@@ -1,6 +1,7 @@
 @icon-element-bottom-margin: @vc_element_margin_bottom;
 @icon-element-rounded-radius: 5px;
-@icon-element-font-size-base: 14px;
+// Values will be in px (for Gulp build process we will add px to unit() function)
+@icon-element-font-size-base: 14;
 
 @icon-element-icon-size-xs: 1.20em;
 // 17px
@@ -13,20 +14,21 @@
 @icon-element-icon-size-xl: 5em;
 // 70px
 
-@icon-element-box-size-xs: 2.5em;
+// Values will be in em (for Gulp build process we will add em to unit() function)
+@icon-element-box-size-xs: 2.5;
 // 35px
-@icon-element-box-size-sm: 3.15em;
+@icon-element-box-size-sm: 3.15;
 // 45px
-@icon-element-box-size-md: 4em;
+@icon-element-box-size-md: 4;
 // 56px default
-@icon-element-box-size-lg: 5em;
+@icon-element-box-size-lg: 5;
 // 70px
-@icon-element-box-size-xl: 7.15em;
+@icon-element-box-size-xl: 7.15;
 // 100px
 
 .vc_icon_element {
   line-height: 0;
-  font-size: @icon-element-font-size-base;
+  font-size: unit(@icon-element-font-size-base, px);
   margin-bottom: @icon-element-bottom-margin;
   &.vc_icon_element-outer {
     box-sizing: border-box;
@@ -46,8 +48,8 @@
       text-align: center;
       display: inline-block;
       border: 2px solid transparent;
-      width: @icon-element-box-size-md; // default size md
-      height: @icon-element-box-size-md; //default size md
+      width: unit(@icon-element-box-size-md, em); // default size md
+      height: unit(@icon-element-box-size-md, em); //default size md
       box-sizing: content-box; // helps for font-awesome centring on small sizes
       position: relative;
       .vc_icon_element-icon {
@@ -103,8 +105,8 @@
         &.vc_icon_element-size-@{selector} {
           // fix if no background style selected
           &.vc_icon_element-have-style-inner {
-            width: @size !important;
-            height: @size !important;
+            width: unit(@size, em) !important;
+            height: unit(@size, em) !important;
           }
           max-width: 100% !important;
           line-height: @font_size !important;

@@ -19,12 +19,12 @@ class WPBakeryShortCode_Vc_Pageable extends WPBakeryShortCode {
 	 * Register scripts and styles for pager
 	 */
 	public function shortcodeScripts() {
-		wp_register_script( 'vc_pageable_owl-carousel', vc_asset_url( 'lib/owl-carousel2-dist/owl.carousel.min.js' ), array(
+		wp_register_script( 'vc_pageable_owl-carousel', vc_asset_url( 'lib/vendor/owl-carousel2-dist/owl.carousel.min.js' ), array(
 			'jquery-core',
 		), WPB_VC_VERSION, true );
-		wp_register_script( 'vc_waypoints', vc_asset_url( 'lib/vc_waypoints/vc-waypoints.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_waypoints', vc_asset_url( 'lib/vc/vc_waypoints/vc-waypoints.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
 
-		wp_register_style( 'vc_pageable_owl-carousel-css', vc_asset_url( 'lib/owl-carousel2-dist/assets/owl.min.css' ), array(), WPB_VC_VERSION );
+		wp_register_style( 'vc_pageable_owl-carousel-css', vc_asset_url( 'lib/vendor/owl-carousel2-dist/assets/owl.min.css' ), array(), WPB_VC_VERSION );
 	}
 
 	/**
@@ -105,7 +105,6 @@ class WPBakeryShortCode_Vc_Pageable extends WPBakeryShortCode {
 	public function enqueueScripts() {
 		wp_enqueue_script( 'vc_pageable_owl-carousel' );
 		wp_enqueue_style( 'vc_pageable_owl-carousel-css' );
-		wp_enqueue_style( 'vc_animate-css' );
 	}
 
 	/**

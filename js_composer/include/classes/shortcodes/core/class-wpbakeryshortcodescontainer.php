@@ -173,9 +173,6 @@ abstract class WPBakeryShortCodesContainer extends WPBakeryShortCode {
 	/**
 	 * @return string
 	 */
-	/**
-	 * @return string
-	 */
 	public function getBackendEditorChildControlsElementCssClass() {
 		return 'vc_element-name';
 	}

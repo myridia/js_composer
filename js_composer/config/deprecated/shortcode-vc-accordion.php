@@ -1,4 +1,11 @@
 <?php
+/**
+ * Configuration file for [vc_accordion] shortcode of 'Old Accordion' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ * @depreacted 4.6
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

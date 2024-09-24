@@ -249,7 +249,7 @@ class Vc_Grid_Item {
 		} else {
 			$predefined_template = $this->predefinedTemplate( $id );
 			if ( $predefined_template ) {
-				$shortcodes_custom_css = wpbakery()->parseShortcodesCustomCss( $predefined_template['template'] );
+				$shortcodes_custom_css = wpbakery()->parseShortcodesCss( $predefined_template['template'], 'custom' );
 			}
 		}
 		if ( ! empty( $shortcodes_custom_css ) ) {
@@ -264,12 +264,13 @@ class Vc_Grid_Item {
 	}
 
 	/**
-	 * Generates html with template's variables for rendering new project.
+	 * Generates html with template's variables.
 	 *
-	 * @param $template
-	 * @throws \Exception
+	 * @param string $template
+	 * @return string
+	 * @since 7.6
 	 */
-	public function parseTemplate( $template ) {
+	public function getParseTemplate( $template ) {
 		$this->mapShortcodes();
 		WPBMap::addAllMappedShortcodes();
 		$attr = ' width="' . $this->gridAttribute( 'element_width', 12 ) . '"' . ' is_end="' . ( 'true' === $this->isEnd() ? 'true' : '' ) . '"';
@@ -281,7 +282,19 @@ class Vc_Grid_Item {
 			'[vc_gitem',
 			'[/vc_gitem]',
 		), $template );
-		$this->html_template .= do_shortcode( trim( $template ) );
+
+		return do_shortcode( trim( $template ) );
+	}
+
+	/**
+	 * Set parsed template to html_template attribute.
+	 *
+	 * @param string $template
+	 * @param bool $is_preview
+	 * @throws \Exception
+	 */
+	public function parseTemplate( $template ) {
+		$this->html_template .= $this->getParseTemplate( $template );
 	}
 
 	/**

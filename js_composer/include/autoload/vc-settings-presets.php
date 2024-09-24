@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoload hooks related presets plugin functionality.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -16,11 +22,16 @@ add_action( 'vc_register_settings_preset', 'vc_register_settings_preset', 10, 4 
 add_filter( 'vc_add_new_elements_to_box', 'vc_add_new_elements_to_box' );
 add_filter( 'vc_add_new_category_filter', 'vc_add_new_category_filter' );
 
+/**
+ * Include settings preset class.
+ */
 function vc_include_settings_preset_class() {
 	require_once vc_path_dir( 'AUTOLOAD_DIR', 'class-vc-settings-presets.php' );
 }
 
 /**
+ * Get Vc_Vendor_Preset instance.
+ *
  * @return Vc_Vendor_Preset
  */
 function vc_vendor_preset() {
@@ -30,9 +41,9 @@ function vc_vendor_preset() {
 }
 
 /**
- * Save settings preset for specific shortcode
+ * Save settings preset for specific shortcode.
  *
- * Include freshly rendered html in response
+ * Include freshly rendered html in response.
  *
  * Required _POST params:
  * - shortcode_name string
@@ -44,7 +55,7 @@ function vc_vendor_preset() {
  */
 function vc_action_save_settings_preset() {
 	vc_include_settings_preset_class();
-	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to save presets
+	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to save presets.
 
 	$id = Vc_Settings_Preset::saveSettingsPreset( vc_post_param( 'shortcode_name' ), vc_post_param( 'title' ), vc_post_param( 'data' ), vc_post_param( 'is_default' ) );
 
@@ -70,7 +81,7 @@ function vc_action_save_settings_preset() {
  */
 function vc_action_set_as_default_settings_preset() {
 	vc_include_settings_preset_class();
-	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to set as default presets
+	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to set as default presets.
 
 	$id = vc_post_param( 'id' );
 	$shortcode_name = vc_post_param( 'shortcode_name' );
@@ -97,7 +108,7 @@ function vc_action_set_as_default_settings_preset() {
  */
 function vc_action_restore_default_settings_preset() {
 	vc_include_settings_preset_class();
-	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to restore presets
+	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to restore presets.
 
 	$shortcode_name = vc_post_param( 'shortcode_name' );
 
@@ -124,7 +135,7 @@ function vc_action_restore_default_settings_preset() {
  */
 function vc_action_delete_settings_preset() {
 	vc_include_settings_preset_class();
-	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to delete presets
+	vc_user_access()->part( 'presets' )->checkStateAny( true, null )->validateDie(); // user must have permission to delete presets.
 
 	$default = get_post_meta( vc_post_param( 'id' ), '_vc_default', true );
 
@@ -190,13 +201,13 @@ function vc_action_render_settings_preset_popup() {
  * Return rendered title prompt
  *
  * @since 4.7
- *
  */
 function vc_action_render_settings_preset_title_prompt() {
 	vc_user_access()->checkAdminNonce()->validateDie()->wpAny( 'edit_posts', 'edit_pages' )->validateDie()->part( 'presets' )->can()->validateDie();
 
 	ob_start();
-	vc_include_template( apply_filters( 'vc_render_settings_preset_title_prompt', 'editors/partials/prompt-presets.tpl.php' ) );
+	$info = vc_get_template( 'editors/partials/param-info.tpl.php', [ 'description' => esc_html__( 'Enter element title.', 'js_composer' ) ] );
+	vc_include_template( apply_filters( 'vc_render_settings_preset_title_prompt', 'editors/partials/prompt-presets.tpl.php' ), [ 'info' => $info ] );
 	$html = ob_get_clean();
 
 	$response = array(
@@ -233,14 +244,16 @@ function vc_action_render_settings_templates_prompt() {
  * @param string $title
  * @param string $shortcode
  * @param array $params
- * @param bool $default
+ * @param bool $default_value
  */
-function vc_register_settings_preset( $title, $shortcode, $params, $default = false ) {
-	vc_vendor_preset()->add( $title, $shortcode, $params, $default );
+function vc_register_settings_preset( $title, $shortcode, $params, $default_value = false ) {
+	vc_vendor_preset()->add( $title, $shortcode, $params, $default_value );
 }
 
 /**
- * @param $shortcodes
+ * Add new elements to box.
+ *
+ * @param array $shortcodes
  * @return array
  * @throws \Exception
  */
@@ -251,7 +264,9 @@ function vc_add_new_elements_to_box( $shortcodes ) {
 }
 
 /**
- * @param $cat
+ * Add new category filter.
+ *
+ * @param array $cat
  * @return array
  */
 function vc_add_new_category_filter( $cat ) {

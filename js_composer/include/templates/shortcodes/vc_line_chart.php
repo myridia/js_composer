@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Shortcode attributes
+ * @var $atts
  * @var $title
  * @var $el_class
  * @var $el_id
@@ -93,7 +94,8 @@ foreach ( $base_colors['active'] as $name => $color ) {
 
 wp_enqueue_script( 'vc_line_chart' );
 
-$class_to_filter = 'vc_chart vc_line-chart wpb_content_element';
+$element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
+$class_to_filter = 'vc_chart vc_line-chart ' . esc_attr( $element_class );
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . $this->getExtraClass( $el_class ) . $this->getCSSAnimation( $css_animation );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter, $this->settings['base'], $atts );
 

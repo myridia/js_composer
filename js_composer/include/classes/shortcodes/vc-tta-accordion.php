@@ -8,18 +8,24 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WPBakeryShortCode_Vc_Tta_Accordion extends WPBakeryShortCodesContainer {
 	protected $controls_css_settings = 'out-tc vc_controls-content-widget';
+
 	protected $controls_list = array(
 		'add',
 		'edit',
 		'clone',
+		'copy',
+		'paste',
 		'delete',
 	);
+
 	protected $template_vars = array();
 
 	public $layout = 'accordion';
+
 	protected $content;
 
 	public $activeClass = 'vc_active';
+
 	/**
 	 * @var WPBakeryShortCode_Vc_Tta_Section
 	 */
@@ -423,8 +429,8 @@ class WPBakeryShortCode_Vc_Tta_Accordion extends WPBakeryShortCodesContainer {
 	}
 
 	public function enqueueTtaScript() {
-		wp_register_script( 'vc_accordion_script', vc_asset_url( 'lib/vc_accordion/vc-accordion.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
-		wp_register_script( 'vc_tta_autoplay_script', vc_asset_url( 'lib/vc-tta-autoplay/vc-tta-autoplay.min.js' ), array( 'vc_accordion_script' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_accordion_script', vc_asset_url( 'lib/vc/vc_accordion/vc-accordion.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_tta_autoplay_script', vc_asset_url( 'lib/vc/vc-tta-autoplay/vc-tta-autoplay.min.js' ), array( 'vc_accordion_script' ), WPB_VC_VERSION, true );
 
 		wp_enqueue_script( 'vc_accordion_script' );
 		if ( ! vc_is_page_editable() ) {

@@ -4,8 +4,8 @@
   .vc_tta-controls-icon {
     display: inline-block;
     vertical-align: middle;
-    height: @vc_tta-control-icon-size;
-    width: @vc_tta-control-icon-size;
+    height: unit(@vc_tta-control-icon-size, px);
+    width: unit(@vc_tta-control-icon-size, px);
     position: relative;
     font-size: inherit;
     margin: 0;
@@ -87,7 +87,7 @@
         top: 0;
         bottom: 0;
         border-style: solid;
-        border-width: floor(@vc_tta-control-icon-size / 2);
+        border-width: unit(floor((@vc_tta-control-icon-size / 2)), px);
         border-bottom-color: transparent !important;
         border-right-color: transparent !important;
         border-left-color: transparent !important;
@@ -134,7 +134,7 @@
     .vc_tta-controls-icon-position-left {
       &.vc_tta-panel-title {
         > a {
-          padding-left: @vc_tta-panels-padding-horizontal + @vc_tta-icon-spacing + @vc_tta-control-icon-size;
+          padding-left: (@vc_tta-panels-padding-horizontal + @vc_tta-icon-spacing + unit(@vc_tta-control-icon-size, px));
         }
       }
       .vc_tta-controls-icon {
@@ -150,7 +150,7 @@
     .vc_tta-controls-icon-position-right {
       &.vc_tta-panel-title {
         > a {
-          padding-right: @vc_tta-panels-padding-horizontal * 1.5 + @vc_tta-control-icon-size;
+          padding-right: (@vc_tta-panels-padding-horizontal * 1.5 + unit(@vc_tta-control-icon-size, px));
         }
       }
       .vc_tta-controls-icon {

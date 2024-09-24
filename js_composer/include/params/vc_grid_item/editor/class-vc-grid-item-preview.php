@@ -112,7 +112,10 @@ class Vc_Grid_Item_Preview {
 		wp_enqueue_style( 'prettyphoto' );
 		wp_enqueue_style( 'js_composer_front' );
 		wp_enqueue_script( 'wpb_composer_front_js' );
-		wp_enqueue_style( 'js_composer_custom_css' );
+
+		if ( vc_modules_manager()->is_module_on( 'custom_css' ) ) {
+			wp_enqueue_style( 'js_composer_custom_css' );
+		}
 
 		VcShortcodeAutoloader::getInstance()->includeClass( 'WPBakeryShortCode_Vc_Basic_Grid' );
 

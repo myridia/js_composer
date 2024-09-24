@@ -1,4 +1,10 @@
 <?php
+/**
+ * Configuration file for [vc_tweetmeme] shortcode of 'Tweetmeme Button' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,6 +13,7 @@ return array(
 	'name' => esc_html__( 'Tweetmeme Button', 'js_composer' ),
 	'base' => 'vc_tweetmeme',
 	'icon' => 'icon-wpb-tweetme',
+	'element_default_class' => 'wpb_content_element',
 	'category' => esc_html__( 'Social', 'js_composer' ),
 	'description' => esc_html__( 'Tweet button', 'js_composer' ),
 	'params' => array(
@@ -22,7 +29,7 @@ return array(
 			),
 			'description' => esc_html__( 'Select type of Twitter button.', 'js_composer' ),
 		),
-		// share type
+		// share type.
 		array(
 			'type' => 'checkbox',
 			'heading' => esc_html__( 'Share url: page URL', 'js_composer' ),
@@ -106,7 +113,7 @@ return array(
 			),
 			'description' => esc_html__( 'Add a comma-separated list of hashtags to a Tweet using the hashtags parameter.', 'js_composer' ),
 		),
-		// follow type
+		// follow type.
 		array(
 			'type' => 'textfield',
 			'heading' => esc_html__( 'User @', 'js_composer' ),
@@ -143,7 +150,7 @@ return array(
 			),
 			'description' => esc_html__( 'Do you want to displat the follower count in button?', 'js_composer' ),
 		),
-		// hashtag type
+		// hashtag type.
 		array(
 			'type' => 'textfield',
 			'heading' => esc_html__( 'Hashtag #', 'js_composer' ),
@@ -227,7 +234,7 @@ return array(
 			),
 			'description' => esc_html__( 'Enter custom url to be used in the tweet.', 'js_composer' ),
 		),
-		// mention type
+		// mention type.
 		array(
 			'type' => 'textfield',
 			'heading' => esc_html__( 'Tweet to @', 'js_composer' ),
@@ -286,7 +293,7 @@ return array(
 			),
 			'description' => esc_html__( 'Enter username to recommend.', 'js_composer' ),
 		),
-		// general
+		// general.
 		array(
 			'type' => 'checkbox',
 			'heading' => esc_html__( 'Use large button', 'js_composer' ),
@@ -343,7 +350,7 @@ return array(
 			'type' => 'el_id',
 			'heading' => esc_html__( 'Element ID', 'js_composer' ),
 			'param_name' => 'el_id',
-			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 		),
 		array(
 			'type' => 'textfield',
@@ -356,6 +363,9 @@ return array(
 			'heading' => esc_html__( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
 			'group' => esc_html__( 'Design Options', 'js_composer' ),
+			'value' => array(
+				'margin-bottom' => '35px',
+			),
 		),
 	),
 );

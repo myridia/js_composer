@@ -1,4 +1,10 @@
 <?php
+/**
+ * Configuration file for [vc_section] shortcode of 'Section' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -13,7 +19,7 @@ return array(
 		'only' => 'vc_row',
 	),
 	'as_child' => array(
-		'only' => '', // Only root
+		'only' => '', // Only root.
 	),
 	'class' => 'vc_main-sortable-element',
 	'description' => esc_html__( 'Group multiple rows in section', 'js_composer' ),
@@ -28,6 +34,12 @@ return array(
 				esc_html__( 'Stretch section and content', 'js_composer' ) => 'stretch_row_content',
 			),
 			'description' => esc_html__( 'Select stretching options for section and content (Note: stretched may not work properly if parent container has "overflow: hidden" CSS property).', 'js_composer' ),
+		),
+		array(
+			'type' => 'textfield',
+			'heading' => esc_html__( 'Minimum height', 'js_composer' ),
+			'param_name' => 'min_height',
+			'description' => esc_html__( 'Set minimum height for the container.', 'js_composer' ),
 		),
 		array(
 			'type' => 'checkbox',
@@ -60,7 +72,7 @@ return array(
 			'heading' => esc_html__( 'YouTube link', 'js_composer' ),
 			'param_name' => 'video_bg_url',
 			'value' => 'https://www.youtube.com/watch?v=lMJXxhRFO1k',
-			// default video url
+			// default video url.
 			'description' => esc_html__( 'Add YouTube link.', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'video_bg',
@@ -135,7 +147,7 @@ return array(
 			'type' => 'el_id',
 			'heading' => esc_html__( 'Section ID', 'js_composer' ),
 			'param_name' => 'el_id',
-			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 		),
 		array(
 			'type' => 'checkbox',

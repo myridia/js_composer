@@ -920,7 +920,7 @@
 .vc_tta-tabs {
   &.vc_tta-has-pagination {
     &:not(.vc_tta-tabs-position-bottom) {
-      padding-bottom: @vc_tta-pagination-gap * 2;
+      padding-bottom: (@vc_tta-pagination-gap * 2);
     }
     .vc_pagination {
       position: absolute;
@@ -934,7 +934,7 @@
       transform: translateY(-50%);
     }
     &.vc_tta-tabs-position-bottom {
-      padding-top: @vc_tta-pagination-gap * 2;
+      padding-top: (@vc_tta-pagination-gap * 2);
       .vc_pagination {
         top: auto;
         bottom: 100%;

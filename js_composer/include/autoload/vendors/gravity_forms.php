@@ -1,27 +1,37 @@
 <?php
+/**
+ * Backward compatibility with "Gravity Forms" WordPress plugin.
+ *
+ * Used to add gravity forms shortcode into WPBakery Page Builder
+ *
+ * @see https://wordpress.org/plugins/gravity-forms-custom-post-types/
+ *
+ * @since 4.4 vendors initialization moved to hooks in autoload/vendors.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-/**
- * @since 4.4 vendors initialization moved to hooks in autoload/vendors.
- *
- * Used to add gravity forms shortcode into WPBakery Page Builder
- */
 add_action( 'plugins_loaded', 'vc_init_vendor_gravity_forms' );
+/**
+ * Init Gravity Forms vendor.
+ */
 function vc_init_vendor_gravity_forms() {
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); // Require class-vc-wxr-parser-plugin.php to use is_plugin_active() below
+	include_once ABSPATH . 'wp-admin/includes/plugin.php'; // Require class-vc-wxr-parser-plugin.php to use is_plugin_active() below.
 	if ( is_plugin_active( 'gravityforms/gravityforms.php' ) || class_exists( 'RGForms' ) || class_exists( 'RGFormsModel' ) ) {
-		// Call on map
+		// Call on map.
 		add_action( 'vc_after_init', 'vc_vendor_gravityforms_load' );
-	} // if gravityforms active
+	} // if gravityforms active.
 }
 
+/**
+ * Register [gravityform] shortcode of Gravity Forms.
+ */
 function vc_vendor_gravityforms_load() {
 	$gravity_forms_array[ esc_html__( 'No Gravity forms found.', 'js_composer' ) ] = '';
 	$gravity_forms = array();
 	if ( class_exists( 'RGFormsModel' ) && 'vc_edit_form' === vc_request_param( 'action' ) ) {
-		/** @noinspection PhpUndefinedClassInspection */
 		$gravity_forms = RGFormsModel::get_forms( 1, 'title' );
 		if ( $gravity_forms ) {
 			$gravity_forms_array = array( esc_html__( 'Select a form to display.', 'js_composer' ) => '' );

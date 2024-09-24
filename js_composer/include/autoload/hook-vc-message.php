@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoload hooks for plugin messages.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

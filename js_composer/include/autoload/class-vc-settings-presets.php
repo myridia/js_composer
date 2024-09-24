@@ -1,4 +1,11 @@
 <?php
+/**
+ * Autoload preset for settings.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ * @since 4.7
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -37,7 +44,7 @@ class Vc_Settings_Preset {
 		if ( $posts ) {
 			$default_id = $posts[0]->ID;
 		} else {
-			// check for vendor presets
+			// check for vendor presets.
 			$default_id = vc_vendor_preset()->getDefaultId( $shortcode_name );
 		}
 
@@ -49,7 +56,7 @@ class Vc_Settings_Preset {
 	 *
 	 * If this is vendor preset, clone it and set new one as default
 	 *
-	 * @param int $id If falsy, no default will be set
+	 * @param int $id If falsy, no default will be set.
 	 * @param string $shortcode_name
 	 *
 	 * @return boolean
@@ -64,12 +71,10 @@ class Vc_Settings_Preset {
 
 		if ( $id ) {
 			if ( is_numeric( $id ) ) {
-				// user preset
-
+				// user preset.
 				update_post_meta( $id, '_vc_default', true );
 			} else {
-				// vendor preset
-
+				// vendor preset.
 				$preset = vc_vendor_preset()->get( $id );
 
 				if ( ! $preset || $shortcode_name !== $preset['shortcode'] ) {
@@ -88,7 +93,7 @@ class Vc_Settings_Preset {
 	 *
 	 * @since 4.7
 	 *
-	 * @param $shortcode_name
+	 * @param string $shortcode_name
 	 *
 	 * @return string
 	 */
@@ -130,14 +135,14 @@ class Vc_Settings_Preset {
 			'posts_per_page' => - 1,
 		);
 
-		// user presets
+		// user presets.
 		$posts = get_posts( $args );
 		foreach ( $posts as $post ) {
 			$shortcode_name = self::extractShortcodeMimeType( $post->post_mime_type );
 			$list[ $post->ID ] = (array) json_decode( $post->post_content );
 		}
 
-		// vendor presets
+		// vendor presets.
 		$presets = self::listDefaultVendorSettingsPresets();
 		foreach ( $presets as $shortcode => $params ) {
 			if ( ! isset( $list[ $shortcode ] ) ) {
@@ -165,14 +170,14 @@ class Vc_Settings_Preset {
 			'meta_value' => true,
 		);
 
-		// user presets
+		// user presets.
 		$posts = get_posts( $args );
 		foreach ( $posts as $post ) {
 			$shortcode_name = self::extractShortcodeMimeType( $post->post_mime_type );
 			$list[ $shortcode_name ] = (array) json_decode( $post->post_content );
 		}
 
-		// vendor presets
+		// vendor presets.
 		$presets = self::listDefaultVendorSettingsPresets();
 		foreach ( $presets as $shortcode => $params ) {
 			if ( ! isset( $list[ $shortcode ] ) ) {
@@ -290,14 +295,14 @@ class Vc_Settings_Preset {
 	 *
 	 * @since 4.7
 	 *
-	 * @param mixed $id Can be int (user preset) or string (vendor preset)
-	 * @param bool $array If true, return array instead of string
+	 * @param mixed $id Can be int (user preset) or string (vendor preset).
+	 * @param array|bool $initial If true, return array instead of string.
 	 *
 	 * @return mixed string?array Post content
 	 */
-	public static function getSettingsPreset( $id, $array = false ) {
+	public static function getSettingsPreset( $id, $initial = false ) {
 		if ( is_numeric( $id ) ) {
-			// user preset
+			// user preset.
 
 			$post = get_post( $id );
 
@@ -305,9 +310,9 @@ class Vc_Settings_Preset {
 				return false;
 			}
 
-			$params = $array ? (array) json_decode( $post->post_content ) : $post->post_content;
+			$params = $initial ? (array) json_decode( $post->post_content ) : $post->post_content;
 		} else {
-			// vendor preset
+			// vendor preset.
 
 			$preset = vc_vendor_preset()->get( $id );
 
@@ -326,7 +331,7 @@ class Vc_Settings_Preset {
 	 *
 	 * @since 4.7
 	 *
-	 * @param int $post_id Post must be of type 'vc_settings_preset'
+	 * @param int $post_id Post must be of type 'vc_settings_preset'.
 	 *
 	 * @return bool
 	 */
@@ -375,7 +380,9 @@ class Vc_Settings_Preset {
 	}
 
 	/**
-	 * @param $shortcodes
+	 * Add presets for specific shortcodes
+	 *
+	 * @param array $shortcodes
 	 *
 	 * @return array
 	 * @throws \Exception
@@ -411,7 +418,9 @@ class Vc_Settings_Preset {
 	}
 
 	/**
-	 * @param $category
+	 * Add preset category
+	 *
+	 * @param array $category
 	 *
 	 * @return array
 	 */

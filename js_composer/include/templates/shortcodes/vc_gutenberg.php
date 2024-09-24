@@ -18,7 +18,8 @@ $el_class = $el_id = $css = $css_animation = '';
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 
-$class_to_filter = 'vc_gutenberg wpb_content_element ' . $this->getCSSAnimation( $css_animation );
+$element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
+$class_to_filter = 'vc_gutenberg ' . esc_attr( $element_class ) . $this->getCSSAnimation( $css_animation );
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . $this->getExtraClass( $el_class );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter, $this->settings['base'], $atts );
 $wrapper_attributes = array();

@@ -14,6 +14,8 @@ class WPBakeryShortCode_Vc_Tta_Section extends WPBakeryShortCode_Vc_Tta_Accordio
 		'add',
 		'edit',
 		'clone',
+		'copy',
+		'paste',
 		'delete',
 	);
 	protected $backened_editor_prepend_controls = false;
@@ -178,7 +180,9 @@ class WPBakeryShortCode_Vc_Tta_Section extends WPBakeryShortCode_Vc_Tta_Accordio
 		if ( is_object( self::$tta_base_shortcode ) ) {
 			if ( isset( self::$tta_base_shortcode->atts['c_icon'] ) && strlen( self::$tta_base_shortcode->atts['c_icon'] ) > 0 && isset( self::$tta_base_shortcode->atts['c_position'] ) && strlen( self::$tta_base_shortcode->atts['c_position'] ) > 0 ) {
 				$c_position = self::$tta_base_shortcode->atts['c_position'];
-
+				if ( 'default' === $c_position ) {
+					$c_position = is_rtl() ? 'right' : 'left';
+				}
 				return 'vc_tta-controls-icon-position-' . $c_position;
 			}
 		}
@@ -242,9 +246,9 @@ class WPBakeryShortCode_Vc_Tta_Section extends WPBakeryShortCode_Vc_Tta_Accordio
 		$output .= ' data-vc-accordion';
 
 		$output .= ' data-vc-container=".vc_tta-container">';
-		$output .= $this->getTemplateVariable( 'icon-left' );
-		$output .= '<span class="vc_tta-title-text">' . $this->getTemplateVariable( 'title' ) . '</span>';
-		$output .= $this->getTemplateVariable( 'icon-right' );
+		$output .= empty( $atts['i_position'] ) ? '' : $this->getTemplateVariable( 'icon-left' );
+		$output .= '<span class="vc_tta-title-text">' . wp_kses_post( $this->getTemplateVariable( 'title' ) ) . '</span>';
+		$output .= empty( $atts['i_position'] ) ? '' : $this->getTemplateVariable( 'icon-right' );
 		if ( ! $isPageEditable ) {
 			$output .= $this->getTemplateVariable( 'control-icon' );
 		}

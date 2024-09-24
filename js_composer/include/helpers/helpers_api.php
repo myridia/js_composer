@@ -280,7 +280,9 @@ if ( ! function_exists( 'vc_add_default_templates' ) ) {
 }
 
 /**
- * @param $shortcode
+ * Get element shortcode map include/exclude some param fields.
+ *
+ * @param array $shortcode
  * @param string $field_prefix
  * @param string $group_prefix
  * @param null $change_fields
@@ -349,86 +351,69 @@ function vc_map_integrate_shortcode( $shortcode, $field_prefix = '', $group_pref
  *
  */
 function vc_map_integrate_include_exclude_fields( $param, $change_fields ) {
-	if ( is_array( $change_fields ) ) {
-		if ( isset( $change_fields['exclude'] ) && in_array( $param['param_name'], $change_fields['exclude'], true ) ) {
-			$param = null;
+	if ( ! is_array( $change_fields ) || ! isset( $param['param_name'] ) ) {
+		return $param;
+	}
+	$param_name = $param['param_name'];
 
-			return $param; // to prevent group adding to $param
-		} elseif ( isset( $change_fields['exclude_regex'] ) ) {
-			if ( is_array( $change_fields['exclude_regex'] ) && ! empty( $change_fields['exclude_regex'] ) ) {
-				$break_foreach = false;
-				foreach ( $change_fields['exclude_regex'] as $regex ) {
-					/** @noinspection PhpUsageOfSilenceOperatorInspection */
-					// @codingStandardsIgnoreLine
-					if ( @preg_match( $regex, null ) ) {
-						if ( preg_match( $regex, $param['param_name'] ) ) {
-							$param = null;
-							$break_foreach = true;
-						}
-					}
-					if ( $break_foreach ) {
-						break;
-					}
-				}
-				if ( $break_foreach ) {
-					return $param; // to prevent group adding to $param
-				}
-			} elseif ( is_string( $change_fields['exclude_regex'] ) && strlen( $change_fields['exclude_regex'] ) > 0 ) {
-				/** @noinspection PhpUsageOfSilenceOperatorInspection */
-				// @codingStandardsIgnoreLine
-				if ( @preg_match( $change_fields['exclude_regex'], null ) ) {
-					if ( preg_match( $change_fields['exclude_regex'], $param['param_name'] ) ) {
-						$param = null;
+	if ( isset( $change_fields['exclude'] ) ) {
+		$param = in_array( $param_name, $change_fields['exclude'], true ) ? null : $param;
+	} elseif ( isset( $change_fields['exclude_regex'] ) ) {
+		$param = vc_map_check_param_field_against_regex( $param, $change_fields['exclude_regex'], 'exclude' );
+	}
 
-						return $param; // to prevent group adding to $param
-					}
-				}
-			}
-		}
-
-		if ( isset( $change_fields['include_only'] ) && ! in_array( $param['param_name'], $change_fields['include_only'], true ) ) {
-			// if we want to enclude only some fields
-			$param = null;
-
-			return $param; // to prevent group adding to $param
-		} elseif ( isset( $change_fields['include_only_regex'] ) ) {
-			if ( is_array( $change_fields['include_only_regex'] ) && ! empty( $change_fields['include_only_regex'] ) ) {
-				$break_foreach = false;
-				foreach ( $change_fields['include_only_regex'] as $regex ) {
-					/** @noinspection PhpUsageOfSilenceOperatorInspection */
-					// @codingStandardsIgnoreLine
-					if ( false === @preg_match( $regex, null ) ) {
-						// Regular expression is invalid, (don't remove @).
-					} else {
-						if ( ! preg_match( $regex, $param['param_name'] ) ) {
-							$param = null;
-							$break_foreach = true;
-						}
-					}
-					if ( $break_foreach ) {
-						break;
-					}
-				}
-				if ( $break_foreach ) {
-					return $param; // to prevent group adding to $param
-				}
-			} elseif ( is_string( $change_fields['include_only_regex'] ) && strlen( $change_fields['include_only_regex'] ) > 0 ) {
-				/** @noinspection PhpUsageOfSilenceOperatorInspection */
-				// @codingStandardsIgnoreLine
-				if ( false === @preg_match( $change_fields['include_only_regex'], null ) ) {
-					// Regular expression is invalid, (don't remove @).
-				} else {
-					if ( ! preg_match( $change_fields['include_only_regex'], $param['param_name'] ) ) {
-						$param = null;
-
-						return $param; // to prevent group adding to $param
-					}
-				}
-			}
-		}
+	if ( isset( $change_fields['include_only'] ) ) {
+		$param = ! in_array( $param_name, $change_fields['include_only'], true ) ? null : $param ;
+	} elseif ( isset( $change_fields['include_only_regex'] ) ) {
+		$param = vc_map_check_param_field_against_regex( $param, $change_fields['include_only_regex'], 'include' );
 	}
 
 	return $param;
+}
+
+
+if ( ! function_exists( 'vc_map_check_param_field_against_regex' ) ) {
+	/**
+	 * Check shortcode param against regex
+	 *
+	 * @param array $param
+	 * @param string|array $regex
+	 * @param string $type
+	 *
+	 * @since 7.8
+	 * @return array
+	 */
+	function vc_map_check_param_field_against_regex( $param, $regex_list, $condition ) {
+		$check_against = 'exclude' === $condition ? 1 : 0;
+
+		if ( is_array( $regex_list ) && ! empty( $regex_list ) ) {
+			$break_foreach = false;
+
+			foreach ( $regex_list as $regex ) {
+				if ( wpb_is_regex_valid( $regex ) ) {
+					if ( preg_match( $regex, $param['param_name'] ) === $check_against ) {
+						$param = null;
+						$break_foreach = true;
+					}
+				}
+				if ( $break_foreach ) {
+					break;
+				}
+			}
+			if ( $break_foreach ) {
+				return $param; // to prevent group adding to $param
+			}
+		} elseif ( is_string( $regex_list ) && strlen( $regex_list ) > 0 ) {
+			$regex = $regex_list;
+			if ( wpb_is_regex_valid( $regex ) ) {
+				if ( preg_match( $regex, $param['param_name'] ) === $check_against ) {
+					return null; // to prevent group adding to $param
+				}
+			}
+		}
+
+		return $param;
+	}
 }
 
 /**

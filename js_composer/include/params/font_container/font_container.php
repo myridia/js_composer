@@ -121,7 +121,8 @@ class Vc_Font_Container {
                     <div class="wpb_element_label">' . esc_html__( 'Text color', 'js_composer' ) . '</div>
                     <div class="vc_font_container_form_field-color-container">
                         <div class="color-group">
-                            <input type="text" value="' . $values['color'] . '" class="vc_font_container_form_field-color-input vc_color-control" />
+                            <div class="wpb-color-picker"></div>
+                            <input type="text" value="' . $values['color'] . '" class="vc_font_container_form_field-color-input vc_color-control vc_ui-hidden" />
                         </div>
                     </div>';
 				if ( isset( $fields['color_description'] ) && strlen( $fields['color_description'] ) > 0 ) {

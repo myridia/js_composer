@@ -57,12 +57,40 @@
     content: "";
     border: none;
   }
-  .vc_color-picker .wp-picker-input-wrap label {
-    margin-top: 0;
-  }
+  //.vc_color-picker .wp-picker-open + .wp-picker-input-wrap {
+  //  display: flex;
+  //  align-items: center;
+  //}
+  //.vc_color-picker .wp-picker-input-wrap label {
+  //  margin-top: 0;
+  //  margin-bottom: 0;
+  //}
   input.wp-picker-clear {
     width: auto;
   }
+  .wp-picker-input-wrap input.wp-picker-clear[type="button"] {
+    min-height: 30px;
+  }
+  @media screen and (max-width: 782px) {
+    .wp-picker-input-wrap input.wp-picker-clear[type="button"] {
+      min-height: 32px;
+    }
+  }
+  .vc_ui-button.vc_param-animation-style-trigger {
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    background-color: #EBEBEB;
+  }
+  // will be prefixed by autoprefixer package
+  input::placeholder {
+    color: #999;
+  }
+}
+
+.edit_form_line {
+  position: relative;
 }
 
 /* Select Image / Select Images (multiple)
@@ -275,4 +303,10 @@ option, select {
   .vc-link-nofollow {
     display: block;
   }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
 }

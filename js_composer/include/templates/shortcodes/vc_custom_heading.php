@@ -30,7 +30,8 @@ extract( $atts );
 /**
  * @var $css_class
  */
-extract( $this->getStyles( $el_class . $this->getCSSAnimation( $css_animation ), $css, $google_fonts_data, $font_container_data, $atts ) );
+$element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
+extract( $this->getStyles( $element_class . ' ' . $el_class . $this->getCSSAnimation( $css_animation ), $css, $google_fonts_data, $font_container_data, $atts ) );
 
 $settings = get_option( 'wpb_js_google_fonts_subsets' );
 if ( is_array( $settings ) && ! empty( $settings ) ) {
@@ -62,16 +63,17 @@ if ( ! empty( $el_id ) ) {
 	$wrapper_attributes[] = 'id="' . esc_attr( $el_id ) . '"';
 }
 $output = '';
+$tag = tag_escape( $font_container_data['values']['tag'] );
 if ( apply_filters( 'vc_custom_heading_template_use_wrapper', false ) ) {
 	$output .= '<div class="' . esc_attr( $css_class ) . '" ' . implode( ' ', $wrapper_attributes ) . '>';
-	$output .= '<' . $font_container_data['values']['tag'] . ' ' . $style . ' >';
+	$output .= '<' . $tag . ' ' . $style . ' >';
 	$output .= $text;
-	$output .= '</' . $font_container_data['values']['tag'] . '>';
+	$output .= '</' . $tag . '>';
 	$output .= '</div>';
 } else {
-	$output .= '<' . $font_container_data['values']['tag'] . ' ' . $style . ' class="' . esc_attr( $css_class ) . '" ' . implode( ' ', $wrapper_attributes ) . '>';
+	$output .= '<' . $tag . ' ' . $style . ' class="' . esc_attr( $css_class ) . '" ' . implode( ' ', $wrapper_attributes ) . '>';
 	$output .= $text;
-	$output .= '</' . $font_container_data['values']['tag'] . '>';
+	$output .= '</' . $tag . '>';
 }
 
 return $output;

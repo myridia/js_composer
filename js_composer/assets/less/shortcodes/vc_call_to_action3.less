@@ -5,8 +5,7 @@
 @vc_cta3-font-size-base: 1em;
 @vc_cta3-gold-size-base: 14px;
 @vc_cta3-elements-margin: 1em;
-@vc_cta3-padding-vertical: @vc_cta3-gold-size-base * 2;
-@vc_cta3-padding-horizontal: @vc_cta3-gold-size-base * 2;
+@vc_cta3-padding-horizontal: (@vc_cta3-gold-size-base * 2);
 @vc_cta3-shadow-width-3d: 5px;
 @vc_cta3-border-radius-rounded: 5px;
 @vc_cta3-border-radius-round: 4em;
@@ -131,7 +130,6 @@
 @vc_cta3-color-white-headings: #666;
 
 .vc_cta3-container {
-  margin-bottom: @vc_element_margin_bottom;
   &::before,
   &::after {
     display: table;
@@ -161,7 +159,6 @@
 .vc_general.vc_cta3 {
   border: 1px solid transparent;
   font-size: @vc_cta3-font-size-base;
-  padding: @vc_cta3-padding-vertical @vc_cta3-padding-horizontal;
   word-wrap: break-word;
 
   .vc_cta3-content {
@@ -347,6 +344,7 @@
         max-width: 30%;
       }
       .vc_cta3-content {
+        width: 100%;
         padding-right: @vc_cta3-padding-horizontal;
         display: table-cell;
       }
@@ -553,48 +551,48 @@
 // make icon margins
 .vc_cta3-make-icon-on-border-margins(@direction;) {
   &.vc_cta3-icon-size-xs {
-    margin-@{direction}: floor(@icon-element-font-size-base * unit(@icon-element-box-size-xs) / 2);
+    margin-@{direction}:unit(floor((@icon-element-font-size-base * unit(@icon-element-box-size-xs) / 2)), px);
     .vc_cta3_content-container {
       padding-@{direction}: 0;
     }
     &.vc_cta3-icons-in-box .vc_cta3_content-container {
-      padding-@{direction}: @vc_cta3-gold-size-base * 0.5;
+      padding-@{direction}: (@vc_cta3-gold-size-base * 0.5);
     }
   }
   &.vc_cta3-icon-size-sm {
-    margin-@{direction}: floor(@icon-element-font-size-base * unit(@icon-element-box-size-sm) / 2);
+    margin-@{direction}: unit(floor((@icon-element-font-size-base * unit(@icon-element-box-size-sm) / 2)), px);
     .vc_cta3_content-container {
-      padding-@{direction}: @vc_cta3-gold-size-base * 0.5;
+      padding-@{direction}: (@vc_cta3-gold-size-base * 0.5);
     }
     &.vc_cta3-icons-in-box .vc_cta3_content-container {
       padding-@{direction}: @vc_cta3-gold-size-base;
     }
   }
   &.vc_cta3-icon-size-md {
-    margin-@{direction}: floor(@icon-element-font-size-base * unit(@icon-element-box-size-md) / 2);
+    margin-@{direction}: unit(floor((@icon-element-font-size-base * unit(@icon-element-box-size-md) / 2)), px);
     .vc_cta3_content-container {
       padding-@{direction}: @vc_cta3-gold-size-base;
     }
     &.vc_cta3-icons-in-box .vc_cta3_content-container {
-      padding-@{direction}: @vc_cta3-gold-size-base * 1.5;
+      padding-@{direction}: (@vc_cta3-gold-size-base * 1.5);
     }
   }
   &.vc_cta3-icon-size-lg {
-    margin-@{direction}: floor(@icon-element-font-size-base * unit(@icon-element-box-size-lg) / 2);
+    margin-@{direction}: unit(floor((@icon-element-font-size-base * unit(@icon-element-box-size-lg) / 2)), px);
     .vc_cta3_content-container {
-      padding-@{direction}: @vc_cta3-gold-size-base * 1.5;
+      padding-@{direction}: (@vc_cta3-gold-size-base * 1.5);
     }
     &.vc_cta3-icons-in-box .vc_cta3_content-container {
-      padding-@{direction}: @vc_cta3-gold-size-base * 2;
+      padding-@{direction}: (@vc_cta3-gold-size-base * 2);
     }
   }
   &.vc_cta3-icon-size-xl {
-    margin-@{direction}: floor(@icon-element-font-size-base * unit(@icon-element-box-size-xl) / 2);
+    margin-@{direction}: unit(floor((@icon-element-font-size-base * unit(@icon-element-box-size-xl) / 2)), px);
     .vc_cta3_content-container {
-      padding-@{direction}: @vc_cta3-gold-size-base * 2;
+      padding-@{direction}: (@vc_cta3-gold-size-base * 2);
     }
     &.vc_cta3-icons-in-box .vc_cta3_content-container {
-      padding-@{direction}: @vc_cta3-gold-size-base * 2.5;
+      padding-@{direction}: (@vc_cta3-gold-size-base * 2.5);
     }
   }
 }

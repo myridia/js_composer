@@ -17,7 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="vc_ui-panel-content vc_properties-list vc_edit_form_elements" data-vc-ui-element="panel-content">
 				<div class="vc_row vc_ui-flex-row">
 					<div class="vc_col-sm-12 vc_column vc_layout-panel-switcher">
-						<div class="wpb_element_label"><?php esc_html_e( 'Row layout', 'js_composer' ); ?></div>
+						<div class="wpb-param-heading">
+							<div class="wpb_element_label"><?php esc_html_e( 'Row layout', 'js_composer' ); ?></div>
+							<?php if ( is_string( $rowInfo ) ) { echo $rowInfo ; } ?>
+						</div>
 						<?php foreach ( $vc_row_layouts as $layout ) : ?>
 							<a data-vc-ui-element="button-layout" class="vc_layout-btn" <?php
 							echo 'data-cells="' . esc_attr( $layout['cells'] ) . '" data-cells-mask="' . esc_attr( $layout['mask'] ) . '" title="' . esc_attr( $layout['title'] )
@@ -25,15 +28,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<i class="vc-composer-icon vc-c-icon-<?php echo esc_attr( $layout['icon_class'] ); ?>"></i>
 							</a>
 						<?php endforeach ?>
-						<span class="vc_description vc_clearfix"><?php esc_html_e( 'Select row layout from predefined options.', 'js_composer' ); ?></span>
+			
 					</div>
 					<div class="vc_col-sm-12 vc_column">
-						<div class="wpb_element_label"><?php esc_html_e( 'Enter custom layout for your row', 'js_composer' ); ?></div>
+						<div class="wpb-param-heading">
+							<div class="wpb_element_label"><?php esc_html_e( 'Enter custom layout for your row', 'js_composer' ); ?></div>
+							<?php if ( is_string( $customRowInfo ) ) { echo $customRowInfo ; } ?>
+						</div>
 						<div class="edit_form_line">
 							<input name="padding" class="wpb-textinput vc_row_layout" type="text" value="" id="vc_row-layout">
 							<span class="vc_general vc_ui-button vc_ui-button-size-sm vc_ui-button-action vc_ui-button-shape-rounded vc_ui-button-update-layout" data-vc-ui-element="button-update-layout"><?php esc_html_e( 'Update', 'js_composer' ); ?></span>
-					<span
-						class="vc_description vc_clearfix"><?php esc_html_e( 'Change particular row layout manually by specifying number of columns and their size value.', 'js_composer' ); ?></span>
+							
 						</div>
 					</div>
 				</div>

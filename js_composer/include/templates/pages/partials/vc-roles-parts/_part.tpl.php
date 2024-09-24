@@ -5,7 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <?php /** @var Vc_Role_Access_Controller $controller */ ?>
 	<tr>
-		<th scope="row"><?php echo esc_html( $main_label ); ?></th>
+		<th scope="row">
+			<span><?php echo esc_html( $main_label ); ?></span>
+			<?php ( isset( $description ) && ! empty( $description ) ) ? vc_include_template( 'editors/partials/param-info.tpl.php', ['description' => $description] ) : ''
+			?>
+		</th>
 		<td>
 			<fieldset>
 				<legend class="screen-reader-text">
@@ -23,9 +27,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php echo $controller->getState() === $option[0] ? ' selected' : ''; ?>><?php echo esc_html( $option[1] ); ?></option>
 					<?php endforeach; ?>
 				</select>
-				<?php if ( isset( $description ) && ! empty( $description ) ) : ?>
-					<p class="description"><?php echo esc_html( $description ); ?></p>
-				<?php endif; ?>
 			</fieldset>
 		</td>
 	</tr>

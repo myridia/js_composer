@@ -5,9 +5,10 @@
 // --------------------
 @toggle-border-width: 2px;
 
-@toggle-icon-size-sm: 16px;
-@toggle-icon-size-md: 22px;
-@toggle-icon-size-lg: 28px;
+// Values will be in px (for Gulp build process we will add px to unit() function)
+@toggle-icon-size-sm: 16;
+@toggle-icon-size-md: 22;
+@toggle-icon-size-lg: 28;
 
 @toggle-font-size-base: 1em;
 @toggle-content-top-margin: 1em;
@@ -16,8 +17,6 @@
 // --------------------
 .vc_toggle {
   display: block;
-  margin: 0 0 @vc_margin_bottom_gold 0;
-  padding: 0;
   font-size: @toggle-font-size-base;
   &:last-of-type {
     margin-bottom: @vc_element_margin_bottom;
@@ -261,7 +260,7 @@
 }
 
 // Make colors set
-// ------------------------------------- 
+// -------------------------------------
 .vc-make-toggle-colors-set(@selector; @background; @color; @hover-color) {
   .vc_toggle_color_@{selector} {
     .vc-make-toggle-simple-style-color(@background; @hover-color);
@@ -272,7 +271,7 @@
 }
 
 // Make sizes set
-// ------------------------------------- 
+// -------------------------------------
 .vc-make-toggle-sizes-set(@selector; @size) {
   .vc_toggle_size_@{selector} {
     .vc-make-toggle-shape-size(@size);
@@ -283,7 +282,7 @@
 }
 
 // Make indents
-// ------------------------------------- 
+// -------------------------------------
 .vc-make-toggle-indents(@indent) {
   &.vc_toggle_simple,
   &.vc_toggle_round,
@@ -292,7 +291,7 @@
   &.vc_toggle_default {
     .vc_toggle_title,
     .vc_toggle_content {
-      padding-left: @indent * 1.5;
+      padding-left: unit((@indent * 1.5), px);
       .vc_toggle_icon {
         position: absolute;
         left: 0;
@@ -304,18 +303,18 @@
   &.vc_toggle_default {
     .vc_toggle_title,
     .vc_toggle_content {
-      padding-left: @indent * 1.1;
+      padding-left: unit((@indent * 1.1), px);
     }
   }
   &.vc_toggle_arrow {
     .vc_toggle_icon {
-      margin-left: @indent / 2;
+      margin-left: unit((@indent / 2), px);
     }
   }
 }
 
 // Make color
-// ------------------------------------- 
+// -------------------------------------
 .vc-make-toggle-shape-color(@color: @black; @hover-color: false; @background: transparent; @hover-background: transparent;) {
   // normal
   .vc_toggle_icon {
@@ -436,7 +435,7 @@
 }
 
 // Make simple style color
-// ------------------------------------- 
+// -------------------------------------
 .vc-make-toggle-simple-style-color(@plus-color; @plus-hover) {
   &.vc_toggle_simple {
     .vc-make-toggle-shape-color(@color: @plus-color; @hover-color: @plus-hover);
@@ -445,32 +444,32 @@
 
 // Make sizes
 // ===================================
-.vc-make-toggle-shape-size(@icon-size; @plus-size: floor(@icon-size * 0.5)) {
+.vc-make-toggle-shape-size(@icon-size; @plus-size: floor((@icon-size * 0.5))) {
   @mod: mod(@plus-size, 2);
   .vc_toggle_icon {
-    height: @icon-size;
-    width: @icon-size;
+    height: unit(@icon-size, px);
+    width: unit(@icon-size, px);
     &::before {
       height: 2px;
-      width: @plus-size - @mod;
+      width: unit((@plus-size - @mod), px);
     }
     &::after {
-      height: @plus-size - @mod;
+      height: unit((@plus-size - @mod), px);
       width: 2px;
     }
   }
 }
 
 // Default style sizes
-.vc-make-toggle-default-style-size(@icon-size; @plus-size: floor(@icon-size * 0.5)) {
-  @plus-computed-size: max(@plus-size - mod(@plus-size, 2), 8px);
+.vc-make-toggle-default-style-size(@icon-size; @plus-size: floor((@icon-size * 0.5))) {
+  @plus-computed-size: (@plus-size - mod(@plus-size, 2));
   @plus-width-max: 4px;
   @plus-width-min: 2px;
   &.vc_toggle_default {
     .vc_toggle_icon {
       display: inline-block;
-      width: @plus-computed-size;
-      margin-left: @plus-computed-size / 2;
+      width: unit(@plus-computed-size, px);
+      margin-left: unit((@plus-computed-size / 2), px);
       & when (@plus-size >= 10) {
         height: @plus-width-max;
       }
@@ -478,7 +477,7 @@
         height: @plus-width-min;
       }
       &::before {
-        height: @plus-computed-size;
+        height: unit(@plus-computed-size, px);
         & when (@plus-size >= 10) {
           width: @plus-width-max;
         }
@@ -487,12 +486,12 @@
         }
       }
       &::after {
-        width: @plus-computed-size - 2px;
+        width: (unit(@plus-computed-size, px) - 2px);
         & when (@plus-size >= 10) {
-          height: @plus-width-max - 2px;
+          height: (@plus-width-max - 2px);
         }
         & when (@plus-size < 10) {
-          height: @plus-width-min - 2px;
+          height: (@plus-width-min - 2px);
         }
       }
     }
@@ -500,24 +499,24 @@
 }
 
 // Arrow style sizes
-.vc-make-toggle-arrow-style-size(@icon-size; @plus-size: floor(@icon-size * 0.5)) {
+.vc-make-toggle-arrow-style-size(@icon-size; @plus-size: floor((@icon-size * 0.5))) {
   @mod: mod(@plus-size, 2);
   &.vc_toggle_arrow {
     .vc_toggle_icon {
-      height: @icon-size;
-      width: @icon-size;
+      height: unit(@icon-size, px);
+      width: unit(@icon-size, px);
       &::before,
       &::after {
         border-width: 2px;
-        height: @plus-size - @mod;
-        margin-left: -(@plus-size - @mod) / 2;
-        width: @plus-size - @mod;
+        height: unit((@plus-size - @mod), px);
+        margin-left: unit((-(@plus-size - @mod) / 2), px);
+        width: unit((@plus-size - @mod), px)
       }
       &::before {
-        margin-top: -(@plus-size - @mod);
+        margin-top: unit((-(@plus-size - @mod)), px);
       }
       &::after {
-        margin-top: -(@plus-size - @mod) / 2;
+        margin-top: unit((-(@plus-size - @mod) / 2), px);
       }
     }
   }

@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @var $atts
  * @var $el_class
  * @var $full_width
+ * @var $min_height
  * @var $full_height
  * @var $columns_placement
  * @var $content_placement
@@ -25,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Shortcode class
  * @var WPBakeryShortCode_Vc_Row $this
  */
-$el_class = $full_height = $parallax_speed_bg = $parallax_speed_video = $full_width = $flex_row = $columns_placement = $content_placement = $parallax = $parallax_image = $css = $el_id = $video_bg = $video_bg_url = $video_bg_parallax = $css_animation = '';
+$el_class = $full_height = $min_height = $parallax_speed_bg = $parallax_speed_video = $full_width = $flex_row = $columns_placement = $content_placement = $parallax = $parallax_image = $css = $el_id = $video_bg = $video_bg_url = $video_bg_parallax = $css_animation = '';
 $disable_element = '';
 $output = $after_output = '';
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
@@ -70,6 +71,14 @@ if ( ! empty( $full_width ) ) {
 		$wrapper_attributes[] = 'data-vc-stretch-content="true"';
 	}
 	$after_output .= '<div class="vc_row-full-width vc_clearfix"></div>';
+}
+
+if ( $min_height ) {
+	$min_height = wpb_format_with_css_unit( $min_height );
+
+	if ( strlen( $min_height ) > 0 ) {
+		$wrapper_attributes[] = 'style="min-height: ' . $min_height . '"';
+	}
 }
 
 if ( ! empty( $full_height ) ) {

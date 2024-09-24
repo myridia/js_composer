@@ -1,4 +1,11 @@
 <?php
+/**
+ * Configuration file for [vc_cta_button2] shortcode of 'Old Call to Action Button' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ * @depreacted 4.5
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

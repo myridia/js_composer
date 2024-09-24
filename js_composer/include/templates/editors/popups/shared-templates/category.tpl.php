@@ -32,6 +32,7 @@ $custom_tag = 'script';
 				</a>
 			</div>
 		<?php endif; ?>
+		<div class="vc_ui-panel-message vc_ui-panel-message--error vc_ui-hidden" id="vc_template-library-panel-error-message"></div>
 		<div class="vc_ui-search-box vc_ui-panel-search-box">
 			<div class="vc_ui-search-box-input vc_ui-panel-search">
 				<input type="search" id="vc_template_lib_name_filter" data-vc-template-lib-name-filter="" placeholder="<?php esc_attr_e( 'Search template by name', 'js_composer' ); ?>">
@@ -89,7 +90,7 @@ $custom_tag = 'script';
 		updates from WPBakery Page Builder team.', 'js_composer' );
 				?>
 			</p>
-			<button class="vc_general vc_ui-button vc_ui-button-size-sm vc_ui-button-shape-rounded vc_ui-button-action vc_ui-access-library-btn">
+			<button class="vc_general vc_ui-button vc_ui-button-size-md vc_ui-button-shape-rounded vc_ui-button-action vc_ui-access-library-btn">
 				<?php esc_html_e( 'Access Library', 'js_composer' ); ?>
 			</button>
 		</div>

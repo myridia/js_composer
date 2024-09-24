@@ -318,7 +318,7 @@
 .vc_tta-make-shape(@border-radius) {
   // for panels
   .vc_tta-panel-body {
-    min-height: @border-radius * 2;
+    min-height: (@border-radius * 2);
   }
   .vc_tta-panel-body,
   .vc_tta-panel-heading {
@@ -391,16 +391,16 @@
     // --------------------------------------------------
     .vc_tta-tabs-list {
       padding: 0;
-      margin-top: -(unit(ceil(@spacing / 2), px));
-      margin-bottom: -(unit(floor(@spacing / 2), px));
-      margin-left: -(unit(ceil(@spacing / 2), px));
-      margin-right: -(unit(floor(@spacing / 2), px));
+      margin-top: -(unit(ceil((@spacing / 2)), px));
+      margin-bottom: -(unit(floor((@spacing / 2)), px));
+      margin-left: -(unit(ceil((@spacing / 2)), px));
+      margin-right: -(unit(floor((@spacing / 2)), px));
     }
     .vc_tta-tab {
-      margin-top: unit(ceil(@spacing / 2), px);
-      margin-bottom: unit(floor(@spacing / 2), px);
-      margin-left: unit(ceil(@spacing / 2), px);
-      margin-right: unit(floor(@spacing / 2), px);
+      margin-top: unit(ceil((@spacing / 2)), px);
+      margin-bottom: unit(floor((@spacing / 2)), px);
+      margin-left: unit(ceil((@spacing / 2)), px);
+      margin-right: unit(floor((@spacing / 2)), px);
     }
   }
 }

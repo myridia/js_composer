@@ -41,9 +41,10 @@ $style = '';
 if ( ! empty( $styles['styles'] ) ) {
 	$style = 'style="' . esc_attr( implode( ';', $styles['styles'] ) ) . '"';
 }
-$output .= '<' . $atts['font_container_data']['values']['tag'] . ' ' . $style . ' >';
+$tag = tag_escape( $atts['font_container_data']['values']['tag'] );
+$output .= '<' . $tag . ' ' . $style . ' >';
 $output .= $content;
-$output .= '</' . $atts['font_container_data']['values']['tag'] . '>';
+$output .= '</' . $tag . '>';
 $output .= '</div>';
 
 return $output;

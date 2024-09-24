@@ -16,12 +16,11 @@ $height = $el_class = $el_id = $css = '';
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 
-$pattern = '/^(\d*(?:\.\d+)?)\s*(px|\%|in|cm|mm|em|rem|ex|pt|pc|vw|vh|vmin|vmax)?$/';
-// allowed metrics: https://www.w3schools.com/cssref/css_units.asp
-$regexr = preg_match( $pattern, $height, $matches );
-$value = isset( $matches[1] ) ? (float) $matches[1] : (float) WPBMap::getParam( 'vc_empty_space', 'height' );
-$unit = isset( $matches[2] ) ? $matches[2] : 'px';
-$height = $value . $unit;
+$height = wpb_format_with_css_unit( $height );
+
+if ( empty( $height ) ) {
+	$height = wpb_format_with_css_unit( WPBMap::getParam( 'vc_empty_space', 'height' ) );
+}
 
 $inline_css = ( (float) $height >= 0.0 ) ? ' style="height: ' . esc_attr( $height ) . '"' : '';
 

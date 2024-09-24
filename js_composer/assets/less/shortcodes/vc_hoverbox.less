@@ -118,20 +118,14 @@
 .vc-hoverbox-block-inner {
   flex-shrink: 0;
   padding: 20px;
-  > * {
-    backface-visibility: hidden;
-  }
 }
 
 .vc-hoverbox-front {
   transform: rotateY(0deg);
-  //background: @background-front;
-  z-index: 1; // fixed backface visibility for animations
 }
 
 .vc-hoverbox-back {
   transform: rotateY(180deg);
-  //background: @background-back;
 }
 
 .vc-hoverbox {

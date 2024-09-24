@@ -87,11 +87,11 @@ class Vc_Preset_Panel_Editor {
 						data-vc-ui-element="template-title">' . esc_html( $preset['title'] ) . '</button>';
 			$output .= '<div class="vc_ui-list-bar-item-actions">';
 
-			$output .= '<button id="' . esc_attr( $preset['parent'] ) . '" type="button" class="vc_general vc_ui-control-button" title="' . esc_attr( 'Add element', 'js_composer' ) . '" data-template-handler="" data-preset="' . esc_attr( $presetId ) . '" data-tag="' . esc_attr( $preset['parent'] ) . '" data-vc-ui-add-preset>';
+			$output .= '<button id="' . esc_attr( $preset['parent'] ) . '" type="button" class="vc_general vc_ui-control-button" title="' . esc_attr__( 'Add element', 'js_composer' ) . '" data-template-handler="" data-preset="' . esc_attr( $presetId ) . '" data-tag="' . esc_attr( $preset['parent'] ) . '" data-vc-ui-add-preset>';
 			$output .= '<i class="vc-composer-icon vc-c-icon-add"></i>';
 			$output .= '</button>';
 
-			$output .= '<button type="button" class="vc_general vc_ui-control-button" data-vc-ui-delete="preset-title" data-preset="' . esc_attr( $presetId ) . '" data-preset-parent="' . esc_attr( $preset['parent'] ) . '" title="' . esc_attr( 'Delete element', 'js_composer' ) . '">';
+			$output .= '<button type="button" class="vc_general vc_ui-control-button" data-vc-ui-delete="preset-title" data-preset="' . esc_attr( $presetId ) . '" data-preset-parent="' . esc_attr( $preset['parent'] ) . '" title="' . esc_attr__( 'Delete element', 'js_composer' ) . '">';
 			$output .= '<i class="vc-composer-icon vc-c-icon-delete_empty"></i>';
 			$output .= '</button>';
 

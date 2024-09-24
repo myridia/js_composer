@@ -28,9 +28,6 @@ abstract class WPBakeryVisualComposerAbstract {
 	 */
 	protected $shortcode_content = '';
 
-	/**
-	 *
-	 */
 	public function __construct() {
 	}
 

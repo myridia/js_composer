@@ -1,4 +1,10 @@
 <?php
+/**
+ * Configuration file for [vc_tta_accordion] shortcode of 'Accordion' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -135,6 +141,7 @@ return array(
 			'type' => 'dropdown',
 			'param_name' => 'c_align',
 			'value' => array(
+				esc_html__( 'Default', 'js_composer' ) => 'default',
 				esc_html__( 'Left', 'js_composer' ) => 'left',
 				esc_html__( 'Right', 'js_composer' ) => 'right',
 				esc_html__( 'Center', 'js_composer' ) => 'center',
@@ -169,7 +176,7 @@ return array(
 			'heading' => esc_html__( 'Allow collapse all?', 'js_composer' ),
 			'description' => esc_html__( 'Allow collapse all accordion sections.', 'js_composer' ),
 		),
-		// Control Icons
+		// Control Icons.
 		array(
 			'type' => 'dropdown',
 			'param_name' => 'c_icon',
@@ -187,6 +194,7 @@ return array(
 			'type' => 'dropdown',
 			'param_name' => 'c_position',
 			'value' => array(
+				esc_html__( 'Default', 'js_composer' ) => 'default',
 				esc_html__( 'Left', 'js_composer' ) => 'left',
 				esc_html__( 'Right', 'js_composer' ) => 'right',
 			),
@@ -197,7 +205,7 @@ return array(
 			'heading' => esc_html__( 'Position', 'js_composer' ),
 			'description' => esc_html__( 'Select accordion navigation icon position.', 'js_composer' ),
 		),
-		// Control Icons END
+		// Control Icons END.
 		array(
 			'type' => 'textfield',
 			'param_name' => 'active_section',
@@ -210,7 +218,7 @@ return array(
 			'type' => 'el_id',
 			'heading' => esc_html__( 'Element ID', 'js_composer' ),
 			'param_name' => 'el_id',
-			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 		),
 		array(
 			'type' => 'textfield',

@@ -126,12 +126,12 @@ class Vc_IconPicker {
 			foreach ( $arr as $group => $icons ) {
 				if ( ! is_array( $icons ) || ! is_array( current( $icons ) ) ) {
 					$class_key = key( $icons );
-					$output .= '<option value="' . esc_attr( $class_key ) . '" ' . ( strcmp( $class_key, $this->value ) === 0 ? 'selected' : '' ) . '>' . esc_html( current( $icons ) ) . '</option>' . "\n";
+					$output .= '<option value="' . esc_attr( $class_key ) . '" ' . ( ( null !== $this->value && 0 === strcmp( $class_key, $this->value ) ) ? 'selected' : '' ) . '>' . esc_html( current( $icons ) ) . '</option>' . "\n";
 				} else {
 					$output .= '<optgroup label="' . esc_attr( $group ) . '">' . "\n";
 					foreach ( $icons as $key => $label ) {
 						$class_key = key( $label );
-						$output .= '<option value="' . esc_attr( $class_key ) . '" ' . ( strcmp( $class_key, $this->value ) === 0 ? 'selected' : '' ) . '>' . esc_html( current( $label ) ) . '</option>' . "\n";
+						$output .= '<option value="' . esc_attr( $class_key ) . '" ' . ( ( null !== $this->value && 0 === strcmp( $class_key, $this->value ) ) ? 'selected' : '' ) . '>' . esc_html( current( $label ) ) . '</option>' . "\n";
 					}
 					$output .= '</optgroup>' . "\n";
 				}

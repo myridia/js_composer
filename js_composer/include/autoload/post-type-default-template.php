@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoload lib for default template for post type manager.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -6,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Return true value for filter 'wpb_vc_js_status_filter'.
  * It allows to start backend editor on load.
+ *
  * @return string
  * @since 4.12
- *
  */
 function vc_set_default_content_for_post_type_wpb_vc_js_status_filter() {
 	return 'true';
@@ -19,12 +25,12 @@ function vc_set_default_content_for_post_type_wpb_vc_js_status_filter() {
  *
  * Data for post type templates stored in settings.
  *
- * @param $post_content
- * @param $post
- * @return null
+ * @param string|null $post_content
+ * @param WP_Post $post
  * @throws \Exception
  * @since 4.12
  *
+ * @return string|null
  */
 function vc_set_default_content_for_post_type( $post_content, $post ) {
 	if ( ! empty( $post_content ) || ! vc_backend_editor()->isValidPostType( $post->post_type ) ) {
@@ -49,14 +55,32 @@ function vc_set_default_content_for_post_type( $post_content, $post ) {
  * @since 4.12
  */
 class Vc_Setting_Post_Type_Default_Template_Field {
+	/**
+	 * Tab name
+	 *
+	 * @var string
+	 */
 	protected $tab;
+
+	/**
+	 * Field key
+	 *
+	 * @var string
+	 */
 	protected $key;
+
+	/**
+	 * Post types
+	 *
+	 * @var bool|array
+	 */
 	protected $post_types = false;
 
 	/**
 	 * Vc_Setting_Post_Type_Default_Template_Field constructor.
-	 * @param $tab
-	 * @param $key
+	 *
+	 * @param string $tab
+	 * @param string $key
 	 */
 	public function __construct( $tab, $key ) {
 		$this->tab = $tab;
@@ -68,6 +92,8 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
+	 * Get field name
+	 *
 	 * @return string
 	 */
 	protected function getFieldName() {
@@ -75,6 +101,8 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
+	 * Get field key
+	 *
 	 * @return string
 	 */
 	protected function getFieldKey() {
@@ -84,7 +112,9 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
-	 * @param $type
+	 * Check if post type is valid
+	 *
+	 * @param string $type
 	 * @return bool
 	 */
 	protected function isValidPostType( $type ) {
@@ -92,6 +122,8 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
+	 * Get post types.
+	 *
 	 * @return array|bool
 	 */
 	protected function getPostTypes() {
@@ -105,6 +137,8 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
+	 * Get templates.
+	 *
 	 * @return array
 	 */
 	protected function getTemplates() {
@@ -112,6 +146,8 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
+	 * Get templates editor.
+	 *
 	 * @return bool|\Vc_Templates_Panel_Editor
 	 */
 	protected function getTemplatesEditor() {
@@ -134,7 +170,7 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	/**
 	 * Get template's shortcodes string
 	 *
-	 * @param $template_data
+	 * @param array $template_data
 	 * @return string|null
 	 */
 	protected function getTemplate( $template_data ) {
@@ -150,7 +186,9 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 		WPBMap::addAllMappedShortcodes();
 		if ( 'my_templates' === $template_type ) {
 			$saved_templates = get_option( $this->getTemplatesEditor()->getOptionName() );
-
+			if ( ! isset( $saved_templates[ $template_id ] ) ) {
+				return $template;
+			}
 			$content = trim( $saved_templates[ $template_id ]['template'] );
 			$content = str_replace( '\"', '"', $content );
 			$pattern = get_shortcode_regex();
@@ -173,7 +211,9 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
-	 * @param $type
+	 * Get template by post type.
+	 *
+	 * @param string $type
 	 * @return string|null
 	 */
 	public function getTemplateByPostType( $type ) {
@@ -183,7 +223,9 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 	}
 
 	/**
-	 * @param $settings
+	 * Sanitize settings.
+	 *
+	 * @param array $settings
 	 * @return mixed
 	 */
 	public function sanitize( $settings ) {
@@ -200,6 +242,9 @@ class Vc_Setting_Post_Type_Default_Template_Field {
 		return $settings;
 	}
 
+	/**
+	 * Include template for default post type.
+	 */
 	public function render() {
 		vc_include_template( 'pages/vc-settings/default-template-post-type.tpl.php', array(
 			'post_types' => $this->getPostTypes(),

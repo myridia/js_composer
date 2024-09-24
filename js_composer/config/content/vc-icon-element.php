@@ -1,13 +1,25 @@
 <?php
+/**
+ * Configuration file for [vc_icon] shortcode of 'Icon' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+/**
+ * Get shortcode attributes
+ *
+ * @return array
+ */
 function vc_icon_element_params() {
 	return array(
 		'name' => esc_html__( 'Icon', 'js_composer' ),
 		'base' => 'vc_icon',
 		'icon' => 'icon-wpb-vc_icon',
+		'element_default_class' => 'vc_do_icon',
 		'category' => esc_html__( 'Content', 'js_composer' ),
 		'description' => esc_html__( 'Eye catching icons from libraries', 'js_composer' ),
 		'params' => array(
@@ -32,12 +44,12 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'Icon', 'js_composer' ),
 				'param_name' => 'icon_fontawesome',
 				'value' => 'fas fa-adjust',
-				// default value to backend editor admin_label
+				// default value to backend editor admin_label.
 				'settings' => array(
 					'emptyIcon' => false,
-					// default true, display an "EMPTY" icon?
+					// default true, display an "EMPTY" icon.
 					'iconsPerPage' => 500,
-					// default 100, how many icons per/page to display, we use (big number) to display all icons in single page
+					// default 100, how many icons per/page to display, we use (big number) to display all icons in single page.
 				),
 				'dependency' => array(
 					'element' => 'type',
@@ -50,13 +62,13 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'Icon', 'js_composer' ),
 				'param_name' => 'icon_openiconic',
 				'value' => 'vc-oi vc-oi-dial',
-				// default value to backend editor admin_label
+				// default value to backend editor admin_label.
 				'settings' => array(
 					'emptyIcon' => false,
-					// default true, display an "EMPTY" icon?
+					// default true, display an "EMPTY" icon.
 					'type' => 'openiconic',
 					'iconsPerPage' => 4000,
-					// default 100, how many icons per/page to display
+					// default 100, how many icons per/page to display.
 				),
 				'dependency' => array(
 					'element' => 'type',
@@ -69,13 +81,13 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'Icon', 'js_composer' ),
 				'param_name' => 'icon_typicons',
 				'value' => 'typcn typcn-adjust-brightness',
-				// default value to backend editor admin_label
+				// default value to backend editor admin_label.
 				'settings' => array(
 					'emptyIcon' => false,
-					// default true, display an "EMPTY" icon?
+					// default true, display an "EMPTY" icon.
 					'type' => 'typicons',
 					'iconsPerPage' => 4000,
-					// default 100, how many icons per/page to display
+					// default 100, how many icons per/page to display.
 				),
 				'dependency' => array(
 					'element' => 'type',
@@ -88,13 +100,13 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'Icon', 'js_composer' ),
 				'param_name' => 'icon_entypo',
 				'value' => 'entypo-icon entypo-icon-note',
-				// default value to backend editor admin_label
+				// default value to backend editor admin_label.
 				'settings' => array(
 					'emptyIcon' => false,
-					// default true, display an "EMPTY" icon?
+					// default true, display an "EMPTY" icon.
 					'type' => 'entypo',
 					'iconsPerPage' => 4000,
-					// default 100, how many icons per/page to display
+					// default 100, how many icons per/page to display.
 				),
 				'dependency' => array(
 					'element' => 'type',
@@ -106,13 +118,13 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'Icon', 'js_composer' ),
 				'param_name' => 'icon_linecons',
 				'value' => 'vc_li vc_li-heart',
-				// default value to backend editor admin_label
+				// default value to backend editor admin_label.
 				'settings' => array(
 					'emptyIcon' => false,
-					// default true, display an "EMPTY" icon?
+					// default true, display an "EMPTY" icon.
 					'type' => 'linecons',
 					'iconsPerPage' => 4000,
-					// default 100, how many icons per/page to display
+					// default 100, how many icons per/page to display.
 				),
 				'dependency' => array(
 					'element' => 'type',
@@ -125,13 +137,13 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'Icon', 'js_composer' ),
 				'param_name' => 'icon_monosocial',
 				'value' => 'vc-mono vc-mono-fivehundredpx',
-				// default value to backend editor admin_label
+				// default value to backend editor admin_label.
 				'settings' => array(
 					'emptyIcon' => false,
-					// default true, display an "EMPTY" icon?
+					// default true, display an "EMPTY" icon.
 					'type' => 'monosocial',
 					'iconsPerPage' => 4000,
-					// default 100, how many icons per/page to display
+					// default 100, how many icons per/page to display.
 				),
 				'dependency' => array(
 					'element' => 'type',
@@ -144,13 +156,13 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'Icon', 'js_composer' ),
 				'param_name' => 'icon_material',
 				'value' => 'vc-material vc-material-cake',
-				// default value to backend editor admin_label
+				// default value to backend editor admin_label.
 				'settings' => array(
 					'emptyIcon' => false,
-					// default true, display an "EMPTY" icon?
+					// default true, display an "EMPTY" icon.
 					'type' => 'material',
 					'iconsPerPage' => 4000,
-					// default 100, how many icons per/page to display
+					// default 100, how many icons per/page to display.
 				),
 				'dependency' => array(
 					'element' => 'type',
@@ -244,7 +256,7 @@ function vc_icon_element_params() {
 				'type' => 'el_id',
 				'heading' => esc_html__( 'Element ID', 'js_composer' ),
 				'param_name' => 'el_id',
-				'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+				'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 			),
 			array(
 				'type' => 'textfield',
@@ -257,6 +269,9 @@ function vc_icon_element_params() {
 				'heading' => esc_html__( 'CSS box', 'js_composer' ),
 				'param_name' => 'css',
 				'group' => esc_html__( 'Design Options', 'js_composer' ),
+				'value' => array(
+					'margin-bottom' => '35px',
+				),
 			),
 		),
 		'js_view' => 'VcIconElementView_Backend',

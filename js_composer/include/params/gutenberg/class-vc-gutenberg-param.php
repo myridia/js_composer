@@ -21,8 +21,7 @@ class Vc_Gutenberg_Param {
 
 	public function initialize() {
 		global $pagenow, $wp_version;
-		if ( version_compare( $wp_version, '4.9.8', '>' ) && 'post-new.php' === $pagenow && vc_user_access()->wpAll( 'edit_posts' )
-				->get() && vc_request_param( 'post_type' ) === $this->postTypeSlug ) {
+		if ( version_compare( $wp_version, '4.9.8', '>' ) && 'post-new.php' === $pagenow && vc_user_access()->wpAll( 'edit_posts' )->get() && vc_request_param( 'post_type' ) === $this->postTypeSlug ) {
 			$this->registerGutenbergAttributeType();
 			/** @see \Vc_Gutenberg_Param::removeAdminUi */
 			add_action( 'admin_enqueue_scripts', array(

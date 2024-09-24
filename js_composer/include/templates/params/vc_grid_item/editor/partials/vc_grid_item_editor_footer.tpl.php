@@ -13,6 +13,7 @@ $templates_editor->renderUITemplate();
 
 $grid_item = new Vc_Grid_Item();
 $shortcodes = $grid_item->shortcodes();
+$modules = vc_modules_manager()->get_settings();
 
 if ( vc_user_access()->part( 'presets' )->can()->get() ) {
 	require_once vc_path_dir( 'AUTOLOAD_DIR', 'class-vc-settings-presets.php' );
@@ -32,6 +33,8 @@ $custom_tag = 'script';
 		window.vc_frontend_enabled = false;
 		window.vc_mode = '<?php echo esc_js( vc_mode() ); ?>';
 		window.vcAdminNonce = '<?php echo esc_js( vc_generate_nonce( 'vc-admin-nonce' ) ); ?>';
+		window.vc_auto_save = <?php echo wp_json_encode( get_option( 'wpb_js_auto_save' ) ) ?>;
+		window.vc_modules = <?php echo wp_json_encode( $modules ); ?>;
 	</<?php echo esc_attr( $custom_tag ); ?>>
 
 	<<?php echo esc_attr( $custom_tag ); ?> type="text/html" id="vc_settings-image-block">

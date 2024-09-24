@@ -97,7 +97,7 @@
     .vc_sep_line {
       border: none;
       position: relative;
-      height: @vc_separator-shadow-size * 2;
+      height: (@vc_separator-shadow-size * 2);
       top: 0;
       overflow: hidden;
       &::after {
@@ -105,7 +105,7 @@
         display: block;
         position: absolute;
         left: 0;
-        top: -@vc_separator-shadow-size * 2;
+        top: (-@vc_separator-shadow-size * 2);
         right: 0;
         height: @vc_separator-shadow-size;
         border-radius: 100%;
@@ -180,7 +180,7 @@
       }
       &.vc_sep_double .vc_sep_holder .vc_sep_line {
         border-bottom-width: unit(@width, px);
-        top: unit(ceil(-@width/2), px);
+        top: unit(ceil((-@width/2)), px);
       }
       &.vc_sep_shadow {
         .vc_sep_line {

@@ -1,10 +1,17 @@
 <?php
+/**
+ * Autoload hooks related to form hidden fields.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * required hooks for hidden field.
+ * Required hooks for hidden field.
+ *
  * @since 4.5
  */
 require_once vc_path_dir( 'PARAMS_DIR', 'hidden/hidden.php' );

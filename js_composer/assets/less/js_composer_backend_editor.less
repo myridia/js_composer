@@ -25,15 +25,12 @@
 @import "modules/vc_fullscreen.less";
 // Message box shown when post content is empty
 @import "modules/vc_welcome.less";
-
 // Backend switcher
 @import "modules/vc_switcher.less";
 // Edit form for shortcode
 @import "popups/panel_edit_form.less";
-
 // Template library
 @import "popups/panel_template_library";
-
 // Templates editor
 @import "modules/ui/vc_ui-panel-templates.less";
 //Presets
@@ -43,6 +40,7 @@
 #vc_settings-title-container {
   display: none;
 }
+@import "modules/vc_info_tooltip.less";
 
 // Backend controls
 @import "lib/controls.less";
@@ -241,7 +239,7 @@
   }
 }
 
-#wpb_csseditor {
+.custom_code {
   border: 1px solid #BABABA;
 }
 

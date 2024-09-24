@@ -22,7 +22,7 @@ if ( ! defined( 'WPB_VC_VERSION' ) ) {
  * @since 4.2
  * vc_filter: vc_wpb_getimagesize - to override output of this function
  */
-function wpb_getImageBySize( $params = array() ) {
+function wpb_getImageBySize( $params = array() ) { // phpcs:ignore
 	$params = array_merge( array(
 		'post_id' => null,
 		'attach_id' => null,
@@ -61,6 +61,7 @@ function wpb_getImageBySize( $params = array() ) {
 		$attributes = array(
 			'class' => $thumb_class . 'attachment-' . $thumb_size,
 			'title' => $title,
+			'alt'   => trim( esc_attr( do_shortcode( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ) ) ) ),
 		);
 
 		$thumbnail = wp_get_attachment_image( $attach_id, $thumb_size, false, $attributes );
@@ -84,7 +85,7 @@ function wpb_getImageBySize( $params = array() ) {
 		if ( is_array( $thumb_size ) ) {
 			// Resize image to custom size
 			$p_img = wpb_resize( $attach_id, null, $thumb_size[0], $thumb_size[1], true );
-			$alt = trim( wp_strip_all_tags( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ) ) );
+			$alt = trim( esc_attr( do_shortcode( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ) ) ) );
 			$attachment = get_post( $attach_id );
 			if ( ! empty( $attachment ) ) {
 				$title = trim( wp_strip_all_tags( $attachment->post_title ) );
@@ -96,15 +97,16 @@ function wpb_getImageBySize( $params = array() ) {
 					$alt = $title;
 				}
 				if ( $p_img ) {
-
-					$attributes = vc_stringify_attributes( array(
+					$attributes = array(
 						'class' => $thumb_class,
 						'src' => $p_img['url'],
 						'width' => $p_img['width'],
 						'height' => $p_img['height'],
 						'alt' => $alt,
 						'title' => $title,
-					) );
+					);
+
+					$attributes = vc_stringify_attributes( vc_add_lazy_loading_attribute( $attributes ) );
 
 					$thumbnail = '<img ' . $attributes . ' />';
 				}
@@ -118,6 +120,76 @@ function wpb_getImageBySize( $params = array() ) {
 		'thumbnail' => $thumbnail,
 		'p_img_large' => $p_img_large,
 	), $attach_id, $params );
+}
+
+/**
+ * Get image data by source where image obtained from.
+ *
+ * @since 7.4
+ * @param string $source
+ * @param int $post_id
+ * @param int $image_id
+ * @param string $img_size
+ * @return array
+ */
+function wpb_get_image_data_by_source( $source, $post_id, $image_id, $img_size ) {
+	$image_src = '';
+	switch ( $source ) {
+		case 'media_library':
+		case 'featured_image':
+			if ( 'featured_image' === $source ) {
+				if ( $post_id && has_post_thumbnail( $post_id ) ) {
+					$img_id = get_post_thumbnail_id( $post_id );
+				} else {
+					$img_id = 0;
+				}
+			} else {
+				$img_id = preg_replace( '/[^\d]/', '', $image_id );
+			}
+
+			if ( ! $img_size ) {
+				$img_size = 'thumbnail';
+			}
+
+			if ( $img_id ) {
+				$image_src = wp_get_attachment_image_src( $img_id, $img_size );
+				if ( $image_src ) {
+					$image_src = $image_src[0];
+				}
+			}
+			$alt_text = get_post_meta( $img_id, '_wp_attachment_image_alt', true );
+
+			break;
+
+		case 'external_link':
+			if ( ! empty( $params['custom_src'] ) ) {
+				$image_src = $params['custom_src'];
+			}
+			$alt_text = '';
+			break;
+	}
+
+	return [
+		'image_src' => $image_src,
+		'image_alt' => $alt_text,
+	];
+}
+
+/**
+ * Add `loading` attribute with param lazy to attribute list.
+ *
+ * @param array $attributes
+ * @return array
+ * @since 7.1
+ */
+function vc_add_lazy_loading_attribute( $attributes ) {
+	if ( ! is_array( $attributes ) ) {
+		$attributes = [];
+	}
+
+	$attributes['loading'] = 'lazy';
+
+	return $attributes;
 }
 
 /**
@@ -172,7 +244,7 @@ function vc_get_image_by_size( $id, $size ) {
  * @return string
  * @since 4.2
  */
-function wpb_translateColumnWidthToFractional( $width ) {
+function wpb_translateColumnWidthToFractional( $width ) { // phpcs:ignore
 	switch ( $width ) {
 		case 'vc_col-sm-2':
 			$w = '1/6';
@@ -209,7 +281,7 @@ function wpb_translateColumnWidthToFractional( $width ) {
  * @return bool|string
  * @since 4.2
  */
-function wpb_translateColumnWidthToSpan( $width ) {
+function wpb_translateColumnWidthToSpan( $width ) { // phpcs:ignore
 	$output = $width;
 	preg_match( '/(\d+)\/(\d+)/', $width, $matches );
 
@@ -281,7 +353,7 @@ if ( ! function_exists( 'vc_siteAttachedImages' ) ) {
 	 * @return string
 	 * @since 4.11
 	 */
-	function vc_siteAttachedImages( $att_ids = array() ) {
+	function vc_siteAttachedImages( $att_ids = array() ) { // phpcs:ignore
 		$output = '';
 
 		$limit = (int) apply_filters( 'vc_site_attached_images_query_limit', - 1 );
@@ -341,7 +413,8 @@ function vc_field_attached_images( $images = array() ) {
  * @return array
  * @since 4.2
  */
-function wpb_removeNotExistingImgIDs( $param_value ) {
+function wpb_removeNotExistingImgIDs( $param_value ) { // phpcs:ignore
+	$param_value = is_null( $param_value ) ? '' : $param_value;
 	$tmp = explode( ',', $param_value );
 	$return_ar = array();
 	foreach ( $tmp as $id ) {
@@ -729,7 +802,7 @@ function wpb_vc_get_column_width_indent( $width ) {
  * @return string
  * @since 4.2
  */
-function vc_colorCreator( $colour, $per = 10 ) {
+function vc_colorCreator( $colour, $per = 10 ) { // phpcs:ignore
 	require_once 'class-vc-color-helper.php';
 	$color = $colour;
 	if ( stripos( $colour, 'rgba(' ) !== false ) {
@@ -844,9 +917,9 @@ function vc_hex2rgb( $color ) {
  * @return array
  * @since 4.2
  */
-function vc_parse_multi_attribute( $value, $default = array() ) {
+function vc_parse_multi_attribute( $value, $default = [] ) {
 	$result = $default;
-	$params_pairs = explode( '|', $value );
+	$params_pairs = is_string( $value ) ? explode( '|', $value ) : [];
 	if ( ! empty( $params_pairs ) ) {
 		foreach ( $params_pairs as $pair ) {
 			$param = preg_split( '/\:/', $pair );
@@ -1180,18 +1253,6 @@ function vc_extract_youtube_id( $url ) {
 /**
  * @return string[]|\WP_Taxonomy[]
  */
-/**
- * @return string[]|\WP_Taxonomy[]
- */
-/**
- * @return string[]|\WP_Taxonomy[]
- */
-/**
- * @return string[]|\WP_Taxonomy[]
- */
-/**
- * @return string[]|\WP_Taxonomy[]
- */
 function vc_taxonomies_types( $post_type = null ) {
 	global $vc_taxonomies_types;
 	if ( is_null( $vc_taxonomies_types ) || $post_type ) {
@@ -1287,18 +1348,6 @@ function vc_stringify_attributes( $attributes ) {
 	return implode( ' ', $atts );
 }
 
-/**
- * @return bool
- */
-/**
- * @return bool
- */
-/**
- * @return bool
- */
-/**
- * @return bool
- */
 /**
  * @return bool
  */
@@ -1425,10 +1474,7 @@ function wpb_remove_custom_html( $content ) {
 	$is_rest_request = ( defined( 'REST_REQUEST' ) && REST_REQUEST );
 	if ( ! empty( $content ) && ! $is_rest_request && ! vc_user_access()->part( 'unfiltered_html' )->checkStateAny( true, null )->get() ) {
 		// html encoded shortcodes
-		$regex = vc_get_shortcode_regex( implode( '|', apply_filters( 'wpb_custom_html_elements', array(
-			'vc_raw_html',
-			'vc_raw_js',
-		) ) ) );
+		$regex = vc_get_shortcode_regex( implode( '|', wpb_get_elements_with_custom_html() ) );
 
 		// custom on click
 		$button_regex = vc_get_shortcode_regex( 'vc_btn' );
@@ -1446,4 +1492,111 @@ function wpb_remove_custom_onclick( $match ) {
 	}
 
 	return $match[0];
+}
+
+/**
+ * We use it only to check is current environment is wordpress.com
+ * @since 6.2
+ *
+ * @return bool
+ */
+function wpb_check_wordpress_com_env() {
+	return defined( 'IS_ATOMIC' ) &&
+		IS_ATOMIC &&
+		defined( 'ATOMIC_CLIENT_ID' ) &&
+		'2' === ATOMIC_CLIENT_ID;
+}
+
+if ( ! function_exists( 'wpb_get_post_id' ) ) {
+	/**
+	 * Get current post id for plugin custom output like css and js.
+	 *
+	 * @since  7.7
+	 * @return false|int
+	 */
+	function wpb_get_post_id_for_custom_output() {
+		$id = false;
+		if ( is_front_page() || is_home() ) {
+			$id = get_queried_object_id();
+		} elseif ( is_singular() ) {
+			$id = get_the_ID();
+		}
+
+		return $id;
+	}
+}
+
+if ( ! function_exists( 'wpb_get_elements_with_custom_html' ) ) {
+	/**
+	 * Get elements list that use custom html in our plugin core.
+	 * @note it's elements lists that can edit only users roles that have unfiltered_html capability.
+	 * @note admin can set access to unfiltered_html cap in our role manager plugin settings for individual roles.
+	 *
+	 * @return array
+	 * @since 7.8
+	 */
+	function wpb_get_elements_with_custom_html() {
+		return apply_filters('wpb_custom_html_elements', [
+			'vc_raw_html',
+			'vc_raw_js',
+			'vc_gmaps',
+		]);
+	}
+}
+
+if ( ! function_exists( 'wpb_is_regex_valid' ) ) {
+	/**
+	 * Check if regex string is valid.
+	 *
+	 * @since  7.8
+	 * @return bool
+	 */
+	function wpb_is_regex_valid( $regex ) {
+        // @phpcs:ignore
+        return false !== @preg_match( $regex, '' );
+	}
+}
+
+if ( ! function_exists( 'wpb_get_editor_status' ) ) {
+	/**
+	 * Get post plugin editor status for post.
+	 *
+	 * @param int $post_id
+	 *
+	 * @since  7.8
+	 * @return bool
+	 */
+	function wpb_get_post_editor_status( $post_id ) {
+		if ( ! is_int( $post_id ) ) {
+			return false;
+		}
+
+		$status = get_post_meta( $post_id, '_wpb_vc_js_status', true );
+
+		if ( 'true' === $status ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
+/**
+ * Formats a CSS value by ensuring it has a valid unit.
+ * If no unit is provided, defaults to 'px'.
+ *
+ * @param string $value The CSS value to format, e.g., '20', '15em'.
+ * @return string The formatted value with a unit, e.g., '20px', '15em'.
+ * @since 7.9
+ */
+function wpb_format_with_css_unit( $value ) {
+	if ( $value ) {
+		$value = preg_replace( '/\s+/', '', $value );
+		$pattern = '/^(\d*(?:\.\d+)?)\s*(px|\%|in|cm|mm|em|rem|ex|pt|pc|vw|vh|vmin|vmax)?$/';
+		preg_match( $pattern, $value, $matches );
+		$numeric_value = isset( $matches[1] ) ? (float) $matches[1] : (float) $value;
+		$unit = isset( $matches[2] ) ? $matches[2] : 'px';
+		return $numeric_value . $unit;
+	}
+	return '';
 }
