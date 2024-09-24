@@ -94,7 +94,8 @@ class Vc_Vendor_NinjaForms {
 	 * @return bool
 	 */
 	private function is_ninja_forms_three() {
-		return ( version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '<' ) || get_option( 'ninja_forms_load_deprecated', false ) );
+		return version_compare( get_option( 'ninja_forms_version', '0.0.0' ), '3.0', '<' ) ||
+			( get_option( 'ninja_forms_load_deprecated', false ) && function_exists( 'ninja_forms_get_all_forms' ) );
 	}
 
 	/**
@@ -113,6 +114,7 @@ class Vc_Vendor_NinjaForms {
 			'(nf-form-errors-)(\d+)()',
 			'(form.id\s*=\s*\')(\d+)(\')',
 		);
+        // phpcs:ignore
 		$time = time() . self::$ninjaCount . rand( 100, 999 );
 		foreach ( $patterns as $pattern ) {
 			$output = preg_replace( '/' . $pattern . '/', '${1}' . $time . '${3}', $output );

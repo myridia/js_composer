@@ -1,22 +1,61 @@
 <?php
+/**
+ * Configuration class for grid attributes.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-require_once dirname( __FILE__ ) . '/vc-grids-functions.php';
+require_once __DIR__ . '/vc-grids-functions.php';
 if ( ! class_exists( 'VcGridsCommon' ) ) {
 	/**
-	 * Class VcGridsCommon
+	 * Class VcGridsCommon.
 	 */
 	abstract class VcGridsCommon {
 
+		/**
+		 * Basic grid attributes.
+		 *
+		 * @var array
+		 */
 		protected static $basicGrid;
+		/**
+		 * Masonry grid attributes.
+		 *
+		 * @var array
+		 */
 		protected static $masonryGrid;
+		/**
+		 * Masonry media grid attributes.
+		 *
+		 * @var array
+		 */
 		protected static $masonryMediaGrid;
+		/**
+		 * Media grid attributes.
+		 *
+		 * @var array
+		 */
 		protected static $mediaGrid;
+		/**
+		 * Buttons params.
+		 *
+		 * @var array
+		 */
 		protected static $btn3Params;
+		/**
+		 * Grid columns list.
+		 *
+		 * @var array
+		 */
 		protected static $gridColsList;
 
+		/**
+		 * Set initial data.
+		 */
 		protected static function initData() {
 			self::$btn3Params = vc_map_integrate_shortcode( 'vc_btn', 'btn_', esc_html__( 'Load More Button', 'js_composer' ), array(
 				'exclude' => array(
@@ -40,7 +79,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 				}
 			}
 
-			// Grid column list
+			// Grid column list.
 			self::$gridColsList = array(
 				array(
 					'label' => '6',
@@ -66,7 +105,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 		}
 
 		/**
-		 * Basic Grid Common Settings
+		 * Basic Grid Common Settings.
 		 */
 		public static function getBasicAtts() {
 
@@ -78,41 +117,41 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 				self::initData();
 			}
 
-			$postTypes = get_post_types( array() );
-			$postTypesList = array();
-			$excludedPostTypes = array(
+			$post_types = get_post_types();
+			$post_types_list = array();
+			$excluded_post_types = array(
 				'revision',
 				'nav_menu_item',
 				'vc_grid_item',
 			);
-			if ( is_array( $postTypes ) && ! empty( $postTypes ) ) {
-				foreach ( $postTypes as $postType ) {
-					if ( ! in_array( $postType, $excludedPostTypes, true ) ) {
-						$label = ucfirst( $postType );
-						$postTypesList[] = array(
-							$postType,
+			if ( is_array( $post_types ) && ! empty( $post_types ) ) {
+				foreach ( $post_types as $post_type ) {
+					if ( ! in_array( $post_type, $excluded_post_types, true ) ) {
+						$label = ucfirst( $post_type );
+						$post_types_list[] = array(
+							$post_type,
 							$label,
 						);
 					}
 				}
 			}
-			$postTypesList[] = array(
+			$post_types_list[] = array(
 				'custom',
 				esc_html__( 'Custom query', 'js_composer' ),
 			);
-			$postTypesList[] = array(
+			$post_types_list[] = array(
 				'ids',
 				esc_html__( 'List of IDs', 'js_composer' ),
 			);
 
-			$taxonomiesForFilter = array();
+			$taxonomies_for_filter = array();
 
 			if ( 'vc_edit_form' === vc_post_param( 'action' ) ) {
-				$vcTaxonomiesTypes = vc_taxonomies_types();
-				if ( is_array( $vcTaxonomiesTypes ) && ! empty( $vcTaxonomiesTypes ) ) {
-					foreach ( $vcTaxonomiesTypes as $t => $data ) {
+				$vc_taxonomies_types = vc_taxonomies_types();
+				if ( is_array( $vc_taxonomies_types ) && ! empty( $vc_taxonomies_types ) ) {
+					foreach ( $vc_taxonomies_types as $t => $data ) {
 						if ( 'post_format' !== $t && is_object( $data ) ) {
-							$taxonomiesForFilter[ $data->labels->name . '(' . $t . ')' ] = $t;
+							$taxonomies_for_filter[ $data->labels->name . '(' . $t . ')' ] = $t;
 						}
 					}
 				}
@@ -123,7 +162,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Data source', 'js_composer' ),
 					'param_name' => 'post_type',
-					'value' => $postTypesList,
+					'value' => $post_types_list,
 					'save_always' => true,
 					'description' => esc_html__( 'Select content type for your grid.', 'js_composer' ),
 					'admin_label' => true,
@@ -143,12 +182,12 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						'value' => array( 'ids' ),
 					),
 				),
-				// Custom query tab
+				// Custom query tab.
 				array(
 					'type' => 'textarea_safe',
 					'heading' => esc_html__( 'Custom query', 'js_composer' ),
 					'param_name' => 'custom_query',
-					'description' => sprintf( esc_html__( 'Build custom query according to %sWordPress Codex%s.', 'js_composer' ), '<a href="https://codex.wordpress.org/Function_Reference/query_posts">', '</a>' ),
+					'description' => sprintf( esc_html__( 'Build custom query according to %1$sWordPress Codex%2$s.', 'js_composer' ), '<a href="https://codex.wordpress.org/Function_Reference/query_posts">', '</a>' ),
 
 					'dependency' => array(
 						'element' => 'post_type',
@@ -163,15 +202,15 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						'multiple' => true,
 						'min_length' => 1,
 						'groups' => true,
-						// In UI show results grouped by groups, default false
+						// In UI show results grouped by groups, default false.
 						'unique_values' => true,
-						// In UI show results except selected. NB! You should manually check values in backend, default false
+						// In UI show results except selected. NB! You should manually check values in backend, default false.
 						'display_inline' => true,
-						// In UI show results inline view, default false (each value in own line)
+						// In UI show results inline view, default false (each value in own line).
 						'delay' => 500,
-						// delay for search. default 500
+						// delay for search. default 500.
 						'auto_focus' => true,
-						// auto focus input, default true
+						// auto focus input, default true.
 					),
 					'param_holder_class' => 'vc_not-for-custom',
 					'description' => esc_html__( 'Enter categories, tags or custom taxonomies.', 'js_composer' ),
@@ -189,7 +228,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'heading' => esc_html__( 'Total items', 'js_composer' ),
 					'param_name' => 'max_items',
 					'value' => 10,
-					// default value
+					// default value.
 					'param_holder_class' => 'vc_not-for-custom',
 					'description' => esc_html__( 'Set max limit for items in grid or enter -1 to display all (limited to 1000).', 'js_composer' ),
 					'dependency' => array(
@@ -271,7 +310,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'description' => esc_html__( 'Select gap between grid elements.', 'js_composer' ),
 					'edit_field_class' => 'vc_col-sm-6',
 				),
-				// Data settings
+				// Data settings.
 				array(
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Order by', 'js_composer' ),
@@ -368,12 +407,12 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						'callback' => 'vc_grid_exclude_dependency_callback',
 					),
 				),
-				// Filter tab
+				// Filter tab.
 				array(
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Filter by', 'js_composer' ),
 					'param_name' => 'filter_source',
-					'value' => $taxonomiesForFilter,
+					'value' => $taxonomies_for_filter,
 					'group' => esc_html__( 'Filter', 'js_composer' ),
 					'dependency' => array(
 						'element' => 'show_filter',
@@ -388,19 +427,19 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'param_name' => 'exclude_filter',
 					'settings' => array(
 						'multiple' => true,
-						// is multiple values allowed? default false
+						// is multiple values allowed? default false.
 						'min_length' => 1,
-						// min length to start search -> default 2
+						// min length to start search -> default 2.
 						'groups' => true,
-						// In UI show results grouped by groups, default false
+						// In UI show results grouped by groups, default false.
 						'unique_values' => true,
-						// In UI show results except selected. NB! You should manually check values in backend, default false
+						// In UI show results except selected. NB! You should manually check values in backend, default false.
 						'display_inline' => true,
-						// In UI show results inline view, default false (each value in own line)
+						// In UI show results inline view, default false (each value in own line).
 						'delay' => 500,
-						// delay for search. default 500
+						// delay for search. default 500.
 						'auto_focus' => true,
-						// auto focus input, default true
+						// auto focus input, default true.
 					),
 					'description' => esc_html__( 'Enter categories, tags won\'t be shown in the filters list', 'js_composer' ),
 					'dependency' => array(
@@ -486,8 +525,8 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					),
 					'group' => esc_html__( 'Filter', 'js_composer' ),
 				),
-				// moved to the end
-				// Paging controls
+				// moved to the end.
+				// Paging controls.
 				array(
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Arrows design', 'js_composer' ),
@@ -527,7 +566,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'dependency' => array(
 						'element' => 'arrows_design',
 						'value_not_equal_to' => array( 'none' ),
-						// New dependency
+						// New dependency.
 					),
 					'description' => esc_html__( 'Arrows will be displayed inside or outside grid.', 'js_composer' ),
 				),
@@ -541,7 +580,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'dependency' => array(
 						'element' => 'arrows_design',
 						'value_not_equal_to' => array( 'none' ),
-						// New dependency
+						// New dependency.
 					),
 					'description' => esc_html__( 'Select color for arrows.', 'js_composer' ),
 				),
@@ -590,7 +629,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'dependency' => array(
 						'element' => 'paging_design',
 						'value_not_equal_to' => array( 'none' ),
-						// New dependency
+						// New dependency.
 					),
 					'description' => esc_html__( 'Select pagination color.', 'js_composer' ),
 				),
@@ -653,7 +692,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'type' => 'vc_grid_item',
 					'heading' => esc_html__( 'Grid element template', 'js_composer' ),
 					'param_name' => 'item',
-					'description' => sprintf( esc_html__( '%sCreate new%s template or %smodify selected%s. Predefined templates will be cloned.', 'js_composer' ), '<a href="' . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
+					'description' => sprintf( esc_html__( '%1$sCreate new%2$s template or %3$smodify selected%4$s. Predefined templates will be cloned.', 'js_composer' ), '<a href="' . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
 					'group' => esc_html__( 'Item Design', 'js_composer' ),
 					'value' => 'none',
 				),
@@ -678,7 +717,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'type' => 'el_id',
 					'heading' => esc_html__( 'Element ID', 'js_composer' ),
 					'param_name' => 'el_id',
-					'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+					'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 				),
 				array(
 					'type' => 'textfield',
@@ -691,9 +730,12 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'heading' => esc_html__( 'CSS box', 'js_composer' ),
 					'param_name' => 'css',
 					'group' => esc_html__( 'Design Options', 'js_composer' ),
+					'value' => array(
+						'margin-bottom' => '35px',
+					),
 				),
 
-				// Load more btn
+				// Load more btn.
 				array(
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button style', 'js_composer' ),
@@ -900,7 +942,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'dependency' => array(
 						'element' => 'arrows_design',
 						'value_not_equal_to' => array( 'none' ),
-						// New dependency
+						// New dependency.
 					),
 					'description' => esc_html__( 'Arrows will be displayed inside or outside grid.', 'js_composer' ),
 				),
@@ -914,7 +956,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'dependency' => array(
 						'element' => 'arrows_design',
 						'value_not_equal_to' => array( 'none' ),
-						// New dependency
+						// New dependency.
 					),
 					'description' => esc_html__( 'Select color for arrows.', 'js_composer' ),
 				),
@@ -963,7 +1005,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'dependency' => array(
 						'element' => 'paging_design',
 						'value_not_equal_to' => array( 'none' ),
-						// New dependency
+						// New dependency.
 					),
 					'description' => esc_html__( 'Select pagination color.', 'js_composer' ),
 				),
@@ -1026,7 +1068,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'type' => 'vc_grid_item',
 					'heading' => esc_html__( 'Grid element template', 'js_composer' ),
 					'param_name' => 'item',
-					'description' => sprintf( esc_html__( '%sCreate new%s template or %smodify selected%s. Predefined templates will be cloned.', 'js_composer' ), '<a href="' . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
+					'description' => sprintf( esc_html__( '%1$sCreate new%2$s template or %3$smodify selected%4$s. Predefined templates will be cloned.', 'js_composer' ), '<a href="' . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
 					'group' => esc_html__( 'Item Design', 'js_composer' ),
 					'value' => 'mediaGrid_Default',
 				),
@@ -1038,7 +1080,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'type' => 'el_id',
 					'heading' => esc_html__( 'Element ID', 'js_composer' ),
 					'param_name' => 'el_id',
-					'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+					'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 				),
 				array(
 					'type' => 'textfield',
@@ -1051,9 +1093,12 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'heading' => esc_html__( 'CSS box', 'js_composer' ),
 					'param_name' => 'css',
 					'group' => esc_html__( 'Design Options', 'js_composer' ),
+					'value' => array(
+						'margin-bottom' => '35px',
+					),
 				),
 			), self::$btn3Params, array(
-				// Load more btn bc
+				// Load more btn bc.
 				array(
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button style', 'js_composer' ),
@@ -1112,20 +1157,25 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 			return self::$mediaGrid;
 		}
 
+		/**
+		 * Get Masonry Grid Common Attributes
+		 *
+		 * @return array
+		 */
 		public static function getMasonryCommonAtts() {
 
 			if ( self::$masonryGrid ) {
 				return self::$masonryGrid;
 			}
 
-			$gridParams = self::getBasicAtts();
+			$grid_params = self::getBasicAtts();
 
-			self::$masonryGrid = $gridParams;
+			self::$masonryGrid = $grid_params;
 			$style = self::arraySearch( self::$masonryGrid, 'param_name', 'style' );
 			unset( self::$masonryGrid[ $style ]['value'][ esc_html__( 'Pagination', 'js_composer' ) ] );
 
 			$animation = self::arraySearch( self::$masonryGrid, 'param_name', 'initial_loading_animation' );
-			$masonryAnimation = array(
+			$masonry_animation = array(
 				'type' => 'dropdown',
 				'heading' => esc_html__( 'Initial loading animation', 'js_composer' ),
 				'param_name' => 'initial_loading_animation',
@@ -1137,7 +1187,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 				'std' => 'zoomIn',
 				'description' => esc_html__( 'Select initial loading animation for grid element.', 'js_composer' ),
 			);
-			self::$masonryGrid[ $animation ] = $masonryAnimation;
+			self::$masonryGrid[ $animation ] = $masonry_animation;
 
 			$key = self::arraySearch( self::$masonryGrid, 'group', esc_html__( 'Pagination', 'js_composer' ) );
 			while ( $key ) {
@@ -1145,37 +1195,42 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 				$key = self::arraySearch( self::$masonryGrid, 'group', esc_html__( 'Pagination', 'js_composer' ) );
 			}
 
-			$vcGridItem = self::arraySearch( self::$masonryGrid, 'param_name', 'item' );
-			self::$masonryGrid[ $vcGridItem ]['value'] = 'masonryGrid_Default';
+			$vc_grid_item = self::arraySearch( self::$masonryGrid, 'param_name', 'item' );
+			self::$masonryGrid[ $vc_grid_item ]['value'] = 'masonryGrid_Default';
 
 			self::$masonryGrid = array_merge( self::$masonryGrid );
 
 			return array_merge( self::$masonryGrid );
 		}
 
+		/**
+		 * Get Masonry Media Grid Common Attributes
+		 *
+		 * @return array
+		 */
 		public static function getMasonryMediaCommonAtts() {
 			if ( self::$masonryMediaGrid ) {
 				return self::$masonryMediaGrid;
 			}
 
-			$mediaGridParams = self::getMediaCommonAtts();
+			$media_grid_params = self::getMediaCommonAtts();
 
-			self::$masonryMediaGrid = $mediaGridParams;
+			self::$masonryMediaGrid = $media_grid_params;
 			$key = self::arraySearch( self::$masonryMediaGrid, 'group', esc_html__( 'Pagination', 'js_composer' ) );
 			while ( $key ) {
 				unset( self::$masonryMediaGrid[ $key ] );
 				$key = self::arraySearch( self::$masonryMediaGrid, 'group', esc_html__( 'Pagination', 'js_composer' ) );
 			}
 
-			$vcGridItem = self::arraySearch( self::$masonryMediaGrid, 'param_name', 'item' );
-			self::$masonryMediaGrid[ $vcGridItem ]['value'] = 'masonryMedia_Default';
+			$vc_grid_item = self::arraySearch( self::$masonryMediaGrid, 'param_name', 'item' );
+			self::$masonryMediaGrid[ $vc_grid_item ]['value'] = 'masonryMedia_Default';
 
 			$style = self::arraySearch( self::$masonryMediaGrid, 'param_name', 'style' );
 
 			unset( self::$masonryMediaGrid[ $style ]['value'][ esc_html__( 'Pagination', 'js_composer' ) ] );
 
 			$animation = self::arraySearch( self::$masonryMediaGrid, 'param_name', 'initial_loading_animation' );
-			$masonryAnimation = array(
+			$masonry_animation = array(
 				'type' => 'dropdown',
 				'heading' => esc_html__( 'Initial loading animation', 'js_composer' ),
 				'param_name' => 'initial_loading_animation',
@@ -1193,7 +1248,7 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 				),
 				'description' => esc_html__( 'Select initial loading animation for grid element.', 'js_composer' ),
 			);
-			self::$masonryMediaGrid[ $animation ] = $masonryAnimation;
+			self::$masonryMediaGrid[ $animation ] = $masonry_animation;
 
 			self::$masonryMediaGrid = array_merge( self::$masonryMediaGrid );
 
@@ -1201,14 +1256,18 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 		}
 
 		/**
-		 * Function to search array
+		 * Function to search array.
+		 *
+		 * @param array $initial
+		 * @param string $column
+		 * @param string $value
 		 */
-		public static function arraySearch( $array, $column, $value ) {
-			if ( ! is_array( $array ) ) {
+		public static function arraySearch( $initial, $column, $value ) {
+			if ( ! is_array( $initial ) ) {
 				return false;
 			}
-			foreach ( $array as $key => $innerArray ) {
-				$exists = isset( $innerArray[ $column ] ) && $innerArray[ $column ] === $value;
+			foreach ( $initial as $key => $inner_array ) {
+				$exists = isset( $inner_array[ $column ] ) && $inner_array[ $column ] === $value;
 				if ( $exists ) {
 					return $key;
 				}

@@ -47,6 +47,13 @@ class WPBakeryShortCode_Vc_Acf extends WPBakeryShortCode {
 
 			$value = do_shortcode( '[acf field="' . $field_key . '" post_id="' . get_the_ID() . '"]' );
 
+			if ( function_exists( 'acf_version_compare' ) && function_exists( 'acf_get_db_version' ) ) {
+				$db_version = acf_get_db_version();
+				if ( acf_version_compare( $db_version, '>=', '6.3.0' ) ) {
+					$value = get_field( $field_key, get_the_ID() );
+				}
+			}
+
 			if ( $atts['show_label'] ) {
 				if ( empty( $value ) && ! $show_empty_acf ) {
 					$value = '';

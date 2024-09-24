@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoload hooks related shortcode autoloader plugin functionality.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,11 +14,30 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class VcShortcodeAutoloader {
 
+	/**
+	 * Instance of VcShortcodeAutoloader
+	 *
+	 * @var VcShortcodeAutoloader
+	 */
 	private static $instance = null;
+
+	/**
+	 * Configuration
+	 *
+	 * @var array
+	 */
 	private static $config = null;
+
+	/**
+	 * Cached
+	 *
+	 * @var null|bool
+	 */
 	private static $cached = null;
 
 	/**
+	 * Get instance of VcShortcodeAutoloader
+	 *
 	 * @param bool $load_config
 	 * @return \VcShortcodeAutoloader|null
 	 */
@@ -26,6 +51,7 @@ class VcShortcodeAutoloader {
 
 	/**
 	 * VcShortcodeAutoloader constructor.
+	 *
 	 * @param bool $load_config
 	 */
 	private function __construct( $load_config = true ) {
@@ -39,27 +65,28 @@ class VcShortcodeAutoloader {
 	/**
 	 * Include class dependencies
 	 *
-	 * @param string $class Class name
+	 * @param string $class_name Class name.
 	 *
 	 * @return string[] Included (if any) files
 	 */
-	public static function includeClass( $class ) {
-		// call the constructor (php 7.4 compat)
+	public static function includeClass( $class_name ) {
+		// call the constructor (php 7.4 compat).
 		self::getInstance();
 		if ( ! is_array( self::$config ) ) {
 			self::loadConfig();
 		}
-		$class = strtolower( $class );
+		$class_name = strtolower( $class_name );
 		$files = array();
 
 		if ( self::$config['classmap'] ) {
-			$files = isset( self::$config['classmap'][ $class ] ) ? self::$config['classmap'][ $class ] : array();
+			$files = isset( self::$config['classmap'][ $class_name ] ) ? self::$config['classmap'][ $class_name ] : array();
 		}
 
 		if ( $files ) {
 			foreach ( $files as $k => $file ) {
 				if ( self::$cached ) {
-					$files[ $k ] = $file = self::$config['root_dir'] . DIRECTORY_SEPARATOR . $file;
+					$file = self::$config['root_dir'] . DIRECTORY_SEPARATOR . $file;
+					$files[ $k ] = $file;
 				}
 
 				if ( is_file( $file ) ) {
@@ -74,7 +101,7 @@ class VcShortcodeAutoloader {
 	/**
 	 * Find all classes defined in file
 	 *
-	 * @param string $file Full path to file
+	 * @param string $file Full path to file.
 	 *
 	 * @return string[]
 	 */
@@ -106,7 +133,7 @@ class VcShortcodeAutoloader {
 	/**
 	 * Extract all classes from file with their extends
 	 *
-	 * @param $file
+	 * @param string $file
 	 *
 	 * @return array Associative array where key is class name and value is parent class name (if any))
 	 */
@@ -119,13 +146,13 @@ class VcShortcodeAutoloader {
 			return $classes;
 		}
 
-		// class Foo extends Bar {
+		// class Foo extends Bar {.
 		preg_match_all( '/class\s+(\w+)\s+extends\s(\w+)\s+\{/i', $contents, $matches, PREG_SET_ORDER );
 		foreach ( $matches as $v ) {
 			$classes[ $v[1] ] = $v[2];
 		}
 
-		// class Foo {
+		// class Foo {.
 		preg_match_all( '/class\s+(\w+)\s+\{/i', $contents, $matches, PREG_SET_ORDER );
 		foreach ( $matches as $v ) {
 			$classes[ $v[1] ] = null;
@@ -139,22 +166,22 @@ class VcShortcodeAutoloader {
 	 *
 	 * Search is case-insensitive
 	 *
-	 * @param string $class
-	 * @param string[]|string $dirs One or more directories where to look (recursive)
+	 * @param string $class_name
+	 * @param string[]|string $dirs One or more directories where to look (recursive).
 	 *
 	 * @return string|false Full path to class file
 	 */
-	public static function findClassFile( $class, $dirs ) {
+	public static function findClassFile( $class_name, $dirs ) {
 		foreach ( (array) $dirs as $dir ) {
 			$Directory = new RecursiveDirectoryIterator( $dir );
 			$Iterator = new RecursiveIteratorIterator( $Directory );
 			$Regex = new RegexIterator( $Iterator, '/^.+\.php$/i', RecursiveRegexIterator::GET_MATCH );
-			$class = strtolower( $class );
+			$class_name = strtolower( $class_name );
 
 			foreach ( $Regex as $file => $object ) {
 				$classes = self::extractClassNames( $file );
 
-				if ( $classes && in_array( $class, array_map( 'strtolower', $classes ), true ) ) {
+				if ( $classes && in_array( $class_name, array_map( 'strtolower', $classes ), true ) ) {
 					return $file;
 				}
 			}
@@ -166,7 +193,7 @@ class VcShortcodeAutoloader {
 	/**
 	 * Construct full dependency list of classes for each class in right order (including class itself)
 	 *
-	 * @param string[]|string $dirs Directories where to look (recursive)
+	 * @param string[]|string $dirs Directories where to look (recursive).
 	 *
 	 * @return array Associative array where key is lowercase class name and value is array of files to include for
 	 *     that class to work
@@ -183,7 +210,7 @@ class VcShortcodeAutoloader {
 
 				foreach ( $classes as $class => $extends ) {
 					$class = strtolower( $class );
-					$extends = strtolower( $extends );
+					$extends = is_string( $extends ) ? strtolower( $extends ) : $extends;
 					if ( in_array( $extends, array(
 						'wpbakeryshortcodescontainer',
 						'wpbakeryvisualcomposer',
@@ -233,7 +260,7 @@ class VcShortcodeAutoloader {
 			}
 		}
 
-		// simplify array
+		// simplify array.
 		$classmap = array();
 		foreach ( $map as $class => $dependencies ) {
 			$classmap[ $class ] = array();
@@ -248,8 +275,8 @@ class VcShortcodeAutoloader {
 	/**
 	 * Regenerate and save class map file
 	 *
-	 * @param string[]|string $dirs Directories where to look (recursive)
-	 * @param string $target Output file
+	 * @param string[]|string $dirs Directories where to look (recursive).
+	 * @param string $target Output file.
 	 *
 	 * @return bool
 	 */
@@ -267,6 +294,9 @@ class VcShortcodeAutoloader {
 		return (bool) file_put_contents( $target, $code );
 	}
 
+	/**
+	 * Load configuration
+	 */
 	protected static function loadConfig() {
 		$config = array(
 			'classmap_file' => vc_path_dir( 'APP_ROOT', 'vc_classmap.json.php' ),

@@ -57,7 +57,7 @@ class Vc_Current_User_Access_Controller extends Vc_Role_Access_Controller {
 	}
 
 	/**
-	 * Check Wordpress capability. Should be valid one cap at least.
+	 * Check WordPress capability. Should be valid one cap at least.
 	 *
 	 * @return $this
 	 */
@@ -74,7 +74,7 @@ class Vc_Current_User_Access_Controller extends Vc_Role_Access_Controller {
 	}
 
 	/**
-	 * Check Wordpress capability. Should be valid all caps.
+	 * Check WordPress capability. Should be valid all caps.
 	 *
 	 * @return $this
 	 */
@@ -143,6 +143,7 @@ class Vc_Current_User_Access_Controller extends Vc_Role_Access_Controller {
 
 		if ( $this->getValidAccess() ) {
 			// Administrators have all access always
+            // phpcs:ignore
 			if ( current_user_can( 'administrator' ) ) {
 				$this->setValidAccess( true );
 
@@ -188,6 +189,7 @@ class Vc_Current_User_Access_Controller extends Vc_Role_Access_Controller {
 	public function getState() {
 		$currentUser = wp_get_current_user();
 		$allCaps = $currentUser->get_role_caps();
+        // phpcs:ignore
 		if ( current_user_can( 'administrator' ) ) {
 			return true;
 		}
@@ -195,6 +197,19 @@ class Vc_Current_User_Access_Controller extends Vc_Role_Access_Controller {
 		$state = null;
 		if ( array_key_exists( $capKey, $allCaps ) ) {
 			$state = $allCaps[ $capKey ];
+		}
+
+		// if state of rule not saving in settings we should get default value of it
+		if ( is_null( $state ) && isset( $currentUser->roles ) ) {
+			foreach ( $currentUser->roles as $role ) {
+				$state = vc_role_access()->who( $role )->part( $this->getPart() )->getState();
+
+				if ( is_null( $state ) ) {
+					continue;
+				} else {
+					break;
+				}
+			}
 		}
 
 		return apply_filters( 'vc_user_access_with_' . $this->getPart() . '_get_state', $state, $this->getPart() );

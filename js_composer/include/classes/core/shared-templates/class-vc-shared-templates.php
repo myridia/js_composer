@@ -20,9 +20,6 @@ class Vc_Shared_Templates {
 	 */
 	protected $download_link_url = 'https://support.wpbakery.com/templates/download-link';
 
-	/**
-	 *
-	 */
 	public function init() {
 		if ( $this->initialized ) {
 			return;
@@ -258,6 +255,14 @@ class Vc_Shared_Templates {
 
 			return $downloadedTemplateFile;
 		} elseif ( isset( $body['error'] ) ) {
+			//new flow for error messages
+			if ( ! empty( [ 'errorHtml' ] ) ) {
+				return [
+					'code' => 1,
+					'message' => $body['errorHtml'],
+				];
+			}
+
 			return array(
 				'code' => 1,
 				'message' => $body['error'],

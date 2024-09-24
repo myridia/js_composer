@@ -1,4 +1,10 @@
 <?php
+/**
+ * Configuration file for [vc_video] shortcode of 'Video Player' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,6 +13,7 @@ return array(
 	'name' => esc_html__( 'Video Player', 'js_composer' ),
 	'base' => 'vc_video',
 	'icon' => 'icon-wpb-film-youtube',
+	'element_default_class' => 'wpb_content_element',
 	'category' => esc_html__( 'Content', 'js_composer' ),
 	'description' => esc_html__( 'Embed YouTube/Vimeo player', 'js_composer' ),
 	'params' => array(
@@ -20,9 +27,9 @@ return array(
 			'type' => 'textfield',
 			'heading' => esc_html__( 'Video link', 'js_composer' ),
 			'param_name' => 'link',
-			'value' => 'https://vimeo.com/51589652',
+			'value' => 'https://vimeo.com/channels/staffpicks/181907337',
 			'admin_label' => true,
-			'description' => sprintf( esc_html__( 'Enter link to video (Note: read more about available formats at WordPress %scodex page%s).', 'js_composer' ), '<a href="https://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">', '</a>' ),
+			'description' => sprintf( esc_html__( 'Enter link to video (Note: read more about available formats at WordPress %1$scodex page%2$s).', 'js_composer' ), '<a href="https://codex.wordpress.org/Embeds#Okay.2C_So_What_Sites_Can_I_Embed_From.3F" target="_blank">', '</a>' ),
 		),
 		array(
 			'type' => 'dropdown',
@@ -72,7 +79,7 @@ return array(
 			'type' => 'el_id',
 			'heading' => esc_html__( 'Element ID', 'js_composer' ),
 			'param_name' => 'el_id',
-			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 		),
 		array(
 			'type' => 'textfield',
@@ -85,6 +92,9 @@ return array(
 			'heading' => esc_html__( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
 			'group' => esc_html__( 'Design Options', 'js_composer' ),
+			'value' => array(
+				'margin-bottom' => '35px',
+			),
 		),
 	),
 );

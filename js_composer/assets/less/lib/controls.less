@@ -53,7 +53,7 @@
       bottom: 0;
       left: 50%;
       .translate(-50%, 0);
-      z-index: 1;
+      z-index: 5;
     }
     &br {
       //bottom right
@@ -171,7 +171,19 @@
   }
 }
 
-// Single Control button
+.vc_controls-parent.vc_controls {
+  > .vc_controls-out-tl {
+    left: initial;
+    right: -1px;
+  }
+}
+
+.element-vc_section .vc_control-btn .vc-composer-icon {
+  width: 15px;
+  height: 15px;
+}
+
+  // Single Control button
 .vc_control-btn {
   display: inline-block;
   position: relative;
@@ -244,6 +256,7 @@
   line-height: 1px !important;
   font-size: 1px !important;
   vertical-align: middle !important;
+  box-sizing: border-box;
 }
 
 .vc_element-name {
@@ -440,17 +453,17 @@
 
       &.vc_parent, &.vc_element {
         .vc_advanced {
-          width: 120px;
+          width: 180px;
         }
       }
       &.parent-vc_row, &.parent-vc_row_inner {
         .vc_advanced {
-          width: 150px;
+          width: 210px;
         }
       }
       &.element-vc_column, &.element-vc_column_inner {
         .vc_advanced {
-          width: 90px;
+          width: 120px;
         }
       }
       &.element-vc_tab {
@@ -462,6 +475,30 @@
         }
       }
     }
+  }
+}
+
+.vc_controls-parent > div {
+  .vc_control-btn {
+    .vc_btn-content {
+      background-color: @vc_controls_parent_background;
+      border-color: @vc_controls_parent_border;
+      &:hover {
+        background-color: @vc_controls_parent_background_hover;
+        border-color: @vc_controls_parent_border_hover;
+      }
+    }
+  }
+}
+
+// Toggle container element has custom controls set
+// It requires a custom width
+.vc_vc_tta_toggle_section {
+  .vc_controls-container > div > .vc_active.vc_parent .vc_advanced {
+    width: 120px;
+  }
+  .vc_controls-container > div > .vc_active.vc_element .vc_advanced {
+    width: 90px;
   }
 }
 

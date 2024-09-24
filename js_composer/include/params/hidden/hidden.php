@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string - html string.
  */
 function vc_hidden_form_field( $settings, $value ) {
+	$value = is_string( $value ) ? $value : '';
 	$value = htmlspecialchars( $value );
 
 	return '<input name="' . esc_attr( $settings['param_name'] ) . '" class="wpb_vc_param_value vc_hidden-field vc_param-name-' . esc_attr( $settings['param_name'] ) . ' ' . esc_attr( $settings['type'] ) . '" type="hidden" value="' . esc_attr( $value ) . '"/>';

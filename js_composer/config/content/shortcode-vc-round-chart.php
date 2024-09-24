@@ -1,4 +1,10 @@
 <?php
+/**
+ * Configuration file for [vc_round_chart] shortcode of 'Round Chart' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,6 +14,7 @@ return array(
 	'base' => 'vc_round_chart',
 	'class' => '',
 	'icon' => 'icon-wpb-vc-round-chart',
+	'element_default_class' => 'wpb_content_element',
 	'category' => esc_html__( 'Content', 'js_composer' ),
 	'description' => esc_html__( 'Pie and Doughnut charts', 'js_composer' ),
 	'params' => array(
@@ -101,6 +108,23 @@ return array(
 			),
 		),
 		array(
+			'type' => 'dropdown',
+			'heading' => esc_html__( 'Legend position', 'js_composer' ),
+			'param_name' => 'legend_position',
+			'value' => array(
+				esc_html__( 'Top', 'js_composer' ) => 'top',
+				esc_html__( 'Left', 'js_composer' ) => 'left',
+				esc_html__( 'Bottom', 'js_composer' ) => 'bottom',
+				esc_html__( 'Right', 'js_composer' ) => 'right',
+			),
+			'description' => esc_html__( 'Select legend position.', 'js_composer' ),
+			'std' => 'left',
+			'dependency' => array(
+				'element' => 'legend',
+				'value' => 'yes',
+			),
+		),
+		array(
 			'type' => 'colorpicker',
 			'heading' => esc_html__( 'Custom legend color', 'js_composer' ),
 			'param_name' => 'custom_legend_color',
@@ -180,7 +204,7 @@ return array(
 			'type' => 'el_id',
 			'heading' => esc_html__( 'Element ID', 'js_composer' ),
 			'param_name' => 'el_id',
-			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 		),
 		array(
 			'type' => 'textfield',
@@ -193,6 +217,9 @@ return array(
 			'heading' => esc_html__( 'CSS box', 'js_composer' ),
 			'param_name' => 'css',
 			'group' => esc_html__( 'Design Options', 'js_composer' ),
+			'value' => array(
+				'margin-bottom' => '35px',
+			),
 		),
 	),
 );

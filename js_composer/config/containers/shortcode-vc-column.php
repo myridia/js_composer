@@ -1,11 +1,14 @@
 <?php
+/**
+ * Configuration file for [vc_column] shortcode of 'Column' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-/**
- * @var $tag - shortcode tag;
- */
 return array(
 	'name' => esc_html__( 'Column', 'js_composer' ),
 	'icon' => 'icon-wpb-row',
@@ -25,7 +28,7 @@ return array(
 			'heading' => esc_html__( 'YouTube link', 'js_composer' ),
 			'param_name' => 'video_bg_url',
 			'value' => 'https://www.youtube.com/watch?v=lMJXxhRFO1k',
-			// default video url
+			// default video url.
 			'description' => esc_html__( 'Add YouTube link.', 'js_composer' ),
 			'dependency' => array(
 				'element' => 'video_bg',
@@ -100,7 +103,7 @@ return array(
 			'type' => 'el_id',
 			'heading' => esc_html__( 'Element ID', 'js_composer' ),
 			'param_name' => 'el_id',
-			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+			'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 		),
 		array(
 			'type' => 'textfield',

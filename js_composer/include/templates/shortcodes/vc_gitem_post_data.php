@@ -42,9 +42,10 @@ $style = '';
 if ( ! empty( $styles ) ) {
 	$style = 'style="' . esc_attr( implode( ';', $styles ) ) . '"';
 }
-$output .= '<' . $font_container_data['values']['tag'] . ' ' . $style . ' >';
+$tag = tag_escape( $font_container_data['values']['tag'] );
+$output .= '<' . $tag . ' ' . $style . ' >';
 $output .= $content;
-$output .= '</' . $font_container_data['values']['tag'] . '>';
+$output .= '</' . $tag . '>';
 $output .= '</div>';
 
 return $output;

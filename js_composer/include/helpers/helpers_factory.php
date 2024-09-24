@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WPBakery WPBakery Page Builder Main manager.
+ * WPBakery Page Builder Main manager.
  *
  * @package WPBakeryPageBuilder
  * @since   4.2
@@ -77,6 +77,24 @@ if ( ! function_exists( 'vc_automapper' ) ) {
 	 */
 	function vc_automapper() {
 		return vc_manager()->automapper();
+	}
+}
+if ( ! function_exists( 'vc_autoload_manager' ) ) {
+	/**
+	 * @return Vc_Autoload_Manager
+	 * @since 7.7
+	 */
+	function vc_autoload_manager() {
+		return vc_manager()->autoload();
+	}
+}
+if ( ! function_exists( 'vc_modules_manager' ) ) {
+	/**
+	 * @return Vc_Modules_Manager
+	 * @since 7.7
+	 */
+	function vc_modules_manager() {
+		return vc_manager()->modules();
 	}
 }
 if ( ! function_exists( 'vc_frontend_editor' ) ) {
@@ -184,6 +202,7 @@ if ( ! function_exists( 'vc_post_param' ) ) {
 			check_ajax_referer();
 		}
 
+        // phpcs:ignore
 		return isset( $_POST[ $param ] ) ? $_POST[ $param ] : $default;
 	}
 }
@@ -217,7 +236,7 @@ if ( ! function_exists( 'vc_request_param' ) ) {
 	 * @param $default
 	 *
 	 * @param bool $check
-	 * @return null|string - null for undefined param.
+	 * @return mixed - null for undefined param.
 	 * @since 4.4
 	 */
 	function vc_request_param( $param, $default = null, $check = false ) {
@@ -247,6 +266,26 @@ if ( ! function_exists( 'vc_is_page_editable' ) ) {
 	 */
 	function vc_is_page_editable() {
 		return 'page_editable' === vc_mode();
+	}
+}
+if ( ! function_exists( 'vc_is_gutenberg_editor' ) ) {
+	/**
+	 * Check if current screen is Gutenberg editor screen.
+	 *
+	 * @return bool
+	 * @since 7.0
+	 */
+	function vc_is_gutenberg_editor() {
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			return false;
+		}
+
+		$current_screen = get_current_screen();
+		if ( ! method_exists( $current_screen, 'is_block_editor' ) ) {
+			return false;
+		}
+
+		return get_current_screen()->is_block_editor();
 	}
 }
 if ( ! function_exists( 'vc_action' ) ) {
@@ -302,37 +341,33 @@ function vc_is_editor() {
  * @since 4.2
  */
 function vc_value_from_safe( $value, $encode = false ) {
+	$value = is_string( $value ) ? $value : '';
 	// @codingStandardsIgnoreLine
 	$value = preg_match( '/^#E\-8_/', $value ) ? rawurldecode( base64_decode( preg_replace( '/^#E\-8_/', '', $value ) ) ) : $value;
 	if ( $encode ) {
 		$value = htmlentities( $value, ENT_COMPAT, 'UTF-8' );
 	}
 
-	return str_replace( [
-		'`{`',
-		'`}`',
-		'``',
-	], [
-		'[',
-		']',
-		'"',
-	], $value );
+	return str_replace( [ '`{`', '`}`', '``', ], [ '[', ']', '"', ], $value );
 }
 
 /**
+ * @depreacted 7.7 ( use modules settings )
  * @param bool $disable
  * @since 4.2
- *
  */
 function vc_disable_automapper( $disable = true ) {
+	_deprecated_function( __FUNCTION__, '7.7', 'Use plugin settings module tab to disable automapper' );
 	vc_automapper()->setDisabled( $disable );
 }
 
 /**
+ * @depreacted 7.7 ( use modules settings )
  * @return bool
  * @since 4.2
  */
 function vc_automapper_is_disabled() {
+	_deprecated_function( __FUNCTION__, '7.7', 'Use plugin settings module tab to disable automapper' );
 	return vc_automapper()->disabled();
 }
 
@@ -351,6 +386,7 @@ function vc_get_dropdown_option( $param, $value ) {
 		reset( $value );
 		$value = isset( $value['value'] ) ? $value['value'] : current( $value );
 	}
+	$value = is_string( $value ) ? $value : '';
 	$value = preg_replace( '/\s/', '_', $value );
 
 	return ( '' !== $value ? $value : '' );
@@ -600,40 +636,65 @@ function vc_check_post_type( $type = '' ) {
 }
 
 /**
+ * Check if user have edit access level to specific shortcode.
+ *
  * @param $shortcode
- * @return bool|mixed|void
+ * @return bool
+ * @throws Exception
  */
 function vc_user_access_check_shortcode_edit( $shortcode ) {
-	$do_check = apply_filters( 'vc_user_access_check-shortcode_edit', null, $shortcode );
-	if ( is_multisite() && is_super_admin() ) {
-		return true;
-	}
-	if ( is_null( $do_check ) ) {
-		$state_check = vc_user_access()->part( 'shortcodes' )->checkStateAny( true, 'edit', null )->get();
-		if ( $state_check ) {
-			return true;
-		} else {
-			return vc_user_access()->part( 'shortcodes' )->canAny( $shortcode . '_all', $shortcode . '_edit' )->get();
-		}
-	} else {
+	$do_check = apply_filters( 'vc_user_access_check-shortcode_all', null, $shortcode );
+
+	if ( ! is_null( $do_check ) ) {
 		return $do_check;
 	}
+
+	return vc_get_user_shortcode_access( $shortcode, 'edit' );
 }
 
 /**
+ * Check if user have all access level to specific shortcode.
+ *
  * @param $shortcode
- * @return bool|mixed|void
- * @throws \Exception
+ * @return bool
+ * @throws Exception
  */
 function vc_user_access_check_shortcode_all( $shortcode ) {
 	$do_check = apply_filters( 'vc_user_access_check-shortcode_all', null, $shortcode );
+
+	if ( ! is_null( $do_check ) ) {
+		return $do_check;
+	}
+
+	return vc_get_user_shortcode_access( $shortcode );
+}
+
+/**
+ * Get user access to shortcode.
+ *
+ * Note you can set access to specific shortcode in plugin settings 'Role Manager' tab.
+ *
+ * @since 7.9
+ * @param string $shortcode
+ * @param string $access_level right now we have 2 levels: 'all' and 'edit'.
+ * @return bool
+ * @throws Exception
+ */
+function vc_get_user_shortcode_access( $shortcode, $access_level = 'all' ) {
 	if ( is_multisite() && is_super_admin() ) {
 		return true;
 	}
-	if ( is_null( $do_check ) ) {
-		return vc_user_access()->part( 'shortcodes' )->checkStateAny( true, 'custom', null )->can( $shortcode . '_all' )->get();
+
+	$shortcodes_part = vc_user_access()->part( 'shortcodes' );
+	if ( 'edit' === $access_level ) {
+		$state_check = $shortcodes_part->checkStateAny( true, 'edit', null )->get();
+		if ( $state_check ) {
+			return true;
+		} else {
+			return $shortcodes_part->canAny( $shortcode . '_all', $shortcode . '_edit' )->get();
+		}
 	} else {
-		return $do_check;
+		return $shortcodes_part->checkStateAny( true, 'custom', null )->can( $shortcode . '_all' )->get();
 	}
 }
 

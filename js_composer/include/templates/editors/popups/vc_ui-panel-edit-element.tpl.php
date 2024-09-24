@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="vc_ui-font-open-sans vc_ui-panel-window vc_media-xs vc_ui-panel"
 	data-vc-panel=".vc_ui-panel-header-header" data-vc-ui-element="panel-edit-element" id="vc_ui-panel-edit-element">
-	<div class="vc_ui-panel-window-inner">
+	<div class="vc_ui-panel-window-inner<?php echo get_option( 'wpb_js_auto_save' ) ? ' vc_ui-panel-window-inner--auto-save' : '' ?>">
 		<?php
 		$controls = array(
 			'minimize',
@@ -36,22 +36,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</div>
 		<!-- param window footer-->
+
 		<?php
-		vc_include_template( 'editors/popups/vc_ui-footer.tpl.php', array(
-			'controls' => array(
-				array(
-					'name' => 'close',
-					'label' => esc_html__( 'Close', 'js_composer' ),
-					'css_classes' => 'vc_ui-button-fw',
-				),
-				array(
-					'name' => 'save',
-					'label' => esc_html__( 'Save changes', 'js_composer' ),
-					'css_classes' => 'vc_ui-button-fw',
-					'style' => 'action',
-				),
-			),
-		) );
+		do_action( 'wpb_add_element_controls' );
 		?>
 	</div>
 </div>

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Configuration file for [vc_accordion_tab] shortcode of 'Old Section' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ * @deprecated 4.6
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

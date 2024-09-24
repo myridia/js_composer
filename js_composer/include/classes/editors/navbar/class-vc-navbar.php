@@ -23,7 +23,7 @@ class Vc_Navbar {
 	/**
 	 * @var string
 	 */
-	protected $brand_url = 'https://wpbakery.com/?utm_campaign=VCplugin&utm_source=vc_user&utm_medium=backend_editor';
+	protected $brand_url = 'https://wpbakery.com?utm_source=wpb-plugin&utm_medium=backend-editor&utm_campaign=info&utm_content=logo';
 	/**
 	 * @var string
 	 */
@@ -51,7 +51,7 @@ class Vc_Navbar {
 	 */
 	public function getControls() {
 		$control_list = array();
-		foreach ( $this->controls as $control ) {
+		foreach ( $this->getControlList() as $control ) {
 			$method = vc_camel_case( 'get_control_' . $control );
 			if ( method_exists( $this, $method ) ) {
 				$control_list[] = array(
@@ -62,6 +62,24 @@ class Vc_Navbar {
 		}
 
 		return apply_filters( $this->controls_filter_name, $control_list );
+	}
+
+	/**
+	 * Get navbar control list.
+	 *
+	 * @since 7.7
+	 * @return array
+	 */
+	public function getControlList() {
+		/**
+		 * Filters list of navbar controls.
+		 *
+		 * @param array $this->controls
+		 * @param Vc_Navbar $this
+		 *
+		 * @since 7.7
+		 */
+		return apply_filters( 'vc_nav_control_list', $this->controls, $this );
 	}
 
 	/**
@@ -109,7 +127,7 @@ class Vc_Navbar {
 			return '';
 		}
 
-		return '<li class="vc_pull-right"><a id="vc_post-settings-button" href="javascript:;" class="vc_icon-btn vc_post-settings" title="' . esc_attr__( 'Page settings', 'js_composer' ) . '">' . '<span id="vc_post-css-badge" class="vc_badge vc_badge-custom-css" style="display: none;">' . esc_attr__( 'CSS', 'js_composer' ) . '</span><i class="vc-composer-icon vc-c-icon-cog"></i></a>' . '</li>';
+		return '<li class="vc_pull-right"><a id="vc_post-settings-button" href="javascript:;" class="vc_icon-btn vc_post-settings" title="' . esc_attr__( 'Page settings', 'js_composer' ) . '">' . '<span id="vc_post-settings-badge" class="vc_badge vc_badge-custom-css" style="display: none;"></span><i class="vc-composer-icon vc-c-icon-cog"></i></a>' . '</li>';
 	}
 
 	/**
@@ -131,8 +149,7 @@ class Vc_Navbar {
 	 * @throws \Exception
 	 */
 	public function getControlAddElement() {
-		if ( vc_user_access()->part( 'shortcodes' )->checkStateAny( true, 'custom', null )
-				->get() && vc_user_access_check_shortcode_all( 'vc_row' ) && vc_user_access_check_shortcode_all( 'vc_column' ) ) {
+		if ( vc_user_access()->part( 'shortcodes' )->checkStateAny( true, 'custom', null )->get() && vc_user_access_check_shortcode_all( 'vc_row' ) && vc_user_access_check_shortcode_all( 'vc_column' ) ) {
 			return '<li class="vc_show-mobile">' . '	<a href="javascript:;" class="vc_icon-btn vc_element-button" data-model-id="vc_element" id="vc_add-new-element" title="' . '' . esc_attr__( 'Add new element', 'js_composer' ) . '">' . '    <i class="vc-composer-icon vc-c-icon-add_element"></i>' . '	</a>' . '</li>';
 		}
 

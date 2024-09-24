@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoload hooks for [vc_progress_bar] shortcode of 'Progress Bar' element.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

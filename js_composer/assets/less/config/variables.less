@@ -1,5 +1,5 @@
-@import (reference) "../../lib/bower/bootstrap3/less/bootstrap.less";
-@import (reference) "../../fonts/vc_icons_v2/variables.less";
+@import (reference) "../../lib/vendor/node_modules/bootstrap3/less/bootstrap.less";
+@import (reference) "../../fonts/vc_icons_v3/variables.less";
 
 //Grid
 // This variables are needed when grid is recalculated
@@ -28,8 +28,8 @@
 @vc_responsive_max_w: @screen-xs-min;
 
 @vc_element_margin_bottom: 35px;
-@vc_margin_bottom_third: @vc_element_margin_bottom/3;
-@vc_margin_bottom_gold: @vc_element_margin_bottom/1.61;
+@vc_margin_bottom_third: (@vc_element_margin_bottom/3);
+@vc_margin_bottom_gold: (@vc_element_margin_bottom/1.61);
 
 // vc_row
 @vc_row_control_bg: @vc_backend_controls_inactive_color;
@@ -39,7 +39,7 @@
 //vc_call_to_action.less
 @vc_call_to_action_bg: @vc_grey;
 @vc_call_to_action_border: @vc_grey_hover;
-@vc_cta_button_w: 100% - 70% - @fluidGridGutterWidth;
+@vc_cta_button_w: (100% - 70% - @fluidGridGutterWidth);
 
 @vc_call_to_action_2_bg: @grey;
 
@@ -61,8 +61,8 @@
 
 //vc_tabs_tour_accordion.less
 @tour_nav_spanX: 4;
-@tour_nav_width: @vc_span1 * @tour_nav_spanX + @fluidGridGutterWidth * (@tour_nav_spanX - 1);
-@tour_slides_width: 100% - @tour_nav_width;
+@tour_nav_width: (@vc_span1 * @tour_nav_spanX + @fluidGridGutterWidth * (@tour_nav_spanX - 1));
+@tour_slides_width: (100% - @tour_nav_width);
 
 @vc_tab_bg_active: @vc_grey;
 @vc_tab_bg: @vc_inner_container_bg_color;
@@ -76,12 +76,12 @@
 @vc_accordion_tab_label_margin_left: 23px;
 @vc_accordion_tab_label_color: #6f777d;
 //vc_teaser_grid.less
-@vc_teaser_grid_w: 100% + @fluidGridGutterWidth;
-@vc_teaser_grid_span2: 100% / @gridColumns * 2 - @fluidGridGutterWidth - 0.15%;
-@vc_teaser_grid_span3: 100% / @gridColumns * 3 - @fluidGridGutterWidth - 0.08%;
-@vc_teaser_grid_span4: 100% / @gridColumns * 4 - @fluidGridGutterWidth - 0.08%;
-@vc_teaser_grid_span6: 100% / @gridColumns * 6 - @fluidGridGutterWidth - 0.05%;
-@vc_teaser_grid_span12: 100% - @fluidGridGutterWidth;
+@vc_teaser_grid_w: (100% + @fluidGridGutterWidth);
+@vc_teaser_grid_span2: (100% / @gridColumns * 2 - @fluidGridGutterWidth - 0.15%);
+@vc_teaser_grid_span3: (100% / @gridColumns * 3 - @fluidGridGutterWidth - 0.08%);
+@vc_teaser_grid_span4: (100% / @gridColumns * 4 - @fluidGridGutterWidth - 0.08%);
+@vc_teaser_grid_span6: (100% / @gridColumns * 6 - @fluidGridGutterWidth - 0.05%);
+@vc_teaser_grid_span12: (100% - @fluidGridGutterWidth);
 
 @vc_carousel_arrows_bg: @vc_grey;
 @vc_carousel_arrows_bg_hover: @vc_grey_hover;
@@ -104,4 +104,4 @@
 @vc_grid-float-breakpoint: @grid-float-breakpoint;
 @vc_grid-float-breakpoint-max: @grid-float-breakpoint-max;
 
-@vc_background: #0473aa;
+@vc_success_frontend_editor: #12C248;

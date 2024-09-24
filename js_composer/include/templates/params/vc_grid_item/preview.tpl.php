@@ -21,7 +21,7 @@ $first_tag = 'style';
 
 		<?php
 		// @codingStandardsIgnoreLine
-		print wpbakery()->parseShortcodesCustomCss( $shortcodes_string );
+		print wpbakery()->parseShortcodesCss( $shortcodes_string, 'custom' );
 		?>
 		.vc_gitem-preview {
 			margin: 60px auto;

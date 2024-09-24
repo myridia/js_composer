@@ -15,12 +15,19 @@ abstract class WPBakeryShortCode {
 	 * @var string
 	 */
 	protected $controls_css_settings = 'cc';
+
 	/**
+	 * Backend section controls.
+	 *
+	 * @note for a frontend editor section controls please see
+	 * include/templates/editors/partials/frontend_controls.tpl.php
+	 *
 	 * @var array
 	 */
 	protected $controls_list = array(
 		'edit',
 		'clone',
+		'copy',
 		'delete',
 	);
 
@@ -72,7 +79,6 @@ abstract class WPBakeryShortCode {
 	protected $controls_template_file = 'editors/partials/backend_controls.tpl.php';
 
 	public $nonDraggableClass = 'vc-non-draggable';
-	/** @noinspection PhpMissingParentConstructorInspection */
 
 	/**
 	 * @param $settings
@@ -249,9 +255,6 @@ abstract class WPBakeryShortCode {
 		return ( $this->isInline() || $this->isEditor() && true === $this->settings( 'is_container' ) ? '<span class="vc_container-anchor"></span>' : '' ) . $content;
 	}
 
-	/**
-	 *
-	 */
 	public function enqueueAssets() {
 		if ( ! empty( $this->settings['admin_enqueue_js'] ) ) {
 			$this->registerJs( $this->settings['admin_enqueue_js'] );
@@ -328,9 +331,6 @@ abstract class WPBakeryShortCode {
 		}
 	}
 
-	/**
-	 *
-	 */
 	public static function enqueueCss() {
 		if ( ! empty( self::$css_scripts ) ) {
 			foreach ( self::$css_scripts as $stylesheet ) {
@@ -339,9 +339,6 @@ abstract class WPBakeryShortCode {
 		}
 	}
 
-	/**
-	 *
-	 */
 	public static function enqueueJs() {
 		if ( ! empty( self::$js_scripts ) ) {
 			foreach ( self::$js_scripts as $script ) {
@@ -895,7 +892,7 @@ abstract class WPBakeryShortCode {
 			$title = 'title="' . esc_attr( $params['title'] ) . '" ';
 		}
 
-		return '<i ' . $title . 'class="vc_general vc_element-icon' . ( ! empty( $params['icon'] ) ? ' ' . sanitize_text_field( $params['icon'] ) : '' ) . '"' . $data . '></i> ';
+		return '<i ' . $title . ' class="vc_general vc_element-icon' . ( ! empty( $params['icon'] ) ? ' ' . sanitize_text_field( $params['icon'] ) : '' ) . '"' . $data . '></i> ';
 	}
 
 	/**
@@ -961,7 +958,6 @@ abstract class WPBakeryShortCode {
 	}
 
 	/**
-	 * Since 4.5
 	 * Possible placeholders:
 	 *      {{ content }}
 	 *      {{ title }}

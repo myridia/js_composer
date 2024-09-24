@@ -40,6 +40,7 @@ switch ( $source ) {
 }
 
 if ( ! $img ) {
+	$img = is_array( $img ) ? $img : array();
 	$img['thumbnail'] = '<img class="vc_single_image-img" src="' . esc_url( $default_src ) . '" />';
 }
 

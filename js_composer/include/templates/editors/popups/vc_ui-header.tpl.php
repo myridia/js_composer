@@ -20,11 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="vc_ui-panel-header-header vc_ui-grid-gap" data-vc-panel-container=".vc_ui-panel-header-container">
 			<h3 class="vc_ui-panel-header-heading"
-				data-vc-ui-element="panel-title"><?php echo isset( $title ) ? esc_html( $title ) : ''; ?></h3>
+				data-vc-ui-element="panel-title">
+				<?php echo isset( $title ) ? esc_html( $title ) : ''; ?>
+				<?php if ( ! empty( $is_ai_token_usage ) ) : ?>
+					<?php vc_include_template( 'editors/popups/ai/token-usage.tpl.php' ); ?>
+				<?php endif ?>
+			</h3>
 			<?php if ( isset( $search_template ) && ! empty( $search_template ) ) : ?>
 				<?php vc_include_template( $search_template ); ?>
 			<?php endif ?>
-
 		</div>
 		<div class="vc_ui-panel-header-content" data-vc-ui-element="panel-header-content">
 			<?php if ( isset( $content_template ) && ! empty( $content_template ) ) : ?>

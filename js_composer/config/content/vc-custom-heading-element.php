@@ -1,13 +1,25 @@
 <?php
+/**
+ * Configuration file for [vc_custom_heading] shortcode of 'Custom Heading' element.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/ for more detailed information about element attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+/**
+ * Shortcode attributes
+ *
+ * @return array
+ */
 function vc_custom_heading_element_params() {
 	return array(
 		'name' => esc_html__( 'Custom Heading', 'js_composer' ),
 		'base' => 'vc_custom_heading',
 		'icon' => 'icon-wpb-ui-custom_heading',
+		'element_default_class' => 'vc_do_custom_heading',
 		'show_settings_on_create' => true,
 		'category' => esc_html__( 'Content', 'js_composer' ),
 		'description' => esc_html__( 'Text with Google fonts', 'js_composer' ),
@@ -40,7 +52,7 @@ function vc_custom_heading_element_params() {
 				'heading' => esc_html__( 'URL (Link)', 'js_composer' ),
 				'param_name' => 'link',
 				'description' => esc_html__( 'Add link to custom heading.', 'js_composer' ),
-				// compatible with btn2 and converted from href{btn1}
+				// compatible with btn2 and converted from href{btn1}.
 			),
 			array(
 				'type' => 'font_container',
@@ -49,7 +61,7 @@ function vc_custom_heading_element_params() {
 				'settings' => array(
 					'fields' => array(
 						'tag' => 'h2',
-						// default value h2
+						// default value h2.
 						'text_align',
 						'font_size',
 						'line_height',
@@ -89,7 +101,7 @@ function vc_custom_heading_element_params() {
 				'type' => 'el_id',
 				'heading' => esc_html__( 'Element ID', 'js_composer' ),
 				'param_name' => 'el_id',
-				'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %sw3c specification%s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
+				'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
 			),
 			array(
 				'type' => 'textfield',
@@ -102,6 +114,10 @@ function vc_custom_heading_element_params() {
 				'heading' => esc_html__( 'CSS box', 'js_composer' ),
 				'param_name' => 'css',
 				'group' => esc_html__( 'Design Options', 'js_composer' ),
+				'value' => array(
+					'margin-bottom' => '0.625rem',
+					'margin-top' => '0',
+				),
 			),
 		),
 	);

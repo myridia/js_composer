@@ -88,7 +88,7 @@ abstract class Vc_Access {
 		$this->setValidAccess( true );
 		if ( ! $result ) {
 			if ( defined( 'VC_DIE_EXCEPTION' ) && VC_DIE_EXCEPTION ) {
-				throw new Exception( $message );
+				throw new Exception( esc_html( $message ) );
 			} else {
 				die( esc_html( $message ) );
 			}

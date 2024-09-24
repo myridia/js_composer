@@ -24,7 +24,7 @@ $custom_tag = 'script';
 	<?php
 	$vc_gitem_template = vc_request_param( 'vc_gitem_template' );
 	$template = Vc_Grid_Item::predefinedTemplate( $vc_gitem_template );
-	if ( strlen( $vc_gitem_template ) && $template ) {
+	if ( isset( $vc_gitem_template ) && is_string( $vc_gitem_template ) && strlen( $vc_gitem_template ) && $template ) {
 		echo "var vcDefaultGridItemContent = '" . $template['template'] . "';";
 	} else {
 		?>

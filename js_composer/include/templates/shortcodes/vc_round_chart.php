@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Shortcode attributes
+ * @var $atts
  * @var $title
  * @var $el_class
  * @var $el_id
@@ -23,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @var WPBakeryShortCode_Vc_Round_Chart $this
  */
 $el_class = $el_id = $title = $type = $style = $legend = $animation = $tooltips = $stroke_color = $stroke_width = $values = $css = $css_animation = $custom_stroke_color = '';
+$legend_position = '';
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 
@@ -102,7 +104,8 @@ foreach ( $base_colors['active'] as $name => $color ) {
 
 wp_enqueue_script( 'vc_round_chart' );
 
-$class_to_filter = 'vc_chart vc_round-chart wpb_content_element';
+$element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
+$class_to_filter = 'vc_chart vc_round-chart ' . esc_attr( $element_class );
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . $this->getExtraClass( $el_class ) . $this->getCSSAnimation( $css_animation );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter, $this->settings['base'], $atts );
 
@@ -179,6 +182,7 @@ $round_chart_data = [
 ];
 $options[] = 'data-vc-values="' . esc_attr( wp_json_encode( $round_chart_data ) ) . '"';
 $options[] = 'data-vc-legend-color="' . esc_attr( $legendColor ) . '"';
+$options[] = 'data-vc-legend-position="' . esc_attr( $legend_position ) . '"';
 if ( '' !== $title ) {
 	$title = '<h2 class="wpb_heading">' . $title . '</h4>';
 }

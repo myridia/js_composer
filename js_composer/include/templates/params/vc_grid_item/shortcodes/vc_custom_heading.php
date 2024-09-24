@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * @var WPBakeryShortCode_Vc_Custom_heading $this
+ * @var $atts
  */
 
 extract( $this->getAttributes( $atts ) );
@@ -32,17 +33,22 @@ if ( ! empty( $styles ) ) {
 	$style = '';
 }
 
+if ( isset( $atts['source'] ) && 'post_title' === $atts['source'] ) {
+	$text = get_the_title( get_the_ID() );
+}
+
 $output = '';
+$tag = tag_escape( $font_container_data['values']['tag'] );
 if ( apply_filters( 'vc_custom_heading_template_use_wrapper', false ) ) {
 	$output .= '<div class="' . esc_attr( $css_class ) . '" >';
-	$output .= '<' . $font_container_data['values']['tag'] . ' ' . $style . ' >';
+	$output .= '<' . $tag . ' ' . $style . ' >';
 	$output .= $text;
-	$output .= '</' . $font_container_data['values']['tag'] . '>';
+	$output .= '</' . $tag . '>';
 	$output .= '</div>';
 } else {
-	$output .= '<' . $font_container_data['values']['tag'] . ' ' . $style . ' class="' . esc_attr( $css_class ) . '">';
+	$output .= '<' . $tag . ' ' . $style . ' class="' . esc_attr( $css_class ) . '">';
 	$output .= $text;
-	$output .= '</' . $font_container_data['values']['tag'] . '>';
+	$output .= '</' . $tag . '>';
 }
 
 return $output;

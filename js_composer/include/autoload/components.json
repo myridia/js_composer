@@ -17,6 +17,7 @@
   "vendors/wpml.php": "",
   "vendors/rankmath-seo.php": "",
   "vendors/gutenberg.php": "",
+  "vendors/wordpress-com.php": "",
   "hook-vc-grid.php": "Logic for shortcode vc_grid",
   "hook-vc-iconpicker-param.php": "Logic for shortcode param iconpicker",
   "hook-vc-message.php": "Logic for shortcode vc_message",
@@ -26,7 +27,6 @@
   "vc-grid-item-editor.php": "Create new post type vc_grid_item or Grid item",
   "ui-vc-pointers.php": "Integrating With WordPress’ UI: Admin Pointers",
   "vc-pages/automapper.php": "",
-  "vc-pages/page-custom-css.php": "Vc Special pages.",
   "vc-pages/page-design-options.php": "Vc Special pages.",
   "vc-pages/page-role-manager.php": "Vc Special pages.",
   "vc-pages/pages.php": "Vc Special pages.",
@@ -40,5 +40,8 @@
   "params-to-init.php": "add required init params",
   "post-type-default-template.php": "Load default templates",
   "bc-multisite-options.php": "BC for multisite options",
-  "vc-undoredo.php": "Undo Redo logic"
+  "vc-undoredo.php": "Undo Redo logic",
+  "local-fonts/class-local-fonts.php": "Local Google fonts",
+  "class-vc-notice-controller.php": "Plugin Notice System",
+  "vc-settings-auto-save.php": "Logic for auto-save in General settings"
 }

@@ -18,9 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Vc_Shortcode_Edit_Form {
 	protected $initialized;
 
-	/**
-	 *
-	 */
 	public function init() {
 		if ( $this->initialized ) {
 			return;
@@ -42,9 +39,6 @@ class Vc_Shortcode_Edit_Form {
 		) );
 	}
 
-	/**
-	 *
-	 */
 	public function render() {
 		vc_include_template( 'editors/popups/vc_ui-panel-edit-element.tpl.php', array(
 			'box' => $this,
@@ -65,12 +59,27 @@ class Vc_Shortcode_Edit_Form {
 
 		$params = (array) stripslashes_deep( vc_post_param( 'params' ) );
 		$params = array_map( 'vc_htmlspecialchars_decode_deep', $params );
-
+		$this->updateElementUsageCount( $tag );
 		require_once vc_path_dir( 'EDITORS_DIR', 'class-vc-edit-form-fields.php' );
 		$fields = new Vc_Edit_Form_Fields( $tag, $params );
 		$output = $fields->render();
 		// @codingStandardsIgnoreLine
 		wp_die( $output );
+	}
+
+	/**
+	 * We need to update usage count for element on every new adding of element.
+	 * This is required for most used elements sorting.
+	 * @param $tag
+	 * @return void
+	 */
+	public function updateElementUsageCount( $tag ) {
+		$is_usage_count = vc_post_param( 'usage_count' );
+		if ( $is_usage_count ) {
+			$usage_count = get_option( 'wpb_usage_count', array() );
+			$usage_count[ $tag ] = isset( $usage_count[ $tag ] ) ? $usage_count[ $tag ] + 1 : 1;
+			update_option( 'wpb_usage_count', $usage_count );
+		}
 	}
 
 	/**

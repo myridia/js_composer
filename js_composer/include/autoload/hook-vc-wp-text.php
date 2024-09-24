@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoload hooks for [vc_wp_text] shortcode of 'Wp Text' element.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

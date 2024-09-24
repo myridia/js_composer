@@ -11,6 +11,7 @@ if ( 'yes' === $atts['show_filter'] && ! empty( $filter_terms ) ) {
 	$unique_terms = array_unique( $filter_terms );
 	$terms_ids = ! empty( $atts['exclude_filter'] ) ? array_diff( $unique_terms, // Posts filter terms
 		array_map( 'abs', preg_split( '/\s*\,\s*/', $atts['exclude_filter'] ) ) ) : $unique_terms;
+	// phpcs:ignore
 	$terms = count( $terms_ids ) > 0 ? get_terms( $atts['filter_source'], array(
 		'include' => implode( ',', $terms_ids ),
 	) ) : array();

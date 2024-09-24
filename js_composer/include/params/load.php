@@ -71,5 +71,5 @@ $vc_params_list = array(
 	'animation_style',
 	'iconpicker',
 	'el_id',
-	'gutenberg',
+	'gutenberg'
 );

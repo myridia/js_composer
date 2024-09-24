@@ -1,12 +1,14 @@
 <?php
+/**
+ * Default templates list.
+ *
+ * @since 4.4
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-/**
- * @since 4.4
- * Default templates list
- */
 
 /** Landing page template */
 $data = array();
@@ -66,7 +68,7 @@ $data['content'] = <<<CONTENT
 [vc_row full_width=""][vc_column width="1/1"][vc_column_text css_animation=""]I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.[/vc_column_text][vc_separator color="grey" align="align_center" style="" border_width="" el_width=""][vc_single_image image="" alignment="" style="" border_color="grey" img_link_large="" img_link_target="_self" css_animation=""][vc_separator color="grey" align="align_center" style="" border_width="" el_width=""][/vc_column][/vc_row][vc_row full_width=""][vc_column width="1/2"][vc_column_text css_animation=""]I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.[/vc_column_text][vc_btn title="Read more" style="flat" shape="rounded" color="blue" size="md" align="inline" i_align="left" i_type="fontawesome" i_icon_fontawesome="fas fa-adjust" i_icon_openiconic="vc-oi vc-oi-dial" i_icon_typicons="typcn typcn-adjust-brightness" i_icon_entypo="entypo-icon entypo-icon-note" i_icon_linecons="vc_li vc_li-heart" button_block="" add_icon="" i_icon_pixelicons="vc_pixel_icon vc_pixel_icon-alert"][/vc_column][vc_column width="1/2"][vc_column_text css_animation=""]I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.[/vc_column_text][vc_btn title="Read more" style="flat" shape="rounded" color="blue" size="md" align="inline" i_align="left" i_type="fontawesome" i_icon_fontawesome="fas fa-adjust" i_icon_openiconic="vc-oi vc-oi-dial" i_icon_typicons="typcn typcn-adjust-brightness" i_icon_entypo="entypo-icon entypo-icon-note" i_icon_linecons="vc_li vc_li-heart" css_animation="" button_block="" add_icon="" i_icon_pixelicons="vc_pixel_icon vc_pixel_icon-alert"][/vc_column][/vc_row]
 CONTENT;
 
-vc_add_default_templates( $data );// New templates. Since 4.4
+vc_add_default_templates( $data );// New templates. Since 4.4.
 /** FAQ section */
 $data = array();
 $data['name'] = esc_html__( 'FAQ section', 'js_composer' );

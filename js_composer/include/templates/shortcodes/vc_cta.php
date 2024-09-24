@@ -13,7 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 $this->buildTemplate( $atts, $content );
 $containerClass = trim( 'vc_cta3-container ' . esc_attr( implode( ' ', $this->getTemplateVariable( 'container-class' ) ) ) );
-$cssClass = trim( 'vc_general ' . esc_attr( implode( ' ', $this->getTemplateVariable( 'css-class' ) ) ) );
+$element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
+$cssClass = trim( 'vc_general ' . esc_attr( $element_class ) . ' ' . esc_attr( implode( ' ', $this->getTemplateVariable( 'css-class' ) ) ) );
 $output = '';
 
 $output .= '<section class="' . esc_attr( $containerClass ) . '"' . ( ! empty( $atts['el_id'] ) ? ' id="' . esc_attr( $atts['el_id'] ) . '"' : '' ) . '>';

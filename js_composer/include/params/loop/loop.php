@@ -187,6 +187,7 @@ class VcLoopQueryBuilder {
 		$not_in = array();
 		$in = array();
 
+		// phpcs:ignore
 		$terms = get_terms( VcLoopSettings::getTaxonomies(), array( 'include' => array_map( 'abs', $terms ) ) );
 		foreach ( $terms as $t ) {
 			if ( in_array( (int) $t->term_id, $negative_term_list, true ) ) {
@@ -672,6 +673,7 @@ class VcLoopSettings {
 				$not_in[] = abs( $id );
 			}
 		}
+		// phpcs:ignore
 		$list = get_terms( self::getTaxonomies(), array( 'include' => array_map( 'abs', $list ) ) );
 		foreach ( $list as $obj ) {
 			$options[] = array(
@@ -916,6 +918,7 @@ class VcLoopSuggestions {
 		if ( ! empty( $this->exclude ) ) {
 			$args['exclude'] = $this->exclude;
 		}
+		// phpcs:ignore
 		$tags = get_terms( VcLoopSettings::getTaxonomies(), $args );
 		foreach ( $tags as $tag ) {
 			$this->content[] = array(

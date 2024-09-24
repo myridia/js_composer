@@ -29,6 +29,7 @@ function vc_textarea_html_form_field( $settings, $value ) {
 		) );
 		$output_value = ob_get_contents();
 		ob_end_clean();
+		$default_content = is_string( $value ) ? $value : '';
 		$output .= $output_value . '<input type="hidden" name="' . esc_attr( $settings['param_name'] ) . '"  class="vc_textarea_html_content wpb_vc_param_value ' . esc_attr( $settings['param_name'] ) . '" value="' . htmlspecialchars( $default_content ) . '"/>';
 		$vc_html_editor_already_is_use = $settings['param_name'];
 	}

@@ -40,7 +40,8 @@ if ( is_numeric( $size ) ) {
 	$link = preg_replace( '/height="[0-9]*"/', 'height="' . $size . '"', $link );
 }
 
-$class_to_filter = 'wpb_gmaps_widget wpb_content_element' . ( '' === $size ? ' vc_map_responsive' : '' );
+$element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
+$class_to_filter = 'wpb_gmaps_widget ' . esc_attr( $element_class ) . ( '' === $size ? ' vc_map_responsive' : '' );
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . $this->getExtraClass( $el_class ) . $this->getCSSAnimation( $css_animation );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter, $this->settings['base'], $atts );
 

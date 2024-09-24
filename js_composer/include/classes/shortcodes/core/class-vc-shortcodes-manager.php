@@ -68,21 +68,12 @@ class Vc_Shortcodes_Manager {
 	 * @param $tag
 	 * @return $this
 	 */
-	/**
-	 * @param $tag
-	 * @return $this
-	 */
 	public function setTag( $tag ) {
 		$this->tag = $tag;
 
 		return $this;
 	}
 
-	/**
-	 * @param $tag
-	 * @return \WPBakeryShortCodeFishBones
-	 * @throws \Exception
-	 */
 	/**
 	 * @param $tag
 	 * @return \WPBakeryShortCodeFishBones
@@ -123,10 +114,6 @@ class Vc_Shortcodes_Manager {
 		return $shortcode_class;
 	}
 
-	/**
-	 * @return \WPBakeryShortCodeFishBones
-	 * @throws \Exception
-	 */
 	/**
 	 * @return \WPBakeryShortCodeFishBones
 	 * @throws \Exception
@@ -190,20 +177,12 @@ class Vc_Shortcodes_Manager {
 	 * @param $tag
 	 * @return bool
 	 */
-	/**
-	 * @param $tag
-	 * @return bool
-	 */
 	public function isShortcodeClassInitialized( $tag ) {
 		$currentScope = WPBMap::getScope();
 
 		return isset( $this->shortcode_classes[ $currentScope ], $this->shortcode_classes[ $currentScope ][ $tag ] );
 	}
 
-	/**
-	 * @param $tag
-	 * @return bool
-	 */
 	/**
 	 * @param $tag
 	 * @return bool

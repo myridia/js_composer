@@ -40,9 +40,9 @@ if ( in_array( 'striped', $options, true ) ) {
 }
 
 if ( 'custom' === $bgcolor && '' !== $custombgcolor ) {
-	$custombgcolor = ' style="' . vc_get_css_color( 'background-color', $custombgcolor ) . '"';
+	$custombgcolor = ' style="' . esc_attr( vc_get_css_color( 'background-color', $custombgcolor ) ) . '"';
 	if ( '' !== $customtxtcolor ) {
-		$customtxtcolor = ' style="' . vc_get_css_color( 'color', $customtxtcolor ) . '"';
+		$customtxtcolor = ' style="' . esc_attr( vc_get_css_color( 'color', $customtxtcolor ) ) . '"';
 	}
 	$bgcolor = '';
 } else {
@@ -52,7 +52,8 @@ if ( 'custom' === $bgcolor && '' !== $custombgcolor ) {
 	$el_class .= ' ' . $bgcolor;
 }
 
-$class_to_filter = 'vc_progress_bar wpb_content_element';
+$element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
+$class_to_filter = 'vc_progress_bar ' . esc_attr( $element_class );
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . $this->getExtraClass( $el_class );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter, $this->settings['base'], $atts );
 $wrapper_attributes = array();
@@ -89,11 +90,11 @@ foreach ( $values as $data ) {
 }
 
 foreach ( $graph_lines_data as $line ) {
-	$unit = ( '' !== $units ) ? ' <span class="vc_label_units">' . $line['value'] . $units . '</span>' : '';
+	$unit = ( '' !== $units ) ? ' <span class="vc_label_units">' . esc_attr( $line['value'] ) . $units . '</span>' : '';
 	$output .= '<div class="vc_general vc_single_bar' . ( ( isset( $line['color'] ) && 'custom' !== $line['color'] ) ?
-			' vc_progress-bar-color-' . $line['color'] : '' )
+			' vc_progress-bar-color-' . esc_attr( $line['color'] ) : '' )
 		. '">';
-	$output .= '<small class="vc_label"' . $line['txtcolor'] . '>' . $line['label'] . $unit . '</small>';
+	$output .= '<small class="vc_label"' . $line['txtcolor'] . '>' . wp_kses_post( $line['label'] )  . $unit . '</small>';
 	if ( $max_value > 100.00 ) {
 		$percentage_value = (float) $line['value'] > 0 && $max_value > 100.00 ? round( (float) $line['value'] / $max_value * 100, 4 ) : 0;
 	} else {

@@ -81,6 +81,35 @@ class Vc_Add_Element_Box {
 	}
 
 	/**
+	 * Render 6 most used elements from the wpb_usage_count option, and the usage count should be 10 or more.
+	 *
+	 * @param array $shortcodes list of shorcodes avalable in current editor
+	 *
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function getMostUsedElements( $shortcodes ) {
+		$usage_count = get_option( 'wpb_usage_count', array() );
+		$most_used_elements = array();
+		if ( ! empty( $usage_count ) ) {
+			arsort( $usage_count );
+			$most_used_elements = array_slice( $usage_count, 0, 6 );
+		}
+		$most_used_elements = array_filter( $most_used_elements, function ( $count ) {
+			return $count >= 10;
+		} );
+		$most_used_elements = array_keys( $most_used_elements );
+		$most_used_elements = array_filter( $most_used_elements, function ( $element ) use ( $shortcodes ) {
+			if ( ! in_array( $element, $shortcodes ) ) {
+				return false;
+			}
+			return WPBMap::getShortCode( $element );
+		} );
+		$most_used_elements = array_slice( $most_used_elements, 0, 6 );
+		return $most_used_elements;
+	}
+
+	/**
 	 * Render list of buttons for each mapped and allowed VC shortcodes.
 	 * vc_filter: vc_add_element_box_buttons - hook to override output of getControls method
 	 * @return mixed
@@ -88,10 +117,27 @@ class Vc_Add_Element_Box {
 	 * @see WPBMap::getSortedUserShortCodes
 	 */
 	public function getControls() {
-		$output = '<ul class="wpb-content-layouts">';
+		$output = '<div class="vc-panel-no-results-message">' . __( 'No elements found', 'js_composer' ) . '</div>';
+		$shortcodes = $this->shortcodes();
+		$most_used_elements = $this->getMostUsedElements( array_column( $shortcodes, 'base' ) );
+		if ( ! empty( $most_used_elements ) ) {
+			$output .= '<div class="vc_clearfix"><h4>' . esc_html__( 'Most used', 'js_composer' ) . '</h4>';
+			$output .= '<ul class="wpb-content-layouts" style="margin-bottom: 20px">';
+			foreach ( $most_used_elements as $element ) {
+				$button = $this->renderButton( WPBMap::getShortCode( $element ) );
+				if ( ! empty( $button ) ) {
+					$output .= $button;
+				}
+			}
+			$output .= '</ul></div>';
+		}
+
+		if ( ! empty( $most_used_elements ) ) {
+			$output .= '<div class="vc_clearfix"><h4>' . esc_html__( 'All elements', 'js_composer' ) . '</h4>';
+		}
+		$output .= '<ul class="wpb-content-layouts">';
 		/** @var array $element */
 		$buttons_count = 0;
-		$shortcodes = $this->shortcodes();
 		foreach ( $shortcodes as $element ) {
 			if ( isset( $element['content_element'] ) && false === $element['content_element'] ) {
 				continue;
@@ -103,6 +149,9 @@ class Vc_Add_Element_Box {
 			$output .= $button;
 		}
 		$output .= '</ul>';
+		if ( ! empty( $most_used_elements ) ) {
+			$output .= '</div>';
+		}
 		if ( 0 === $buttons_count ) {
 			$this->show_empty_message = true;
 		}
@@ -120,9 +169,6 @@ class Vc_Add_Element_Box {
 		return apply_filters( 'vc_add_new_category_filter', WPBMap::getUserCategories() );
 	}
 
-	/**
-	 *
-	 */
 	public function render() {
 		vc_include_template( 'editors/popups/vc_ui-panel-add-element.tpl.php', array(
 			'box' => $this,

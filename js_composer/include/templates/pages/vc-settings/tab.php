@@ -37,14 +37,14 @@ $custom_tag = 'script';
 	<?php if ( 'general' === $tab && vc_pointers_is_dismissed() ) : ?>
 		<table class="form-table">
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Guide tours', 'js_composer' ); ?></th>
+				<th scope="row">
+					<span><?php esc_html_e( 'Guide tours', 'js_composer' ); ?></span>
+					<?php vc_include_template( 'editors/partials/param-info.tpl.php', ['description' => esc_html__( 'Guide tours are shown in WPBakery editors to help you to start working with editors. You can see them again by clicking button above.', 'js_composer' )] ); ?>
+				</th>
 				<td>
 					<a href="#" class="button vc_pointers-reset-button"
 							id="vc_settings-vc-pointers-reset"
 							data-vc-done-txt="<?php esc_attr_e( 'Done', 'js_composer' ); ?>"><?php esc_html_e( 'Reset', 'js_composer' ); ?></a>
-
-					<p
-							class="description indicator-hint"><?php esc_html_e( 'Guide tours are shown in WPBakery editors to help you to start working with editors. You can see them again by clicking button above.', 'js_composer' ); ?></p>
 				</td>
 			</tr>
 		</table>
@@ -69,8 +69,11 @@ $custom_tag = 'script';
 		<a href="#" class="button vc_restore-button" id="vc_settings-color-restore-default">
 			<?php echo esc_html__( 'Restore Default', 'js_composer' ); ?>
 		</a>
+	<?php elseif ( 'color-picker' === $tab ) : ?>
+	<a href="#" class="button vc_restore-button" id="vc_settings-color-picker-restore-default">
+		<?php echo esc_html__( 'Restore Default', 'js_composer' ); ?>
+	</a>
 	<?php endif ?>
-
 	<?php if ( 'updater' === $tab ) : ?>
 
 		<div class="vc_settings-activation-deactivation">
@@ -116,7 +119,7 @@ $custom_tag = 'script';
 				</p>
 
 				<p class="description">
-					<?php printf( esc_html__( 'Don\'t have direct license yet? %sPurchase WPBakery Page Builder license%s.', 'js_composer' ), '<a href="' . esc_url( 'https://go.wpbakery.com/wpb-buy' ) . '" target="_blank">', '</a>' ); ?>
+					<?php printf( esc_html__( 'Don\'t have direct license yet? %1$sPurchase WPBakery Page Builder license%2$s.', 'js_composer' ), '<a href="' . esc_url( 'https://go.wpbakery.com/wpb-buy' ) . '" target="_blank">', '</a>' ); ?>
 				</p>
 
 			<?php endif ?>
@@ -124,3 +127,8 @@ $custom_tag = 'script';
 
 	<?php endif ?>
 </form>
+
+<?php
+// [modal ai render]
+vc_include_template( 'editors/popups/ai/modal.tpl.php' );
+?>

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoload lib and global variables for plugin pointers.
+ *
+ * @note we require our autoload files everytime and everywhere after plugin load.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -13,9 +19,12 @@ if ( is_admin() ) {
 	add_action( 'admin_enqueue_scripts', 'vc_pointer_load', 1000 );
 }
 
+/**
+ * Load pointers.
+ */
 function vc_pointer_load() {
 	global $vc_pointers;
-	// Don't run on WP < 3.3
+	// Don't run on WP < 3.3.
 	if ( get_bloginfo( 'version' ) < '3.3' ) {
 		return;
 	}
@@ -23,7 +32,7 @@ function vc_pointer_load() {
 	$screen = get_current_screen();
 	$screen_id = $screen->id;
 
-	// Get pointers for this screen
+	// Get pointers for this screen.
 	$pointers = apply_filters( 'vc-ui-pointers', array() );
 	$pointers = apply_filters( 'vc_ui-pointers-' . $screen_id, $pointers );
 
@@ -31,22 +40,21 @@ function vc_pointer_load() {
 		return;
 	}
 
-	// Get dismissed pointers
+	// Get dismissed pointers.
 	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
 	$vc_pointers = array( 'pointers' => array() );
 
 	// Check pointers and remove dismissed ones.
 	foreach ( $pointers as $pointer_id => $pointer ) {
 
-		// Sanity check
+		// Sanity check.
 		if ( in_array( $pointer_id, $dismissed, true ) || empty( $pointer ) || empty( $pointer_id ) || empty( $pointer['name'] ) ) {
 			continue;
 		}
 
 		$pointer['pointer_id'] = $pointer_id;
 
-		// Add the pointer to $valid_pointers array
-
+		// Add the pointer to $valid_pointers array.
 		$vc_pointers['pointers'][] = $pointer;
 	}
 
@@ -56,7 +64,7 @@ function vc_pointer_load() {
 	}
 	wp_enqueue_style( 'wp-pointer' );
 	wp_enqueue_script( 'wp-pointer' );
-	// messages
+	// messages.
 	$vc_pointers['texts'] = array(
 		'finish' => esc_html__( 'Finish', 'js_composer' ),
 		'next' => esc_html__( 'Next', 'js_composer' ),
@@ -69,6 +77,7 @@ function vc_pointer_load() {
 
 /**
  * Remove Vc pointers keys to show Tour markers again.
+ *
  * @sine 4.5
  */
 function vc_pointer_reset() {
@@ -88,6 +97,7 @@ function vc_pointer_reset() {
 
 /**
  * Reset tour guid
+ *
  * @return bool
  */
 function vc_pointers_is_dismissed() {

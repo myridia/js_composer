@@ -22,7 +22,7 @@ class Vc_WXR_Parser_SimpleXML {
 
 		$dom = new DOMDocument();
 		$old_value = null;
-		if ( function_exists( 'libxml_disable_entity_loader' ) ) {
+		if ( function_exists( 'libxml_disable_entity_loader' ) && version_compare( PHP_VERSION, '8.0.0', '<' ) ) {
 			$old_value = libxml_disable_entity_loader( true );
 		}
 		/** @var \WP_Filesystem_Direct $wp_filesystem */
@@ -32,7 +32,7 @@ class Vc_WXR_Parser_SimpleXML {
 			WP_Filesystem( false, false, true );
 		}
 		$success = $dom->loadXML( $wp_filesystem->get_contents( $file ) );
-		if ( ! is_null( $old_value ) ) {
+		if ( ! is_null( $old_value ) && version_compare( PHP_VERSION, '8.0.0', '<' ) ) {
 			libxml_disable_entity_loader( $old_value );
 		}
 

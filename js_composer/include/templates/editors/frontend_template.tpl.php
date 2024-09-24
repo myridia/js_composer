@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		_print_styles();
 		print_head_scripts();
-		print_late_styles();
 		print_footer_scripts();
 		?>
 	</div>

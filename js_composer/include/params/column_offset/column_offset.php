@@ -30,6 +30,11 @@ class Vc_Column_Offset {
 	protected $column_width_list = array();
 
 	/**
+	 * @var array
+	 */
+	protected $data = array();
+
+	/**
 	 * @param $settings
 	 * @param $value
 	 */
@@ -77,8 +82,8 @@ class Vc_Column_Offset {
 	 * @return array|mixed
 	 */
 	public function valueData() {
-		if ( ! isset( $this->data ) ) {
-			$this->data = preg_split( '/\s+/', $this->value );
+		if ( empty( $this->data ) ) {
+			$this->data = ! empty( $this->value ) ? preg_split( '/\s+/', $this->value ) : [];
 		}
 
 		return $this->data;

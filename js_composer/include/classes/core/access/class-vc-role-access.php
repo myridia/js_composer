@@ -18,9 +18,6 @@ class Vc_Role_Access extends Vc_Access {
 	 */
 	protected $parts = array();
 
-	/**
-	 *
-	 */
 	public function __construct() {
 		require_once ABSPATH . 'wp-admin/includes/user.php';
 	}

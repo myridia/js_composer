@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Manger for new post type for single grid item design with constructor
+ * Manager for new post type for single grid item design with constructor
  *
  * @package WPBakeryPageBuilder
  * @since 4.4
@@ -204,7 +204,16 @@ class Vc_Grid_Item_Editor extends Vc_Backend_Editor {
 	 * @throws \Exception
 	 */
 	public function accessCheckShortcodeEdit( $null, $shortcode ) {
-		return vc_user_access()->part( 'grid_builder' )->can()->get();
+		if ( ! vc_user_access()->part( 'grid_builder' )->can()->get() ) {
+			return false;
+		}
+
+		$params = vc_get_shortcode( $shortcode );
+		if ( ! empty( $params['category'] ) && 'Post' === $params['category'] ) {
+			  return true;
+		} else {
+			return vc_get_user_shortcode_access( $shortcode, 'edit' );
+		}
 	}
 
 	/**
@@ -214,7 +223,16 @@ class Vc_Grid_Item_Editor extends Vc_Backend_Editor {
 	 * @throws \Exception
 	 */
 	public function accessCheckShortcodeAll( $null, $shortcode ) {
-		return vc_user_access()->part( 'grid_builder' )->can()->get();
+		if ( ! vc_user_access()->part( 'grid_builder' )->can()->get() ) {
+			return false;
+		}
+
+		$params = vc_get_shortcode( $shortcode );
+		if ( ! empty( $params['category'] ) && 'Post' === $params['category'] ) {
+			return true;
+		} else {
+			return vc_get_user_shortcode_access( $shortcode );
+		}
 	}
 
 	/**

@@ -16,7 +16,7 @@ class Vc_Vendor_YoastSeo {
 	 */
 	protected $parsedContent;
 
-	function __construct() {
+	public function __construct() {
 		add_action( 'vc_backend_editor_render', array(
 			$this,
 			'enqueueJs',
@@ -58,6 +58,7 @@ class Vc_Vendor_YoastSeo {
 			 */
 			do_action( 'vc_vendor_yoastseo_filter_results' );
 			$this->parsedContent = do_shortcode( shortcode_unautop( $content ) );
+            // phpcs:ignore
 			wp_reset_query();
 		}
 

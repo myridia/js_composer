@@ -15,22 +15,22 @@
 @vc_btn3-color-initial: @vc_btn3-color-blue;
 
 // Button xs
-@vc_btn3-xs-padding-horizontal: 12px;
+@vc_btn3-xs-padding-horizontal: 12; //px
 @vc_btn3-xs-padding-vertical: 8px;
 @vc_btn3-xs-font-size: 11px;
 @vc_btn3-xs-icon-size: 14px;
 // Button sm
-@vc_btn3-sm-padding-horizontal: 16px;
+@vc_btn3-sm-padding-horizontal: 16; //px
 @vc_btn3-sm-padding-vertical: 11px;
 @vc_btn3-sm-font-size: 12px;
 @vc_btn3-sm-icon-size: 14px;
 // Button md (default)
-@vc_btn3-md-padding-horizontal: 20px;
+@vc_btn3-md-padding-horizontal: 20; //px
 @vc_btn3-md-padding-vertical: 14px;
 @vc_btn3-md-font-size: 14px;
 @vc_btn3-md-icon-size: 16px;
 // Button lg
-@vc_btn3-lg-padding-horizontal: 25px;
+@vc_btn3-lg-padding-horizontal: 25; //px
 @vc_btn3-lg-padding-vertical: 18px;
 @vc_btn3-lg-font-size: 16px;
 @vc_btn3-lg-icon-size: 20px;
@@ -329,10 +329,6 @@
       border-width: @vc_btn3-border-outline;
     }
   }
-  // 3d
-  &.vc_btn3-style-3d {
-
-  }
   // Custom
   &.vc_btn3-style-custom {
     #gradient > .vertical-three-colors(@start-color: rgba(0, 0, 0, 0); @mid-color: rgba(0, 0, 0, 0.1); @color-stop: 50%; @end-color: rgba(0, 0, 0, 0.1));
@@ -554,24 +550,25 @@
     padding-bottom: @padding-vertical;
   }
   & when not (@padding-horizontal = false) {
-    padding-left: @padding-horizontal;
-    padding-right: @padding-horizontal;
+    padding-left: unit(@padding-horizontal, px);
+    padding-right: unit(@padding-horizontal, px);
   }
   &.vc_btn3-style-outline-custom,
   &.vc_btn3-style-outline {
     & when not (@padding-vertical = false) {
-      padding-top: @padding-vertical - @vc_btn3-border-outline + @vc_btn3-border-base;
-      padding-bottom: @padding-vertical - @vc_btn3-border-outline + @vc_btn3-border-base;
+      padding-top: (@padding-vertical - @vc_btn3-border-outline + @vc_btn3-border-base);
+      padding-bottom: (@padding-vertical - @vc_btn3-border-outline + @vc_btn3-border-base);
     }
     & when not (@padding-horizontal = false) {
-      padding-left: @padding-horizontal - @vc_btn3-border-outline + @vc_btn3-border-base;
-      padding-right: @padding-horizontal - @vc_btn3-border-outline + @vc_btn3-border-base;
+      padding-left: (@padding-horizontal - @vc_btn3-border-outline + @vc_btn3-border-base);
+      padding-right: (@padding-horizontal - @vc_btn3-border-outline + @vc_btn3-border-base);
     }
   }
 }
 
 // Icon sizes
 .make-btn3-icon-size(@padding-horizontal, @icon-size, @line-height) {
+  @padding-value: ceil((@padding-horizontal * 2 + @icon-size / 2));
   // indents and padding
   .vc_btn3-icon {
     font-size: @icon-size;
@@ -580,16 +577,16 @@
   }
   // left icon
   &.vc_btn3-icon-left:not(.vc_btn3-o-empty) {
-    padding-left: ceil(@padding-horizontal * 2 + @icon-size / 2);
+    padding-left: unit(@padding-value, px);
     .vc_btn3-icon {
-      left: @padding-horizontal;
+      left: unit(@padding-horizontal, px);
     }
   }
   // right icon
   &.vc_btn3-icon-right:not(.vc_btn3-o-empty) {
-    padding-right: ceil(@padding-horizontal * 2 + @icon-size / 2);
+    padding-right: unit(@padding-value, px);
     .vc_btn3-icon {
-      right: @padding-horizontal;
+      right: unit(@padding-horizontal, px);
     }
   }
 }
@@ -670,7 +667,7 @@
       box-shadow: 0 @vc_btn3-shadow-width-md-3d 0 darken(@background, 11%);
       &:hover,
       &:focus {
-        top: @vc_btn3-shadow-width-md-3d - @vc_btn3-shadow-width-hover;
+        top: (@vc_btn3-shadow-width-md-3d - @vc_btn3-shadow-width-hover);
         box-shadow: 0 @vc_btn3-shadow-width-hover 0 darken(@background, 11%);
       }
       // XS size
@@ -678,7 +675,7 @@
         box-shadow: 0 @vc_btn3-shadow-width-xs-3d 0 darken(@background, 11%);
         &:hover,
         &:focus {
-          top: @vc_btn3-shadow-width-xs-3d - @vc_btn3-shadow-width-hover;
+          top: (@vc_btn3-shadow-width-xs-3d - @vc_btn3-shadow-width-hover);
           box-shadow: 0 @vc_btn3-shadow-width-hover 0 darken(@background, 11%);
         }
       }
@@ -687,7 +684,7 @@
         box-shadow: 0 @vc_btn3-shadow-width-sm-3d 0 darken(@background, 11%);
         &:hover,
         &:focus {
-          top: @vc_btn3-shadow-width-sm-3d - @vc_btn3-shadow-width-hover;
+          top: (@vc_btn3-shadow-width-sm-3d - @vc_btn3-shadow-width-hover);
           box-shadow: 0 @vc_btn3-shadow-width-hover 0 darken(@background, 11%);
         }
       }
@@ -696,7 +693,7 @@
         box-shadow: 0 @vc_btn3-shadow-width-lg-3d 0 darken(@background, 11%);
         &:hover,
         &:focus {
-          top: @vc_btn3-shadow-width-lg-3d - @vc_btn3-shadow-width-hover;
+          top: (@vc_btn3-shadow-width-lg-3d - @vc_btn3-shadow-width-hover);
           box-shadow: 0 @vc_btn3-shadow-width-hover 0 darken(@background, 11%);
         }
       }
