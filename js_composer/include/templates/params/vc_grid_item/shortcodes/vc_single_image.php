@@ -1,10 +1,17 @@
 <?php
+/**
+ * Single image grid builder shortcode element.
+ *
+ * @var WPBakeryShortCode_Vc_Single_image $this
+ * @var array $atts
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 $el_class = $image = $img_size = $img_link = $img_link_target = $img_link_large = $title = $alignment = $css_animation = $css = '';
-/** @var WPBakeryShortCode_Vc_Single_image $this */
+
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 
@@ -16,11 +23,11 @@ $img_id = preg_replace( '/[^\d]/', '', $image );
 
 switch ( $source ) {
 	case 'media_library':
-		$img = wpb_getImageBySize( array(
+		$img = wpb_getImageBySize( [
 			'attach_id' => $img_id,
 			'thumb_size' => $img_size,
 			'class' => 'vc_single_image-img',
-		) );
+		] );
 
 		break;
 
@@ -30,9 +37,9 @@ switch ( $source ) {
 
 		$custom_src = $custom_src ? esc_attr( $custom_src ) : $default_src;
 
-		$img = array(
+		$img = [
 			'thumbnail' => '<img class="vc_single_image-img" ' . $hwstring . ' src="' . esc_url( $custom_src ) . '" />',
-		);
+		];
 		break;
 
 	default:
@@ -40,14 +47,14 @@ switch ( $source ) {
 }
 
 if ( ! $img ) {
-	$img = is_array( $img ) ? $img : array();
+	$img = is_array( $img ) ? $img : [];
 	$img['thumbnail'] = '<img class="vc_single_image-img" src="' . esc_url( $default_src ) . '" />';
 }
 
-$wrapperClass = 'vc_single_image-wrapper ' . $style . ' ' . $border_color;
-$link = vc_gitem_create_link( $atts, $wrapperClass );
+$wrapper_class = 'vc_single_image-wrapper ' . $style . ' ' . $border_color;
+$link = vc_gitem_create_link( $atts, $wrapper_class );
 
-$image_string = ! empty( $link ) ? '<' . $link . '>' . $img['thumbnail'] . '</a>' : '<div class="' . $wrapperClass . '"> ' . $img['thumbnail'] . ' </div>';
+$image_string = ! empty( $link ) ? '<' . $link . '>' . $img['thumbnail'] . '</a>' : '<div class="' . $wrapper_class . '"> ' . $img['thumbnail'] . ' </div>';
 
 $class_to_filter = 'wpb_single_image wpb_content_element vc_align_' . $alignment . ' ' . $this->getCSSAnimation( $css_animation );
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . $this->getExtraClass( $el_class );
@@ -55,10 +62,10 @@ $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter
 
 $output = '
 	<div class="' . esc_attr( $css_class ) . '">
-		' . wpb_widget_title( array(
+		' . wpb_widget_title( [
 	'title' => $title,
 	'extraclass' => 'wpb_singleimage_heading',
-) ) . '
+] ) . '
 		<figure class="wpb_wrapper vc_figure">
 			' . $image_string . '
 		</figure>

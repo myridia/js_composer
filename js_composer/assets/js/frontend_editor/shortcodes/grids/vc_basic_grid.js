@@ -1,7 +1,7 @@
-(function () {
+( function () {
 	'use strict';
 
-	window.InlineShortcodeView_vc_basic_grid = vc.shortcode_view.extend( {
+	window.InlineShortcodeView_vc_basic_grid = vc.shortcode_view.extend({
 		render: function ( e ) {
 			window.InlineShortcodeView_vc_basic_grid.__super__.render.call( this, e );
 			this.initGridJs( true );
@@ -22,11 +22,11 @@
 				vc.frame_window.vc_iframe.addActivity( function () {
 					this.vc_iframe.gridInit( model.get( 'id' ) );
 					model.set( 'grid_activity', false );
-				} );
+				});
 			} else {
 				vc.frame_window.vc_iframe.gridInit( model.get( 'id' ) );
 				model.set( 'grid_activity', false );
 			}
 		}
-	} );
+	});
 })();

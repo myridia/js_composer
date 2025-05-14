@@ -1,4 +1,8 @@
 <?php
+/**
+ * Start select layout title template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

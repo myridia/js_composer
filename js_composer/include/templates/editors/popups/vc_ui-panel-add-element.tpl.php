@@ -1,4 +1,12 @@
 <?php
+/**
+ * Add element panel template.
+ *
+ * @var WPBakeryShortCode_VC_Column $box
+ * @var array $header_tabs_template_variables
+ * @var Vc_Add_Element_Box $box
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,14 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	data-vc-panel=".vc_ui-panel-header-header" data-vc-ui-element="panel-add-element" id="vc_ui-panel-add-element">
 	<div class="vc_ui-panel-window-inner">
 		<?php
-		vc_include_template( 'editors/popups/vc_ui-header.tpl.php', array(
+		vc_include_template( 'editors/popups/vc_ui-header.tpl.php', [
 			'title' => esc_html__( 'Add Element', 'js_composer' ),
-			'controls' => array( 'close' ),
+			'controls' => [ 'close' ],
 			'header_css_class' => 'vc_ui-add-element-header-container',
-			'content_template' => 'editors/partials/add_element_tabs.tpl.php',
+			'header_tabs_template' => 'editors/partials/add_element_tabs.tpl.php',
+			'box' => $box,
 			'search_template' => 'editors/partials/add_element_search.tpl.php',
-			'template_variables' => $template_variables,
-		) )
+			'header_tabs_template_variables' => $header_tabs_template_variables,
+		] )
 		?>
 		<div class="vc_ui-panel-content-container">
 			<div class="vc_add-element-container">

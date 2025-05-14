@@ -1,4 +1,8 @@
 <?php
+/**
+ * Prompt template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

@@ -1,10 +1,20 @@
 <?php
+/**
+ * Backend controls tab template.
+ *
+ * @var string $name
+ * @var string $shortcode
+ * @var string $position
+ * @var string $extended_css
+ * @var array $controls
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-$editAccess = vc_user_access_check_shortcode_edit( $shortcode );
-$allAccess = vc_user_access_check_shortcode_all( $shortcode );
+$edit_access = vc_user_access_check_shortcode_edit( $shortcode );
+$all_access = vc_user_access_check_shortcode_all( $shortcode );
 
 ?>
 <div class="vc_controls<?php echo ! empty( esc_attr( $extended_css ) ) ? ' ' . esc_attr( $extended_css ) : ''; ?>">
@@ -19,15 +29,15 @@ $allAccess = vc_user_access_check_shortcode_all( $shortcode );
 				<a class="vc_control-btn vc_control-btn-prepend vc_edit" href="#"
 						title="<?php printf( esc_html__( 'Prepend to %s', 'js_composer' ), esc_attr( $name ) ); ?>"><span
 							class="vc_btn-content"><i class="vc-composer-icon vc-c-icon-add"></i></span></a>
-			<?php elseif ( $editAccess && 'edit' === $control ) : ?>
+			<?php elseif ( $edit_access && 'edit' === $control ) : ?>
 				<a class="vc_control-btn vc_control-btn-edit" href="#"
 						title="<?php printf( esc_html__( 'Edit %s', 'js_composer' ), esc_attr( $name ) ); ?>"><span
 							class="vc_btn-content"><i class="vc-composer-icon vc-c-icon-mode_edit"></i></span></a>
-			<?php elseif ( $allAccess && 'clone' === $control ) : ?>
+			<?php elseif ( $all_access && 'clone' === $control ) : ?>
 				<a class="vc_control-btn vc_control-btn-clone" href="#"
 						title="<?php printf( esc_html__( 'Clone %s', 'js_composer' ), esc_attr( $name ) ); ?>"><span
 							class="vc_btn-content"><i class="vc-composer-icon vc-c-icon-content_copy"></i></span></a>
-			<?php elseif ( $allAccess && 'delete' === $control ) : ?>
+			<?php elseif ( $all_access && 'delete' === $control ) : ?>
 				<a class="vc_control-btn vc_control-btn-delete" href="#"
 						title="<?php printf( esc_html__( 'Delete %s', 'js_composer' ), esc_attr( $name ) ); ?>"><span
 							class="vc_btn-content"><i class="vc-composer-icon vc-c-icon-delete_empty"></i></span></a>

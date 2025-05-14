@@ -1,4 +1,10 @@
 <?php
+/**
+ * Frontend controls template.
+ *
+ * phpcs:ignoreFile:Squiz.PHP.EmbeddedPhp.ContentBeforeEnd
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

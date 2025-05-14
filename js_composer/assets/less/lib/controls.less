@@ -1,4 +1,6 @@
 // Controls
+@vc-element-controls-height: 30px;
+
 .vc_controls {
   font-family: "Open Sans", Helvetica, sans-serif;
   height: 0;
@@ -178,11 +180,6 @@
   }
 }
 
-.element-vc_section .vc_control-btn .vc-composer-icon {
-  width: 15px;
-  height: 15px;
-}
-
   // Single Control button
 .vc_control-btn {
   display: inline-block;
@@ -257,6 +254,7 @@
   font-size: 1px !important;
   vertical-align: middle !important;
   box-sizing: border-box;
+	letter-spacing: normal !important;
 }
 
 .vc_element-name {
@@ -332,7 +330,7 @@
 .vc_control-btn-switcher {
   overflow: hidden;
   width: 24px;
-  height: 30px;
+  height: @vc-element-controls-height;
   .transition(width 0.5s);
   display: inline-block;
   &-disable-switcher {
@@ -386,7 +384,7 @@
     }
     .vc_advanced {
       overflow: hidden;
-      height: 30px;
+      height: @vc-element-controls-height;
       width: 0;
       display: inline-block;
       vertical-align: middle;
@@ -480,10 +478,18 @@
 
 .vc_controls-parent > div {
   .vc_control-btn {
+    &::before {
+      border-bottom-color: @vc_controls_parent_background;
+    }
     .vc_btn-content {
       background-color: @vc_controls_parent_background;
       border-color: @vc_controls_parent_border;
-      &:hover {
+    }
+    &:hover {
+      &::before {
+        border-bottom-color: @vc_controls_parent_background_hover;
+      }
+      .vc_btn-content {
         background-color: @vc_controls_parent_background_hover;
         border-color: @vc_controls_parent_border_hover;
       }
@@ -612,5 +618,55 @@
     &:hover {
       background-color: @vc_controls_parent_background_hover;
     }
+  }
+}
+
+.wpb-post-title {
+  position: relative;
+
+  &.wpb-title-hover {
+    .vc_controls {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .vc_controls {
+    position: absolute;
+    display: block;
+    height: 100%;
+  }
+
+  .vc_controls-cc {
+    height: @vc-element-controls-height;
+  }
+
+  .vc_control-btn,
+  .vc_btn-content {
+    height: @vc-element-controls-height;
+    vertical-align: top !important; // override existing !important from element controls
+  }
+
+  .vc_element-name .vc_btn-content:hover {
+    cursor: default;
+    background-color: transparent;
+  }
+
+}
+
+.wpb-title-hover {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    border: 1px dashed @vc_element_hover_border_rgba;
   }
 }

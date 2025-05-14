@@ -1,29 +1,31 @@
 <?php
+/**
+ * Class that handles specific [vc_pricing_table] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_pricing_table.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * WPBakery Page Builder shortcodes
- *
- * @package WPBakeryPageBuilder
- * @since 7.0
- */
-
-/**
  * Class WPBakeryShortCode_Vc_Pricing_Table
+ *
  * @since 7.0
  */
 class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 	/**
 	 * Template variables
+	 *
 	 * @var array
 	 * @since 7.0
 	 */
-	protected $template_vars = array();
+	protected $template_vars = [];
 
 	/**
 	 * Build templates where we are keeping element optionality
+	 *
 	 * @since 7.0
 	 *
 	 * @param array $atts
@@ -31,10 +33,10 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 	 * @throws Exception
 	 */
 	public function buildTemplate( $atts, $content ) {
-		$output = array();
-		$inline_css = array();
+		$output = [];
+		$inline_css = [];
 
-		$main_wrapper_classes = array( 'wpb-pricing-table' );
+		$main_wrapper_classes = [ 'wpb-pricing-table' ];
 
 		if ( ! empty( $atts['el_class'] ) ) {
 			$main_wrapper_classes[] = $atts['el_class'];
@@ -78,6 +80,7 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 
 	/**
 	 * Get custom element heading.
+	 *
 	 * @since 7.0
 	 *
 	 * @param string $tag
@@ -90,11 +93,11 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 		if ( isset( $atts[ $tag ] ) && '' !== trim( $atts[ $tag ] ) ) {
 			$custom_heading = wpbakery()->getShortCode( 'vc_custom_heading' );
 			$data = vc_map_integrate_parse_atts( $this->shortcode, 'vc_custom_heading', $atts, $tag . '_' );
-			$data['font_container'] = implode( '|', array_filter( array(
+			$data['font_container'] = implode( '|', array_filter( [
 				'tag:' . $tag,
 				$data['font_container'],
-			) ) );
-			$data['text'] = $atts[ $tag ]; // provide text to shortcode
+			] ) );
+			$data['text'] = $atts[ $tag ]; // provide text to shortcode.
 
 			return $custom_heading->render( array_filter( $data ) );
 		}
@@ -104,6 +107,7 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 
 	/**
 	 * Get custom element button.
+	 *
 	 * @since 7.0
 	 *
 	 * @param array $atts
@@ -115,7 +119,7 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 		if ( $data ) {
 			$btn = wpbakery()->getShortCode( 'vc_btn' );
 			if ( is_object( $btn ) ) {
-				return  $btn->render( array_filter( $data ) );
+				return $btn->render( array_filter( $data ) );
 			}
 		}
 
@@ -124,15 +128,16 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 
 	/**
 	 * We keep some element setting here.
+	 *
 	 * @since 7.0
 	 *
-	 * @param string $string
+	 * @param string $var_name
 	 * @return mixed|string
 	 */
-	public function getTemplateVariable( $string ) {
-		if ( is_array( $this->template_vars ) && isset( $this->template_vars[ $string ] ) ) {
+	public function getTemplateVariable( $var_name ) {
+		if ( is_array( $this->template_vars ) && isset( $this->template_vars[ $var_name ] ) ) {
 
-			return $this->template_vars[ $string ];
+			return $this->template_vars[ $var_name ];
 		}
 
 		return '';
@@ -140,6 +145,7 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 
 	/**
 	 * Some styles that depend on element setting we out them as inline.
+	 *
 	 * @since 7.0
 	 *
 	 * @param array $atts
@@ -151,7 +157,7 @@ class WPBakeryShortCode_Vc_Pricing_Table extends WPBakeryShortCode {
 		$color = empty( $atts['markers_color'] ) ? '#5188F1' : str_replace( '#', '', $atts['markers_color'] );
 
 		$style = '<style>';
-		$style .= '#' . esc_attr( $element_id ) .  ' .wpb-plan-features li::before { ';
+		$style .= '#' . esc_attr( $element_id ) . ' .wpb-plan-features li::before { ';
 		$style .= ' content: ""; ';
 		$style .= ' display: inline-block; ';
 		$style .= ' margin: 0 10px 0 0;';

@@ -1,11 +1,11 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
 	$( '#vc_vendor_qtranslate_langs_front' ).on( 'change', function () {
 		vc.closeActivePanel();
 		$( '#vc_logo' ).addClass( 'vc_ui-wp-spinner' );
 		window.location.href = $( this ).val();
-	} );
+	});
 
 	vc.ShortcodesBuilder.prototype.getContent = function () {
 		var output, $postContent, lang, content;
@@ -14,7 +14,7 @@
 		lang = $postContent.attr( 'data-lang' );
 		content = $postContent.val();
 		vc.shortcodes.sort();
-		output = this.modelsToString( vc.shortcodes.where( { parent_id: false } ) );
+		output = this.modelsToString( vc.shortcodes.where({ parent_id: false }) );
 
 		return qtrans_integrate( lang, output, content );
 	};

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Backend shortcodes template.
+ *
+ * phpcs:ignoreFile:Generic.PHP.DisallowAlternativePHPTags.MaybeASPShortOpenTagFound
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -14,7 +20,7 @@ if ( vc_user_access()->part( 'presets' )->can()->get() ) {
 	$vc_vendor_settings_presets = array();
 	$vc_all_presets = array();
 }
-$custom_tag = 'script'; // TODO: Use HTML Shadow dom or ajax response for templates
+$custom_tag = 'script'; // TODO: Use HTML Shadow dom or ajax response for templates.
 ?>
 <<?php echo esc_attr( $custom_tag ); ?>>
 	var vc_user_mapper = <?php echo wp_json_encode( WPBMap::getUserShortCodes() ); ?>,

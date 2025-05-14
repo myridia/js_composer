@@ -1,8 +1,8 @@
 jQuery( document ).ready( function ( $ ) {
 	'use strict';
 
-	if (window.Vc_postSettingsEditor) {
-		function setEditorNewValue($editor_input, editor_slug) {
+	if ( window.Vc_postSettingsEditor ) {
+		function setEditorNewValue ( $editor_input, editor_slug ) {
 			// set new value to textarea
 			$editor_input.val( window[editor_slug].getValue() );
 		}
@@ -15,11 +15,11 @@ jQuery( document ).ready( function ( $ ) {
 		editor_js_footer.mode = 'javascript';
 
 		var editor_list = {
-			js_header : editor_js_header,
-			js_footer : editor_js_footer
+			js_header: editor_js_header,
+			js_footer: editor_js_footer
 		};
 
-		for (var editor_name in editor_list) {
+		for ( var editor_name in editor_list ) {
 			var $editor = $( '#wpb_' + editor_name + '_editor' );
 			if ( $editor.length ) {
 				var $editor_input = $editor.prev();
@@ -27,8 +27,8 @@ jQuery( document ).ready( function ( $ ) {
 				window[editor_slug] = editor_list[editor_name];
 				window[editor_slug].setEditor( $editor_input.val() );
 
-				window[editor_slug].getEditor().on( "change", setEditorNewValue.bind(null, $editor_input, editor_slug));
+				window[editor_slug].getEditor().on( 'change', setEditorNewValue.bind( null, $editor_input, editor_slug ) );
 			}
 		}
 	}
-} );
+});

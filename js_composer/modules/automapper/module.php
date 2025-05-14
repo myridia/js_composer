@@ -50,14 +50,21 @@ class Vc_Automapper {
 	public static $shortcode_suffix = '-vc-automapper-';
 
 	/**
+	 * Vc_Automapper constructor.
+	 *
+	 * @since 8.0
+	 */
+	public function __construct() {
+		$this->settings = new Vc_Automapper_Module_Settings();
+		$this->settings->init();
+	}
+
+	/**
 	 * Init module implementation.
 	 *
 	 * @since 7.7
 	 */
 	public function init() {
-
-		$this->settings = new Vc_Automapper_Module_Settings();
-		$this->settings->init();
 
 		$this->add_ajax_actions();
 
@@ -103,22 +110,22 @@ class Vc_Automapper {
 	 * @since 7.7
 	 */
 	public function add_ajax_actions() {
-		add_action( 'wp_ajax_vc_automapper_create', array(
+		add_action( 'wp_ajax_vc_automapper_create', [
 			$this,
 			'create',
-		) );
-		add_action( 'wp_ajax_vc_automapper_read', array(
+		] );
+		add_action( 'wp_ajax_vc_automapper_read', [
 			$this,
 			'read',
-		) );
-		add_action( 'wp_ajax_vc_automapper_update', array(
+		] );
+		add_action( 'wp_ajax_vc_automapper_update', [
 			$this,
 			'update',
-		) );
-		add_action( 'wp_ajax_vc_automapper_delete', array(
+		] );
+		add_action( 'wp_ajax_vc_automapper_delete', [
 			$this,
 			'delete',
-		) );
+		] );
 
 		return $this;
 	}
@@ -402,7 +409,7 @@ class Vc_Automapper {
 		$data = vc_post_param( 'data' );
 		$shortcode = new Vc_Automap_Model( $id );
 		if ( ! isset( $data['params'] ) ) {
-			$data['params'] = array();
+			$data['params'] = [];
 		}
 		$shortcode->set( $data );
 
@@ -484,7 +491,7 @@ class Vc_Automapper {
 	public static function map() {
 		$shortcodes = Vc_Automap_Model::findAll();
 		foreach ( $shortcodes as $shortcode ) {
-			vc_map( array(
+			vc_map( [
 				'name' => $shortcode->name,
 				'base' => self::prepare_shortcode_tags( $shortcode->tag, WPBMap::getShortCodes() ),
 				'category' => ( new self() )->build_categories_array( $shortcode->category ),
@@ -493,7 +500,7 @@ class Vc_Automapper {
 				'show_settings_on_create' => ! empty( $shortcode->params ),
 				'atm' => true,
 				'icon' => 'icon-wpb-atm',
-			) );
+			] );
 		}
 	}
 
@@ -569,7 +576,7 @@ class Vc_Automapper {
 	 * @return array
 	 */
 	public function build_params_array( $init_params ) {
-		$params = array();
+		$params = [];
 		if ( is_array( $init_params ) ) {
 			foreach ( $init_params as $param ) {
 				if ( 'dropdown' === $param['type'] ) {

@@ -164,6 +164,7 @@
 [data-vc-template-search="true"] {
   .vc_edit-form-tab {
     display: flex !important;
+    padding-top: 0;
     &.vc-search-result-empty {
       display: none !important;
     }
@@ -174,7 +175,15 @@
       margin-bottom: 0;
     }
   }
-  .vc_ui-panel-content{
+  .vc_ui-panel-content {
     padding-bottom: 0;
+    padding-top: 0;
+
+    .vc_ui-template-list .vc_ui-template:last-of-type .vc_ui-list-bar-item {
+      border-bottom: none;
+    }
   }
+
+
 }
+

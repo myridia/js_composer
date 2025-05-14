@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_toggle] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_toggle.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,7 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WPBakeryShortCode_Vc_Toggle extends WPBakeryShortCode {
 	/**
-	 * @param $title
+	 * Override default title.
+	 *
+	 * @param string $title
 	 * @return string
 	 */
 	public function outputTitle( $title ) {
@@ -16,7 +24,9 @@ class WPBakeryShortCode_Vc_Toggle extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $atts
+	 * Get element heading.
+	 *
+	 * @param array $atts
 	 * @return string
 	 * @throws \Exception
 	 */

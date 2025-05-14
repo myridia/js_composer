@@ -1,4 +1,8 @@
 <?php
+/**
+ * Notice param assets template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -61,7 +65,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				console.error( 'Failed to add notice to disable list', response)
 			});
 		};
-
 		$( document ).off( 'click.wpb-notice-dismiss' ).on( 'click.wpb-notice-dismiss', '.wpb-notice-dismiss', function ( e ) {
 			e.preventDefault();
 			var $el = jQuery( this ).closest(

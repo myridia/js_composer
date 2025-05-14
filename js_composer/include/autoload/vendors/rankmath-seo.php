@@ -28,10 +28,10 @@ function vc_rank_math_seo_image_filter( $images, $id ) {
 				$ids = explode( ',', $m );
 				foreach ( $ids as $id ) {
 					if ( (int) $id ) {
-						$images[] = array(
+						$images[] = [
 							'src' => wp_get_attachment_url( $id ),
 							'title' => get_the_title( $id ),
-						);
+						];
 					}
 				}
 			}

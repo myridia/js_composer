@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_gitem] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_gitem.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,15 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WPBakeryShortCode_Vc_Gitem extends WPBakeryShortCodesContainer {
 	/**
-	 * @param $atts
-	 * @param null $content
+	 * Get admin output.
+	 *
+	 * @param array $atts
+	 * @param string|null $content
 	 * @return string
 	 * @throws \Exception
 	 */
 	public function contentAdmin( $atts, $content = null ) {
-		/**
-		 * @var string @el_class - comes
-		 */
+		// string @el_class - comes.
 		extract( shortcode_atts( $this->predefined_atts, $atts ) );
 		$output = '';
 
@@ -32,7 +38,7 @@ class WPBakeryShortCode_Vc_Gitem extends WPBakeryShortCodesContainer {
 			foreach ( $this->settings['params'] as $param ) {
 				$param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : '';
 				if ( is_array( $param_value ) ) {
-					// Get first element from the array
+					// Get first element from the array.
 					reset( $param_value );
 					$first_key = key( $param_value );
 					$param_value = $param_value[ $first_key ];
@@ -48,8 +54,10 @@ class WPBakeryShortCode_Vc_Gitem extends WPBakeryShortCodesContainer {
 	}
 
 	/**
-	 * @param $width
-	 * @param $i
+	 * Add main html block attributes.
+	 *
+	 * @param string $width
+	 * @param int $i
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -60,6 +68,8 @@ class WPBakeryShortCode_Vc_Gitem extends WPBakeryShortCodesContainer {
 	}
 
 	/**
+	 * Get item grid output.
+	 *
 	 * @return string
 	 */
 	public function itemGrid() {
@@ -69,8 +79,10 @@ class WPBakeryShortCode_Vc_Gitem extends WPBakeryShortCodesContainer {
 	}
 
 	/**
-	 * @param $width
-	 * @param $i
+	 * Add container classes.
+	 *
+	 * @param string $width
+	 * @param int $i
 	 * @return string
 	 */
 	public function containerHtmlBlockParams( $width, $i ) {
@@ -90,25 +102,25 @@ class WPBakeryShortCode_Vc_Gitem extends WPBakeryShortCodesContainer {
 			return '';
 		}
 
-		$buttons = array();
-		$editAccess = vc_user_access_check_shortcode_edit( $this->shortcode );
-		$allAccess = vc_user_access_check_shortcode_all( $this->shortcode );
+		$buttons = [];
+		$edit_access = vc_user_access_check_shortcode_edit( $this->shortcode );
+		$all_access = vc_user_access_check_shortcode_all( $this->shortcode );
 		foreach ( $controls as $control ) {
 			switch ( $control ) {
 				case 'add':
-					if ( $allAccess ) {
+					if ( $all_access ) {
 						$buttons[] = '<a class="vc_control-btn vc_control-btn-add" href="#" title="' . esc_attr__( 'Add to this grid item', 'js_composer' ) . '" data-vc-control="add"><i class="vc_icon"></i></a>';
 					}
 					break;
 
 				case 'edit':
-					if ( $editAccess ) {
+					if ( $edit_access ) {
 						$buttons[] = '<a class="vc_control-btn vc_control-btn-edit" href="#" title="' . esc_attr__( 'Edit this grid item', 'js_composer' ) . '" data-vc-control="edit"><i class="vc_icon"></i></a>';
 					}
 					break;
 
 				case 'delete':
-					if ( $allAccess ) {
+					if ( $all_access ) {
 						$buttons[] = '<a class="vc_control-btn vc_control-btn-delete" href="#" title="' . esc_attr__( 'Delete this grid item ', 'js_composer' ) . '" data-vc-control="delete"><i class="vc_icon"></i></a>';
 					}
 					break;

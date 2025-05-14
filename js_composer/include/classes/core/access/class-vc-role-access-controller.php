@@ -1,4 +1,11 @@
 <?php
+/**
+ * Handles role-based access control rules and capabilities.
+ *
+ * This file defines the Vc_Role_Access_Controller class, which manages specific
+ * parts of role-based access control, including capabilities and rules for user roles.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -11,23 +18,59 @@ require_once vc_path_dir( 'CORE_DIR', 'access/abstract-class-vc-access.php' );
  * @since 4.8
  */
 class Vc_Role_Access_Controller extends Vc_Access {
+	/**
+	 * Prefix used for storing access rules.
+	 *
+	 * @var string
+	 */
 	protected static $part_name_prefix = 'vc_access_rules_';
+
+	/**
+	 * The specific part of the role being managed.
+	 *
+	 * @var bool|string
+	 */
 	protected $part = false;
+
+	/**
+	 * The name of the role.
+	 *
+	 * @var bool|string
+	 */
 	protected $roleName = false;
+
+	/**
+	 * WordPress role object.
+	 *
+	 * @var WP_Role|bool
+	 */
 	protected $role = false;
+
+	/**
+	 * The current access validation state.
+	 *
+	 * @var bool
+	 */
 	protected $validAccess = true;
-	protected $mergedCaps = array(
+
+	/**
+	 * Map of merged capabilities to simplify permission checks.
+	 *
+	 * @var array
+	 */
+	protected $mergedCaps = [
 		'vc_row_inner_all' => 'vc_row_all',
 		'vc_column_all' => 'vc_row_all',
 		'vc_column_inner_all' => 'vc_row_all',
 		'vc_row_inner_edit' => 'vc_row_edit',
 		'vc_column_edit' => 'vc_row_edit',
 		'vc_column_inner_edit' => 'vc_row_edit',
-	);
+	];
 
 	/**
 	 * Vc_Role_Access_Controller constructor.
-	 * @param $part
+	 *
+	 * @param string $part
 	 */
 	public function __construct( $part ) {
 		$this->part = $part;
@@ -36,7 +79,7 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	/**
 	 * Set role name.
 	 *
-	 * @param $role_name
+	 * @param string $role_name
 	 */
 	public function setRoleName( $role_name ) {
 		$this->roleName = $role_name;
@@ -44,6 +87,7 @@ class Vc_Role_Access_Controller extends Vc_Access {
 
 	/**
 	 * Get part for role.
+	 *
 	 * @return bool
 	 */
 	public function getPart() {
@@ -99,7 +143,7 @@ class Vc_Role_Access_Controller extends Vc_Access {
 		if ( null === $this->getRole() ) {
 			$this->setValidAccess( is_super_admin() );
 		} elseif ( $this->getValidAccess() ) {
-			// YES it is hard coded :)
+			// YES it is hard coded.
 			if ( 'administrator' === $this->getRole()->name && 'settings' === $this->getPart() && ( 'vc-roles-tab' === $rule || 'vc-updater-tab' === $rule ) ) {
 				$this->setValidAccess( true );
 
@@ -128,6 +172,9 @@ class Vc_Role_Access_Controller extends Vc_Access {
 		return $this;
 	}
 
+	/**
+	 * Get valid access.
+	 */
 	public function getValidAccess() {
 		return $this->validAccess;
 	}
@@ -161,7 +208,7 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	/**
 	 * Get capability for role
 	 *
-	 * @param $rule
+	 * @param string $rule
 	 *
 	 * @return bool
 	 * @throws \Exception
@@ -175,7 +222,7 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	/**
 	 * Add capability to role.
 	 *
-	 * @param $rule
+	 * @param string $rule
 	 * @param bool $value
 	 * @throws \Exception
 	 */
@@ -186,11 +233,12 @@ class Vc_Role_Access_Controller extends Vc_Access {
 
 	/**
 	 * Get all capability for this part.
+	 *
 	 * @throws \Exception
 	 */
 	public function getAllCaps() {
 		$role = $this->getRole();
-		$caps = array();
+		$caps = [];
 		if ( $role ) {
 			$role = apply_filters( 'vc_role_access_all_caps_role', $role );
 			if ( isset( $role->capabilities ) && is_array( $role->capabilities ) ) {
@@ -207,6 +255,8 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	}
 
 	/**
+	 * Get the role object.
+	 *
 	 * @return null|\WP_Role
 	 * @throws Exception
 	 */
@@ -222,6 +272,8 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	}
 
 	/**
+	 * Get role name.
+	 *
 	 * @return null|string
 	 */
 	public function getRoleName() {
@@ -229,6 +281,8 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	}
 
 	/**
+	 * Get current state key.
+	 *
 	 * @return string
 	 */
 	public function getStateKey() {
@@ -236,7 +290,9 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	}
 
 	/**
-	 * @param $data
+	 * Checking if user has access to this part.
+	 *
+	 * @param mixed $data
 	 * @return $this
 	 * @throws \Exception
 	 */
@@ -249,6 +305,8 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	}
 
 	/**
+	 * Check multi state.
+	 *
 	 * @return $this
 	 */
 	public function checkStateAny() {
@@ -262,6 +320,7 @@ class Vc_Role_Access_Controller extends Vc_Access {
 
 	/**
 	 * Return access value.
+	 *
 	 * @return string
 	 */
 	public function __toString() {
@@ -269,7 +328,9 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	}
 
 	/**
-	 * @param $rule
+	 * Get certain rule.
+	 *
+	 * @param string $rule
 	 * @return mixed
 	 */
 	public function updateMergedCaps( $rule ) {
@@ -281,6 +342,8 @@ class Vc_Role_Access_Controller extends Vc_Access {
 	}
 
 	/**
+	 * Get caps.
+	 *
 	 * @return array
 	 */
 	public function getMergedCaps() {

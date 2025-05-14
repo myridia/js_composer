@@ -1,10 +1,19 @@
 <?php
+/**
+ * The template for displaying [vc_tab] shortcode output.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_tab.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $tab_id
  * @var $title

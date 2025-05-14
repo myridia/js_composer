@@ -1,0 +1,35 @@
+.wpb-toggle-wrapper {
+  input[type=checkbox]{
+    display: none;
+  }
+  label {
+    flex: 0 0 40px;
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 40px;
+    height: 20px;
+    background: #5E5E5E;
+    display: block;
+    border-radius: 15px;
+    position: relative;
+    transition: 0.3s;
+  }
+  label:after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    transition: 0.3s;
+  }
+  input:checked + label {
+    background: #0772CE;
+  }
+  input:checked + label:after {
+    left: calc(100% - 4px);
+    transform: translateX(-100%);
+  }
+}

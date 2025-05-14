@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_accordion_tab] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_accordion_tab.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -10,28 +16,37 @@ require_once vc_path_dir( 'SHORTCODES_DIR', 'vc-tab.php' );
  */
 class WPBakeryShortCode_VC_Accordion_Tab extends WPBakeryShortCode_VC_Tab {
 	/**
+	 * Controls css settings.
+	 *
 	 * @var string
 	 */
 	protected $controls_css_settings = 'tc vc_control-container';
 	/**
+	 * Controls list.
+	 *
 	 * @var array
 	 */
-	protected $controls_list = array(
+	protected $controls_list = [
 		'add',
 		'edit',
 		'clone',
 		'copy',
 		'delete',
-	);
+	];
 
 	/**
+	 * Class for non draggable container.
+	 *
 	 * @var string
 	 */
 	public $nonDraggableClass = 'vc-non-draggable-container';
 
 	/**
-	 * @param $atts
-	 * @param null $content
+	 * Get admin output.
+	 *
+	 * @param array $atts
+	 * @param string $content
+	 *
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -45,47 +60,47 @@ class WPBakeryShortCode_VC_Accordion_Tab extends WPBakeryShortCode_VC_Tab {
 		$column_controls_bottom = $this->getColumnControls( 'add', 'bottom-controls' );
 
 		if ( 'column_14' === $width || '1/4' === $width ) {
-			$width = array( 'vc_col-sm-3' );
+			$width = [ 'vc_col-sm-3' ];
 		} elseif ( 'column_14-14-14-14' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-3',
 				'vc_col-sm-3',
 				'vc_col-sm-3',
 				'vc_col-sm-3',
-			);
+			];
 		} elseif ( 'column_13' === $width || '1/3' === $width ) {
-			$width = array( 'vc_col-sm-4' );
+			$width = [ 'vc_col-sm-4' ];
 		} elseif ( 'column_13-23' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-4',
 				'vc_col-sm-8',
-			);
+			];
 		} elseif ( 'column_13-13-13' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-4',
 				'vc_col-sm-4',
 				'vc_col-sm-4',
-			);
+			];
 		} elseif ( 'column_12' === $width || '1/2' === $width ) {
-			$width = array( 'vc_col-sm-6' );
+			$width = [ 'vc_col-sm-6' ];
 		} elseif ( 'column_12-12' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-6',
 				'vc_col-sm-6',
-			);
+			];
 		} elseif ( 'column_23' === $width || '2/3' === $width ) {
-			$width = array( 'vc_col-sm-8' );
+			$width = [ 'vc_col-sm-8' ];
 		} elseif ( 'column_34' === $width || '3/4' === $width ) {
-			$width = array( 'vc_col-sm-9' );
+			$width = [ 'vc_col-sm-9' ];
 		} elseif ( 'column_16' === $width || '1/6' === $width ) {
-			$width = array( 'vc_col-sm-2' );
+			$width = [ 'vc_col-sm-2' ];
 		} else {
-			$width = array( '' );
+			$width = [ '' ];
 		}
 		$sortable = ( vc_user_access_check_shortcode_all( $this->shortcode ) ? 'wpb_sortable' : $this->nonDraggableClass );
 
 		$count = count( $width );
-		for ( $i = 0; $i < $count; $i ++ ) {
+		for ( $i = 0; $i < $count; $i++ ) {
 			$output .= '<div class="group ' . $sortable . '">';
 			$output .= '<h3><span class="tab-label"><%= params.title %></span></h3>';
 			$output .= '<div ' . $this->mainHtmlBlockParams( $width, $i ) . '>';
@@ -99,7 +114,7 @@ class WPBakeryShortCode_VC_Accordion_Tab extends WPBakeryShortCode_VC_Tab {
 				foreach ( $this->settings['params'] as $param ) {
 					$param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : '';
 					if ( is_array( $param_value ) ) {
-						// Get first element from the array
+						// Get first element from the array.
 						reset( $param_value );
 						$first_key = key( $param_value );
 						$param_value = $param_value[ $first_key ];
@@ -118,8 +133,10 @@ class WPBakeryShortCode_VC_Accordion_Tab extends WPBakeryShortCode_VC_Tab {
 	}
 
 	/**
-	 * @param $width
-	 * @param $i
+	 * Get main html block params.
+	 *
+	 * @param string $width
+	 * @param int $i
 	 * @return string
 	 */
 	public function mainHtmlBlockParams( $width, $i ) {
@@ -127,8 +144,10 @@ class WPBakeryShortCode_VC_Accordion_Tab extends WPBakeryShortCode_VC_Tab {
 	}
 
 	/**
-	 * @param $width
-	 * @param $i
+	 * Add container classes.
+	 *
+	 * @param string $width
+	 * @param int $i
 	 * @return string
 	 */
 	public function containerHtmlBlockParams( $width, $i ) {
@@ -136,7 +155,9 @@ class WPBakeryShortCode_VC_Accordion_Tab extends WPBakeryShortCode_VC_Tab {
 	}
 
 	/**
-	 * @param $title
+	 * Get title.
+	 *
+	 * @param string $title
 	 * @return string
 	 */
 	protected function outputTitle( $title ) {
@@ -144,6 +165,8 @@ class WPBakeryShortCode_VC_Accordion_Tab extends WPBakeryShortCode_VC_Tab {
 	}
 
 	/**
+	 * Set custom admin block params.
+	 *
 	 * @return string
 	 */
 	public function customAdminBlockParams() {

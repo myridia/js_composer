@@ -1,11 +1,21 @@
 <?php
+/**
+ * Param type 'vc_grid_id'.
+ *
+ * Specific param type for vc_grid_id that we use for our grid builder.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/#vc_map()-ParametersofparamsArray
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * @param $settings
- * @param $value
+ * Render form field for vc_grid_id.
+ *
+ * @param array $settings
+ * @param string $value
  *
  * @return string
  * @since 4.4.3

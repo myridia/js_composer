@@ -1,8 +1,17 @@
 <?php
+/**
+ * Default post type settings template.
+ *
+ * @var string $title
+ * @var array $post_types
+ * @var array $templates
+ * @var string $field_key
+ * @var array $value
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-
 ?>
 <fieldset>
 	<legend class="screen-reader-text">

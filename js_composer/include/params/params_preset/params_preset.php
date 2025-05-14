@@ -1,4 +1,12 @@
 <?php
+/**
+ * Param type 'param_preset'.
+ *
+ * Container param for preset other fields.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/#vc_map()-ParametersofparamsArray
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Allows to set list of attributes which will be
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4

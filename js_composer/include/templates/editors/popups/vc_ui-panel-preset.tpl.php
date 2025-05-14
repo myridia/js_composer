@@ -1,4 +1,10 @@
 <?php
+/**
+ * Preset panel template.
+ *
+ * @var Vc_Preset_Panel_Editor $box
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,14 +13,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	data-vc-panel=".vc_ui-panel-header-header" data-vc-ui-element="panel-preset" id="vc_ui-panel-preset">
 	<div class="vc_ui-panel-window-inner">
 		<?php
-		vc_include_template( 'editors/popups/vc_ui-header.tpl.php', array(
+		vc_include_template( 'editors/popups/vc_ui-header.tpl.php', [
 			'title' => esc_html__( 'My Elements', 'js_composer' ),
-			'controls' => array(
+			'controls' => [
 				'minimize',
 				'close',
-			),
+			],
 			'header_css_class' => 'vc_ui-preset-panel-header-container',
-		) );
+		] );
 		?>
 		<!-- param window footer-->
 		<div class="vc_ui-panel-content-container">

@@ -1,7 +1,7 @@
-(function () {
+( function () {
 	'use strict';
 
-	window.InlineShortcodeView_vc_tour = window.InlineShortcodeView_vc_tabs.extend( {
+	window.InlineShortcodeView_vc_tour = window.InlineShortcodeView_vc_tabs.extend({
 		render: function () {
 			_.bindAll( this, 'stopSorting' );
 			this.$tabs = this.$el.find( '> .wpb_tour' );
@@ -17,5 +17,5 @@
 			this.$tabs.find( '.wpb_tour_next_prev_nav' ).appendTo( this.$tabs );
 			window.InlineShortcodeView_vc_tour.__super__.updated.call( this );
 		}
-	} );
+	});
 })();

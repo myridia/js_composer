@@ -21,7 +21,7 @@ if ( ! function_exists( 'vc_auto_save_add_settings' ) ) {
 			'auto_save',
 			'vc_auto_save_sanitize_disable_callback',
 			'vc_auto_save_disable_render_callback',
-			array( 'info' => esc_html__( 'Enable auto-save, or use legacy save.', 'js_composer' ) )
+			[ 'info' => esc_html__( 'Enable auto-save, or use legacy save.', 'js_composer' ) ]
 		);
 	}
 }
@@ -66,21 +66,21 @@ if ( ! function_exists( 'wpb_add_element_controls' ) ) {
 	 */
 	function wpb_add_element_controls() {
 		if ( ! get_option( 'wpb_js_auto_save' ) ) {
-			vc_include_template('editors/popups/vc_ui-footer.tpl.php', array(
-				'controls' => array(
-					array(
+			vc_include_template('editors/popups/vc_ui-footer.tpl.php', [
+				'controls' => [
+					[
 						'name' => 'close',
 						'label' => esc_html__( 'Close', 'js_composer' ),
 						'css_classes' => 'vc_ui-button-fw',
-					),
-					array(
+					],
+					[
 						'name' => 'save',
 						'label' => esc_html__( 'Save changes', 'js_composer' ),
 						'css_classes' => 'vc_ui-button-fw',
 						'style' => 'action',
-					),
-				),
-			));
+					],
+				],
+			]);
 		}
 	}
 }

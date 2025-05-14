@@ -1,18 +1,38 @@
 <?php
+/**
+ * Manage role.
+ *
+ * @since 4.8
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * Manage role.
- * @since 4.8
- *
  * Class Vc_Roles
  */
 class Vc_Roles {
+	/**
+	 * List of post types.
+	 *
+	 * @var array|bool
+	 */
 	protected $post_types = false;
+
+	/**
+	 * List of excluded post types.
+	 *
+	 * @var array|bool
+	 */
 	protected $vc_excluded_post_types = false;
-	protected $parts = array(
+
+	/**
+	 * List of parts for the roles.
+	 *
+	 * @var array
+	 */
+	protected $parts = [
 		'post_types',
 		'backend_editor',
 		'frontend_editor',
@@ -24,12 +44,19 @@ class Vc_Roles {
 		'grid_builder',
 		'presets',
 		'dragndrop',
-	);
+	];
 
+	/**
+	 * Cached parts list.
+	 *
+	 * @var array|null
+	 */
 	protected static $parts_cache = null;
+
 
 	/**
 	 * Get list of parts
+	 *
 	 * @return mixed
 	 */
 	public function getParts() {
@@ -43,20 +70,22 @@ class Vc_Roles {
 	/**
 	 * Check required capability for this role to have user access.
 	 *
-	 * @param $part
+	 * @param string $part
 	 *
 	 * @return array|string
 	 */
 	public function getPartCapability( $part ) {
-		return 'settings' !== $part ? array(
+		return 'settings' !== $part ? [
 			'edit_posts',
 			'edit_pages',
-		) : 'manage_options';
+		] : 'manage_options';
 	}
 
 	/**
-	 * @param $role
-	 * @param $caps
+	 * Check if the role has the specified capabilities.
+	 *
+	 * @param string $role
+	 * @param string|array $caps
 	 * @return bool
 	 */
 	public function hasRoleCapability( $role, $caps ) {
@@ -68,7 +97,7 @@ class Vc_Roles {
 			$i = 0;
 			$count = count( $caps );
 			while ( false === $has && $i < $count ) {
-				$has = $this->hasRoleCapability( $role, $caps[ $i ++ ] );
+				$has = $this->hasRoleCapability( $role, $caps[ $i++ ] );
 			}
 		}
 
@@ -76,29 +105,31 @@ class Vc_Roles {
 	}
 
 	/**
+	 * Retrieve the WP_Roles instance.
+	 *
 	 * @return \WP_Roles
 	 */
 	public function getWpRoles() {
 		global $wp_roles;
 		if ( function_exists( 'wp_roles' ) ) {
 			return $wp_roles;
-		} else {
-			if ( ! isset( $wp_roles ) ) {
+		} elseif ( ! isset( $wp_roles ) ) {
 				// @codingStandardsIgnoreLine
 				$wp_roles = new WP_Roles();
-			}
 		}
 
 		return $wp_roles;
 	}
 
 	/**
+	 * Save role settings.
+	 *
 	 * @param array $params
 	 * @return array
 	 * @throws \Exception
 	 */
-	public function save( $params = array() ) {
-		$data = array( 'message' => '' );
+	public function save( $params = [] ) {
+		$data = [ 'message' => '' ];
 		$roles = $this->getWpRoles();
 		$editable_roles = get_editable_roles();
 		foreach ( $params as $role => $parts ) {
@@ -108,24 +139,22 @@ class Vc_Roles {
 			if ( isset( $editable_roles[ $role ] ) ) {
 				foreach ( $parts as $part => $settings ) {
 					$part_key = vc_role_access()->who( $role )->part( $part )->getStateKey();
-					$stateValue = '0';
-					$roles->use_db = false; // Disable saving in DB on every cap change
+					$state_value = '0';
+					$roles->use_db = false; // Disable saving in DB on every cap change.
 					foreach ( $settings as $key => $value ) {
 						if ( '_state' === $key ) {
-							$stateValue = in_array( $value, array(
+							$state_value = in_array( $value, [
 								'0',
 								'1',
-							), true ) ? (bool) $value : $value;
-						} else {
-							if ( empty( $value ) ) {
+							], true ) ? (bool) $value : $value;
+						} elseif ( empty( $value ) ) {
 								$roles->remove_cap( $role, $part_key . '/' . $key );
-							} else {
-								$roles->add_cap( $role, $part_key . '/' . $key, true );
-							}
+						} else {
+							$roles->add_cap( $role, $part_key . '/' . $key, true );
 						}
 					}
-					$roles->use_db = true; // Enable for the lat change in cap of role to store data in DB
-					$roles->add_cap( $role, $part_key, $stateValue );
+					$roles->use_db = true; // Enable for the lat change in cap of role to store data in DB.
+					$roles->add_cap( $role, $part_key, $state_value );
 				}
 			}
 		}
@@ -135,18 +164,20 @@ class Vc_Roles {
 	}
 
 	/**
+	 * Get post types.
+	 *
 	 * @return array|bool
 	 */
 	public function getPostTypes() {
 		if ( false === $this->post_types ) {
-			$this->post_types = array();
+			$this->post_types = [];
 			$exclude = $this->getExcludePostTypes();
-			foreach ( get_post_types( array( 'public' => true ) ) as $post_type ) {
+			foreach ( get_post_types( [ 'public' => true ] ) as $post_type ) {
 				if ( ! in_array( $post_type, $exclude, true ) ) {
-					$this->post_types[] = array(
+					$this->post_types[] = [
 						$post_type,
 						$post_type,
-					);
+					];
 				}
 			}
 		}
@@ -155,16 +186,18 @@ class Vc_Roles {
 	}
 
 	/**
+	 * Get excluded post types.
+	 *
 	 * @return bool|mixed|void
 	 */
 	public function getExcludePostTypes() {
 		if ( false === $this->vc_excluded_post_types ) {
-			$this->vc_excluded_post_types = apply_filters( 'vc_settings_exclude_post_type', array(
+			$this->vc_excluded_post_types = apply_filters( 'vc_settings_exclude_post_type', [
 				'attachment',
 				'revision',
 				'nav_menu_item',
 				'mediapage',
-			) );
+			] );
 		}
 
 		return $this->vc_excluded_post_types;

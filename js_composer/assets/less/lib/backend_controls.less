@@ -82,7 +82,6 @@
   // Row drag handler
   &.column_move, .vc-controls-move {
     cursor: move;
-    float: left;
   }
   &:hover {
     color: #888888;
@@ -93,8 +92,9 @@
 }
 
 .vc_controls-row {
-  text-align: center;
-  line-height: 1px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;  line-height: 1px;
   position: relative;
   z-index: 1;
   visibility: visible; // TODO: set as default
@@ -103,12 +103,20 @@
   &:hover {
     z-index: 10;
   }
+  > div {
+    position: relative;
+    display: flex;
+    margin-right: auto;
+  }
+  .vc_row_edit_clone_delete {
+    display: flex;
+    flex-direction: row-reverse;
+  }
   .vc_control {
     background-color: @vc_row_control_bg;
     padding: 3px 10px;
   }
   .column_add, .vc_control-add-column {
-    float: left;
     margin-left: 1px;
   }
   .column_move {
@@ -156,7 +164,6 @@
     display: block;
     height: 16px;
     overflow: hidden;
-    float: left;
     padding: 3px 0 5px 4px;
     text-align: left;
     margin-left: 1px;
@@ -166,7 +173,8 @@
     .vc_active {
       display: inline-block;
     }
-    &:hover {
+    &:hover,
+    &.vc_active {
       width: auto;
       height: auto;
       position: absolute;
@@ -182,9 +190,6 @@
     }
   }
   .vc_control-set-column {
-    //background-image: url(../vc/row_layouts/1.gif);
-    //background-position: center center;
-    //background-repeat: no-repeat;
     display: none;
     border: none;
     width: 32px;
@@ -265,7 +270,6 @@
   // Right controls (delete, clone, edit)
   .vc_row_edit_clone_delete {
     .vc_control {
-      float: right;
       background-position: center center;
       background-repeat: no-repeat;
       margin-left: 1px;
@@ -273,10 +277,12 @@
       -moz-box-shadow: none !important;
       box-shadow: none !important;
     }
+    .column_toggle {
+      margin: 0;
+    }
   }
 
   .vc_row_color {
-    float: right;
     margin-top: 3px;
     width: 16px;
     height: 16px;
@@ -285,7 +291,6 @@
     border-radius: 8px;
   }
   .vc_row_image {
-    float: right;
     margin-top: 3px;
     width: 16px;
     height: 16px;
@@ -294,6 +299,14 @@
     background-size: cover;
     border-radius: 8px;
   }
+}
+
+.vc_row_title {
+  text-align: left;
+  max-width: 120px;
+  padding-bottom: 7px;
+  font-style: italic;
+  color: #aaaaaa;
 }
 
 .wpb_vc_section {
@@ -376,9 +389,20 @@
 }
 
 .wpb_content_element {
-  &:hover {
+  &:hover,
+  &.vc_active {
     > .vc_controls {
       .vc_controls-visible;
     }
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .vc_controls-row .vc_row_layouts.vc_active,
+  .vc_controls-row .vc_row_layouts:hover{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 70vw;
   }
 }

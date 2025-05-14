@@ -1,4 +1,17 @@
 <?php
+/**
+ * UI Header template.
+ *
+ * @var string $header_css_class
+ * @var string $title
+ * @var array $controls
+ * @var string $search_template
+ * @var string $header_tabs_template
+ * @var array $header_tabs_template_variables
+ * @var bool $stacked_bottom
+ * @var bool $is_ai_token_usage
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -11,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="vc_ui-panel-header-controls">
 			<?php foreach ( $controls as $key => $control ) : ?>
 				<?php if ( is_array( $control ) && isset( $control['template'] ) ) : ?>
-					<?php vc_include_template( $control['template'], isset( $control['variables'] ) ? $control['variables'] : array() ); ?>
+					<?php vc_include_template( $control['template'], isset( $control['variables'] ) ? $control['variables'] : [] ); ?>
 				<?php else : ?>
 					<button type="button" class="vc_general vc_ui-control-button vc_ui-<?php echo esc_attr( $control ); ?>-button" data-vc-ui-element="button-<?php echo esc_attr( $control ); ?>">
 						<i class="vc-composer-icon vc-c-icon-<?php echo esc_attr( $control ); ?>"></i></button>
@@ -26,14 +39,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php vc_include_template( 'editors/popups/ai/token-usage.tpl.php' ); ?>
 				<?php endif ?>
 			</h3>
-			<?php if ( isset( $search_template ) && ! empty( $search_template ) ) : ?>
+			<?php if ( ! empty( $search_template ) ) : ?>
 				<?php vc_include_template( $search_template ); ?>
 			<?php endif ?>
 		</div>
 		<div class="vc_ui-panel-header-content" data-vc-ui-element="panel-header-content">
-			<?php if ( isset( $content_template ) && ! empty( $content_template ) ) : ?>
-				<?php vc_include_template( $content_template, isset( $template_variables ) && is_array( $template_variables ) ? $template_variables : array() ); ?>
-			<?php endif ?>
+			<?php
+			if ( ! empty( $header_tabs_template ) ) :
+				$payload = isset( $header_tabs_template_variables ) && is_array( $header_tabs_template_variables ) ? $header_tabs_template_variables : [];
+				$payload = isset( $box ) ? array_merge( $payload, [ 'box' => $box ] ) : $payload;
+
+				vc_include_template( $header_tabs_template, $payload );
+				endif
+			?>
 		</div>
 	</div>
 </div>

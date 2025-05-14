@@ -4,41 +4,41 @@ jQuery( document ).ready( function ( $ ) {
 	var pickers = [];
 	var pickrOptions = {
 		disabled: !isOptionsEnabled
-	}
-	vc.initColorPicker(null, pickrOptions, null,  pickers);
+	};
+	vc.initColorPicker( null, pickrOptions, null, pickers );
 
-	$( '#vc_settings-color-restore-default' ).on('click', function ( e ) {
+	$( '#vc_settings-color-restore-default' ).on( 'click', function ( e ) {
 		e.preventDefault();
 		if ( confirm( window.i18nLocaleSettings.are_you_sure_reset_color ) ) {
 			$( '#vc_settings-color-action' ).val( 'restore_color' );
 			$( '#vc_settings-color' ).attr( 'action', window.location.href ).find( '[type=submit]' ).click();
 		}
-	} );
+	});
 	$( '#wpb_js_use_custom' ).on( 'change', function () {
 		if ( this.checked ) {
 			$( '#vc_settings-color' ).addClass( 'color_enabled' );
-			pickers.forEach(function (pickr) {
+			pickers.forEach( function ( pickr ) {
 				pickr.enable();
 			});
 		} else {
 			$( '#vc_settings-color' ).removeClass( 'color_enabled' );
-			pickers.forEach(function (pickr) {
+			pickers.forEach( function ( pickr ) {
 				pickr.disable();
 			});
 		}
-	} );
+	});
 
-	function showMessageMore( text, typeClass, timeout, remove ) {
+	function showMessageMore ( text, typeClass, timeout, remove ) {
 		if ( remove ) {
 			$( '.vc_atm-message' ).remove();
 		}
-		var $message = $( '<div class="vc_atm-message ' + (typeClass ? typeClass : '') + '" style="display: none;"><p></p></div>' );
+		var $message = $( '<div class="vc_atm-message ' + ( typeClass ? typeClass : '' ) + '" style="display: none;"><p></p></div>' );
 		$message.find( 'p' ).text( text );
 		if ( !_.isUndefined( timeout ) ) {
 			window.setTimeout( function () {
 				$message.fadeOut( 500, function () {
 					$( this ).remove();
-				} );
+				});
 			}, timeout );
 		}
 		return $message;
@@ -66,7 +66,7 @@ jQuery( document ).ready( function ( $ ) {
 			$spinner.insertBefore( $submitButton ).show();
 
 			_.delay( function () {
-				vc.less.build( {
+				vc.less.build({
 					modifyVars: modifyVars,
 					variablesDataLinker: variablesDataLinker,
 					lessPath: $submitButton.data( 'vc-less-path' ),
@@ -75,7 +75,7 @@ jQuery( document ).ready( function ( $ ) {
 					if ( !_.isUndefined( output ) && !_.isUndefined( output.css ) ) {
 						$( '[name="wpb_js_compiled_js_composer_less"]' ).val( output.css );
 						var $form = $( '#vc_settings-color' );
-						$.ajax( {
+						$.ajax({
 							type: 'POST',
 							url: $form.attr( 'action' ),
 							data: $form.eq( 0 ).serializeArray(),
@@ -97,13 +97,13 @@ jQuery( document ).ready( function ( $ ) {
 								lessBuilding = false;
 								$spinner.remove();
 							}
-						} );
+						});
 
 					} else if ( !_.isUndefined( error ) ) {
 						if ( window.console && window.console.warn ) {
 							window.console.warn( 'build error', error );
 						}
-						showMessageMore( window.i18nLocaleSettings.save_error + ". " + error,
+						showMessageMore( window.i18nLocaleSettings.save_error + '. ' + error,
 							'error',
 							undefined,
 							true ).insertBefore( $submitButton.parent() ).fadeIn( 500 );
@@ -111,10 +111,10 @@ jQuery( document ).ready( function ( $ ) {
 						lessBuilding = false;
 						$spinner.remove();
 					}
-				} );
+				});
 			}, 100 );
 		} else {
 			form.submit();
 		}
-	} );
+	});
 });

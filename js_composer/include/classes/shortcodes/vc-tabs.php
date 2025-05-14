@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_tabs] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_tabs.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,39 +13,58 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class WPBakeryShortCode_Vc_Tabs
  */
 class WPBakeryShortCode_Vc_Tabs extends WPBakeryShortCode {
+	/**
+	 * Filter added flag.
+	 *
+	 * @var bool
+	 */
 	public static $filter_added = false;
+	/**
+	 * Controls css settings.
+	 *
+	 * @var string
+	 */
 	protected $controls_css_settings = 'out-tc vc_controls-content-widget';
-	protected $controls_list = array(
+
+	/**
+	 * Controls list.
+	 *
+	 * @var array
+	 */
+	protected $controls_list = [
 		'edit',
 		'clone',
 		'copy',
 		'delete',
-	);
+	];
 
 	/**
 	 * WPBakeryShortCode_Vc_Tabs constructor.
-	 * @param $settings
+	 *
+	 * @param array $settings
 	 */
 	public function __construct( $settings ) {
 		parent::__construct( $settings );
 		if ( ! self::$filter_added ) {
-			add_filter( 'vc_inline_template_content', array(
+			add_filter( 'vc_inline_template_content', [
 				$this,
 				'setCustomTabId',
-			) );
+			] );
 			self::$filter_added = true;
 		}
 	}
 
 	/**
-	 * @param $atts
+	 * Get admin output.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 * @return mixed|string
 	 * @throws \Exception
 	 */
 	public function contentAdmin( $atts, $content = null ) {
 		$width = $custom_markup = '';
-		$shortcode_attributes = array( 'width' => '1/1' );
+		$shortcode_attributes = [ 'width' => '1/1' ];
 		foreach ( $this->settings['params'] as $param ) {
 			if ( 'content' !== $param['param_name'] ) {
 				$shortcode_attributes[ $param['param_name'] ] = isset( $param['value'] ) ? $param['value'] : null;
@@ -49,11 +74,10 @@ class WPBakeryShortCode_Vc_Tabs extends WPBakeryShortCode {
 		}
 		extract( shortcode_atts( $shortcode_attributes, $atts ) );
 
-		// Extract tab titles
-
+		// Extract tab titles.
 		preg_match_all( '/vc_tab title="([^\"]+)"(\stab_id\=\"([^\"]+)\"){0,1}/i', $content, $matches, PREG_OFFSET_CAPTURE );
 
-		$tab_titles = array();
+		$tab_titles = [];
 
 		if ( isset( $matches[0] ) ) {
 			$tab_titles = $matches[0];
@@ -77,7 +101,7 @@ class WPBakeryShortCode_Vc_Tabs extends WPBakeryShortCode {
 		foreach ( $this->settings['params'] as $param ) {
 			$param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : '';
 			if ( is_array( $param_value ) ) {
-				// Get first element from the array
+				// Get first element from the array.
 				reset( $param_value );
 				$first_key = key( $param_value );
 				$param_value = $param_value[ $first_key ];
@@ -102,6 +126,8 @@ class WPBakeryShortCode_Vc_Tabs extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Get tab html output.
+	 *
 	 * @return string
 	 */
 	public function getTabTemplate() {
@@ -109,7 +135,9 @@ class WPBakeryShortCode_Vc_Tabs extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $content
+	 * Set id for custom tab.
+	 *
+	 * @param string $content
 	 * @return string|string[]|null
 	 */
 	public function setCustomTabId( $content ) {

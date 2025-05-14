@@ -22,10 +22,10 @@ function vc_init_vendor_yoast() {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-yoast_seo.php' );
 		$vendor = new Vc_Vendor_YoastSeo();
 		if ( defined( 'WPSEO_VERSION' ) && version_compare( WPSEO_VERSION, '3.0.0' ) === - 1 ) {
-			add_action( 'vc_after_set_mode', array(
+			add_action( 'vc_after_set_mode', [
 				$vendor,
 				'load',
-			) );
+			] );
 		} elseif ( is_admin() && 'vc_inline' === vc_action() ) {
 			$vendor->frontendEditorBuild();
 		}

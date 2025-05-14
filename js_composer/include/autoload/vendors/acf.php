@@ -26,9 +26,9 @@ function vc_init_vendor_acf() {
 	if ( class_exists( 'acf' ) || is_plugin_active( 'advanced-custom-fields/acf.php' ) || is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-advanced-custom-fields.php' );
 		$vendor = new Vc_Vendor_AdvancedCustomFields();
-		add_action( 'vc_after_set_mode', array(
+		add_action( 'vc_after_set_mode', [
 			$vendor,
 			'load',
-		) );
+		] );
 	}
 }

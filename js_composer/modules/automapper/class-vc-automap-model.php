@@ -57,13 +57,13 @@ if ( ! class_exists( 'Vc_Automap_Model' ) ) {
 		 * @since 7.7
 		 * @var array
 		 */
-		protected $vars = array(
+		protected $vars = [
 			'tag',
 			'name',
 			'category',
 			'description',
 			'params',
-		);
+		];
 
 		/**
 		 * Shortcode name.
@@ -97,7 +97,7 @@ if ( ! class_exists( 'Vc_Automap_Model' ) ) {
 		 */
 		public static function findAll() { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
 			self::loadOptionData();
-			$records = array();
+			$records = [];
 			foreach ( self::$option_data as $id => $record ) {
 				$record['id'] = $id;
 				$model = new self( $record );
@@ -120,7 +120,7 @@ if ( ! class_exists( 'Vc_Automap_Model' ) ) {
 				self::$option_data = get_option( self::$option_name );
 			}
 			if ( ! self::$option_data ) {
-				self::$option_data = array();
+				self::$option_data = [];
 			}
 
 			return self::$option_data;
@@ -136,7 +136,7 @@ if ( ! class_exists( 'Vc_Automap_Model' ) ) {
 		 */
 		public function get( $key ) {
 			if ( is_null( $this->data ) ) {
-				$this->data = isset( self::$option_data[ $this->id ] ) ? self::$option_data[ $this->id ] : array();
+				$this->data = isset( self::$option_data[ $this->id ] ) ? self::$option_data[ $this->id ] : [];
 			}
 
 			return isset( $this->data[ $key ] ) ? $this->data[ $key ] : null;

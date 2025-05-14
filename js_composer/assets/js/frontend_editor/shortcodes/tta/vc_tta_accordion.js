@@ -1,7 +1,7 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
-	window.InlineShortcodeView_vc_tta_accordion = window.InlineShortcodeViewContainer.extend( {
+	window.InlineShortcodeView_vc_tta_accordion = window.InlineShortcodeViewContainer.extend({
 		events: {},
 		childTag: 'vc_tta_section',
 		activeClass: 'vc_active',
@@ -71,7 +71,7 @@
 		getSiblingsFirstPositionIndex: function () {
 			var order, first_shortcode;
 			order = 0;
-			first_shortcode = vc.shortcodes.sort().findWhere( { parent_id: this.model.get( 'id' ) } );
+			first_shortcode = vc.shortcodes.sort().findWhere({ parent_id: this.model.get( 'id' ) });
 			if ( first_shortcode ) {
 				order = first_shortcode.get( 'order' ) - 1;
 			}
@@ -93,24 +93,24 @@
 				return;
 			}
 			if ( this.$el ) {
-				this.$el.find( '.vc_tta-panels' ).sortable( {
+				this.$el.find( '.vc_tta-panels' ).sortable({
 					forcePlaceholderSize: true,
 					placeholder: 'vc_placeholder-row', // TODO: fix placeholder
 					start: this.startSorting,
 					over: function ( event, ui ) {
-						ui.placeholder.css( { maxWidth: ui.placeholder.parent().width() } );
+						ui.placeholder.css({ maxWidth: ui.placeholder.parent().width() });
 						ui.placeholder.removeClass( 'vc_hidden-placeholder' );
 					},
 					items: '> .vc_element',
 					handle: '.vc_tta-panel-heading, .vc_child-element-move',// TODO: change vc_column to vc_tta_section
 					update: this.updateSorting
-				} );
+				});
 			}
 		},
 		startSorting: function ( event, ui ) {
 			ui.placeholder.width( ui.item.width() );
 		},
-		updateSorting: function ( event, ui ) {
+		updateSorting: function () {
 			var self = this;
 			this.getPanelsList().find( '> .vc_element' ).each( function () {
 				var shortcode, model_id, $this;
@@ -118,8 +118,8 @@
 				$this = $( this );
 				model_id = $this.data( 'modelId' );
 				shortcode = vc.shortcodes.get( model_id );
-				shortcode.save( { 'order': self.getIndex( $this ) }, { silent: true } );
-			} );
+				shortcode.save({ 'order': self.getIndex( $this ) }, { silent: true });
+			});
 			// re-render pagination
 			this.buildPagination();
 		},
@@ -132,11 +132,11 @@
 		parentChanged: function () {
 			window.InlineShortcodeView_vc_tta_accordion.__super__.parentChanged.call( this );
 
-			if ( 'undefined' !== typeof (vc.frame_window.vc_round_charts) ) {
+			if ( 'undefined' !== typeof ( vc.frame_window.vc_round_charts ) ) {
 				vc.frame_window.vc_round_charts( this.model.get( 'id' ) );
 			}
 
-			if ( 'undefined' !== typeof (vc.frame_window.vc_line_charts) ) {
+			if ( 'undefined' !== typeof ( vc.frame_window.vc_line_charts ) ) {
 				vc.frame_window.vc_line_charts( this.model.get( 'id' ) );
 			}
 		},
@@ -155,8 +155,8 @@
 				classes.push( 'vc_general' );
 				classes.push( 'vc_pagination' );
 				style_chunks = params.pagination_style.split( '-' );
-				classes.push( 'vc_pagination-style-' + style_chunks[ 0 ] );
-				classes.push( 'vc_pagination-shape-' + style_chunks[ 1 ] );
+				classes.push( 'vc_pagination-style-' + style_chunks[ 0 ]);
+				classes.push( 'vc_pagination-shape-' + style_chunks[ 1 ]);
 
 				if ( !_.isUndefined( params.pagination_color ) && params.pagination_color.length ) {
 					classes.push( 'vc_pagination-color-' + params.pagination_color );
@@ -185,7 +185,7 @@
 					}
 					a_html = '<a href="javascript:;" data-vc-target="' + selector + '" class="vc_pagination-trigger" data-vc-tabs data-vc-container=".vc_tta"></a>';
 					html.push( '<li class="' + section_classes.join( ' ' ) + '" data-vc-tab>' + a_html + '</li>' );
-				} );
+				});
 
 				html.push( '</ul>' );
 
@@ -194,5 +194,5 @@
 
 			return null;
 		}
-	} );
+	});
 })( window.jQuery );

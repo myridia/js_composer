@@ -46,10 +46,10 @@ function vc_grid_item_editor_init() {
 	require_once vc_path_dir( 'PARAMS_DIR', 'vc_grid_item/class-wpb-map-grid-item.php' );
 	$vc_grid_item_editor = new Vc_Grid_Item_Editor();
 	$vc_grid_item_editor->addMetaBox();
-	add_action( 'wp_ajax_vc_grid_item_editor_load_template_preview', array(
+	add_action( 'wp_ajax_vc_grid_item_editor_load_template_preview', [
 		&$vc_grid_item_editor,
 		'renderTemplatePreview',
-	) );
+	] );
 	$vc_grid_item_editor->addHooksSettings();
 }
 
@@ -59,48 +59,48 @@ function vc_grid_item_editor_init() {
  * @since 4.4
  */
 function vc_grid_item_render_preview() {
-	vc_user_access()->checkAdminNonce()->validateDie()->wpAny( array(
+	vc_user_access()->checkAdminNonce()->validateDie()->wpAny( [
 		'edit_post',
 		(int) vc_request_param( 'post_id' ),
-	) )->validateDie()->part( 'grid_builder' )->can()->validateDie();
+	] )->validateDie()->part( 'grid_builder' )->can()->validateDie();
 
 	require_once vc_path_dir( 'PARAMS_DIR', 'vc_grid_item/class-vc-grid-item.php' );
 	$grid_item = new Vc_Grid_Item();
 	$grid_item->mapShortcodes();
 	require_once vc_path_dir( 'PARAMS_DIR', 'vc_grid_item/editor/class-vc-grid-item-preview.php' );
 	$vc_grid_preview = new Vc_Grid_Item_Preview();
-	add_filter( 'vc_gitem_template_attribute_post_image_background_image_css_value', array(
+	add_filter( 'vc_gitem_template_attribute_post_image_background_image_css_value', [
 		$vc_grid_preview,
 		'addCssBackgroundImage',
-	) );
-	add_filter( 'vc_gitem_template_attribute_post_image_url_value', array(
+	] );
+	add_filter( 'vc_gitem_template_attribute_post_image_url_value', [
 		$vc_grid_preview,
 		'addImageUrl',
-	) );
-	add_filter( 'vc_gitem_template_attribute_post_full_image_url_value', array(
+	] );
+	add_filter( 'vc_gitem_template_attribute_post_full_image_url_value', [
 		$vc_grid_preview,
 		'addImageUrl',
-	) );
-	add_filter( 'vc_gitem_template_attribute_post_image_html', array(
+	] );
+	add_filter( 'vc_gitem_template_attribute_post_image_html', [
 		$vc_grid_preview,
 		'addImage',
-	) );
-	add_filter( 'vc_gitem_attribute_featured_image_img', array(
+	] );
+	add_filter( 'vc_gitem_attribute_featured_image_img', [
 		$vc_grid_preview,
 		'addPlaceholderImage',
-	) );
-	add_filter( 'vc_gitem_post_data_get_link_real_link', array(
+	] );
+	add_filter( 'vc_gitem_post_data_get_link_real_link', [
 		$vc_grid_preview,
 		'disableRealContentLink',
-	), 10, 4 );
-	add_filter( 'vc_gitem_post_data_get_link_link', array(
+	], 10, 4 );
+	add_filter( 'vc_gitem_post_data_get_link_link', [
 		$vc_grid_preview,
 		'disableContentLink',
-	), 10, 3 );
-	add_filter( 'vc_gitem_zone_image_block_link', array(
+	], 10, 3 );
+	add_filter( 'vc_gitem_zone_image_block_link', [
 		$vc_grid_preview,
 		'disableGitemZoneLink',
-	) );
+	] );
 	$vc_grid_preview->render();
 	die();
 }
@@ -145,14 +145,14 @@ function vc_grid_item_editor_shortcodes() {
 	if ( ( 'true' === vc_request_param( 'vc_grid_item_editor' ) || ( is_admin() && vc_grid_item_get_post_type() === Vc_Grid_Item_Editor::postType() ) && vc_user_access()->wpAny( 'edit_posts', 'edit_pages' )->part( 'grid_builder' )->can()->get() ) ) {
 
 		global $vc_grid_item_editor;
-		add_action( 'vc_user_access_check-shortcode_edit', array(
+		add_action( 'vc_user_access_check-shortcode_edit', [
 			&$vc_grid_item_editor,
 			'accessCheckShortcodeEdit',
-		), 10, 2 );
-		add_action( 'vc_user_access_check-shortcode_all', array(
+		], 10, 2 );
+		add_action( 'vc_user_access_check-shortcode_all', [
 			&$vc_grid_item_editor,
 			'accessCheckShortcodeAll',
-		), 10, 2 );
+		], 10, 2 );
 
 		vc_grid_item_map_shortcodes();
 	}
@@ -185,63 +185,63 @@ if ( is_admin() ) {
 function vc_grid_item_register_pointer( $pointers ) {
 	$screen = get_current_screen();
 	if ( 'add' === $screen->action ) {
-		$pointers['vc_grid_item'] = array(
+		$pointers['vc_grid_item'] = [
 			'name' => 'vcPointersController',
-			'messages' => array(
-				array(
+			'messages' => [
+				[
 					'target' => '#vc_templates-editor-button',
-					'options' => array(
+					'options' => [
 						'content' => sprintf( '<h3> %s </h3> <p> %s </p>', esc_html__( 'Start Here!', 'js_composer' ), esc_html__( 'Start easy - use predefined template as a starting point and modify it.', 'js_composer' ) ),
-						'position' => array(
+						'position' => [
 							'edge' => 'left',
 							'align' => 'center',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'target' => '[data-vc-navbar-control="animation"]',
-					'options' => array(
+					'options' => [
 						'content' => sprintf( '<h3> %s </h3> <p> %s </p>', esc_html__( 'Use Animations', 'js_composer' ), esc_html__( 'Select animation preset for grid element. "Hover" state will be added next to the "Normal" state tab.', 'js_composer' ) ),
-						'position' => array(
+						'position' => [
 							'edge' => 'right',
 							'align' => 'center',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'target' => '.vc_gitem_animated_block-shortcode',
-					'options' => array(
+					'options' => [
 						'content' => sprintf( '<h3> %s </h3> <p> %s </p>', esc_html__( 'Style Design Options', 'js_composer' ), esc_html__( 'Edit "Normal" state to set "Featured image" as a background, control zone sizing proportions and other design options (Height mode: Select "Original" to scale image without cropping).', 'js_composer' ) ),
-						'position' => array(
+						'position' => [
 							'edge' => 'bottom',
 							'align' => 'center',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'target' => '[data-vc-gitem="add-c"][data-vc-position="top"]',
-					'options' => array(
+					'options' => [
 						'content' => sprintf( '<h3> %s </h3> <p> %s </p>', esc_html__( 'Extend Element', 'js_composer' ), esc_html__( 'Additional content zone can be added to grid element edges (Note: This zone can not be animated).', 'js_composer' ) ) . '<p><img src="' . esc_url( vc_asset_url( 'vc/gb_additional_content.png' ) ) . '" alt="" /></p>',
-						'position' => array(
+						'position' => [
 							'edge' => 'right',
 							'align' => 'center',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'target' => '#wpadminbar',
-					'options' => array(
+					'options' => [
 						'content' => sprintf( '<h3> %s </h3> %s', esc_html__( 'Watch Video Tutorial', 'js_composer' ), '<p>' . esc_html__( 'Have a look how easy it is to work with grid element builder.', 'js_composer' ) . '</p><iframe width="500" height="281" src="https://www.youtube.com/embed/sBvEiIL6Blo" frameborder="0" allowfullscreen></iframe>' ),
-						'position' => array(
+						'position' => [
 							'edge' => 'top',
 							'align' => 'center',
-						),
+						],
 						'pointerClass' => 'vc_gitem-animated-block-pointer-video',
 						'pointerWidth' => '530',
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 	}
 
 	return $pointers;
@@ -255,7 +255,7 @@ function vc_grid_item_register_pointer( $pointers ) {
 function vc_gitem_content_shortcodes() {
 	require_once vc_path_dir( 'PARAMS_DIR', 'vc_grid_item/class-vc-grid-item.php' );
 	$grid_item = new Vc_Grid_Item();
-	$invalid_shortcodes = apply_filters( 'vc_gitem_zone_grid_item_not_content_shortcodes', array(
+	$invalid_shortcodes = apply_filters( 'vc_gitem_zone_grid_item_not_content_shortcodes', [
 		'vc_gitem',
 		'vc_gitem_animated_block',
 		'vc_gitem_zone',
@@ -264,7 +264,7 @@ function vc_gitem_content_shortcodes() {
 		'vc_gitem_zone_c',
 		'vc_gitem_row',
 		'vc_gitem_col',
-	) );
+	] );
 
 	return array_diff( array_keys( $grid_item->shortcodes() ), $invalid_shortcodes );
 }

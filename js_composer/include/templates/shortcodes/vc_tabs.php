@@ -1,10 +1,19 @@
 <?php
+/**
+ * The template for displaying [vc_tabs] shortcode output.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_tabs.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $title
  * @var $interval
@@ -26,13 +35,10 @@ if ( 'vc_tour' === $this->shortcode ) {
 	$element = 'wpb_tour';
 }
 
-// Extract tab titles
+// Extract tab titles.
 preg_match_all( '/vc_tab([^\]]+)/i', $content, $matches, PREG_OFFSET_CAPTURE );
-$tab_titles = array();
-/**
- * vc_tabs
- *
- */
+$tab_titles = [];
+// vc_tabs.
 if ( isset( $matches[1] ) ) {
 	$tab_titles = $matches[1];
 }
@@ -57,10 +63,10 @@ if ( 'vc_tour' === $this->shortcode ) {
 $output = '
 	<div class="' . esc_attr( $css_class ) . '" data-interval="' . esc_attr( $interval ) . '">
 		<div class="wpb_wrapper wpb_tour_tabs_wrapper ui-tabs vc_clearfix">
-			' . wpb_widget_title( array(
+			' . wpb_widget_title( [
 	'title' => $title,
 	'extraclass' => $element . '_heading',
-) )
+] )
 	. $tabs_nav
 	. wpb_js_remove_wpautop( $content )
 	. $next_prev_nav . '

@@ -59,11 +59,11 @@ function vc_action_save_settings_preset() {
 
 	$id = Vc_Settings_Preset::saveSettingsPreset( vc_post_param( 'shortcode_name' ), vc_post_param( 'title' ), vc_post_param( 'data' ), vc_post_param( 'is_default' ) );
 
-	$response = array(
+	$response = [
 		'success' => (bool) $id,
 		'html' => Vc_Settings_Preset::getRenderedSettingsPresetPopup( vc_post_param( 'shortcode_name' ) ),
 		'id' => $id,
-	);
+	];
 
 	wp_send_json( $response );
 }
@@ -88,10 +88,10 @@ function vc_action_set_as_default_settings_preset() {
 
 	$status = Vc_Settings_Preset::setAsDefaultSettingsPreset( $id, $shortcode_name );
 
-	$response = array(
+	$response = [
 		'success' => $status,
 		'html' => Vc_Settings_Preset::getRenderedSettingsPresetPopup( $shortcode_name ),
-	);
+	];
 
 	wp_send_json( $response );
 }
@@ -114,10 +114,10 @@ function vc_action_restore_default_settings_preset() {
 
 	$status = Vc_Settings_Preset::setAsDefaultSettingsPreset( null, $shortcode_name );
 
-	$response = array(
+	$response = [
 		'success' => $status,
 		'html' => Vc_Settings_Preset::getRenderedSettingsPresetPopup( $shortcode_name ),
-	);
+	];
 
 	wp_send_json( $response );
 }
@@ -141,11 +141,11 @@ function vc_action_delete_settings_preset() {
 
 	$status = Vc_Settings_Preset::deleteSettingsPreset( vc_post_param( 'id' ) );
 
-	$response = array(
+	$response = [
 		'success' => $status,
 		'default' => $default,
 		'html' => Vc_Settings_Preset::getRenderedSettingsPresetPopup( vc_post_param( 'shortcode_name' ) ),
-	);
+	];
 
 	wp_send_json( $response );
 }
@@ -164,14 +164,14 @@ function vc_action_get_settings_preset() {
 	$data = Vc_Settings_Preset::getSettingsPreset( vc_post_param( 'id' ), true );
 
 	if ( false !== $data ) {
-		$response = array(
+		$response = [
 			'success' => true,
 			'data' => $data,
-		);
+		];
 	} else {
-		$response = array(
+		$response = [
 			'success' => false,
-		);
+		];
 	}
 
 	wp_send_json( $response );
@@ -189,10 +189,10 @@ function vc_action_render_settings_preset_popup() {
 	vc_include_settings_preset_class();
 	$html = Vc_Settings_Preset::getRenderedSettingsPresetPopup( vc_post_param( 'shortcode_name' ) );
 
-	$response = array(
+	$response = [
 		'success' => true,
 		'html' => $html,
-	);
+	];
 
 	wp_send_json( $response );
 }
@@ -210,10 +210,10 @@ function vc_action_render_settings_preset_title_prompt() {
 	vc_include_template( apply_filters( 'vc_render_settings_preset_title_prompt', 'editors/partials/prompt-presets.tpl.php' ), [ 'info' => $info ] );
 	$html = ob_get_clean();
 
-	$response = array(
+	$response = [
 		'success' => true,
 		'html' => $html,
-	);
+	];
 
 	wp_send_json( $response );
 }
@@ -228,10 +228,10 @@ function vc_action_render_settings_templates_prompt() {
 	vc_include_template( apply_filters( 'vc_render_settings_preset_title_prompt', 'editors/partials/prompt-templates.tpl.php' ) );
 	$html = ob_get_clean();
 
-	$response = array(
+	$response = [
 		'success' => true,
 		'html' => $html,
-	);
+	];
 
 	wp_send_json( $response );
 }

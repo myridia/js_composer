@@ -1,14 +1,16 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
-
 /**
+ * Generate AI form template.
+ *
  * @var string $element_form_fields_template_path
  * @var string $ai_element_type
  * @var string $ai_element_id
  * @var Vc_Ai_Modal_Controller $ai_modal_controller
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 ?>
 
 <form method="post" action="" class="vc_ui-panel-content-container vc_ui-hidden">

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Handles role-based access control functionality.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -10,20 +14,33 @@ require_once vc_path_dir( 'CORE_DIR', 'access/abstract-class-vc-access.php' );
  */
 class Vc_Role_Access extends Vc_Access {
 	/**
-	 * @var bool
+	 * The name of the role being managed.
+	 *
+	 * @var bool|string
 	 */
 	protected $roleName = false;
+
 	/**
+	 * Parts of the access system being managed, keyed by part and role name.
+	 *
 	 * @var array
 	 */
-	protected $parts = array();
+	protected $parts = [];
 
+	/**
+	 * Vc_Role_Access constructor.
+	 */
 	public function __construct() {
 		require_once ABSPATH . 'wp-admin/includes/user.php';
 	}
 
 	/**
-	 * @param $part
+	 *  Manage access for a specific part of the system.
+	 *
+	 *  This method retrieves or creates a controller for a specific part of the access system,
+	 *  ensuring that the correct role and part-specific access rules are applied.
+	 *
+	 * @param string $part
 	 * @return \Vc_Role_Access_Controller
 	 * @throws \Exception
 	 */
@@ -35,15 +52,14 @@ class Vc_Role_Access extends Vc_Access {
 		$key = $part . '_' . $role_name;
 		if ( ! isset( $this->parts[ $key ] ) ) {
 			require_once vc_path_dir( 'CORE_DIR', 'access/class-vc-role-access-controller.php' );
-			/** @var Vc_Role_Access_Controller $role_access_controller */
 			$this->parts[ $key ] = new Vc_Role_Access_Controller( $part );
 			$role_access_controller = $this->parts[ $key ];
 			$role_access_controller->setRoleName( $this->getRoleName() );
 		}
-		/** @var Vc_Role_Access_Controller $role_access_controller */
+
 		$role_access_controller = $this->parts[ $key ];
-		$role_access_controller->setValidAccess( $this->getValidAccess() ); // send current status to upper level
-		$this->setValidAccess( true ); // reset
+		$role_access_controller->setValidAccess( $this->getValidAccess() ); // send current status to upper level.
+		$this->setValidAccess( true ); // reset.
 
 		return $role_access_controller;
 	}
@@ -51,10 +67,9 @@ class Vc_Role_Access extends Vc_Access {
 	/**
 	 * Set role to get access to data.
 	 *
-	 * @param $roleName
+	 * @param string $roleName
 	 * @return $this
 	 * @internal param $role
-	 *
 	 */
 	public function who( $roleName ) {
 		$this->roleName = $roleName;
@@ -63,6 +78,8 @@ class Vc_Role_Access extends Vc_Access {
 	}
 
 	/**
+	 * Get the name of the role currently being managed.
+	 *
 	 * @return null|string
 	 */
 	public function getRoleName() {

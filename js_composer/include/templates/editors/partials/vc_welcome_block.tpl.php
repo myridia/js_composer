@@ -1,9 +1,13 @@
 <?php
+/**
+ * Welcome block template.
+ *
+ * @var string $editor
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-
-/** @var string $editor */
 
 $total_templates = wpbakery()->templatesPanelEditor()->loadDefaultTemplates();
 $templates_total_count = count( $total_templates );
@@ -84,7 +88,7 @@ if ( vc_modules_manager()->is_module_on( 'vc-post-custom-layout' ) ) {
 			</div>
 		<?php endif; ?>
 		<p class="vc_ui-help-block vc_welcome-visible-e">
-			<?php echo sprintf( esc_html__( 'Don\'t know where to start? Visit our %s.', 'js_composer' ), '<a class="vc_ui-help-link" href="https://kb.wpbakery.com" target="_blank">' . esc_html__( 'knowledge base', 'js_composer' ) . '</a>' ); ?>
+			<?php printf( esc_html__( 'Don\'t know where to start? Visit our %s.', 'js_composer' ), '<a class="vc_ui-help-link" href="https://kb.wpbakery.com" target="_blank">' . esc_html__( 'knowledge base', 'js_composer' ) . '</a>' ); ?>
 		</p>
 	<?php endif; ?>
 </div>

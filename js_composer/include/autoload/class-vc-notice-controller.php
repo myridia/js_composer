@@ -51,7 +51,11 @@ class Vc_Notice_Controller {
 			$this,
 			'init',
 		] );
-		add_action( 'wp_ajax_wpb_add_notice_to_close_list', [ $this, 'add_notice_to_close_list' ] );
+
+		add_action( 'wp_ajax_wpb_add_notice_to_close_list', [
+			$this,
+			'add_notice_to_close_list',
+		] );
 	}
 
 	/**
@@ -118,11 +122,11 @@ class Vc_Notice_Controller {
 			return false;
 		}
 
-		if ( ! $this->is_notice_version_valid( $notice, WPB_VC_VERSION ) ) {
+		if ( ! $this->is_notice_version_valid( $notice ) ) {
 			return false;
 		}
 
-        // phpcs:ignore
+		// phpcs:ignore
 		if ( ! $this->is_notice_date_valid( $notice, current_time( 'timestamp' ) ) ) {
 			return false;
 		}
@@ -160,10 +164,10 @@ class Vc_Notice_Controller {
 	 *
 	 * @since 7.0
 	 * @param array $notice
-	 * @param string $current_version
+	 * @param string | false $current_version
 	 * @return bool
 	 */
-	public function is_notice_version_valid( $notice, $current_version ) {
+	public function is_notice_version_valid( $notice, $current_version = false ) {
 
 		$result = false;
 
@@ -177,6 +181,15 @@ class Vc_Notice_Controller {
 
 		if ( ! $is_versions_value_valid ) {
 			return $result;
+		}
+
+		if ( ! $current_version ) {
+			if ( ! function_exists( 'get_plugin_data' ) ) {
+				return $result;
+			}
+
+			$plugin_data = get_plugin_data( WPB_PLUGIN_FILE );
+			$current_version = $plugin_data['Version'];
 		}
 
 		$is_version_inside_diapason =
@@ -333,7 +346,7 @@ class Vc_Notice_Controller {
 	public function get_notice_list_from_api_request() {
 		$empty_notice_list = '';
 
-		$response = wp_remote_get( $this->notification_api_url, [ 'timeout' => 30 ] );
+		$response = wp_remote_get( $this->build_request_url(), [ 'timeout' => 30 ] );
 
 		if ( is_wp_error( $response ) ) {
 			return $empty_notice_list;
@@ -352,6 +365,23 @@ class Vc_Notice_Controller {
 		}
 
 		return $notice_list;
+	}
+
+	/**
+	 * Add license key and theme license parameters if it is activated
+	 *
+	 * @return string
+	 */
+	public function build_request_url() {
+		if ( vc_license()->isActivated() ) {
+			return add_query_arg( 'license_key', vc_license()->getLicenseKey(), $this->notification_api_url );
+		}
+
+		if ( vc_is_as_theme() ) {
+			return add_query_arg( 'theme_activated', '1', $this->notification_api_url );
+		}
+
+		return $this->notification_api_url;
 	}
 
 	/**

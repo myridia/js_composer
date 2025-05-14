@@ -1,10 +1,19 @@
 <?php
+/**
+ * The template for displaying [vc_column] shortcode output of 'Column' element.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_column.php
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $el_id
  * @var $el_class
@@ -26,22 +35,22 @@ wp_enqueue_script( 'wpb_composer_front_js' );
 $width = wpb_translateColumnWidthToSpan( $width );
 $width = vc_column_offset_class_merge( $offset, $width );
 
-$css_classes = array(
+$css_classes = [
 	$this->getExtraClass( $el_class ) . $this->getCSSAnimation( $css_animation ),
 	'wpb_column',
 	'vc_column_container',
 	$width,
-);
+];
 
-if ( vc_shortcode_custom_css_has_property( $css, array(
+if ( vc_shortcode_custom_css_has_property( $css, [
 	'border',
 	'background',
-) ) || $video_bg || $parallax
+] ) || $video_bg || $parallax
 ) {
 	$css_classes[] = 'vc_col-has-fill';
 }
 
-$wrapper_attributes = array();
+$wrapper_attributes = [];
 
 $has_video_bg = ( ! empty( $video_bg ) && ! empty( $video_bg_url ) && vc_extract_youtube_id( $video_bg_url ) );
 
@@ -56,7 +65,7 @@ if ( $has_video_bg ) {
 
 if ( ! empty( $parallax ) ) {
 	wp_enqueue_script( 'vc_jquery_skrollr_js' );
-	$wrapper_attributes[] = 'data-vc-parallax="' . esc_attr( $parallax_speed ) . '"'; // parallax speed
+	$wrapper_attributes[] = 'data-vc-parallax="' . esc_attr( $parallax_speed ) . '"'; // parallax speed.
 	$css_classes[] = 'vc_general vc_parallax vc_parallax-' . $parallax;
 	if ( false !== strpos( $parallax, 'fade' ) ) {
 		$css_classes[] = 'js-vc_parallax-o-fade';
@@ -88,12 +97,12 @@ if ( ! empty( $el_id ) ) {
 	$wrapper_attributes[] = 'id="' . esc_attr( $el_id ) . '"';
 }
 $output .= '<div ' . implode( ' ', $wrapper_attributes ) . '>';
-$innerColumnClass = 'vc_column-inner ' . esc_attr( trim( vc_shortcode_custom_css_class( $css ) ) );
-$output .= '<div class="' . trim( $innerColumnClass ) . '">';
+$inner_column_class = 'vc_column-inner ' . esc_attr( trim( vc_shortcode_custom_css_class( $css ) ) );
+$output .= '<div class="' . trim( $inner_column_class ) . '">';
 $output .= '<div class="wpb_wrapper">';
 $output .= wpb_js_remove_wpautop( $content );
 $output .= '</div>';
 $output .= '</div>';
 $output .= '</div>';
 
-echo $output;
+echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

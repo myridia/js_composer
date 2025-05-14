@@ -1,8 +1,16 @@
 <?php
+/**
+ * Navbar template.
+ *
+ * @var Vc_Navbar $nav_bar
+ * @var array $controls
+ * @var string $css_class
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-$class = isset( $css_class ) && ! empty( $css_class ) ? $css_class : 'vc_navbar';
+$class = ! empty( $css_class ) ? $css_class : 'vc_navbar';
 if ( vc_modules_manager()->is_module_on( 'vc-post-custom-layout' ) ) {
 	$custom_layout = vc_modules_manager()->get_module( 'vc-post-custom-layout' );
 

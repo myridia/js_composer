@@ -27,11 +27,11 @@ function vc_vc_grid_item_form_field( $settings, $value ) {
 		}
 	}
 
-	$grid_item_posts = get_posts( array(
+	$grid_item_posts = get_posts( [
 		'posts_per_page' => '-1',
 		'orderby' => 'post_title',
 		'post_type' => Vc_Grid_Item_Editor::postType(),
-	) );
+	] );
 	foreach ( $grid_item_posts as $post ) {
 		$output .= '<option  data-vc-link="' . esc_url( get_edit_post_link( $post->ID ) ) . '"value="' . esc_attr( $post->ID ) . '"' . ( (string) $post->ID === $value ? ' selected="true"' : '' ) . '>' . esc_html( _draft_or_post_title( $post ) ) . '</option>';
 	}
@@ -169,30 +169,30 @@ function vc_gitem_create_link_real( $atts, $post, $default_class = '', $title = 
 			}
 		} elseif ( 'image' === $atts['link'] ) {
 			$target = isset( $atts['link_target'] ) && $atts['link_target'] ? ' target="_blank"' : '';
-			$href_link = vc_gitem_template_attribute_post_image_url( '', array(
+			$href_link = vc_gitem_template_attribute_post_image_url( '', [
 				'post' => $post,
 				'data' => '',
-			) );
+			] );
 			$link = 'a href="' . esc_url( $href_link ) . '" class="' . esc_attr( $link_css_class ) . '"' . $target;
 		} elseif ( 'image_lightbox' === $atts['link'] ) {
 			$target = isset( $atts['link_target'] ) && $atts['link_target'] ? ' target="_blank"' : '';
-			$link = 'a' . vc_gitem_template_attribute_post_image_url_attr_lightbox( '', array(
+			$link = 'a' . vc_gitem_template_attribute_post_image_url_attr_lightbox( '', [
 				'post' => $post,
 				'data' => esc_attr( $link_css_class ),
-			) ) . $target;
+			] ) . $target;
 		} elseif ( 'image_full' === $atts['link'] ) {
 			$target = isset( $atts['link_target'] ) && $atts['link_target'] ? ' target="_blank"' : '';
-			$href_link = vc_gitem_template_attribute_post_full_image_url( '', array(
+			$href_link = vc_gitem_template_attribute_post_full_image_url( '', [
 				'post' => $post,
 				'data' => '',
-			) );
+			] );
 			$link = 'a href="' . esc_url( $href_link ) . '" class="' . esc_attr( $link_css_class ) . '"' . $target;
 		} elseif ( 'image_full_lightbox' === $atts['link'] ) {
 			$target = isset( $atts['link_target'] ) && $atts['link_target'] ? ' target="_blank"' : '';
-			$link = 'a' . vc_gitem_template_attribute_post_full_image_url_attr_lightbox( '', array(
+			$link = 'a' . vc_gitem_template_attribute_post_full_image_url_attr_lightbox( '', [
 				'post' => $post,
 				'data' => esc_attr( $link_css_class ),
-			) ) . $target;
+			] ) . $target;
 		}
 	}
 	if ( strlen( $title ) > 0 ) {

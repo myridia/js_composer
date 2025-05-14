@@ -1,4 +1,4 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
 	var $aiModal = $( '#vc_ui-helper-modal-ai' );
@@ -12,17 +12,17 @@
 		var $currentParamContainer = $currentBtn.closest( '.vc_shortcode-param' );
 		var currentParamData = null;
 		var iconData = $currentBtn.data();
-		if ($currentParamContainer.length) {
+		if ( $currentParamContainer.length ) {
 			currentParamData = $currentParamContainer.data();
 		}
 		var aiElementType = iconData.wpbAiElementType || 'textarea';
 		var aiElementId = iconData.fieldId || aiElementType;
 
-		if (!isModalPreloader()) {
+		if ( !isModalPreloader() ) {
 			setModalPreloader();
 		}
 
-		setModalContent(aiElementType, aiElementId);
+		setModalContent( aiElementType, aiElementId );
 
 		if ( currentParamData ) {
 			var $currentParamField = $currentParamContainer.find( '.' + currentParamData.param_type );
@@ -52,45 +52,45 @@
 		$aiModal.on( 'click', closeModal );
 	}
 
-	function isModalPreloader() {
+	function isModalPreloader () {
 		return $aiModal.find( '.vc_ui-helper-modal-ai-preloader' ).length;
 	}
 
-	function setModalPreloader() {
+	function setModalPreloader () {
 		$aiModal.find( '.vc_ui-post-settings-header-container' ).after( '<div class="vc_ui-helper-modal-ai-preloader"><div class="vc_ui-wp-spinner vc_ui-wp-spinner-dark vc_ui-wp-spinner-lg"></div></div>' );
 	}
 
-	function setModalContent(aiElementType, aiElementId) {
+	function setModalContent ( aiElementType, aiElementId ) {
 		var data = {
 			action: 'wpb_ai_get_modal_data',
 			data: {
 				ai_element_type: aiElementType,
-				ai_element_id: aiElementId,
+				ai_element_id: aiElementId
 			},
 			_vcnonce: window.vcAdminNonce
 		};
 
-		$.ajax( {
+		$.ajax({
 			type: 'POST',
 			url: window.ajaxurl,
 			data: data
-		} ).done( function ( response ) {
+		}).done( function ( response ) {
 			if ( true === response.success ) {
-				if ( undefined === window.vc.ai_modal_view) {
-					window.vc.ai_modal_view = new vc.AiFormView( { el: '#vc_ui-helper-modal-ai', data: response.data } );
+				if ( undefined === window.vc.ai_modal_view ) {
+					window.vc.ai_modal_view = new vc.AiFormView({ el: '#vc_ui-helper-modal-ai', data: response.data });
 				} else {
 					window.vc.ai_modal_view.render( response.data );
 				}
 
-				if (response.data.tokens_left && response.data.tokens_total) {
+				if ( response.data.tokens_left && response.data.tokens_total ) {
 					var token_usage_text =
 						get_locale().ai_credit_usage + response.data.tokens_left + ' / ' + response.data.tokens_total;
-					$aiModal.find('.vc-ai-tokens-usage').text(token_usage_text);
+					$aiModal.find( '.vc-ai-tokens-usage' ).text( token_usage_text );
 				}
 
-				$aiModal.find(' .vc_ui-panel-content-container' ).scrollTop( 0 );
+				$aiModal.find( ' .vc_ui-panel-content-container' ).scrollTop( 0 );
 				$aiModal.find( '.vc_ui-helper-modal-ai-preloader' ).remove();
-				$aiModal.find(' .vc_ui-panel-content-container' ).removeClass( 'vc_ui-hidden' );
+				$aiModal.find( ' .vc_ui-panel-content-container' ).removeClass( 'vc_ui-hidden' );
 			} else {
 				// error returned by wpbakery server api
 				var is_error_message =
@@ -108,7 +108,7 @@
 					showErrorMessage( get_locale().ai_response_error );
 				}
 			}
-		} ).fail( function ( response ) {
+		}).fail( function () {
 			console.error( get_locale().ai_response_error );
 			_this.resetButton();
 			showErrorMessage( get_locale().ai_response_error );
@@ -127,13 +127,13 @@
 			$aiModal.removeClass( 'vc_active' );
 			$aiModal.off( 'click', closeModal );
 			$aiModal.removeData();
-			$aiModal.find(' .vc_ui-panel-content-container' ).addClass( 'vc_ui-hidden' );
-			$aiModal.find(' .vc_ui-helper-modal-ai-placeholder' ).addClass( 'vc_ui-hidden' );
+			$aiModal.find( ' .vc_ui-panel-content-container' ).addClass( 'vc_ui-hidden' );
+			$aiModal.find( ' .vc_ui-helper-modal-ai-placeholder' ).addClass( 'vc_ui-hidden' );
 			$insertButton.hide();
 		}
 	}
 
-	function get_locale() {
+	function get_locale () {
 		if ( window.i18nLocale ) {
 			return window.i18nLocale;
 		} else {

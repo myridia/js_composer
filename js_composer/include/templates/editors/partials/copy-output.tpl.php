@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copy output template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

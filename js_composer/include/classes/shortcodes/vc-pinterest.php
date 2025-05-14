@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_pinterest] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_pinterest.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,7 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WPBakeryShortCode_Vc_Pinterest extends WPBakeryShortCode {
 	/**
-	 * @param $atts
+	 * Get shortcode inline html.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 * @return string
 	 * @throws \Exception
@@ -16,6 +24,7 @@ class WPBakeryShortCode_Vc_Pinterest extends WPBakeryShortCode {
 	protected function contentInline( $atts, $content = null ) {
 		/**
 		 * Shortcode attributes
+		 *
 		 * @var $atts
 		 * @var $type
 		 * @var $annotation // TODO: check why annotation doesn't set before

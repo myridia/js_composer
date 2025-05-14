@@ -18,9 +18,9 @@ function vc_init_vendor_mqtranslate() {
 	if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) || function_exists( 'mqtranslate_activation_check' ) ) {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-mqtranslate.php' );
 		$vendor = new Vc_Vendor_Mqtranslate();
-		add_action( 'vc_after_set_mode', array(
+		add_action( 'vc_after_set_mode', [
 			$vendor,
 			'load',
-		) );
+		] );
 	}
 }

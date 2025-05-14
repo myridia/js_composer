@@ -1,15 +1,24 @@
 <?php
+/**
+ * WPBakery Page Builder Content elements refresh.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-/*** WPBakery Page Builder Content elements refresh ***/
+/**
+ * Class VcSharedLibrary
+ *
+ * Here we will store plugin wise (shared) settings. Colors, Locations, Sizes, etc.
+ */
 class VcSharedLibrary {
-	// Here we will store plugin wise (shared) settings. Colors, Locations, Sizes, etc...
 	/**
+	 * Available color options.
+	 *
 	 * @var array
 	 */
-	private static $colors = array(
+	private static $colors = [
 		'Blue' => 'blue',
 		'Turquoise' => 'turquoise',
 		'Pink' => 'pink',
@@ -27,55 +36,64 @@ class VcSharedLibrary {
 		'Sandy brown' => 'sandy_brown',
 		'Purple' => 'purple',
 		'White' => 'white',
-	);
+	];
 
 	/**
+	 * Available icon options.
+	 *
 	 * @var array
 	 */
-	public static $icons = array(
+	public static $icons = [
 		'Glass' => 'glass',
 		'Music' => 'music',
 		'Search' => 'search',
-	);
+	];
 
 	/**
+	 * Available size options.
+	 *
 	 * @var array
 	 */
-	public static $sizes = array(
+	public static $sizes = [
 		'Mini' => 'xs',
 		'Small' => 'sm',
 		'Normal' => 'md',
 		'Large' => 'lg',
-	);
+	];
 
 	/**
+	 * Available button styles.
+	 *
 	 * @var array
 	 */
-	public static $button_styles = array(
+	public static $button_styles = [
 		'Rounded' => 'rounded',
 		'Square' => 'square',
 		'Round' => 'round',
 		'Outlined' => 'outlined',
 		'3D' => '3d',
 		'Square Outlined' => 'square_outlined',
-	);
+	];
 
 	/**
+	 * Available message box styles.
+	 *
 	 * @var array
 	 */
-	public static $message_box_styles = array(
+	public static $message_box_styles = [
 		'Standard' => 'standard',
 		'Solid' => 'solid',
 		'Solid icon' => 'solid-icon',
 		'Outline' => 'outline',
 		'3D' => '3d',
-	);
+	];
 
 	/**
-	 * Toggle styles
+	 * Available toggle styles.
+	 *
 	 * @var array
 	 */
-	public static $toggle_styles = array(
+	public static $toggle_styles = [
 		'Default' => 'default',
 		'Simple' => 'simple',
 		'Round' => 'round',
@@ -86,13 +104,14 @@ class VcSharedLibrary {
 		'Square Outline' => 'square_outline',
 		'Arrow' => 'arrow',
 		'Text Only' => 'text_only',
-	);
+	];
 
 	/**
-	 * Animation styles
+	 * Available animation styles.
+	 *
 	 * @var array
 	 */
-	public static $animation_styles = array(
+	public static $animation_styles = [
 		'Bounce' => 'easeOutBounce',
 		'Elastic' => 'easeOutElastic',
 		'Back' => 'easeOutBack',
@@ -101,33 +120,39 @@ class VcSharedLibrary {
 		'Quart' => 'easeOutQuart',
 		'Quad' => 'easeInQuad',
 		'Sine' => 'easeOutSine',
-	);
+	];
 
 	/**
+	 * Available call to action styles.
+	 *
 	 * @var array
 	 */
-	public static $cta_styles = array(
+	public static $cta_styles = [
 		'Rounded' => 'rounded',
 		'Square' => 'square',
 		'Round' => 'round',
 		'Outlined' => 'outlined',
 		'Square Outlined' => 'square_outlined',
-	);
+	];
 
 	/**
+	 * Available text align options.
+	 *
 	 * @var array
 	 */
-	public static $txt_align = array(
+	public static $txt_align = [
 		'Left' => 'left',
 		'Right' => 'right',
 		'Center' => 'center',
 		'Justify' => 'justify',
-	);
+	];
 
 	/**
+	 * Available element widths.
+	 *
 	 * @var array
 	 */
-	public static $el_widths = array(
+	public static $el_widths = [
 		'100%' => '',
 		'90%' => '90',
 		'80%' => '80',
@@ -138,12 +163,14 @@ class VcSharedLibrary {
 		'30%' => '30',
 		'20%' => '20',
 		'10%' => '10',
-	);
+	];
 
 	/**
+	 * Available separator widths.
+	 *
 	 * @var array
 	 */
-	public static $sep_widths = array(
+	public static $sep_widths = [
 		'1px' => '',
 		'2px' => '2',
 		'3px' => '3',
@@ -154,23 +181,27 @@ class VcSharedLibrary {
 		'8px' => '8',
 		'9px' => '9',
 		'10px' => '10',
-	);
+	];
 
 	/**
+	 * Available separator styles.
+	 *
 	 * @var array
 	 */
-	public static $sep_styles = array(
+	public static $sep_styles = [
 		'Border' => '',
 		'Dashed' => 'dashed',
 		'Dotted' => 'dotted',
 		'Double' => 'double',
 		'Shadow' => 'shadow',
-	);
+	];
 
 	/**
+	 * Available box styles.
+	 *
 	 * @var array
 	 */
-	public static $box_styles = array(
+	public static $box_styles = [
 		'Default' => '',
 		'Rounded' => 'vc_box_rounded',
 		'Border' => 'vc_box_border',
@@ -178,35 +209,37 @@ class VcSharedLibrary {
 		'Shadow' => 'vc_box_shadow',
 		'Bordered shadow' => 'vc_box_shadow_border',
 		'3D Shadow' => 'vc_box_shadow_3d',
-	);
+	];
 
 	/**
-	 * Round box styles
+	 * Available round box styles.
 	 *
 	 * @var array
 	 */
-	public static $round_box_styles = array(
+	public static $round_box_styles = [
 		'Round' => 'vc_box_circle',
 		'Round Border' => 'vc_box_border_circle',
 		'Round Outline' => 'vc_box_outline_circle',
 		'Round Shadow' => 'vc_box_shadow_circle',
 		'Round Border Shadow' => 'vc_box_shadow_border_circle',
-	);
+	];
 
 	/**
-	 * Circle box styles
+	 * Available circle box styles.
 	 *
 	 * @var array
 	 */
-	public static $circle_box_styles = array(
+	public static $circle_box_styles = [
 		'Circle' => 'vc_box_circle_2',
 		'Circle Border' => 'vc_box_border_circle_2',
 		'Circle Outline' => 'vc_box_outline_circle_2',
 		'Circle Shadow' => 'vc_box_shadow_circle_2',
 		'Circle Border Shadow' => 'vc_box_shadow_border_circle_2',
-	);
+	];
 
 	/**
+	 * Get available colors.
+	 *
 	 * @return array
 	 */
 	public static function getColors() {
@@ -214,6 +247,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available icons.
+	 *
 	 * @return array
 	 */
 	public static function getIcons() {
@@ -221,6 +256,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available sizes.
+	 *
 	 * @return array
 	 */
 	public static function getSizes() {
@@ -228,6 +265,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available button styles.
+	 *
 	 * @return array
 	 */
 	public static function getButtonStyles() {
@@ -235,6 +274,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available message box styles.
+	 *
 	 * @return array
 	 */
 	public static function getMessageBoxStyles() {
@@ -242,6 +283,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available toggle styles.
+	 *
 	 * @return array
 	 */
 	public static function getToggleStyles() {
@@ -249,6 +292,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available animation styles.
+	 *
 	 * @return array
 	 */
 	public static function getAnimationStyles() {
@@ -256,6 +301,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available call to action styles.
+	 *
 	 * @return array
 	 */
 	public static function getCtaStyles() {
@@ -263,6 +310,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available text align options.
+	 *
 	 * @return array
 	 */
 	public static function getTextAlign() {
@@ -270,6 +319,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available element widths.
+	 *
 	 * @return array
 	 */
 	public static function getBorderWidths() {
@@ -277,6 +328,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available element widths.
+	 *
 	 * @return array
 	 */
 	public static function getElementWidths() {
@@ -284,6 +337,8 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available separator styles.
+	 *
 	 * @return array
 	 */
 	public static function getSeparatorStyles() {
@@ -298,12 +353,12 @@ class VcSharedLibrary {
 	 * - round
 	 * - circle
 	 *
-	 * @param array $groups Array of groups to include. If not specified, return all
+	 * @param array $groups Array of groups to include. If not specified, return all.
 	 *
 	 * @return array
 	 */
-	public static function getBoxStyles( $groups = array() ) {
-		$list = array();
+	public static function getBoxStyles( $groups = [] ) {
+		$list = [];
 		$groups = (array) $groups;
 
 		if ( ! $groups || in_array( 'default', $groups, true ) ) {
@@ -322,10 +377,12 @@ class VcSharedLibrary {
 	}
 
 	/**
+	 * Get available colors.
+	 *
 	 * @return array
 	 */
 	public static function getColorsDashed() {
-		$colors = array(
+		$colors = [
 			esc_html__( 'Blue', 'js_composer' ) => 'blue',
 			esc_html__( 'Turquoise', 'js_composer' ) => 'turquoise',
 			esc_html__( 'Pink', 'js_composer' ) => 'pink',
@@ -343,7 +400,7 @@ class VcSharedLibrary {
 			esc_html__( 'Sandy brown', 'js_composer' ) => 'sandy-brown',
 			esc_html__( 'Purple', 'js_composer' ) => 'purple',
 			esc_html__( 'White', 'js_composer' ) => 'white',
-		);
+		];
 
 		return $colors;
 	}

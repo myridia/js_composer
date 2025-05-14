@@ -1,4 +1,8 @@
 <?php
+/**
+ * Resources par of Welcome page template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

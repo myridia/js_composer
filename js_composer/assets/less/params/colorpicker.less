@@ -40,4 +40,26 @@
   filter: brightness(0.975);
 }
 
+.pcr-app[data-theme=classic] .pcr-selection {
+  .pcr-picker {
+    left: calc(0% - 9px); top: calc(100% - 9px); background: rgb(0, 0, 0);
+  }
+  .pcr-color-palette .pcr-palette {
+    background: linear-gradient(to top, rgb(0, 0, 0), transparent), linear-gradient(to left, rgb(255, 0, 0), rgb(255, 255, 255));
+  }
+  .pcr-color-preview {
+    .pcr-last-color, .pcr-current-color {
+      --pcr-color: rgba(0,0,0, 1);
+    }
+  }
+}
 
+.color-group .pickr .pcr-button.clear {
+  --pcr-color: rgba(0, 0, 0, 0) !important;
+  background: none;
+  &::before {
+    opacity: 1;
+    background: url("data:image/svg+xml;utf8, <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 2 2\"><path fill=\"white\" d=\"M1,0H2V1H1V0ZM0,1H1V2H0V1Z\"/><path fill=\"gray\" d=\"M0,0H1V1H0V0ZM1,1H2V2H1V1Z\"/></svg>");
+    background-size: .5em;
+  }
+}

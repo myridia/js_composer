@@ -57,18 +57,18 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 		 * Set initial data.
 		 */
 		protected static function initData() {
-			self::$btn3Params = vc_map_integrate_shortcode( 'vc_btn', 'btn_', esc_html__( 'Load More Button', 'js_composer' ), array(
-				'exclude' => array(
+			self::$btn3Params = vc_map_integrate_shortcode( 'vc_btn', 'btn_', esc_html__( 'Load More Button', 'js_composer' ), [
+				'exclude' => [
 					'link',
 					'css',
 					'i_css',
 					'el_class',
 					'css_animation',
-				),
-			), array(
+				],
+			], [
 				'element' => 'style',
-				'value' => array( 'load-more' ),
-			) );
+				'value' => [ 'load-more' ],
+			] );
 			foreach ( self::$btn3Params as $key => $value ) {
 				if ( 'btn_title' === $value['param_name'] ) {
 					self::$btn3Params[ $key ]['value'] = esc_html__( 'Load more', 'js_composer' );
@@ -80,28 +80,28 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 			}
 
 			// Grid column list.
-			self::$gridColsList = array(
-				array(
+			self::$gridColsList = [
+				[
 					'label' => '6',
 					'value' => 2,
-				),
-				array(
+				],
+				[
 					'label' => '4',
 					'value' => 3,
-				),
-				array(
+				],
+				[
 					'label' => '3',
 					'value' => 4,
-				),
-				array(
+				],
+				[
 					'label' => '2',
 					'value' => 6,
-				),
-				array(
+				],
+				[
 					'label' => '1',
 					'value' => 12,
-				),
-			);
+				],
+			];
 		}
 
 		/**
@@ -118,33 +118,33 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 			}
 
 			$post_types = get_post_types();
-			$post_types_list = array();
-			$excluded_post_types = array(
+			$post_types_list = [];
+			$excluded_post_types = [
 				'revision',
 				'nav_menu_item',
 				'vc_grid_item',
-			);
+			];
 			if ( is_array( $post_types ) && ! empty( $post_types ) ) {
 				foreach ( $post_types as $post_type ) {
 					if ( ! in_array( $post_type, $excluded_post_types, true ) ) {
 						$label = ucfirst( $post_type );
-						$post_types_list[] = array(
+						$post_types_list[] = [
 							$post_type,
 							$label,
-						);
+						];
 					}
 				}
 			}
-			$post_types_list[] = array(
+			$post_types_list[] = [
 				'custom',
 				esc_html__( 'Custom query', 'js_composer' ),
-			);
-			$post_types_list[] = array(
+			];
+			$post_types_list[] = [
 				'ids',
 				esc_html__( 'List of IDs', 'js_composer' ),
-			);
+			];
 
-			$taxonomies_for_filter = array();
+			$taxonomies_for_filter = [];
 
 			if ( 'vc_edit_form' === vc_post_param( 'action' ) ) {
 				$vc_taxonomies_types = vc_taxonomies_types();
@@ -157,8 +157,8 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 				}
 			}
 
-			self::$basicGrid = array_merge( array(
-				array(
+			self::$basicGrid = array_merge( [
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Data source', 'js_composer' ),
 					'param_name' => 'post_type',
@@ -166,39 +166,39 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'save_always' => true,
 					'description' => esc_html__( 'Select content type for your grid.', 'js_composer' ),
 					'admin_label' => true,
-				),
-				array(
+				],
+				[
 					'type' => 'autocomplete',
 					'heading' => esc_html__( 'Include only', 'js_composer' ),
 					'param_name' => 'include',
 					'description' => esc_html__( 'Add posts, pages, etc. by title.', 'js_composer' ),
-					'settings' => array(
+					'settings' => [
 						'multiple' => true,
 						'sortable' => true,
 						'groups' => true,
-					),
-					'dependency' => array(
+					],
+					'dependency' => [
 						'element' => 'post_type',
-						'value' => array( 'ids' ),
-					),
-				),
+						'value' => [ 'ids' ],
+					],
+				],
 				// Custom query tab.
-				array(
+				[
 					'type' => 'textarea_safe',
 					'heading' => esc_html__( 'Custom query', 'js_composer' ),
 					'param_name' => 'custom_query',
 					'description' => sprintf( esc_html__( 'Build custom query according to %1$sWordPress Codex%2$s.', 'js_composer' ), '<a href="https://codex.wordpress.org/Function_Reference/query_posts">', '</a>' ),
 
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'post_type',
-						'value' => array( 'custom' ),
-					),
-				),
-				array(
+						'value' => [ 'custom' ],
+					],
+				],
+				[
 					'type' => 'autocomplete',
 					'heading' => esc_html__( 'Narrow data source', 'js_composer' ),
 					'param_name' => 'taxonomies',
-					'settings' => array(
+					'settings' => [
 						'multiple' => true,
 						'min_length' => 1,
 						'groups' => true,
@@ -211,19 +211,19 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						// delay for search. default 500.
 						'auto_focus' => true,
 						// auto focus input, default true.
-					),
+					],
 					'param_holder_class' => 'vc_not-for-custom',
 					'description' => esc_html__( 'Enter categories, tags or custom taxonomies.', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array(
+						'value_not_equal_to' => [
 							'ids',
 							'custom',
-						),
+						],
 						'callback' => 'vcGridTaxonomiesCallBack',
-					),
-				),
-				array(
+					],
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Total items', 'js_composer' ),
 					'param_name' => 'max_items',
@@ -231,55 +231,55 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					// default value.
 					'param_holder_class' => 'vc_not-for-custom',
 					'description' => esc_html__( 'Set max limit for items in grid or enter -1 to display all (limited to 1000).', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array(
+						'value_not_equal_to' => [
 							'ids',
 							'custom',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Display Style', 'js_composer' ),
 					'param_name' => 'style',
-					'value' => array(
+					'value' => [
 						esc_html__( 'Show all', 'js_composer' ) => 'all',
 						esc_html__( 'Load more button', 'js_composer' ) => 'load-more',
 						esc_html__( 'Lazy loading', 'js_composer' ) => 'lazy',
 						esc_html__( 'Pagination', 'js_composer' ) => 'pagination',
-					),
-					'dependency' => array(
+					],
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array( 'custom' ),
-					),
+						'value_not_equal_to' => [ 'custom' ],
+					],
 					'edit_field_class' => 'vc_col-sm-6',
 					'description' => esc_html__( 'Select display style for grid.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Items per page', 'js_composer' ),
 					'param_name' => 'items_per_page',
 					'description' => esc_html__( 'Number of items to show per page.', 'js_composer' ),
 					'value' => '10',
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array(
+						'value' => [
 							'lazy',
 							'load-more',
 							'pagination',
-						),
-					),
+						],
+					],
 					'edit_field_class' => 'vc_col-sm-6',
-				),
-				array(
+				],
+				[
 					'type' => 'checkbox',
 					'heading' => esc_html__( 'Show filter', 'js_composer' ),
 					'param_name' => 'show_filter',
-					'value' => array( esc_html__( 'Yes', 'js_composer' ) => 'yes' ),
+					'value' => [ esc_html__( 'Yes', 'js_composer' ) => 'yes' ],
 					'description' => esc_html__( 'Append filter to grid.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Grid elements per row', 'js_composer' ),
 					'param_name' => 'element_width',
@@ -287,12 +287,12 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'std' => '4',
 					'edit_field_class' => 'vc_col-sm-6',
 					'description' => esc_html__( 'Select number of single grid elements per row.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Gap', 'js_composer' ),
 					'param_name' => 'gap',
-					'value' => array(
+					'value' => [
 						'0px' => '0',
 						'1px' => '1',
 						'2px' => '2',
@@ -305,17 +305,17 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						'25px' => '25',
 						'30px' => '30',
 						'35px' => '35',
-					),
+					],
 					'std' => '30',
 					'description' => esc_html__( 'Select gap between grid elements.', 'js_composer' ),
 					'edit_field_class' => 'vc_col-sm-6',
-				),
+				],
 				// Data settings.
-				array(
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Order by', 'js_composer' ),
 					'param_name' => 'orderby',
-					'value' => array(
+					'value' => [
 						esc_html__( 'Date', 'js_composer' ) => 'date',
 						esc_html__( 'Order by post ID', 'js_composer' ) => 'ID',
 						esc_html__( 'Author', 'js_composer' ) => 'author',
@@ -327,105 +327,105 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						esc_html__( 'Meta value', 'js_composer' ) => 'meta_value',
 						esc_html__( 'Meta value number', 'js_composer' ) => 'meta_value_num',
 						esc_html__( 'Random order', 'js_composer' ) => 'rand',
-					),
+					],
 					'description' => esc_html__( 'Select order type. If "Meta value" or "Meta value Number" is chosen then meta key is required.', 'js_composer' ),
 					'group' => esc_html__( 'Data Settings', 'js_composer' ),
 					'param_holder_class' => 'vc_grid-data-type-not-ids',
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array(
+						'value_not_equal_to' => [
 							'ids',
 							'custom',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Sort order', 'js_composer' ),
 					'param_name' => 'order',
 					'group' => esc_html__( 'Data Settings', 'js_composer' ),
-					'value' => array(
+					'value' => [
 						esc_html__( 'Descending', 'js_composer' ) => 'DESC',
 						esc_html__( 'Ascending', 'js_composer' ) => 'ASC',
-					),
+					],
 					'param_holder_class' => 'vc_grid-data-type-not-ids',
 					'description' => esc_html__( 'Select sorting order.', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array(
+						'value_not_equal_to' => [
 							'ids',
 							'custom',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Meta key', 'js_composer' ),
 					'param_name' => 'meta_key',
 					'description' => esc_html__( 'Input meta key for grid ordering.', 'js_composer' ),
 					'group' => esc_html__( 'Data Settings', 'js_composer' ),
 					'param_holder_class' => 'vc_grid-data-type-not-ids',
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'orderby',
-						'value' => array(
+						'value' => [
 							'meta_value',
 							'meta_value_num',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Offset', 'js_composer' ),
 					'param_name' => 'offset',
 					'description' => esc_html__( 'Number of grid elements to displace or pass over.', 'js_composer' ),
 					'group' => esc_html__( 'Data Settings', 'js_composer' ),
 					'param_holder_class' => 'vc_grid-data-type-not-ids',
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array(
+						'value_not_equal_to' => [
 							'ids',
 							'custom',
-						),
-					),
-				),
-				array(
+						],
+					],
+				],
+				[
 					'type' => 'autocomplete',
 					'heading' => esc_html__( 'Exclude', 'js_composer' ),
 					'param_name' => 'exclude',
 					'description' => esc_html__( 'Exclude posts, pages, etc. by title.', 'js_composer' ),
 					'group' => esc_html__( 'Data Settings', 'js_composer' ),
-					'settings' => array(
+					'settings' => [
 						'multiple' => true,
-					),
+					],
 					'param_holder_class' => 'vc_grid-data-type-not-ids',
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array(
+						'value_not_equal_to' => [
 							'ids',
 							'custom',
-						),
+						],
 						'callback' => 'vc_grid_exclude_dependency_callback',
-					),
-				),
+					],
+				],
 				// Filter tab.
-				array(
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Filter by', 'js_composer' ),
 					'param_name' => 'filter_source',
 					'value' => $taxonomies_for_filter,
 					'group' => esc_html__( 'Filter', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'show_filter',
-						'value' => array( 'yes' ),
-					),
+						'value' => [ 'yes' ],
+					],
 					'save_always' => true,
 					'description' => esc_html__( 'Select filter source.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'autocomplete',
 					'heading' => esc_html__( 'Exclude from filter list', 'js_composer' ),
 					'param_name' => 'exclude_filter',
-					'settings' => array(
+					'settings' => [
 						'multiple' => true,
 						// is multiple values allowed? default false.
 						'min_length' => 1,
@@ -440,20 +440,20 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						// delay for search. default 500.
 						'auto_focus' => true,
 						// auto focus input, default true.
-					),
+					],
 					'description' => esc_html__( 'Enter categories, tags won\'t be shown in the filters list', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'show_filter',
-						'value' => array( 'yes' ),
+						'value' => [ 'yes' ],
 						'callback' => 'vcGridFilterExcludeCallBack',
-					),
+					],
 					'group' => esc_html__( 'Filter', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Style', 'js_composer' ),
 					'param_name' => 'filter_style',
-					'value' => array(
+					'value' => [
 						esc_html__( 'Rounded', 'js_composer' ) => 'default',
 						esc_html__( 'Less Rounded', 'js_composer' ) => 'default-less-rounded',
 						esc_html__( 'Border', 'js_composer' ) => 'bordered',
@@ -462,76 +462,76 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						esc_html__( 'Filled', 'js_composer' ) => 'filled',
 						esc_html__( 'Rounded Filled', 'js_composer' ) => 'filled-rounded',
 						esc_html__( 'Dropdown', 'js_composer' ) => 'dropdown',
-					),
-					'dependency' => array(
+					],
+					'dependency' => [
 						'element' => 'show_filter',
-						'value' => array( 'yes' ),
-					),
+						'value' => [ 'yes' ],
+					],
 					'group' => esc_html__( 'Filter', 'js_composer' ),
 					'description' => esc_html__( 'Select filter display style.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Default title', 'js_composer' ),
 					'param_name' => 'filter_default_title',
 					'value' => esc_html__( 'All', 'js_composer' ),
 					'description' => esc_html__( 'Enter default title for filter option display (empty: "All").', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'show_filter',
-						'value' => array( 'yes' ),
-					),
+						'value' => [ 'yes' ],
+					],
 					'group' => esc_html__( 'Filter', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Alignment', 'js_composer' ),
 					'param_name' => 'filter_align',
-					'value' => array(
+					'value' => [
 						esc_html__( 'Center', 'js_composer' ) => 'center',
 						esc_html__( 'Left', 'js_composer' ) => 'left',
 						esc_html__( 'Right', 'js_composer' ) => 'right',
-					),
-					'dependency' => array(
+					],
+					'dependency' => [
 						'element' => 'show_filter',
-						'value' => array( 'yes' ),
-					),
+						'value' => [ 'yes' ],
+					],
 					'group' => esc_html__( 'Filter', 'js_composer' ),
 					'description' => esc_html__( 'Select filter alignment.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Color', 'js_composer' ),
 					'param_name' => 'filter_color',
 					'value' => vc_get_shared( 'colors' ),
 					'std' => 'grey',
 					'param_holder_class' => 'vc_colored-dropdown',
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'show_filter',
-						'value' => array( 'yes' ),
-					),
+						'value' => [ 'yes' ],
+					],
 					'group' => esc_html__( 'Filter', 'js_composer' ),
 					'description' => esc_html__( 'Select filter color.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Filter size', 'js_composer' ),
 					'param_name' => 'filter_size',
 					'value' => vc_get_shared( 'sizes' ),
 					'std' => 'md',
 					'description' => esc_html__( 'Select filter size.', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'show_filter',
-						'value' => array( 'yes' ),
-					),
+						'value' => [ 'yes' ],
+					],
 					'group' => esc_html__( 'Filter', 'js_composer' ),
-				),
+				],
 				// moved to the end.
 				// Paging controls.
-				array(
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Arrows design', 'js_composer' ),
 					'param_name' => 'arrows_design',
-					'value' => array(
+					'value' => [
 						esc_html__( 'None', 'js_composer' ) => 'none',
 						esc_html__( 'Simple', 'js_composer' ) => 'vc_arrow-icon-arrow_01_left',
 						esc_html__( 'Simple Circle Border', 'js_composer' ) => 'vc_arrow-icon-arrow_02_left',
@@ -546,49 +546,49 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						esc_html__( 'Simple Arrow', 'js_composer' ) => 'vc_arrow-icon-arrow_08_left',
 						esc_html__( 'Simple Rounded Arrow', 'js_composer' ) => 'vc_arrow-icon-arrow_07_left',
 
-					),
+					],
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select design for arrows.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Arrows position', 'js_composer' ),
 					'param_name' => 'arrows_position',
-					'value' => array(
+					'value' => [
 						esc_html__( 'Inside Wrapper', 'js_composer' ) => 'inside',
 						esc_html__( 'Outside Wrapper', 'js_composer' ) => 'outside',
-					),
+					],
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'arrows_design',
-						'value_not_equal_to' => array( 'none' ),
+						'value_not_equal_to' => [ 'none' ],
 						// New dependency.
-					),
+					],
 					'description' => esc_html__( 'Arrows will be displayed inside or outside grid.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Arrows color', 'js_composer' ),
 					'param_name' => 'arrows_color',
 					'value' => vc_get_shared( 'colors' ),
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'arrows_design',
-						'value_not_equal_to' => array( 'none' ),
+						'value_not_equal_to' => [ 'none' ],
 						// New dependency.
-					),
+					],
 					'description' => esc_html__( 'Select color for arrows.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Pagination style', 'js_composer' ),
 					'param_name' => 'paging_design',
-					'value' => array(
+					'value' => [
 						esc_html__( 'None', 'js_composer' ) => 'none',
 						esc_html__( 'Square Dots', 'js_composer' ) => 'square_dots',
 						esc_html__( 'Radio Dots', 'js_composer' ) => 'radio_dots',
@@ -609,16 +609,16 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						esc_html__( 'Outline Rounded Square Light', 'js_composer' ) => 'pagination_rounded_square_light',
 						esc_html__( 'Stripes Dark', 'js_composer' ) => 'pagination_stripes_dark',
 						esc_html__( 'Stripes Light', 'js_composer' ) => 'pagination_stripes_light',
-					),
+					],
 					'std' => 'radio_dots',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select pagination style.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Pagination color', 'js_composer' ),
 					'param_name' => 'paging_color',
@@ -626,155 +626,155 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'std' => 'grey',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'paging_design',
-						'value_not_equal_to' => array( 'none' ),
+						'value_not_equal_to' => [ 'none' ],
 						// New dependency.
-					),
+					],
 					'description' => esc_html__( 'Select pagination color.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'checkbox',
 					'heading' => esc_html__( 'Loop pages?', 'js_composer' ),
 					'param_name' => 'loop',
 					'description' => esc_html__( 'Allow items to be repeated in infinite loop (carousel).', 'js_composer' ),
-					'value' => array( esc_html__( 'Yes', 'js_composer' ) => 'yes' ),
+					'value' => [ esc_html__( 'Yes', 'js_composer' ) => 'yes' ],
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
-				),
-				array(
+						'value' => [ 'pagination' ],
+					],
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Autoplay delay', 'js_composer' ),
 					'param_name' => 'autoplay',
 					'value' => '-1',
 					'description' => esc_html__( 'Enter value in seconds. Set -1 to disable autoplay.', 'js_composer' ),
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
-				),
-				array(
+						'value' => [ 'pagination' ],
+					],
+				],
+				[
 					'type' => 'animation_style',
 					'heading' => esc_html__( 'Animation In', 'js_composer' ),
 					'param_name' => 'paging_animation_in',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'settings' => array(
-						'type' => array(
+					'settings' => [
+						'type' => [
 							'in',
 							'other',
-						),
-					),
-					'dependency' => array(
+						],
+					],
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select "animation in" for page transition.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'animation_style',
 					'heading' => esc_html__( 'Animation Out', 'js_composer' ),
 					'param_name' => 'paging_animation_out',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'settings' => array(
-						'type' => array( 'out' ),
-					),
-					'dependency' => array(
+					'settings' => [
+						'type' => [ 'out' ],
+					],
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select "animation out" for page transition.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'vc_grid_item',
 					'heading' => esc_html__( 'Grid element template', 'js_composer' ),
 					'param_name' => 'item',
 					'description' => sprintf( esc_html__( '%1$sCreate new%2$s template or %3$smodify selected%4$s. Predefined templates will be cloned.', 'js_composer' ), '<a href="' . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
 					'group' => esc_html__( 'Item Design', 'js_composer' ),
 					'value' => 'none',
-				),
-				array(
+				],
+				[
 					'type' => 'vc_grid_id',
 					'param_name' => 'grid_id',
-				),
-				array(
+				],
+				[
 					'type' => 'animation_style',
 					'heading' => esc_html__( 'Initial loading animation', 'js_composer' ),
 					'param_name' => 'initial_loading_animation',
 					'value' => 'fadeIn',
-					'settings' => array(
-						'type' => array(
+					'settings' => [
+						'type' => [
 							'in',
 							'other',
-						),
-					),
+						],
+					],
 					'description' => esc_html__( 'Select initial loading animation for grid element.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'el_id',
 					'heading' => esc_html__( 'Element ID', 'js_composer' ),
 					'param_name' => 'el_id',
 					'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
-				),
-				array(
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Extra class name', 'js_composer' ),
 					'param_name' => 'el_class',
 					'description' => esc_html__( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'css_editor',
 					'heading' => esc_html__( 'CSS box', 'js_composer' ),
 					'param_name' => 'css',
 					'group' => esc_html__( 'Design Options', 'js_composer' ),
-					'value' => array(
+					'value' => [
 						'margin-bottom' => '35px',
-					),
-				),
+					],
+				],
 
 				// Load more btn.
-				array(
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button style', 'js_composer' ),
 					'param_name' => 'button_style',
 					'value' => '',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
+						'value' => [ 'load-more' ],
+					],
 					'description' => esc_html__( 'Select button style.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button color', 'js_composer' ),
 					'param_name' => 'button_color',
 					'value' => '',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
+						'value' => [ 'load-more' ],
+					],
 					'description' => esc_html__( 'Select button color.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button size', 'js_composer' ),
 					'param_name' => 'button_size',
 					'value' => '',
 					'description' => esc_html__( 'Select button size.', 'js_composer' ),
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
-				),
-			), self::$btn3Params );
+						'value' => [ 'load-more' ],
+					],
+				],
+			], self::$btn3Params );
 			self::$basicGrid = array_merge( self::$basicGrid );
 
 			return self::$basicGrid;
@@ -793,48 +793,48 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 				self::initData();
 			}
 
-			self::$mediaGrid = array_merge( array(
-				array(
+			self::$mediaGrid = array_merge( [
+				[
 					'type' => 'attach_images',
 					'heading' => esc_html__( 'Images', 'js_composer' ),
 					'param_name' => 'include',
 					'description' => esc_html__( 'Select images from media library.', 'js_composer' ),
 
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Display Style', 'js_composer' ),
 					'param_name' => 'style',
-					'value' => array(
+					'value' => [
 						esc_html__( 'Show all', 'js_composer' ) => 'all',
 						esc_html__( 'Load more button', 'js_composer' ) => 'load-more',
 						esc_html__( 'Lazy loading', 'js_composer' ) => 'lazy',
 						esc_html__( 'Pagination', 'js_composer' ) => 'pagination',
-					),
-					'dependency' => array(
+					],
+					'dependency' => [
 						'element' => 'post_type',
-						'value_not_equal_to' => array( 'custom' ),
-					),
+						'value_not_equal_to' => [ 'custom' ],
+					],
 					'edit_field_class' => 'vc_col-sm-6',
 					'description' => esc_html__( 'Select display style for grid.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Items per page', 'js_composer' ),
 					'param_name' => 'items_per_page',
 					'description' => esc_html__( 'Number of items to show per page.', 'js_composer' ),
 					'value' => '10',
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array(
+						'value' => [
 							'lazy',
 							'load-more',
 							'pagination',
-						),
-					),
+						],
+					],
 					'edit_field_class' => 'vc_col-sm-6',
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Grid elements per row', 'js_composer' ),
 					'param_name' => 'element_width',
@@ -842,12 +842,12 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'std' => '4',
 					'edit_field_class' => 'vc_col-sm-6',
 					'description' => esc_html__( 'Select number of single grid elements per row.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Gap', 'js_composer' ),
 					'param_name' => 'gap',
-					'value' => array(
+					'value' => [
 						'0px' => '0',
 						'1px' => '1',
 						'2px' => '2',
@@ -860,54 +860,54 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						'25px' => '25',
 						'30px' => '30',
 						'35px' => '35',
-					),
+					],
 					'std' => '5',
 					'description' => esc_html__( 'Select gap between grid elements.', 'js_composer' ),
 					'edit_field_class' => 'vc_col-sm-6',
-				),
-				array(
+				],
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button style', 'js_composer' ),
 					'param_name' => 'button_style',
 					'value' => '',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
+						'value' => [ 'load-more' ],
+					],
 					'description' => esc_html__( 'Select button style.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button color', 'js_composer' ),
 					'param_name' => 'button_color',
 					'value' => '',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
+						'value' => [ 'load-more' ],
+					],
 					'description' => esc_html__( 'Select button color.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button size', 'js_composer' ),
 					'param_name' => 'button_size',
 					'value' => '',
 					'description' => esc_html__( 'Select button size.', 'js_composer' ),
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
-				),
-				array(
+						'value' => [ 'load-more' ],
+					],
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Arrows design', 'js_composer' ),
 					'param_name' => 'arrows_design',
-					'value' => array(
+					'value' => [
 						esc_html__( 'None', 'js_composer' ) => 'none',
 						esc_html__( 'Simple', 'js_composer' ) => 'vc_arrow-icon-arrow_01_left',
 						esc_html__( 'Simple Circle Border', 'js_composer' ) => 'vc_arrow-icon-arrow_02_left',
@@ -922,49 +922,49 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						esc_html__( 'Simple Arrow', 'js_composer' ) => 'vc_arrow-icon-arrow_08_left',
 						esc_html__( 'Simple Rounded Arrow', 'js_composer' ) => 'vc_arrow-icon-arrow_07_left',
 
-					),
+					],
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select design for arrows.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Arrows position', 'js_composer' ),
 					'param_name' => 'arrows_position',
-					'value' => array(
+					'value' => [
 						esc_html__( 'Inside Wrapper', 'js_composer' ) => 'inside',
 						esc_html__( 'Outside Wrapper', 'js_composer' ) => 'outside',
-					),
+					],
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'arrows_design',
-						'value_not_equal_to' => array( 'none' ),
+						'value_not_equal_to' => [ 'none' ],
 						// New dependency.
-					),
+					],
 					'description' => esc_html__( 'Arrows will be displayed inside or outside grid.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Arrows color', 'js_composer' ),
 					'param_name' => 'arrows_color',
 					'value' => vc_get_shared( 'colors' ),
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'arrows_design',
-						'value_not_equal_to' => array( 'none' ),
+						'value_not_equal_to' => [ 'none' ],
 						// New dependency.
-					),
+					],
 					'description' => esc_html__( 'Select color for arrows.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Pagination style', 'js_composer' ),
 					'param_name' => 'paging_design',
-					'value' => array(
+					'value' => [
 						esc_html__( 'None', 'js_composer' ) => 'none',
 						esc_html__( 'Square Dots', 'js_composer' ) => 'square_dots',
 						esc_html__( 'Radio Dots', 'js_composer' ) => 'radio_dots',
@@ -985,16 +985,16 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 						esc_html__( 'Outline Rounded Square Light', 'js_composer' ) => 'pagination_rounded_square_light',
 						esc_html__( 'Stripes Dark', 'js_composer' ) => 'pagination_stripes_dark',
 						esc_html__( 'Stripes Light', 'js_composer' ) => 'pagination_stripes_light',
-					),
+					],
 					'std' => 'radio_dots',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select pagination style.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'Pagination color', 'js_composer' ),
 					'param_name' => 'paging_color',
@@ -1002,155 +1002,155 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 					'std' => 'grey',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'paging_design',
-						'value_not_equal_to' => array( 'none' ),
+						'value_not_equal_to' => [ 'none' ],
 						// New dependency.
-					),
+					],
 					'description' => esc_html__( 'Select pagination color.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'checkbox',
 					'heading' => esc_html__( 'Loop pages?', 'js_composer' ),
 					'param_name' => 'loop',
 					'description' => esc_html__( 'Allow items to be repeated in infinite loop (carousel).', 'js_composer' ),
-					'value' => array( esc_html__( 'Yes', 'js_composer' ) => 'yes' ),
+					'value' => [ esc_html__( 'Yes', 'js_composer' ) => 'yes' ],
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
-				),
-				array(
+						'value' => [ 'pagination' ],
+					],
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Autoplay delay', 'js_composer' ),
 					'param_name' => 'autoplay',
 					'value' => '-1',
 					'description' => esc_html__( 'Enter value in seconds. Set -1 to disable autoplay.', 'js_composer' ),
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
-				),
-				array(
+						'value' => [ 'pagination' ],
+					],
+				],
+				[
 					'type' => 'animation_style',
 					'heading' => esc_html__( 'Animation In', 'js_composer' ),
 					'param_name' => 'paging_animation_in',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'settings' => array(
-						'type' => array(
+					'settings' => [
+						'type' => [
 							'in',
 							'other',
-						),
-					),
-					'dependency' => array(
+						],
+					],
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select "animation in" for page transition.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'animation_style',
 					'heading' => esc_html__( 'Animation Out', 'js_composer' ),
 					'param_name' => 'paging_animation_out',
 					'group' => esc_html__( 'Pagination', 'js_composer' ),
-					'settings' => array(
-						'type' => array( 'out' ),
-					),
-					'dependency' => array(
+					'settings' => [
+						'type' => [ 'out' ],
+					],
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'pagination' ),
-					),
+						'value' => [ 'pagination' ],
+					],
 					'description' => esc_html__( 'Select "animation out" for page transition.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'vc_grid_item',
 					'heading' => esc_html__( 'Grid element template', 'js_composer' ),
 					'param_name' => 'item',
 					'description' => sprintf( esc_html__( '%1$sCreate new%2$s template or %3$smodify selected%4$s. Predefined templates will be cloned.', 'js_composer' ), '<a href="' . esc_url( admin_url( 'post-new.php?post_type=vc_grid_item' ) ) . '" target="_blank">', '</a>', '<a href="#" target="_blank" data-vc-grid-item="edit_link">', '</a>' ),
 					'group' => esc_html__( 'Item Design', 'js_composer' ),
 					'value' => 'mediaGrid_Default',
-				),
-				array(
+				],
+				[
 					'type' => 'vc_grid_id',
 					'param_name' => 'grid_id',
-				),
-				array(
+				],
+				[
 					'type' => 'el_id',
 					'heading' => esc_html__( 'Element ID', 'js_composer' ),
 					'param_name' => 'el_id',
 					'description' => sprintf( esc_html__( 'Enter element ID (Note: make sure it is unique and valid according to %1$sw3c specification%2$s).', 'js_composer' ), '<a href="https://www.w3schools.com/tags/att_global_id.asp" target="_blank">', '</a>' ),
-				),
-				array(
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Extra class name', 'js_composer' ),
 					'param_name' => 'el_class',
 					'description' => esc_html__( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'css_editor',
 					'heading' => esc_html__( 'CSS box', 'js_composer' ),
 					'param_name' => 'css',
 					'group' => esc_html__( 'Design Options', 'js_composer' ),
-					'value' => array(
+					'value' => [
 						'margin-bottom' => '35px',
-					),
-				),
-			), self::$btn3Params, array(
+					],
+				],
+			], self::$btn3Params, [
 				// Load more btn bc.
-				array(
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button style', 'js_composer' ),
 					'param_name' => 'button_style',
 					'value' => '',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
+						'value' => [ 'load-more' ],
+					],
 					'description' => esc_html__( 'Select button style.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button color', 'js_composer' ),
 					'param_name' => 'button_color',
 					'value' => '',
 					'param_holder_class' => 'vc_colored-dropdown',
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
+						'value' => [ 'load-more' ],
+					],
 					'description' => esc_html__( 'Select button color.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'hidden',
 					'heading' => esc_html__( 'Button size', 'js_composer' ),
 					'param_name' => 'button_size',
 					'value' => '',
 					'description' => esc_html__( 'Select button size.', 'js_composer' ),
 					'group' => esc_html__( 'Load More Button', 'js_composer' ),
-					'dependency' => array(
+					'dependency' => [
 						'element' => 'style',
-						'value' => array( 'load-more' ),
-					),
-				),
-				array(
+						'value' => [ 'load-more' ],
+					],
+				],
+				[
 					'type' => 'animation_style',
 					'heading' => esc_html__( 'Initial loading animation', 'js_composer' ),
 					'param_name' => 'initial_loading_animation',
 					'value' => 'fadeIn',
-					'settings' => array(
-						'type' => array(
+					'settings' => [
+						'type' => [
 							'in',
 							'other',
-						),
-					),
+						],
+					],
 					'description' => esc_html__( 'Select initial loading animation for grid element.', 'js_composer' ),
-				),
-			) );
+				],
+			] );
 
 			self::$mediaGrid = array_merge( self::$mediaGrid );
 
@@ -1175,18 +1175,18 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 			unset( self::$masonryGrid[ $style ]['value'][ esc_html__( 'Pagination', 'js_composer' ) ] );
 
 			$animation = self::arraySearch( self::$masonryGrid, 'param_name', 'initial_loading_animation' );
-			$masonry_animation = array(
+			$masonry_animation = [
 				'type' => 'dropdown',
 				'heading' => esc_html__( 'Initial loading animation', 'js_composer' ),
 				'param_name' => 'initial_loading_animation',
-				'value' => array(
+				'value' => [
 					esc_html__( 'None', 'js_composer' ) => 'none',
 					esc_html__( 'Default', 'js_composer' ) => 'zoomIn',
 					esc_html__( 'Fade In', 'js_composer' ) => 'fadeIn',
-				),
+				],
 				'std' => 'zoomIn',
 				'description' => esc_html__( 'Select initial loading animation for grid element.', 'js_composer' ),
-			);
+			];
 			self::$masonryGrid[ $animation ] = $masonry_animation;
 
 			$key = self::arraySearch( self::$masonryGrid, 'group', esc_html__( 'Pagination', 'js_composer' ) );
@@ -1230,24 +1230,24 @@ if ( ! class_exists( 'VcGridsCommon' ) ) {
 			unset( self::$masonryMediaGrid[ $style ]['value'][ esc_html__( 'Pagination', 'js_composer' ) ] );
 
 			$animation = self::arraySearch( self::$masonryMediaGrid, 'param_name', 'initial_loading_animation' );
-			$masonry_animation = array(
+			$masonry_animation = [
 				'type' => 'dropdown',
 				'heading' => esc_html__( 'Initial loading animation', 'js_composer' ),
 				'param_name' => 'initial_loading_animation',
-				'value' => array(
+				'value' => [
 					esc_html__( 'None', 'js_composer' ) => 'none',
 					esc_html__( 'Default', 'js_composer' ) => 'zoomIn',
 					esc_html__( 'Fade In', 'js_composer' ) => 'fadeIn',
-				),
+				],
 				'std' => 'zoomIn',
-				'settings' => array(
-					'type' => array(
+				'settings' => [
+					'type' => [
 						'in',
 						'other',
-					),
-				),
+					],
+				],
 				'description' => esc_html__( 'Select initial loading animation for grid element.', 'js_composer' ),
-			);
+			];
 			self::$masonryMediaGrid[ $animation ] = $masonry_animation;
 
 			self::$masonryMediaGrid = array_merge( self::$masonryMediaGrid );

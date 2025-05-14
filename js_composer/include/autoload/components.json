@@ -24,6 +24,7 @@
   "hook-vc-progress-bar.php": "Logic for shortcode vc_progress_bar",
   "hook-vc-wp-text.php": "Logic for shortcode vc_wp_text fix",
   "hook-vc-pie.php": "Logic for shortcode vc_pie",
+  "hook-wpb-hide-title.php": "Hook for hide title plugin functionality",
   "vc-grid-item-editor.php": "Create new post type vc_grid_item or Grid item",
   "ui-vc-pointers.php": "Integrating With WordPress’ UI: Admin Pointers",
   "vc-pages/automapper.php": "",
@@ -43,5 +44,6 @@
   "vc-undoredo.php": "Undo Redo logic",
   "local-fonts/class-local-fonts.php": "Local Google fonts",
   "class-vc-notice-controller.php": "Plugin Notice System",
+  "class-vc-expire-notice-controller.php": "Plugin Expire Notice System",
   "vc-settings-auto-save.php": "Logic for auto-save in General settings"
 }

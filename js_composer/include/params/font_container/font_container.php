@@ -1,10 +1,19 @@
 <?php
+/**
+ * Param type 'font_container'
+ *
+ * Container param for a set of fields.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/#vc_map()-ParametersofparamsArray
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
  * Class Vc_Font_Container
+ *
  * @since 4.3
  * vc_map examples:
  *  array(
@@ -33,17 +42,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Vc_Font_Container {
 
 	/**
-	 * @param $settings
-	 * @param $value
+	 * Renders the HTML output.
+	 *
+	 * @param array $settings
+	 * @param string $value
 	 *
 	 * @return string
 	 */
 	public function render( $settings, $value ) {
-		$fields = array();
-		$values = array();
+		$fields = [];
+		$values = [];
 		extract( $this->_vc_font_container_parse_attributes( $settings['settings']['fields'], $value ) );
 
-		$data = array();
+		$data = [];
 		$output = '';
 		if ( ! empty( $fields ) ) {
 			if ( isset( $fields['tag'] ) ) {
@@ -122,7 +133,7 @@ class Vc_Font_Container {
                     <div class="vc_font_container_form_field-color-container">
                         <div class="color-group">
                             <div class="wpb-color-picker"></div>
-                            <input type="text" value="' . $values['color'] . '" class="vc_font_container_form_field-color-input vc_color-control vc_ui-hidden" />
+                            <input type="text" value="' . $values['color'] . '" data-default-colorpicker-color="' . $fields['default_colorpicker_color'] . '" class="vc_font_container_form_field-color-input vc_color-control vc_ui-hidden" />
                         </div>
                     </div>';
 				if ( isset( $fields['color_description'] ) && strlen( $fields['color_description'] ) > 0 ) {
@@ -173,7 +184,7 @@ class Vc_Font_Container {
 				$data['font_style'] .= '</div>';
 			}
 			$data = apply_filters( 'vc_font_container_output_data', $data, $fields, $values, $settings );
-			// combine all in output, make sure you follow ordering
+			// combine all in output, make sure you follow ordering.
 			foreach ( $fields as $key => $field ) {
 				if ( isset( $data[ $key ] ) ) {
 					$output .= $data[ $key ];
@@ -188,12 +199,13 @@ class Vc_Font_Container {
 	/**
 	 * If field 'font_family' is used this is list of fonts available
 	 * To modify this list, you should use add_filter('vc_font_container_get_fonts_filter','your_custom_function');
-	 * vc_filter: vc_font_container_get_fonts_filter - to modify list of fonts
+	 *
+	 * @see vc_filter: vc_font_container_get_fonts_filter - to modify list of fonts
 	 * @return array list of fonts
 	 */
-	public function _vc_font_container_get_web_safe_fonts() {
-		// this is "Web Safe FONTS" from w3c: http://www.w3schools.com/cssref/css_websafe_fonts.asp
-		$web_fonts = array(
+	public function _vc_font_container_get_web_safe_fonts() { // phpcs:ignore:PSR2.Methods.MethodDeclaration.Underscore
+		// this is "Web Safe FONTS" from w3c: http://www.w3schools.com/cssref/css_websafe_fonts.asp.
+		$web_fonts = [
 			'Georgia' => 'Georgia, serif',
 			'Palatino Linotype' => '"Palatino Linotype", "Book Antiqua", Palatino, serif',
 			'Book Antiqua' => '"Book Antiqua", Palatino, serif',
@@ -214,7 +226,7 @@ class Vc_Font_Container {
 			'Courier New' => '"Courier New", Courier, monospace',
 			'Lucida Console' => '"Lucida Console", Monaco, monospace',
 			'Monaco' => 'Monaco, monospace',
-		);
+		];
 
 		return apply_filters( 'vc_font_container_get_fonts_filter', $web_fonts );
 	}
@@ -222,11 +234,12 @@ class Vc_Font_Container {
 	/**
 	 * If 'tag' field used this is list of allowed tags
 	 * To modify this list, you should use add_filter('vc_font_container_get_allowed_tags','your_custom_function');
-	 * vc_filter: vc_font_container_get_allowed_tags - to modify list of allowed tags by default
+	 *
+	 * @see vc_filter: vc_font_container_get_allowed_tags - to modify list of allowed tags by default
 	 * @return array list of allowed tags
 	 */
-	public function _vc_font_container_get_allowed_tags() {
-		$allowed_tags = array(
+	public function _vc_font_container_get_allowed_tags() { // phpcs:ignore:PSR2.Methods.MethodDeclaration.Underscore
+		$allowed_tags = [
 			'h1',
 			'h2',
 			'h3',
@@ -235,19 +248,21 @@ class Vc_Font_Container {
 			'h6',
 			'p',
 			'div',
-		);
+		];
 
 		return apply_filters( 'vc_font_container_get_allowed_tags', $allowed_tags );
 	}
 
 	/**
-	 * @param $attr
-	 * @param $value
+	 * Parse font container attributes.
+	 *
+	 * @param array $attr
+	 * @param array|string $value
 	 *
 	 * @return array
 	 */
-	public function _vc_font_container_parse_attributes( $attr, $value ) {
-		$fields = array();
+	public function _vc_font_container_parse_attributes( $attr, $value ) { // phpcs:ignore:PSR2.Methods.MethodDeclaration.Underscore
+		$fields = [];
 		if ( isset( $attr ) ) {
 			foreach ( $attr as $key => $val ) {
 				if ( is_numeric( $key ) ) {
@@ -258,7 +273,7 @@ class Vc_Font_Container {
 			}
 		}
 
-		$values = vc_parse_multi_attribute( $value, array(
+		$values = vc_parse_multi_attribute( $value, [
 			'tag' => isset( $fields['tag'] ) ? $fields['tag'] : 'h2',
 			'font_size' => isset( $fields['font_size'] ) ? $fields['font_size'] : '',
 			'font_style_italic' => isset( $fields['font_style_italic'] ) ? $fields['font_style_italic'] : '',
@@ -274,18 +289,20 @@ class Vc_Font_Container {
 			'color_description' => isset( $fields['color_description'] ) ? $fields['color_description'] : 'left',
 			'line_height_description' => isset( $fields['line_height_description'] ) ? $fields['line_height_description'] : '',
 			'text_align_description' => isset( $fields['text_align_description'] ) ? $fields['text_align_description'] : '',
-		) );
+		] );
 
-		return array(
+		return [
 			'fields' => $fields,
 			'values' => $values,
-		);
+		];
 	}
 }
 
 /**
- * @param $settings
- * @param $value
+ * Filter font container render.
+ *
+ * @param array $settings
+ * @param string $value
  *
  * @return mixed
  */

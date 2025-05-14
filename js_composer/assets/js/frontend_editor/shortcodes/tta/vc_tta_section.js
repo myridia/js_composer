@@ -1,8 +1,8 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
 	window.vc.ttaSectionActivateOnClone = false;
-	window.InlineShortcodeView_vc_tta_section = window.InlineShortcodeViewContainerWithParent.extend( {
+	window.InlineShortcodeView_vc_tta_section = window.InlineShortcodeViewContainerWithParent.extend({
 		events: {
 			'click > .vc_controls [data-vc-control="destroy"]': 'destroy',
 			'click > .vc_controls [data-vc-control="edit"]': 'edit',
@@ -38,7 +38,7 @@
 					var $accordion = window.vc.frame_window.jQuery(
 						'[data-vc-accordion][data-vc-target="[data-model-id=' + model.get( 'id' ) + ']"]' );
 					$accordion.trigger( 'click' );
-				} );
+				});
 			}
 			return this;
 		},
@@ -77,24 +77,24 @@
 		moveClasses: function () {
 			var panelClassName;
 			if ( this.previousClasses ) {
-				this.$el.get( 0 ).className = this.$el.get( 0 ).className.replace( this.previousClasses, "" );
+				this.$el.get( 0 ).className = this.$el.get( 0 ).className.replace( this.previousClasses, '' );
 			}
 			panelClassName = this.$el.find( '.vc_tta-panel' ).get( 0 ).className;
 			this.$el.attr( 'data-vc-content', this.$el.find( '.vc_tta-panel' ).data( 'vcContent' ) );
 			this.previousClasses = panelClassName;
-			this.$el.find( '.vc_tta-panel' ).get( 0 ).className = "";
-			this.$el.get( 0 ).className = this.$el.get( 0 ).className + " " + this.previousClasses;
+			this.$el.find( '.vc_tta-panel' ).get( 0 ).className = '';
+			this.$el.get( 0 ).className = this.$el.get( 0 ).className + ' ' + this.previousClasses;
 			// Fix data-vc-target for accordions:
 			this.$el.find( '.vc_tta-panel-title [data-vc-target]' ).attr( 'data-vc-target',
 				'[data-model-id=' + this.model.get( 'id' ) + ']' );
 		},
 		refreshContent: function ( noSectionUpdate ) {
-			var $controlsIcon, $controlsIconsPositionEl, parentModel, parentParams, paramsMap, parentLayout;
+			var $controlsIcon, $controlsIconsPositionEl, parentModel, parentParams, paramsMap;
 
 			parentModel = vc.shortcodes.get( this.model.get( 'parent_id' ) );
 			if ( _.isObject( parentModel ) ) {
 				paramsMap = vc.getDefaultsAndDependencyMap( parentModel.get( 'shortcode' ) );
-				parentParams = _.extend( {}, paramsMap.defaults, parentModel.get( 'params' ) );
+				parentParams = _.extend({}, paramsMap.defaults, parentModel.get( 'params' ) );
 				$controlsIcon = this.$el.find( '.vc_tta-controls-icon' );
 				if ( parentParams && !_.isUndefined( parentParams.c_icon ) && 0 < parentParams.c_icon.length ) {
 					if ( $controlsIcon.length ) {
@@ -107,9 +107,9 @@
 					if ( !_.isUndefined( parentParams.c_position ) && 0 < parentParams.c_position.length ) {
 						$controlsIconsPositionEl = this.$el.find( '[data-vc-tta-controls-icon-position]' );
 						if ( $controlsIconsPositionEl.length ) {
-							if('default' === parentParams.c_position) {
+							if( 'default' === parentParams.c_position ) {
 								$controlsIconsPositionEl.attr( 'data-vc-tta-controls-icon-position',
-									'rtl' === $('html').attr('dir') ? 'right' : 'left');
+									'rtl' === $( 'html' ).attr( 'dir' ) ? 'right' : 'left' );
 							} else {
 								$controlsIconsPositionEl.attr( 'data-vc-tta-controls-icon-position',
 									parentParams.c_position );
@@ -138,7 +138,7 @@
 				.on( 'show.vc.accordion hide.vc.accordion',
 					function ( e ) {
 						that.setAsActiveSection( 'show' === e.type );
-					} );
+					});
 
 		},
 		destroy: function ( e ) {
@@ -146,7 +146,7 @@
 			parentId = this.model.get( 'parent_id' );
 			window.InlineShortcodeView_vc_tta_section.__super__.destroy.call( this, e );
 			parentModel = vc.shortcodes.get( parentId );
-			if ( !vc.shortcodes.where( { parent_id: parentId } ).length ) {
+			if ( !vc.shortcodes.where({ parent_id: parentId }).length ) {
 				parentModel.destroy();
 			} else {
 				if ( parentModel.view && parentModel.view.removeSection ) {
@@ -154,5 +154,5 @@
 				}
 			}
 		}
-	} );
+	});
 })( window.jQuery );

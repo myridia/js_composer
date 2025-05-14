@@ -136,6 +136,8 @@ class Vc_Ai_Content_Generator {
 			return false;
 		}
 
+		$this->modal_ai->set_ai_element_type( $data['wpb-ai-element-type'] );
+
 		if ( isset( $data['contentType'] ) && is_string( $data['contentType'] ) &&
 			! array_key_exists( $data['contentType'], $this->modal_ai->get_content_generate_variant() ) ) {
 

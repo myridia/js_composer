@@ -1,18 +1,25 @@
 <?php
+/**
+ * Class that handles specific [vc_section] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_section.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * WPBakery WPBakery Page Builder section
+ * WPBakery Page Builder section
  *
  * @package WPBakeryPageBuilder
- *
  */
 class WPBakeryShortCode_Vc_Section extends WPBakeryShortCodesContainer {
 	/**
-	 * @param $width
-	 * @param $i
+	 * Add container classes.
+	 *
+	 * @param string $width
+	 * @param int $i
 	 * @return string
 	 */
 	public function containerHtmlBlockParams( $width, $i ) {
@@ -20,19 +27,26 @@ class WPBakeryShortCode_Vc_Section extends WPBakeryShortCodesContainer {
 	}
 
 	/**
-	 * @param $settings
+	 * WPBakeryShortCode_Vc_Section constructor.
+	 *
+	 * @param array $settings
 	 */
 	public function __construct( $settings ) {
 		parent::__construct( $settings );
 		$this->shortcodeScripts();
 	}
 
+	/**
+	 * Register shortcode scripts.
+	 */
 	protected function shortcodeScripts() {
-		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/vendor/node_modules/skrollr/dist/skrollr.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
-		wp_register_script( 'vc_youtube_iframe_api_js', 'https://www.youtube.com/iframe_api', array(), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/vendor/node_modules/skrollr/dist/skrollr.min.js' ), [ 'jquery-core' ], WPB_VC_VERSION, true );
+		wp_register_script( 'vc_youtube_iframe_api_js', 'https://www.youtube.com/iframe_api', [], WPB_VC_VERSION, true );
 	}
 
 	/**
+	 * Additional CSS class for shortcode in admin.
+	 *
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -43,6 +57,8 @@ class WPBakeryShortCode_Vc_Section extends WPBakeryShortCodesContainer {
 	}
 
 	/**
+	 * Add column controls to shortcode output.
+	 *
 	 * @param string $controls
 	 * @param string $extended_css
 	 * @return string
@@ -53,7 +69,7 @@ class WPBakeryShortCode_Vc_Section extends WPBakeryShortCodesContainer {
 
 		$output = '<div class="vc_controls vc_controls-row controls_row vc_clearfix">';
 		$controls_end = '</div>';
-		// Create columns
+		// Create columns.
 		$controls_move = ' <a class="vc_control column_move vc_column-move" href="#" title="' . esc_attr__( 'Drag row to reorder', 'js_composer' ) . '" data-vc-control="move"><i class="vc-composer-icon vc-c-icon-dragndrop"></i></a>';
 		$moveAccess = vc_user_access()->part( 'dragndrop' )->checkStateAny( true, null )->get();
 		if ( ! $moveAccess ) {
@@ -91,8 +107,11 @@ class WPBakeryShortCode_Vc_Section extends WPBakeryShortCodesContainer {
 	}
 
 	/**
-	 * @param $atts
-	 * @param null $content
+	 * Get admin output.
+	 *
+	 * @param array $atts
+	 * @param string $content
+	 *
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -123,7 +142,7 @@ class WPBakeryShortCode_Vc_Section extends WPBakeryShortCodesContainer {
 				}
 				$param_value = isset( $atts[ $param['param_name'] ] ) ? $atts[ $param['param_name'] ] : '';
 				if ( is_array( $param_value ) ) {
-					// Get first element from the array
+					// Get first element from the array.
 					reset( $param_value );
 					$first_key = key( $param_value );
 					$param_value = $param_value[ $first_key ];

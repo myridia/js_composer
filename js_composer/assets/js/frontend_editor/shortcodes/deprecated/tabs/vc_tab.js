@@ -1,7 +1,7 @@
-(function () {
+( function () {
 	'use strict';
 
-	window.InlineShortcodeView_vc_tab = window.InlineShortcodeViewContainerWithParent.extend( {
+	window.InlineShortcodeView_vc_tab = window.InlineShortcodeViewContainerWithParent.extend({
 		controls_selector: '#vc_controls-template-vc_tab',
 		render: function () {
 			var tab_id, active, params;
@@ -68,23 +68,27 @@
 			}
 			vc.clone_index /= 10;
 			clone = this.model.clone();
+			// TODO: check if params is used
+			// eslint-disable-next-line no-unused-vars
 			params = clone.get( 'params' );
 			builder = new vc.ShortcodesBuilder();
 			var new_model = vc.CloneModel( builder, this.model, this.model.get( 'parent_id' ) );
+			// TODO: check if active_model is used
+			// eslint-disable-next-line no-unused-vars
 			var active_model = this.parent_view.active_model_id;
 			var that = this;
 			builder.render( function () {
 				if ( that.parent_view.cloneTabAfter ) {
 					that.parent_view.cloneTabAfter( new_model );
 				}
-			} );
+			});
 		},
 		rowsColumnsConverted: function () {
-			_.each( vc.shortcodes.where( { parent_id: this.model.get( 'id' ) } ), function ( model ) {
+			_.each( vc.shortcodes.where({ parent_id: this.model.get( 'id' ) }), function ( model ) {
 				if ( model.view.rowsColumnsConverted ) {
 					model.view.rowsColumnsConverted();
 				}
-			} );
+			});
 		}
-	} );
+	});
 })();

@@ -1,4 +1,4 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
 	$( document ).on( 'acf/setup_fields', function () {
@@ -10,5 +10,5 @@
 				$( '#content-html' ).trigger( 'click' );
 			}
 		}, 10 );
-	} );
+	});
 })( window.jQuery );

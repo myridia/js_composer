@@ -1,13 +1,15 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
-
 /**
+ * AI generate code template.
+ *
  * @var Vc_Ai_Modal_Controller $ai_modal_controller
  * @var string $ai_element_type
  * @var string $ai_element_id
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 ?>
 <div class="vc_col-xs-12 wpb_el_type_textarea vc_wrapper-param-type-textarea vc_shortcode-param vc_column">
 	<div class="wpb_element_label"><?php esc_html_e( 'Describe content', 'js_composer' ); ?></div>

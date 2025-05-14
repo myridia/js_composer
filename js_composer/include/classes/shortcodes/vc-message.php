@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_message] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_message.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -9,7 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WPBakeryShortCode_Vc_Message extends WPBakeryShortCode {
 
 	/**
-	 * @param $atts
+	 * Convert attributes to message box.
+	 *
+	 * @param array $atts
 	 * @return mixed
 	 */
 	public static function convertAttributesToMessageBox2( $atts ) {
@@ -30,7 +38,9 @@ class WPBakeryShortCode_Vc_Message extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $title
+	 * Override default title.
+	 *
+	 * @param string $title
 	 * @return string
 	 */
 	public function outputTitle( $title ) {

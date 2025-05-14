@@ -10,12 +10,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+require_once vc_manager()->path( 'MUTUAL_MODULES_DIR', 'class-module.php' );
+
 /**
  * Module entry point.
  *
  * @since 7.7
  */
-class Vc_Seo_Module {
+class Vc_Seo_Module extends Vc_Module {
 	/**
 	 * Post plugin settings seo meta.
 	 *
@@ -23,6 +25,32 @@ class Vc_Seo_Module {
 	 * @var array
 	 */
 	public $post_seo_meta;
+
+	/**
+	 * Module settings that specify functionality common for some modules.
+	 *
+	 * @note We can use object functionality $this->get_module_functionality( 'post-meta' )->foo();
+	 *
+	 * @since 8.4
+	 * @var array
+	 */
+	public $module_common_functionality = [ 'post-meta' ];
+
+	/**
+	 * Post meta key.
+	 *
+	 * @since 8.4
+	 * @var string
+	 */
+	public $post_meta_key = 'post_custom_seo_settings';
+
+	/**
+	 * Post meta slug.
+	 *
+	 * @since 8.4
+	 * @var string
+	 */
+	public $post_meta_slug = 'custom_seo_settings';
 
 	/**
 	 * Post plugin settings seo meta key.
@@ -57,21 +85,17 @@ class Vc_Seo_Module {
 			wp_send_json_success( $is_key_phrase_in_other_posts );
 		} );
 
-		add_action( 'vc_nav_control_list', [ $this, 'add_seo_to_nav_control_list' ], 10, 1 );
+		add_action( 'vc_nav_control_list', [ $this, 'add_seo_to_nav_control_list' ] );
 
-		add_action( 'vc_editor_footer', [ $this, 'add_setting_popup' ], 10, 1 );
+		add_action( 'vc_editor_footer', [ $this, 'add_setting_popup' ] );
 
-		add_filter( 'vc_nav_controls', [ $this, 'add_seo_button_to_nav_controls' ], 10, 1 );
+		add_filter( 'vc_nav_controls', [ $this, 'add_seo_button_to_nav_controls' ], 11, 1 );
 
-		add_filter( 'vc_nav_front_controls', [ $this, 'add_seo_button_to_nav_controls' ], 10, 1 );
-
-		add_filter( 'vc_post_meta_list', [ $this, 'add_custom_meta_to_update' ] );
+		add_filter( 'vc_nav_front_controls', [ $this, 'add_seo_button_to_nav_controls' ], 11, 1 );
 
 		add_filter( 'vc_before_update_post_data', [ $this, 'set_post_slug' ] );
 
 		add_filter( 'wp_insert_post_data', [ $this, 'change_post_fields' ], 10, 2 );
-
-		add_filter( 'wpb_set_post_custom_meta', [ $this, 'set_post_custom_meta' ], 10, 2 );
 	}
 
 	/**
@@ -96,7 +120,7 @@ class Vc_Seo_Module {
 			return [];
 		}
 
-		$post_seo_meta = get_post_meta( get_the_ID(), self::MODULE_POST_META_KEY, true );
+		$post_seo_meta = $this->get_post_seo_meta( get_the_ID() );
 		if ( empty( $post_seo_meta ) ) {
 			return [];
 		}
@@ -369,24 +393,20 @@ class Vc_Seo_Module {
 	 * @return array
 	 */
 	public function add_seo_button_to_nav_controls( $controls ) {
+		if ( 'vc_grid_item' === get_post_type() ) {
+			return $controls;
+		}
+
 		$controls[] = [
 			'seo',
-			'<li class="vc_pull-right"><a href="javascript:;" class="vc_icon-btn vc_seo-button" id="vc_seo-button" title="' . esc_attr__( 'WPBakery SEO', 'js_composer' ) . '"><i class="vc-composer-icon vc-c-icon-seo"></i></a></li>',
+			'<li class="vc_pull-right vc_hide-mobile vc_hide-desktop-more">
+				<a href="javascript:;" class="vc_icon-btn vc_seo-button" id="vc_seo-button" title="' . esc_attr__( 'WPBakery SEO', 'js_composer' ) . '">
+					<i class="vc-composer-icon vc-c-icon-seo"></i>
+					<p class="vc_hide-desktop">' . __( 'SEO', 'js_composer' ) . '</p>
+				</a>
+			</li>',
 		];
 		return $controls;
-	}
-
-	/**
-	 * Add custom module meta to the plugin post custom meta list.
-	 *
-	 * @since 7.7
-	 * @param array $meta_list
-	 * @return array
-	 */
-	public function add_custom_meta_to_update( $meta_list ) {
-		$meta_list[] = 'custom_seo_settings';
-
-		return $meta_list;
 	}
 
 	/**
@@ -451,23 +471,31 @@ class Vc_Seo_Module {
 			return $post_fields;
 		}
 
-		$post_fields = $this->set_post_slug( $post_fields, $post_array['ID'] );
-
-		return $post_fields;
+		return $this->set_post_slug( $post_fields, $post_array['ID'] );
 	}
 
 	/**
-	 * Set post custom meta.
+	 * Get module post meta.
 	 *
-	 * @since 7.7
+	 * @since 8.4
 	 * @param array $post_custom_meta
-	 * @param WP_Post $post
-	 * @return array
+	 * @param int $post_id
+	 * @return string
 	 */
-	public function set_post_custom_meta( $post_custom_meta, $post ) {
-		$post_custom_meta['post_custom_seo_settings'] =
-			get_post_meta( $post->ID, self::MODULE_POST_META_KEY, true );
+	public function get_module_meta( $post_custom_meta, $post_id ) {
+		$post = get_post( $post_id );
 
-		return $post_custom_meta;
+		return $this->get_post_seo_meta( $post->ID );
+	}
+
+	/**
+	 * Get post seo meta.
+	 *
+	 * @since 8.4
+	 * @param int $post_id
+	 * @return string
+	 */
+	public function get_post_seo_meta( $post_id ) {
+		return get_post_meta( $post_id, self::MODULE_POST_META_KEY, true );
 	}
 }

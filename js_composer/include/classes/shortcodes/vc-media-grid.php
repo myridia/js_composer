@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_media_grid] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_media_grid.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -11,17 +17,20 @@ require_once vc_path_dir( 'SHORTCODES_DIR', 'vc-basic-grid.php' );
 class WPBakeryShortCode_Vc_Media_Grid extends WPBakeryShortCode_Vc_Basic_Grid {
 	/**
 	 * WPBakeryShortCode_Vc_Media_Grid constructor.
-	 * @param $settings
+	 *
+	 * @param array $settings
 	 */
 	public function __construct( $settings ) {
 		parent::__construct( $settings );
-		add_filter( $this->shortcode . '_items_list', array(
+		add_filter( $this->shortcode . '_items_list', [
 			$this,
 			'setItemsIfEmpty',
-		) );
+		] );
 	}
 
 	/**
+	 * Get name.
+	 *
 	 * @return mixed|string
 	 */
 	protected function getFileName() {
@@ -29,33 +38,39 @@ class WPBakeryShortCode_Vc_Media_Grid extends WPBakeryShortCode_Vc_Basic_Grid {
 	}
 
 	/**
-	 * @param $max_items
+	 * Set pagination attr.
+	 *
+	 * @param int $max_items
 	 */
 	protected function setPagingAll( $max_items ) {
 		$this->atts['items_per_page'] = $this->atts['query_items_per_page'] = apply_filters( 'vc_basic_grid_items_per_page_all_max_items', self::$default_max_items );
 	}
 
 	/**
-	 * @param $atts
+	 * Build WP_Query.
+	 *
+	 * @param array $atts
 	 * @return array
 	 */
 	public function buildQuery( $atts ) {
 		if ( empty( $atts['include'] ) ) {
 			$atts['include'] = - 1;
 		}
-		$settings = array(
+		$settings = [
 			'include' => $atts['include'],
 			'posts_per_page' => apply_filters( 'vc_basic_grid_max_items', self::$default_max_items ),
 			'offset' => 0,
 			'post_type' => 'attachment',
 			'orderby' => 'post__in',
-		);
+		];
 
 		return $settings;
 	}
 
 	/**
-	 * @param $items
+	 * Set grid items.
+	 *
+	 * @param string $items
 	 * @return string
 	 */
 	public function setItemsIfEmpty( $items ) {
@@ -74,15 +89,17 @@ class WPBakeryShortCode_Vc_Media_Grid extends WPBakeryShortCode_Vc_Basic_Grid {
 	}
 
 	/**
-	 * @param $param
-	 * @param $value
+	 * Set html param holder.
+	 *
+	 * @param array $param
+	 * @param string $value
 	 * @return string
 	 */
 	public function singleParamHtmlHolder( $param, $value ) {
 		$output = '';
 		// Compatibility fixes
 		// TODO: check $old_names & &new_names. Leftover from copypasting?
-		$old_names = array(
+		$old_names = [
 			'yellow_message',
 			'blue_message',
 			'green_message',
@@ -92,8 +109,8 @@ class WPBakeryShortCode_Vc_Media_Grid extends WPBakeryShortCode_Vc_Basic_Grid {
 			'button_blue',
 			'button_red',
 			'button_orange',
-		);
-		$new_names = array(
+		];
+		$new_names = [
 			'alert-block',
 			'alert-info',
 			'alert-success',
@@ -103,7 +120,7 @@ class WPBakeryShortCode_Vc_Media_Grid extends WPBakeryShortCode_Vc_Basic_Grid {
 			'btn-primary',
 			'btn-danger',
 			'btn-warning',
-		);
+		];
 		$value = str_ireplace( $old_names, $new_names, $value );
 		$param_name = isset( $param['param_name'] ) ? $param['param_name'] : '';
 		$type = isset( $param['type'] ) ? $param['type'] : '';
@@ -114,13 +131,13 @@ class WPBakeryShortCode_Vc_Media_Grid extends WPBakeryShortCode_Vc_Basic_Grid {
 		}
 
 		if ( 'include' === $param_name ) {
-			$images_ids = empty( $value ) ? array() : explode( ',', trim( $value ) );
+			$images_ids = empty( $value ) ? [] : explode( ',', trim( $value ) );
 			$output .= '<ul class="attachment-thumbnails' . ( empty( $images_ids ) ? ' image-exists' : '' ) . '" data-name="' . $param_name . '">';
 			foreach ( $images_ids as $image ) {
-				$img = wpb_getImageBySize( array(
+				$img = wpb_getImageBySize( [
 					'attach_id' => (int) $image,
 					'thumb_size' => 'thumbnail',
-				) );
+				] );
 				$output .= ( $img ? '<li>' . $img['thumbnail'] . '</li>' : '<li><img width="150" height="150" src="' . esc_url( vc_asset_url( 'vc/blank.gif' ) ) . '" class="attachment-thumbnail" alt="" title="" /></li>' );
 			}
 			$output .= '</ul>';

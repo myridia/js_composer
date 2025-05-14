@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/class-vc-grids-common.php';
 $grid_params = VcGridsCommon::getBasicAtts();
 
-return array(
+return [
 	'name' => esc_html__( 'Post Grid', 'js_composer' ),
 	'base' => 'vc_basic_grid',
 	'icon' => 'icon-wpb-application-icon-large',
@@ -20,4 +20,4 @@ return array(
 	'category' => esc_html__( 'Content', 'js_composer' ),
 	'description' => esc_html__( 'Posts, pages or custom posts in grid', 'js_composer' ),
 	'params' => $grid_params,
-);
+];

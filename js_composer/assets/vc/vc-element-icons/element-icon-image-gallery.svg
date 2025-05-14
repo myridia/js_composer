@@ -1,16 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
-    <title>Image Gallery</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Image-Gallery">
-            <rect id="Rectangle" fill="#55779D" x="0" y="0" width="27" height="29" rx="3"></rect>
-            <rect id="Rectangle" fill="#91BFF4" x="5" y="4" width="27" height="25" rx="3"></rect>
-            <path d="M28.5954544,32 L7.99263394,32 C6.33984785,32 5,30.6526814 5,28.9999809 L5,23.1984848 L13.1984848,15 L29.3969696,31.1984848 L28.5954544,32 Z" id="Combined-Shape" fill="#40915A"></path>
-            <path d="M32,16.8015152 L32,28.9999809 C32,30.6568457 30.6610658,32 29.0073661,32 L7.99263394,32 C7.21759548,32 6.51137023,31.7037328 5.97984749,31.2186373 L26.1984848,11 L32,16.8015152 Z" id="Combined-Shape" fill="#4CAD6B"></path>
-            <rect id="Rectangle-10" fill="#FFC90F" x="9" y="8" width="5" height="5" rx="2.5"></rect>
-        </g>
-    </g>
+<svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.55261 28.5533L13.5439 21.2603L17.5023 25.3894L26.1129 16.4072L33.387 23.9952" stroke="#00447F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="17.079" cy="13.1705" r="2.94737" stroke="#00447F" stroke-width="1.7"/>
+<path d="M23.3947 6.0127H7.55261C7.00033 6.0127 6.55261 6.46041 6.55261 7.0127V31.9601C6.55261 32.5123 7.00033 32.9601 7.55261 32.9601H32.5C33.0523 32.9601 33.5 32.5123 33.5 31.9601V7.0127C33.5 6.46041 33.0523 6.0127 32.5 6.0127H28.4473" stroke="#00447F" stroke-width="1.7" stroke-linecap="round"/>
+<path d="M1.5 6.95996V0.959961H22.5H28.4474V6.01259H6.55263V27.9073H1.5V12.96" stroke="#00447F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

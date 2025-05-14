@@ -1,20 +1,22 @@
 <?php
+/**
+ * Post categories shortcode grid builder template.
+ *
+ * @var WPBakeryShortCode_Vc_Gitem_Post_Categories $vc_btn
+ * @var WP_Post $post
+ * @var $atts
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-/**
- * @var WPBakeryShortCode_Vc_Gitem_Post_Categories $vc_btn
- * @var WP_Post $post
- * @var $atts
- *
- */
 VcShortcodeAutoloader::getInstance()->includeClass( 'WPBakeryShortCode_Vc_Gitem_Post_Categories' );
 
 $categories = get_the_category();
 
 $separator = '';
-$css_class = array( 'vc_gitem-post-data' );
+$css_class = [ 'vc_gitem-post-data' ];
 $css_class[] = vc_shortcode_custom_css_class( $atts['css'] );
 $css_class[] = $atts['el_class'];
 $css_class[] = 'vc_gitem-post-data-source-post_categories';
@@ -30,7 +32,7 @@ if ( ! empty( $style ) && 'none' !== $style ) {
 }
 
 $output = '<div class="' . esc_attr( implode( ' ', array_filter( $css_class ) ) ) . '">';
-$data = array();
+$data = [];
 if ( ! empty( $categories ) ) {
 	foreach ( $categories as $category ) {
 		$category_link = '';
@@ -41,7 +43,7 @@ if ( ! empty( $categories ) ) {
 		$wrapper = '<div class="vc_grid-filter-item vc_gitem-post-category-name">';
 		$content = esc_html( $category->name );
 		if ( ! empty( $category_link ) ) {
-			$content = '<span class="vc_gitem-post-category-name"><a ' . $category_link . ' class="vc_gitem-link">' . $content . '</a>' . '</span>';
+			$content = '<span class="vc_gitem-post-category-name"><a ' . $category_link . ' class="vc_gitem-link">' . $content . '</a></span>';
 		} else {
 			$content = '<span class="vc_gitem-post-category-name">' . $content . '</span>';
 		}

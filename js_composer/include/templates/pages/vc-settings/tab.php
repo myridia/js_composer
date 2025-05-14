@@ -1,4 +1,10 @@
 <?php
+/**
+ * Settings tab template.
+ *
+ * @var Vc_Page $page
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -25,12 +31,17 @@ $custom_tag = 'script';
 	</div>
 <?php endif ?>
 
+<?php if ( 'updater' === $tab && vc_license()->isActivated() && vc_license()->isExpired() ) : ?>
+	<div class="wpb_message_placeholder notice notice-success" style="display:none"><p></p></div>
+	<div class="wpb_message_placeholder notice notice-error" style="display:none"><p></p></div>
+<?php endif ?>
+
 <form action="options.php"
 		method="post"
 		id="vc_settings-<?php echo esc_attr( $tab ); ?>"
 		data-vc-ui-element="settings-tab-<?php echo esc_attr( $tab ); ?>"
 		class="<?php echo esc_attr( $classes ); ?>"
-		<?php echo apply_filters( 'vc_setting-tab-form-' . esc_attr( $tab ), '' ); ?>
+		<?php echo apply_filters( 'vc_setting-tab-form-' . esc_attr( $tab ), '' ); // phpcs:ignore ?>
 >
 	<?php settings_fields( vc_settings()->getOptionGroup() . '_' . $tab ); ?>
 	<?php do_settings_sections( vc_settings()->page() . '_' . $tab ); ?>
@@ -39,9 +50,9 @@ $custom_tag = 'script';
 			<tr>
 				<th scope="row">
 					<span><?php esc_html_e( 'Guide tours', 'js_composer' ); ?></span>
-					<?php vc_include_template( 'editors/partials/param-info.tpl.php', ['description' => esc_html__( 'Guide tours are shown in WPBakery editors to help you to start working with editors. You can see them again by clicking button above.', 'js_composer' )] ); ?>
 				</th>
 				<td>
+					<?php vc_include_template( 'editors/partials/param-info.tpl.php', [ 'description' => esc_html__( 'Guide tours are shown in WPBakery editors to help you to start working with editors. You can see them again by clicking button above.', 'js_composer' ) ] ); ?>
 					<a href="#" class="button vc_pointers-reset-button"
 							id="vc_settings-vc-pointers-reset"
 							data-vc-done-txt="<?php esc_attr_e( 'Done', 'js_composer' ); ?>"><?php esc_html_e( 'Reset', 'js_composer' ); ?></a>
@@ -52,13 +63,15 @@ $custom_tag = 'script';
 
 	<?php
 
-	$submit_button_attributes = array();
+	$submit_button_attributes = [];
+    // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
 	$submit_button_attributes = apply_filters( 'vc_settings-tab-submit-button-attributes', $submit_button_attributes, $tab );
+    // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
 	$submit_button_attributes = apply_filters( 'vc_settings-tab-submit-button-attributes-' . $tab, $submit_button_attributes, $tab );
 
 	?>
 
-	<?php if ( 'updater' !== $tab ) : ?>
+	<?php if ( 'updater' !== $tab && ! $page->get_ajax_save() ) : ?>
 		<?php submit_button( esc_html__( 'Save Changes', 'js_composer' ), 'primary', 'submit_btn', true, $submit_button_attributes ); ?>
 	<?php endif ?>
 
@@ -78,9 +91,15 @@ $custom_tag = 'script';
 
 		<div class="vc_settings-activation-deactivation">
 			<?php if ( vc_license()->isActivated() ) : ?>
-				<p>
-					<?php echo esc_html__( 'You have activated WPBakery Page Builder version which allows you to access all the customer benefits. Thank you for choosing WPBakery Page Builder as your page builder. If you do not wish to use WPBakery Page Builder on this WordPress site you can deactivate your license below.', 'js_composer' ); ?>
-				</p>
+				<?php if ( vc_license()->isExpired() ) : ?>
+					<p>
+						<?php printf( ' ' . esc_html__( 'Your WPBakery Page Builder license is activated. Automatic updates for the plugin are not available. To enable automatic updates, %1$ssynchronize%2$s your license and ensure you have a valid plugin support period - you can renew the support period %3$shere.%4$s To update manually, visit our customer center to download the latest version. Thank You for choosing WPBakery Page Builder.', 'js_composer' ), '<a href="javascript:void(0)" id="vc_settings-sync-button">', '</a>', '<a href="https://support.wpbakery.com" target="_blank">', '</a>' ); ?>
+					</p>
+				<?php else : ?>
+					<p>
+						<?php echo esc_html__( 'You have activated WPBakery Page Builder version which allows you to access all the customer benefits. Thank you for choosing WPBakery Page Builder as your page builder. If you do not wish to use WPBakery Page Builder on this WordPress site you can deactivate your license below.', 'js_composer' ); ?>
+					</p>
+				<?php endif; ?>
 
 				<br/>
 
@@ -100,7 +119,7 @@ $custom_tag = 'script';
 			<?php else : ?>
 
 				<p>
-					<?php echo sprintf( esc_html__( 'In order to receive all benefits of WPBakery Page Builder, you need to activate your copy of the plugin. By activating WPBakery Page Builder license you will unlock premium options - %1$sdirect plugin updates%2$s, access to %1$stemplate library%2$s and %1$sofficial support.%2$s', 'js_composer' ), '<strong>', '</strong>' ); ?>
+					<?php printf( esc_html__( 'In order to receive all benefits of WPBakery Page Builder, you need to activate your copy of the plugin. By activating WPBakery Page Builder license you will unlock premium options - %1$sdirect plugin updates%2$s, access to %1$stemplate library%2$s and %1$sofficial support.%2$s', 'js_composer' ), '<strong>', '</strong>' ); ?>
 				</p>
 
 				<br/>

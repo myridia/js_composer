@@ -28,12 +28,19 @@ class Vc_Color_Picker_Module {
 	public $settings;
 
 	/**
+	 * Vc_Color_Picker_Module constructor.
+	 *
+	 * @since 8.0
+	 */
+	public function __construct() {
+		$this->settings = new Vc_Color_Picker_Module_Settings();
+		$this->settings->init();
+	}
+
+	/**
 	 * Init module implementation.
 	 *
 	 * @since 7.9
 	 */
-	public function init() {
-		$this->settings = new Vc_Color_Picker_Module_Settings();
-		$this->settings->init();
-	}
+	public function init() {}
 }

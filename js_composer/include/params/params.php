@@ -1,8 +1,4 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
-
 /**
  * WPBakery Page Builder shortcodes attributes class.
  *
@@ -11,30 +7,40 @@ if ( ! defined( 'ABSPATH' ) ) {
  * New attributes can be added to shortcode settings by using param array in wp_map function
  *
  * @package WPBakeryPageBuilder
- *
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
 /**
  * Shortcode params class allows to create new params types.
  * class WpbakeryShortcodeParams
+ *
  * @since 4.2
  */
 class WpbakeryShortcodeParams {
 	/**
+	 * Params list.
+	 *
 	 * @since 4.2
 	 * @var array - store shortcode attributes types
 	 */
-	protected static $params = array();
+	protected static $params = [];
 	/**
+	 * Scripts list.
+	 *
 	 * @since 4.2
 	 * @var array - store shortcode javascript files urls
 	 */
-	protected static $scripts = array();
+	protected static $scripts = [];
 	/**
+	 * Optional init params list.
+	 *
 	 * @since 4.7
 	 * @var array - store params not required to init
 	 */
-	protected static $optional_init_params = array();
+	protected static $optional_init_params = [];
 
 	/**
 	 * Get list of params that need to be initialized
@@ -53,23 +59,22 @@ class WpbakeryShortcodeParams {
 	 * Create new attribute type
 	 *
 	 * @static
-	 * @param $name - attribute name
-	 * @param $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode
-	 *     param list
-	 * @param $script_url - javascript file url which will be attached at the end of settings form.
+	 * @param string $name - attribute name.
+	 * @param callable $form_field_callback - hook, will be called when settings form is shown and attribute added to shortcode
+	 *     param list.
+	 * @param string $script_url - javascript file url which will be attached at the end of settings form.
 	 *
 	 * @return bool - return true if attribute type created
 	 * @since 4.2
-	 *
 	 */
 	public static function addField( $name, $form_field_callback, $script_url = null ) {
 		$result = false;
 		if ( ! empty( $name ) && ! empty( $form_field_callback ) ) {
-			self::$params[ $name ] = array(
-				'callbacks' => array(
+			self::$params[ $name ] = [
+				'callbacks' => [
 					'form' => $form_field_callback,
-				),
-			);
+				],
+			];
 			$result = true;
 
 			if ( is_string( $script_url ) && ! in_array( $script_url, self::$scripts, true ) ) {
@@ -82,15 +87,15 @@ class WpbakeryShortcodeParams {
 
 	/**
 	 * Calls hook for attribute type
-	 * @param $name - attribute name
-	 * @param $param_settings - attribute settings from shortcode
-	 * @param $param_value - attribute value
-	 * @param $tag - attribute tag
+	 *
+	 * @param string $name - attribute name.
+	 * @param array $param_settings - attribute settings from shortcode.
+	 * @param mixed $param_value - attribute value.
+	 * @param string $tag - attribute tag.
 	 *
 	 * @return mixed|string - returns html which will be render in hook
 	 * @since 4.2
 	 * @static
-	 *
 	 */
 	public static function renderSettingsField( $name, $param_settings, $param_value, $tag ) {
 		if ( isset( self::$params[ $name ]['callbacks']['form'] ) ) {
@@ -102,6 +107,7 @@ class WpbakeryShortcodeParams {
 
 	/**
 	 * List of javascript files urls for shortcode attributes.
+	 *
 	 * @return array - list of js scripts
 	 * @since 4.2
 	 * @static

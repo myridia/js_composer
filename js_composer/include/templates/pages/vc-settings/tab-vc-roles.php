@@ -1,4 +1,10 @@
 <?php
+/**
+ * Roles tab settings template.
+ *
+ * @var Vc_Page $page
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -21,7 +27,7 @@ $vc_role = new Vc_Roles();
 			foreach ( $editable_roles as $role => $details ) :
 				$name = translate_user_role( $details['name'] );
 				$unique_id = 'vc_role-' . $role;
-				$valid_roles = array();
+				$valid_roles = [];
 				foreach ( $vc_role->getParts() as $part ) {
 					if ( $vc_role->hasRoleCapability( $role, $vc_role->getPartCapability( $part ) ) ) {
 						$valid_roles[] = $part;
@@ -71,11 +77,11 @@ $vc_role = new Vc_Roles();
 								<?php
 								$next = true;
 								foreach ( $valid_roles as $part ) {
-									vc_include_template( 'pages/partials/vc-roles-parts/_' . $part . '.tpl.php', array(
+									vc_include_template( 'pages/partials/vc-roles-parts/_' . $part . '.tpl.php', [
 										'part' => $part,
 										'role' => $role,
 										'vc_role' => $vc_role,
-									) );
+									] );
 								}
 								?>
 								</tbody>
@@ -90,8 +96,10 @@ $vc_role = new Vc_Roles();
 	<!-- Settings template end -->
 	<?php
 	wp_nonce_field( 'vc_settings-' . $tab . '-action', 'vc_nonce_field' );
-	$submit_button_attributes = array();
+	$submit_button_attributes = [];
+    // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
 	$submit_button_attributes = apply_filters( 'vc_settings-tab-submit-button-attributes', $submit_button_attributes, $tab );
+    // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
 	$submit_button_attributes = apply_filters( 'vc_settings-tab-submit-button-attributes-' . $tab, $submit_button_attributes, $tab );
 	submit_button( esc_html__( 'Save Changes', 'js_composer' ), 'primary', 'submit_btn', true, $submit_button_attributes );
 	?>

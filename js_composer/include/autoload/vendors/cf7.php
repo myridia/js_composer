@@ -20,9 +20,9 @@ function vc_init_vendor_cf7() {
 	if ( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) || defined( 'WPCF7_PLUGIN' ) ) {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-contact-form7.php' );
 		$vendor = new Vc_Vendor_ContactForm7();
-		add_action( 'vc_after_set_mode', array(
+		add_action( 'vc_after_set_mode', [
 			$vendor,
 			'load',
-		) );
+		] );
 	} // if contact form7 plugin active.
 }

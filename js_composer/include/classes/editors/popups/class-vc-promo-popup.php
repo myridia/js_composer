@@ -1,4 +1,8 @@
 <?php
+/**
+ * Promo popup.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -6,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Promo popup class.
  *
- * @since   7.3
+ * @since 7.3
  */
 class Vc_Promo_Popup {
 	/**
@@ -20,7 +24,7 @@ class Vc_Promo_Popup {
 			return;
 		}
 
-		vc_include_template( 'editors/popups/promo/promo-popup.tpl.php' );
+		vc_include_template( 'editors/popups/promo/promo-popup.tpl.php', [ 'box' => $this ] );
 		update_user_meta( $user_id, '_vc_editor_promo_popup', WPB_VC_VERSION );
 	}
 }

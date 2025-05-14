@@ -1,20 +1,21 @@
 <?php
+/**
+ * WPBakery Page Builder updater
+ *
+ * @package WPBakeryPageBuilder
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-
-/**
- * WPBakery WPBakery Page Builder updater
- *
- * @package WPBakeryPageBuilder
- *
- */
 
 /**
  * Vc updating manager.
  */
 class Vc_Updater {
 	/**
+	 * URL for version update.
+	 *
 	 * @var string
 	 */
 	protected $version_url = 'https://updates.wpbakery.com/';
@@ -27,15 +28,20 @@ class Vc_Updater {
 	protected $download_link_url = 'https://support.wpbakery.com/updates/download-link';
 
 	/**
-	 * @var bool
+	 * Auto updater manager instance.
+	 *
+	 * @var Vc_Updating_Manager
 	 */
 	protected $auto_updater;
 
+	/**
+	 * Vc_Updater initialization.
+	 */
 	public function init() {
-		add_filter( 'upgrader_pre_download', array(
+		add_filter( 'upgrader_pre_download', [
 			$this,
 			'preUpgradeFilter',
-		), 10, 4 );
+		], 10, 4 );
 	}
 
 	/**
@@ -58,6 +64,7 @@ class Vc_Updater {
 
 	/**
 	 * Get url for version validation
+	 *
 	 * @return string
 	 */
 	public function versionUrl() {
@@ -71,7 +78,7 @@ class Vc_Updater {
 	 */
 	public function getDownloadUrl() {
 		$url = $this->getUrl();
-		// FIX SSL SNI
+		// FIX SSL SNI.
 		$filter_add = true;
 		if ( function_exists( 'curl_version' ) ) {
 			$version = curl_version();
@@ -82,7 +89,7 @@ class Vc_Updater {
 		if ( $filter_add ) {
 			add_filter( 'https_ssl_verify', '__return_false' );
 		}
-		$response = wp_remote_get( $url, array( 'timeout' => 30 ) );
+		$response = wp_remote_get( $url, [ 'timeout' => 30 ] );
 
 		if ( $filter_add ) {
 			remove_filter( 'https_ssl_verify', '__return_false' );
@@ -96,6 +103,8 @@ class Vc_Updater {
 	}
 
 	/**
+	 * Get download url.
+	 *
 	 * @return string
 	 */
 	protected function getUrl() {
@@ -104,10 +113,16 @@ class Vc_Updater {
 
 		$url = $this->download_link_url . '?product=vc&url=' . $host . '&key=' . $key . '&version=' . WPB_VC_VERSION;
 
+		if ( $this->isBetaEnabled() ) {
+			$url .= '&beta=1';
+		}
+
 		return $url;
 	}
 
 	/**
+	 * Get updater url.
+	 *
 	 * @return string|void
 	 */
 	public static function getUpdaterUrl() {
@@ -115,23 +130,32 @@ class Vc_Updater {
 	}
 
 	/**
+	 * Check if beta version is enabled.
+	 *
+	 * @return bool
+	 */
+	public function isBetaEnabled() {
+		return (bool) get_option( 'wpb_js_beta_version', false );
+	}
+
+	/**
 	 * Get link to newest VC
 	 *
-	 * @param $reply
-	 * @param $package
+	 * @param mixed $reply
+	 * @param mixed $package
 	 * @param WP_Upgrader $updater
 	 *
 	 * @return mixed|string|WP_Error
 	 */
 	public function preUpgradeFilter( $reply, $package, $updater ) {
 		$condition1 = isset( $updater->skin->plugin ) && vc_plugin_name() === $updater->skin->plugin;
-		// Must use I18N otherwise France or other languages will not work
+		// Must use I18N otherwise France or other languages will not work.
 		$condition2 = isset( $updater->skin->plugin_info['Name'] ) && __( 'WPBakery Page Builder', 'js_composer' ) === $updater->skin->plugin_info['Name'];
 		if ( ! $condition1 && ! $condition2 ) {
 			return $reply;
 		}
 
-		$res = $updater->fs_connect( array( WP_CONTENT_DIR ) );
+		$res = $updater->fs_connect( [ WP_CONTENT_DIR ] );
 		if ( ! $res ) {
 			return new WP_Error( 'no_credentials', esc_html__( "Error! Can't connect to filesystem", 'js_composer' ) );
 		}
@@ -168,7 +192,7 @@ class Vc_Updater {
 
 		$plugin_directory_name = dirname( vc_plugin_name() );
 
-		// WP will use same name for plugin directory as archive name, so we have to rename it
+		// WP will use same name for plugin directory as archive name, so we have to rename it.
 		if ( basename( $downloaded_archive, '.zip' ) !== $plugin_directory_name ) {
 			$new_archive_name = dirname( $downloaded_archive ) . '/' . $plugin_directory_name . time() . '.zip';
 			// phpcs:ignore

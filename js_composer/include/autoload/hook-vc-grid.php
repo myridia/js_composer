@@ -37,21 +37,21 @@ class Vc_Hooks_Vc_Grid {
 		 *
 		 * @since 4.4.3
 		 */
-		add_filter( 'vc_hooks_vc_post_settings', array(
+		add_filter( 'vc_hooks_vc_post_settings', [
 			$this,
 			'gridSavePostSettingsId',
-		), 10, 3 );
+		], 10, 3 );
 		/**
 		 * Used to output shortcode data for ajax request. called on any page request.
 		 */
-		add_action( 'wp_ajax_vc_get_vc_grid_data', array(
+		add_action( 'wp_ajax_vc_get_vc_grid_data', [
 			$this,
 			'getGridDataForAjax',
-		) );
-		add_action( 'wp_ajax_nopriv_vc_get_vc_grid_data', array(
+		] );
+		add_action( 'wp_ajax_nopriv_vc_get_vc_grid_data', [
 			$this,
 			'getGridDataForAjax',
-		) );
+		] );
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Vc_Hooks_Vc_Grid {
 		$content = stripslashes( $post->post_content );
 		preg_match_all( "/$pattern/", $content, $found ); // fetch only needed shortcodes.
 		if ( is_array( $found ) && ! empty( $found[0] ) ) {
-			$to_save = array();
+			$to_save = [];
 			if ( isset( $found[1] ) && is_array( $found[1] ) ) {
 				foreach ( $found[1] as $key => $parse_able ) {
 					if ( empty( $parse_able ) || '[' !== $parse_able ) {
@@ -123,11 +123,11 @@ class Vc_Hooks_Vc_Grid {
 							// array $atts.
 							$atts = shortcode_parse_atts( $shortcode_atts_string );
 							$content = $found[6][ $key ];
-							$data = array(
+							$data = [
 								'tag' => $shortcode_tag,
 								'atts' => $atts,
 								'content' => $content,
-							);
+							];
 
 							$to_save[ $id_to_save ] = $data;
 						}
@@ -135,7 +135,7 @@ class Vc_Hooks_Vc_Grid {
 				}
 			}
 			if ( ! empty( $to_save ) ) {
-				$settings['vc_grid_id'] = array( 'shortcodes' => $to_save );
+				$settings['vc_grid_id'] = [ 'shortcodes' => $to_save ];
 			}
 		}
 
@@ -176,31 +176,31 @@ class Vc_Hooks_Vc_Grid {
 $hook = new Vc_Hooks_Vc_Grid();
 
 // when WPBakery Page Builder initialized let's trigger Vc_Grid hooks.
-add_action( 'vc_after_init', array(
+add_action( 'vc_after_init', [
 	$hook,
 	'load',
-) );
+] );
 
 if ( 'vc_edit_form' === vc_post_param( 'action' ) ) {
 	VcShortcodeAutoloader::getInstance()->includeClass( 'WPBakeryShortCode_Vc_Basic_Grid' );
 
-	add_filter( 'vc_edit_form_fields_attributes_vc_basic_grid', array(
+	add_filter( 'vc_edit_form_fields_attributes_vc_basic_grid', [
 		'WPBakeryShortCode_Vc_Basic_Grid',
 		'convertButton2ToButton3',
-	) );
+	] );
 
-	add_filter( 'vc_edit_form_fields_attributes_vc_media_grid', array(
+	add_filter( 'vc_edit_form_fields_attributes_vc_media_grid', [
 		'WPBakeryShortCode_Vc_Basic_Grid',
 		'convertButton2ToButton3',
-	) );
+	] );
 
-	add_filter( 'vc_edit_form_fields_attributes_vc_masonry_grid', array(
+	add_filter( 'vc_edit_form_fields_attributes_vc_masonry_grid', [
 		'WPBakeryShortCode_Vc_Basic_Grid',
 		'convertButton2ToButton3',
-	) );
+	] );
 
-	add_filter( 'vc_edit_form_fields_attributes_vc_masonry_media_grid', array(
+	add_filter( 'vc_edit_form_fields_attributes_vc_masonry_media_grid', [
 		'WPBakeryShortCode_Vc_Basic_Grid',
 		'convertButton2ToButton3',
-	) );
+	] );
 }

@@ -1,18 +1,26 @@
 <?php
+/**
+ * Welcome page template.
+ *
+ * @var Vc_Page $page
+ * @var Vc_Page $active_page
+ * @var array $pages
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 preg_match( '/^(\d+)(\.\d+)?/', WPB_VC_VERSION, $matches );
-$custom_tag = 'script'; // Update to wp_add_inline later
+$custom_tag = 'script'; // Update to wp_add_inline later.
 ?>
 <div class="wrap vc-page-welcome about-wrap">
-	<h1><?php echo sprintf( esc_html__( 'Welcome to WPBakery Page Builder %s', 'js_composer' ), esc_html( isset( $matches[0] ) ? $matches[0] : WPB_VC_VERSION ) ); ?></h1>
+	<h1><?php printf( esc_html__( 'Welcome to WPBakery Page Builder %s', 'js_composer' ), esc_html( isset( $matches[0] ) ? $matches[0] : WPB_VC_VERSION ) ); ?></h1>
 
 	<div class="about-text">
 		<?php esc_html_e( 'The leading no-code solution for building and managing WordPress sites.', 'js_composer' ); ?>
 	</div>
 	<div class="wp-badge vc-page-logo">
-		<?php echo sprintf( esc_html__( 'Version %s', 'js_composer' ), esc_html( WPB_VC_VERSION ) ); ?>
+		<?php printf( esc_html__( 'Version %s', 'js_composer' ), esc_html( WPB_VC_VERSION ) ); ?>
 	</div>
 	<p class="vc-page-actions">
 		<?php
@@ -36,11 +44,11 @@ $custom_tag = 'script'; // Update to wp_add_inline later
 			}( document, 'script', 'twitter-wjs' );</<?php echo esc_attr( $custom_tag ); ?>>
 	</p>
 	<?php
-	vc_include_template( '/pages/partials/_tabs.php', array(
+	vc_include_template( '/pages/partials/_tabs.php', [
 		'slug' => $page->getSlug(),
 		'active_tab' => $active_page->getSlug(),
 		'tabs' => $pages,
-	) );
+	] );
 	?>
 	<?php
 	// @codingStandardsIgnoreLine

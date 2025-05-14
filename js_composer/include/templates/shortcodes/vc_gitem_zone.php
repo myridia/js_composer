@@ -1,9 +1,18 @@
 <?php
+/**
+ * The template for displaying [vc_gitem_zone] shortcode output.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_gitem_zone.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $el_class
  * @var $css
@@ -39,7 +48,7 @@ $css_class = 'vc_gitem-zone' . ( strlen( $this->zone_name ) ? ' vc_gitem-zone-' 
 $css_class_mini = 'vc_gitem-zone-mini';
 // Autoheight Mode
 // https://jsfiddle.net/tL2pgtyb/4/ {{
-// Set css classes for shortcode main html element wrapper and background block
+// Set css classes for shortcode main html element wrapper and background block.
 $css_class .= vc_shortcode_custom_css_class( $css, ' ' ) . ( strlen( $el_class ) ? ' ' . $el_class : '' );
 preg_match( '/background(\-image)?\s*\:\s*[^\s]*?\s*url\(\'?([^\)]+)\'?\)/', $css, $img_matches );
 $background_image_css_editor = isset( $img_matches[2] ) ? $img_matches[2] : false;
@@ -56,23 +65,23 @@ if ( 'custom' === $height_mode ) {
 
 
 if ( 'yes' === $featured_image ) {
-	$css_style .= '{{ post_image_background_image_css' . ':' . $img_size . ' }}';
+	$css_style .= '{{ post_image_background_image_css:' . $img_size . ' }}';
 
-	$attributes = array(
+	$attributes = [
 		'class' => 'vc_gitem-zone-img',
 		'src' => '{{ post_image_url' . ( false !== $background_image_css_editor ? ':' . rawurlencode( $background_image_css_editor ) . '' : ':' ) . ':' . $img_size . ' }}',
 		'alt' => '{{ post_image_alt }}',
-	);
+	];
 	$attributes = vc_add_lazy_loading_attribute( $attributes );
 
 	$image = '<img ' . vc_stringify_attributes( $attributes ) . '>';
 
 } elseif ( false !== $background_image_css_editor ) {
-	$attributes = array(
+	$attributes = [
 		'class' => 'vc_gitem-zone-img',
 		'src' => esc_url( $background_image_css_editor ),
 		'alt' => '{{ post_image_alt }}',
-	);
+	];
 
 	$attributes = vc_add_lazy_loading_attribute( $attributes );
 
@@ -121,4 +130,4 @@ $output .= '>';
 $output .= $image_block . $image;
 $output .= '<div class="' . esc_attr( $css_class_mini ) . '"' . ( empty( $css_style_mini ) ? '' : ' style="' . esc_attr( $css_style_mini ) . '"' ) . '>' . do_shortcode( $content ) . '</div></div>';
 
-echo $output;
+echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -9,17 +9,17 @@ var vc_am = {
 	current_form: false
 };
 window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
-(function ( $ ) {
-	"use strict";
+( function ( $ ) {
+	'use strict';
 
-	function VCS4() {
-		return (((1 + Math.random()) * 0x10000) | 0).toString( 16 ).substring( 1 );
+	function VCS4 () {
+		return ( ( ( 1 + Math.random() ) * 0x10000 ) | 0 ).toString( 16 ).substring( 1 );
 	}
 
 	var EditFormView;
 	var request_url, sync_callback;
 	vc_am.vcGuid = function () {
-		return (VCS4() + VCS4() + "-" + VCS4());
+		return ( VCS4() + VCS4() + '-' + VCS4() );
 	};
 	_.extend( wp.shortcode.prototype, {
 		taggedString: function () {
@@ -31,11 +31,11 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				} else {
 					text += ' <span class="vc_preview-param">' + _.escape( value ) + '</span>';
 				}
-			} );
+			});
 
 			_.each( this.attrs.named, function ( value, name ) {
 				text += ' <span class="vc_preview-param">' + _.escape( name ) + '="' + _.escape( value ) + '"</span>';
-			} );
+			});
 
 			// If the tag is marked as `single` or `self-closing`, close the
 			// tag and ignore any additional content.
@@ -55,27 +55,27 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			// Add the closing tag.
 			return text + '[/<span class="vc_preview-tag">' + _.escape( this.tag ) + '</span>]';
 		}
-	} );
+	});
 	wp.shortcode.atmPreview = function ( options ) {
 		return new wp.shortcode( options ).taggedString();
 	};
 
 	var $vcSettings = $( '#vc_settings-automapper' );
 
-	function show_message( text, type ) {
+	function show_message ( text, type ) {
 		if ( message_timer ) {
 			window.clearTimeout( message_timer );
 			$( '.vc_settings-automapper' ).remove();
 			message_timer = false;
 		}
-		var $message = $( '<div class="vc_atm-message updated' + (type ? ' vc_message-' + type : '') + '" style="display: none;"></div>' );
+		var $message = $( '<div class="vc_atm-message updated' + ( type ? ' vc_message-' + type : '' ) + '" style="display: none;"></div>' );
 		$message.text( text );
 		$message.prependTo( $vcSettings ).fadeIn( 500, function () {
 			var $message = $( this );
 			window.setTimeout( function () {
 				$message.remove();
 			}, 5000 );
-		} );
+		});
 	}
 
 	var message_timer, to_title;
@@ -85,11 +85,11 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 		return string.charAt( 0 ).toUpperCase() + string.slice( 1 );
 	};
 
-	function showMessageMore( text, typeClass, timeout, remove ) {
+	function showMessageMore ( text, typeClass, timeout, remove ) {
 		if ( remove ) {
 			$( '.vc_atm-message' ).remove();
 		}
-		var $message = $( '<div class="vc_atm-message ' + (typeClass ? typeClass : '') + '" style="display: none;"></div>' );
+		var $message = $( '<div class="vc_atm-message ' + ( typeClass ? typeClass : '' ) + '" style="display: none;"></div>' );
 		$message.text( text );
 		if ( !_.isUndefined( timeout ) ) {
 			window.setTimeout( function () {
@@ -99,7 +99,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 		return $message;
 	}
 
-	function showValidationError( text, $el ) {
+	function showValidationError ( text, $el ) {
 		if ( _.isUndefined( $el ) || !$el.length ) {
 			$el = $( '.tab_intro' );
 		}
@@ -139,13 +139,13 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				action: 'vc_automapper_read'
 			};
 		}
-		$.ajax( {
+		$.ajax({
 			method: 'POST',
 			url: request_url,
 			dataType: 'json',
-			data: _.extend( data, { _vcnonce: window.vcAdminNonce } ),
+			data: _.extend( data, { _vcnonce: window.vcAdminNonce }),
 			context: this
-		} ).done( function ( response ) {
+		}).done( function ( response ) {
 			if ( !response.success ) {
 				return;
 			}
@@ -160,12 +160,13 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 					options.success( result );
 				}
 			} else {
-				options.error( "Not found" );
+				options.error( 'Not found' );
 			}
-		} ).fail( function ( data ) {
-		} );
+		}).fail( function ( response ) {
+			options.error( response );
+		});
 	};
-	var ShortcodeModel = Backbone.Model.extend( {
+	var ShortcodeModel = Backbone.Model.extend({
 		defaults: function () {
 			return {
 				tag: '',
@@ -176,14 +177,16 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			};
 		},
 		sync: sync_callback
-	} );
-	var ShortcodesCollection = Backbone.Collection.extend( {
+	});
+	var ShortcodesCollection = Backbone.Collection.extend({
 		model: ShortcodeModel,
 		sync: sync_callback
-	} );
+	});
 	vc_am.shortcodes = new ShortcodesCollection();
 
-	var ShortcodeView = Backbone.View.extend( {
+	// TODO: check if ShortcodeView is used
+	// eslint-disable-next-line no-unused-vars
+	var ShortcodeView = Backbone.View.extend({
 		tagName: 'li',
 		// className: 'vc_automapper-item',
 		className: 'widget',
@@ -206,7 +209,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			if ( e && e.preventDefault ) {
 				e.preventDefault();
 			}
-			new EditFormView( { model: this.model } ).render();
+			new EditFormView({ model: this.model }).render();
 		},
 		clear: function ( e ) {
 			if ( e && e.preventDefault ) {
@@ -219,8 +222,8 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 		removeView: function () {
 			this.$el.remove();
 		}
-	} );
-	var FormView = Backbone.View.extend( {
+	});
+	var FormView = Backbone.View.extend({
 		render: function () {
 			if ( vc_am.current_form ) {
 				vc_am.current_form.close();
@@ -246,7 +249,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			];
 			_.each( attrs.params, function ( param ) {
 				_.each( fields_required, function ( field ) {
-					if ( '' === param[ field ] ) {
+					if ( '' === param[ field ]) {
 						result = window.i18nLocaleVcAutomapper.error_enter_required_fields; // '';
 					} else if ( 'param_name' === field && !param[ field ].match( /^[a-z0-9_]+$/g ) ) {
 						result = window.i18nLocaleVcAutomapper.error_enter_required_fields;
@@ -266,8 +269,8 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			vc_am.current_form = false;
 			this.remove();
 		}
-	} );
-	var ComplexShortcodeView = Backbone.View.extend( {
+	});
+	var ComplexShortcodeView = Backbone.View.extend({
 		_$widget_title: false,
 		_$form_view: false,
 		edit_view: false,
@@ -304,7 +307,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			if ( this.edit_view ) {
 				this.close();
 			} else {
-				this.edit_view = new EditFormInnerView( { model: this.model } ).render();
+				this.edit_view = new EditFormInnerView({ model: this.model }).render();
 			}
 		},
 		$widgetTitle: function () {
@@ -344,9 +347,9 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 		removeView: function () {
 			this.remove();
 		}
-	} );
+	});
 
-	var AddFormView = FormView.extend( {
+	var AddFormView = FormView.extend({
 		className: 'vc_add-form-atm',
 		template_html: $( '#vc_automapper-add-form-tpl' ).html(),
 		events: {
@@ -365,7 +368,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 		},
 		shortcodesRegexp: _.memoize( function () {
 			return new RegExp( '\\[(\\[?)([\\w|\-]+\\b)(?![\\w\-])([^\\]\\/]*(?:\\/(?!\\])[^\\]\\/]*)*?)(?:(\\/)\\]|\\](?:([^\\[]*(?:\\[(?!\\/\\2\\])[^\\[]*)*)(\\[\\/\\2\\]))?)(\\]?)' );
-		} ),
+		}),
 		parseShortcode: function ( e ) {
 			if ( e && e.preventDefault ) {
 				e.preventDefault();
@@ -383,28 +386,28 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				showValidationError( window.i18nLocaleVcAutomapper.error_enter_valid_shortcode, this.$el );
 				return false;
 			}
-			attr = wp.shortcode.attrs( matches[ 3 ] );
+			attr = wp.shortcode.attrs( matches[ 3 ]);
 			_.each( attr.named, function ( value, key ) {
-				params.push( {
+				params.push({
 					param_name: key,
-					type: "textfield",
+					type: 'textfield',
 					heading: to_title( key ),
 					description: 'Example: ' + value,
 					value: value
-				} );
+				});
 			}, this );
-			if ( matches[ 5 ] ) {
-				params.push( {
+			if ( matches[ 5 ]) {
+				params.push({
 					param_name: 'content',
-					type: "textarea",
+					type: 'textarea',
 					heading: 'Content',
 					description: '',
 					value: matches[ 5 ]
-				} );
+				});
 			}
 			data = {
 				tag: matches[ 2 ],
-				name: to_title( matches[ 2 ] ),
+				name: to_title( matches[ 2 ]),
 				category: window.i18nLocaleVcAutomapper.my_shortcodes_category,
 				params: params
 			};
@@ -418,8 +421,8 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				showValidationError( this.validationError );
 			}
 		}
-	} );
-	EditFormView = FormView.extend( {
+	});
+	EditFormView = FormView.extend({
 		className: 'vc_edit-form',
 		active_preview: false,
 		events: {
@@ -463,7 +466,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				$parent.find( '[name="description"]' ).attr( 'disabled', false );
 			}
 		},
-		setTagFieldActive: function ( e ) {
+		setTagFieldActive: function () {
 			if ( this.active_preview ) {
 				$( this.active_preview ).removeClass( 'vc_active' );
 			}
@@ -480,18 +483,18 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			this.active_preview = '#vc_shortcode-preview .vc_preview-param:eq(' + index + ')';
 			$( this.active_preview ).addClass( 'vc_active' );
 		},
-		setContentParamFieldActive: function ( e ) {
+		setContentParamFieldActive: function () {
 			if ( this.active_preview ) {
 				$( this.active_preview ).removeClass( 'vc_active' );
 			}
 			this.active_preview = '#vc_shortcode-preview .vc_preview-content';
 			$( this.active_preview ).addClass( 'vc_active' );
 		},
-		unsetFieldActive: function ( e ) {
+		unsetFieldActive: function () {
 			$( this.active_preview ).removeClass( 'vc_active' );
 			this.active_preview = false;
 		},
-		/***
+		/**
 		 * Escape double quotes in params value.
 		 * @param value
 		 * @return {*}
@@ -503,7 +506,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			var params = data.params,
 				content = false,
 				params_to_string = {};
-			_.each( params, function ( value, key ) {
+			_.each( params, function ( value ) {
 				if ( 'content' !== value.param_name ) {
 					params_to_string[ value.param_name ] = this.escapeParam( value.value );
 				} else {
@@ -512,12 +515,12 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 
 			}, this );
 
-			return wp.shortcode.atmPreview( {
+			return wp.shortcode.atmPreview({
 				tag: data.tag,
 				attrs: params_to_string,
 				content: content,
 				type: false === content ? 'single' : ''
-			} );
+			});
 		},
 		setPreview: function () {
 			var data = {
@@ -576,7 +579,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 					$field_el.closest( '.vc_param-field' ).addClass( 'form-invalid' );
 					return;
 				}
-				if ( _.isBoolean( added_param_names[ param.param_name ] ) && true == added_param_names[ param.param_name ] ) {
+				if ( _.isBoolean( added_param_names[ param.param_name ]) && true == added_param_names[ param.param_name ]) {
 					$field_el.addClass( 'vc_error' );
 					$field_el.closest( '.vc_param-field' ).addClass( 'form-invalid' );
 					if ( !result ) {
@@ -586,7 +589,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				}
 				added_param_names[ param.param_name ] = true;
 				_.each( fields_required, function ( field ) {
-					if ( ('hidden' !== param.type && '' === param[ field ]) || ('hidden' === param.type && 'heading' !== field && '' === param[ field ]) ) {
+					if ( ( 'hidden' !== param.type && '' === param[ field ]) || ( 'hidden' === param.type && 'heading' !== field && '' === param[ field ]) ) {
 						$( '#vc_atm-params-list [name=' + field + ']:eq(' + index + ')' )
 							.addClass( 'vc_error' )
 							.closest( '.vc_param-field' )
@@ -611,18 +614,18 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 		setContentParam: function ( e ) {
 			var $control = $( e.currentTarget );
 			if ( $control[ 0 ].checked ) {
-				this.addParamField( {
+				this.addParamField({
 					type: 'textarea',
 					heading: 'Content',
 					description: '',
 					param_name: 'content',
 					value: ''
-				} );
+				});
 				this.setParamSorting();
 			} else {
 				this.removeParamField( 'content' );
 			}
-			$('.edit-form-info').initializeTooltips('.vc_wrapper');
+			$( '.edit-form-info' ).initializeTooltips( '.vc_wrapper' );
 			this.setPreview();
 		},
 		addAllParams: function () {
@@ -639,13 +642,13 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			var params = [];
 			_.each( $( '.vc_param' ), function ( param ) {
 				var $param = $( param );
-				params.push( {
+				params.push({
 					param_name: $param.find( '[name=param_name]' ).val(),
 					type: $param.find( '[name=type]' ).val(),
 					description: $param.find( '[name=description]' ).val(),
 					heading: $param.find( '[name=heading]' ).val(),
 					value: $param.find( '[name=value]' ).val()
-				} );
+				});
 			}, this );
 			return params;
 		},
@@ -653,26 +656,26 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			if ( e && e.preventDefault ) {
 				e.preventDefault();
 			}
-			this.addParamField( { type: '', heading: '', description: '', param_name: '', value: '' } );
-			$('.edit-form-info').initializeTooltips('.vc_wrapper');
+			this.addParamField({ type: '', heading: '', description: '', param_name: '', value: '' });
+			$( '.edit-form-info' ).initializeTooltips( '.vc_wrapper' );
 			this.setPreview();
 		},
 		removeParamField: function ( name ) {
 			$( '.vc_param-name[value="' + name + '"]' ).parents( '.vc_param' ).remove();
 		},
 		addParamField: function ( attr ) {
-			var $block = $( '<div class="vc_param wpb_vc_row' + ('content' === attr.param_name ? ' vc_content' : '') + '"/>' ).appendTo( '#vc_atm-params-list' );
+			var $block = $( '<div class="vc_param wpb_vc_row' + ( 'content' === attr.param_name ? ' vc_content' : '' ) + '"/>' ).appendTo( '#vc_atm-params-list' );
 			var template = vc.template( this.param_template_html, vc.templateOptions.custom );
 			$block.html( template( attr ) );
 		},
 		setParamSorting: function () {
-			$( '#vc_atm-params-list' ).sortable( {
+			$( '#vc_atm-params-list' ).sortable({
 				items: '> .vc_param',
-				tolerance: "pointer",
+				tolerance: 'pointer',
 				handle: '.vc_move-param',
 				update: this.setPreview,
-				placeholder: "vc_sortable-placeholder"
-			} );
+				placeholder: 'vc_sortable-placeholder'
+			});
 		},
 		deleteParam: function ( e ) {
 			if ( e && e.preventDefault ) {
@@ -705,8 +708,8 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				this.close();
 			}
 		}
-	} );
-	var EditFormInnerView = EditFormView.extend( {
+	});
+	var EditFormInnerView = EditFormView.extend({
 		template_html: $( '#vc_automapper-form-tpl' ).html(),
 		getType: function () {
 			return 'edit';
@@ -715,19 +718,17 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			_.bindAll( this, 'setPreview' );
 		},
 		render: function () {
-			var params,
-				parent = this.model.view;
-			params = this.model.get( 'params' );
+			var parent = this.model.view;
 			EditFormView.__super__.render.call( this );
 			var template = vc.template( this.template_html, vc.templateOptions.custom );
-			this.$el.html( template( _.extend( { shortcode_preview: this.getPreview( this.model.toJSON() ) }, this.model.toJSON() ) ) );
+			this.$el.html( template( _.extend({ shortcode_preview: this.getPreview( this.model.toJSON() ) }, this.model.toJSON() ) ) );
 			this.$el.appendTo( parent.$editForm() );
 			parent.$widgetTitle().html(
 				'<span class="vc_atm-header"><input type="text" name="name" value="" id="vc_atm-header-name" class="vc_header-name"></span><span class="in-widget-title"></span>' );
 			$( '#vc_atm-header-name' ).val( this.model.get( 'name' ) );
 			this.addAllParams();
 			parent.$editForm().slideDown();
-			$('.edit-form-info').initializeTooltips('.vc_wrapper');
+			$( '.edit-form-info' ).initializeTooltips( '.vc_wrapper' );
 			return this;
 		},
 		save: function ( e ) {
@@ -753,8 +754,8 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 				this.remove();
 			}
 		}
-	} );
-	var AppView = Backbone.View.extend( {
+	});
+	var AppView = Backbone.View.extend({
 		events: {
 			'click #vc_automapper-add-btn': 'create',
 			'submit': 'formSubmit'
@@ -772,7 +773,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			if ( e && e.preventDefault ) {
 				e.preventDefault();
 			}
-			if ( _.isObject( e ) && this.addFormView && !_.isEmpty( e.currentTarget ) && !_.isEmpty( e.currentTarget[ 0 ] ) ) {
+			if ( _.isObject( e ) && this.addFormView && !_.isEmpty( e.currentTarget ) && !_.isEmpty( e.currentTarget[ 0 ]) ) {
 				var node, $el;
 				node = e.currentTarget[ 0 ];
 				$el = $( node );
@@ -787,7 +788,7 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 			}, this );
 		},
 		addOne: function ( model ) {
-			var view = new ComplexShortcodeView( { model: model } );
+			var view = new ComplexShortcodeView({ model: model });
 			this.$list.append( view.render().el );
 		},
 		create: function ( e ) {
@@ -800,8 +801,8 @@ window.i18nLocaleVcAutomapper = window.i18nLocaleSettings;
 		},
 		render: function () {
 		}
-	} );
+	});
 	if ( $vcSettings.length ) {
-		new AppView( { el: $vcSettings } );
+		new AppView({ el: $vcSettings });
 	}
 })( window.jQuery );

@@ -1,34 +1,37 @@
 <?php
+/**
+ * WPBakery Page Builder shortcode default attributes functions for rendering.
+ *
+ * @package WPBakeryPageBuilder
+ * @since 4.4
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * WPBakery WPBakery Page Builder shortcode default attributes functions for rendering.
- *
- * @package WPBakeryPageBuilder
- * @since 4.4
- */
-/**
  * Textfield shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
  */
 function vc_textfield_form_field( $settings, $value ) {
 	$value = is_string( $value ) ? htmlspecialchars( $value ) : '';
+	$value_type = isset( $settings['value_type'] ) ? $settings['value_type'] : 'html';
+	$placeholder = $settings['placeholder'] ?? '';
 
-	return '<input name="' . $settings['param_name'] . '" class="wpb_vc_param_value wpb-textinput ' . $settings['param_name'] . ' ' . $settings['type'] . '" type="text" value="' . $value . '"/>';
+	return '<input name="' . $settings['param_name'] . '" class="wpb_vc_param_value wpb-textinput ' . $settings['param_name'] . ' ' . $settings['type'] . '" type="text" value="' . $value . '" data-value-type="' . $value_type . '" placeholder="' . $placeholder . '" />';
 }
 
 /**
  * Dropdown(select with options) shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
@@ -70,7 +73,7 @@ function vc_dropdown_form_field( $settings, $value ) {
 /**
  * Checkbox shortcode attribute type generator.
  *
- * @param $settings
+ * @param array $settings
  * @param string $value
  *
  * @return string - html string.
@@ -79,10 +82,10 @@ function vc_dropdown_form_field( $settings, $value ) {
 function vc_checkbox_form_field( $settings, $value ) {
 	$output = '';
 	if ( is_array( $value ) || is_null( $value ) ) {
-		$value = ''; // fix #1239
+		$value = ''; // fix #1239.
 	}
-	$current_value = strlen( $value ) > 0 ? explode( ',', $value ) : array();
-	$values = isset( $settings['value'] ) && is_array( $settings['value'] ) ? $settings['value'] : array( esc_html__( 'Yes', 'js_composer' ) => 'true' );
+	$current_value = strlen( $value ) > 0 ? explode( ',', $value ) : [];
+	$values = isset( $settings['value'] ) && is_array( $settings['value'] ) ? $settings['value'] : [ esc_html__( 'Yes', 'js_composer' ) => 'true' ];
 	if ( ! empty( $values ) ) {
 		foreach ( $values as $label => $v ) {
 			// NOTE!! Don't use strict compare here for BC!
@@ -96,9 +99,12 @@ function vc_checkbox_form_field( $settings, $value ) {
 }
 
 add_filter( 'vc_map_get_param_defaults', 'vc_checkbox_param_defaults', 10, 2 );
+
 /**
- * @param $value
- * @param $param
+ * Get default value for checkbox.
+ *
+ * @param string $value
+ * @param array $param
  * @return mixed|string
  */
 function vc_checkbox_param_defaults( $value, $param ) {
@@ -115,17 +121,17 @@ function vc_checkbox_param_defaults( $value, $param ) {
 /**
  * Checkbox shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
  */
 function vc_posttypes_form_field( $settings, $value ) {
 	$output = '';
-	$args = array(
+	$args = [
 		'public' => true,
-	);
+	];
 	$post_types = get_post_types( $args );
 	$value = is_null( $value ) ? '' : $value;
 	foreach ( $post_types as $post_type ) {
@@ -144,18 +150,18 @@ function vc_posttypes_form_field( $settings, $value ) {
 /**
  * Taxonomies shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
  */
 function vc_taxonomies_form_field( $settings, $value ) {
 	$output = '';
-	$post_types = get_post_types( array(
+	$post_types = get_post_types( [
 		'public' => false,
 		'name' => 'attachment',
-	), 'names', 'NOT' );
+	], 'names', 'NOT' );
 	foreach ( $post_types as $type ) {
 		$taxonomies = get_object_taxonomies( $type, '' );
 		foreach ( $taxonomies as $tax ) {
@@ -175,8 +181,8 @@ function vc_taxonomies_form_field( $settings, $value ) {
  *
  * Data saved and coma-separated values are merged with line breaks and returned in a textarea.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
@@ -190,8 +196,8 @@ function vc_exploded_textarea_form_field( $settings, $value ) {
 /**
  * Safe Textarea shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.8.2
@@ -209,8 +215,8 @@ function vc_exploded_textarea_safe_form_field( $settings, $value ) {
  *
  * This attribute type allows safely add custom html to your post/page.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
@@ -223,28 +229,30 @@ function vc_textarea_raw_html_form_field( $settings, $value ) {
 /**
  * Safe Textarea shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
  */
 function vc_textarea_safe_form_field( $settings, $value ) {
 	return '<textarea name="' . $settings['param_name'] . '" class="wpb_vc_param_value wpb-textarea_raw_html ' . $settings['param_name'] . ' ' . $settings['type'] . '">' . vc_value_from_safe( $value, true ) . '</textarea>';
-
 }
 
 /**
  * Textarea shortcode attribute type generator.
+ * Textarea param type is used for large plain text input.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4
  */
 function vc_textarea_form_field( $settings, $value ) {
-	return '<textarea name="' . $settings['param_name'] . '" class="wpb_vc_param_value wpb-textarea ' . $settings['param_name'] . ' ' . $settings['type'] . '">' . $value . '</textarea>';
+	$value_type = isset( $settings['value_type'] ) ? $settings['value_type'] : 'html';
+	$placeholder = $settings['placeholder'] ?? '';
+	return '<textarea name="' . $settings['param_name'] . '" class="wpb_vc_param_value wpb-textarea ' . $settings['param_name'] . ' ' . $settings['type'] . '" data-value-type="' . $value_type . '" placeholder="' . $placeholder . '">' . $value . '</textarea>';
 }
 
 /**
@@ -257,7 +265,6 @@ function vc_textarea_form_field( $settings, $value ) {
  *
  * @return string - html string.
  * @since 4.4
- *
  */
 function vc_attach_images_form_field( $settings, $value, $tag, $single = false ) {
 	$param_value = wpb_removeNotExistingImgIDs( $value );
@@ -274,10 +281,9 @@ function vc_attach_images_form_field( $settings, $value, $tag, $single = false )
 /**
  * Attach image shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
- *
- * @param $tag
+ * @param array $settings
+ * @param string $value
+ * @param string $tag
  *
  * @return string - html string.
  * @since 4.4
@@ -289,8 +295,8 @@ function vc_attach_image_form_field( $settings, $value, $tag ) {
 /**
  * Widgetised sidebars shortcode attribute type generator.
  *
- * @param $settings
- * @param $value
+ * @param array $settings
+ * @param string $value
  *
  * @return string - html string.
  * @since 4.4

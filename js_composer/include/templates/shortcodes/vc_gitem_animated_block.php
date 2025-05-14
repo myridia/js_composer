@@ -1,9 +1,18 @@
 <?php
+/**
+ * The template for displaying [vc_gitem_animated_block] shortcode output.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_gitem_animated_block.php
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $css
  * @var $animation
@@ -13,11 +22,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 $css = $animation = $animation_attr = '';
 
-extract( shortcode_atts( array(
+extract( shortcode_atts( [
 	'css' => '',
-	// unmapped
+	// unmapped.
 	'animation' => '',
-), $atts ) );
+], $atts ) );
 
 $css_style = '';
 $css_class = 'vc_gitem-animated-block ' . vc_shortcode_custom_css_class( $css, ' ' );
@@ -33,4 +42,4 @@ $output .= '<div class="' . trim( esc_attr( $css_class ) ) . '" ' . $animation_a
 $output .= do_shortcode( $content );
 $output .= '</div>';
 
-echo $output;
+echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

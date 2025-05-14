@@ -1,4 +1,8 @@
 <?php
+/**
+ * Class that handles specific [vc_tour] shortcode.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -10,6 +14,8 @@ require_once vc_path_dir( 'SHORTCODES_DIR', 'vc-tabs.php' );
  */
 class WPBakeryShortCode_Vc_Tour extends WPBakeryShortCode_Vc_Tabs {
 	/**
+	 * Get name.
+	 *
 	 * @return mixed|string
 	 */
 	protected function getFileName() {
@@ -17,6 +23,8 @@ class WPBakeryShortCode_Vc_Tour extends WPBakeryShortCode_Vc_Tabs {
 	}
 
 	/**
+	 * Get html of individual tab.
+	 *
 	 * @return string
 	 */
 	public function getTabTemplate() {

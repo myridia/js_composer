@@ -1,21 +1,21 @@
-(function () {
+( function () {
 	'use strict';
 
-	function ttaMapChildEvents( model ) {
-		var child_tag = 'vc_tta_toggle' === model.get('shortcode') ? 'vc_tta_toggle_section' : 'vc_tta_section';
+	function ttaMapChildEvents ( model ) {
+		var child_tag = 'vc_tta_toggle' === model.get( 'shortcode' ) ? 'vc_tta_toggle_section' : 'vc_tta_section';
 		window.vc.events.on(
 			'shortcodes:' + child_tag + ':add:parent:' + model.get( 'id' ),
 			function ( model ) {
 				var active_tab_index, models, parent_model;
 				parent_model = window.vc.shortcodes.get( model.get( 'parent_id' ) );
 				active_tab_index = parseInt( parent_model.getParam( 'active_section' ), 10 );
-				if ( 'undefined' === typeof (active_tab_index) ) {
+				if ( 'undefined' === typeof ( active_tab_index ) ) {
 					active_tab_index = 1;
 				}
-				models = _.pluck( _.sortBy( window.vc.shortcodes.where( { parent_id: parent_model.get( 'id' ) } ),
+				models = _.pluck( _.sortBy( window.vc.shortcodes.where({ parent_id: parent_model.get( 'id' ) }),
 					function ( model ) {
 						return model.get( 'order' );
-					} ), 'id' );
+					}), 'id' );
 				if ( models.indexOf( model.get( 'id' ) ) === active_tab_index - 1 ) {
 					model.set( 'isActiveSection', true );
 				}

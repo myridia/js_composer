@@ -1,11 +1,23 @@
 <?php
+/**
+ * Param type 'vc_link'.
+ *
+ * Use it to create Link selection field.
+ *
+ * @note in shortcodes html output, use $href = vc_build_link( $href );
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/#vc_map()-ParametersofparamsArray
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * @param $settings
- * @param $value
+ * Get link form field html.
+ *
+ * @param array $settings
+ * @param string $value
  *
  * @return string
  * @since 4.2
@@ -28,16 +40,18 @@ function vc_vc_link_form_field( $settings, $value ) {
 }
 
 /**
- * @param $value
+ * Get link form field attributes.
+ *
+ * @param array|string $value
  *
  * @return array
  * @since 4.2
  */
 function vc_build_link( $value ) {
-	return vc_parse_multi_attribute( $value, array(
+	return vc_parse_multi_attribute( $value, [
 		'url' => '',
 		'title' => '',
 		'target' => '',
 		'rel' => '',
-	) );
+	] );
 }

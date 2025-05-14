@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 4.5
  */
 function vc_page_css_enqueue() {
-	wp_enqueue_style( 'vc_page-css', vc_asset_url( 'css/js_composer_settings.min.css' ), array(), WPB_VC_VERSION );
+	wp_enqueue_style( 'vc_page-css', vc_asset_url( 'css/js_composer_settings.min.css' ), [], WPB_VC_VERSION );
 }
 
 /**

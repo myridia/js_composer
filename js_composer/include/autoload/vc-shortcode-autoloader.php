@@ -76,10 +76,10 @@ class VcShortcodeAutoloader {
 			self::loadConfig();
 		}
 		$class_name = strtolower( $class_name );
-		$files = array();
+		$files = [];
 
 		if ( self::$config['classmap'] ) {
-			$files = isset( self::$config['classmap'][ $class_name ] ) ? self::$config['classmap'][ $class_name ] : array();
+			$files = isset( self::$config['classmap'][ $class_name ] ) ? self::$config['classmap'][ $class_name ] : [];
 		}
 
 		if ( $files ) {
@@ -106,7 +106,7 @@ class VcShortcodeAutoloader {
 	 * @return string[]
 	 */
 	public static function extractClassNames( $file ) {
-		$classes = array();
+		$classes = [];
 
 		// @codingStandardsIgnoreLine
 		$contents = file_get_contents( $file );
@@ -138,7 +138,7 @@ class VcShortcodeAutoloader {
 	 * @return array Associative array where key is class name and value is parent class name (if any))
 	 */
 	public static function extractClassesAndExtends( $file ) {
-		$classes = array();
+		$classes = [];
 
 		// @codingStandardsIgnoreLine
 		$contents = file_get_contents( $file );
@@ -199,7 +199,7 @@ class VcShortcodeAutoloader {
 	 *     that class to work
 	 */
 	public static function generateClassMap( $dirs ) {
-		$flat_map = array();
+		$flat_map = [];
 		foreach ( (array) $dirs as $dir ) {
 			$Directory = new RecursiveDirectoryIterator( $dir );
 			$Iterator = new RecursiveIteratorIterator( $Directory );
@@ -211,43 +211,43 @@ class VcShortcodeAutoloader {
 				foreach ( $classes as $class => $extends ) {
 					$class = strtolower( $class );
 					$extends = is_string( $extends ) ? strtolower( $extends ) : $extends;
-					if ( in_array( $extends, array(
+					if ( in_array( $extends, [
 						'wpbakeryshortcodescontainer',
 						'wpbakeryvisualcomposer',
 						'wpbakeryshortcode',
 						'wpbmap',
-					), true ) ) {
+					], true ) ) {
 						$extends = null;
 					}
-					$flat_map[ $class ] = array(
+					$flat_map[ $class ] = [
 						'class' => $class,
 						'file' => $file,
 						'extends' => $extends,
-					);
+					];
 				}
 			}
 		}
 
-		$map = array();
+		$map = [];
 		foreach ( $flat_map as $params ) {
-			$dependencies = array(
-				array(
+			$dependencies = [
+				[
 					'class' => $params['class'],
 					'file' => $params['file'],
-				),
-			);
+				],
+			];
 
 			if ( $params['extends'] ) {
-				$queue = array( $params['extends'] );
+				$queue = [ $params['extends'] ];
 
 				while ( $queue ) {
 					$current_class = array_pop( $queue );
 					$current_class = $flat_map[ $current_class ];
 
-					$dependencies[] = array(
+					$dependencies[] = [
 						'class' => $current_class['class'],
 						'file' => $current_class['file'],
-					);
+					];
 
 					if ( ! empty( $current_class['extends'] ) ) {
 						$queue[] = $current_class['extends'];
@@ -261,9 +261,9 @@ class VcShortcodeAutoloader {
 		}
 
 		// simplify array.
-		$classmap = array();
+		$classmap = [];
 		foreach ( $map as $class => $dependencies ) {
-			$classmap[ $class ] = array();
+			$classmap[ $class ] = [];
 			foreach ( $dependencies as $v ) {
 				$classmap[ $class ][] = str_replace( '\\', '/', $v['file'] );
 			}
@@ -298,11 +298,11 @@ class VcShortcodeAutoloader {
 	 * Load configuration
 	 */
 	protected static function loadConfig() {
-		$config = array(
+		$config = [
 			'classmap_file' => vc_path_dir( 'APP_ROOT', 'vc_classmap.json.php' ),
 			'shortcodes_dir' => vc_path_dir( 'SHORTCODES_DIR' ),
 			'root_dir' => vc_path_dir( 'APP_ROOT' ),
-		);
+		];
 
 		if ( is_file( $config['classmap_file'] ) ) {
 			$config['classmap'] = require $config['classmap_file'];

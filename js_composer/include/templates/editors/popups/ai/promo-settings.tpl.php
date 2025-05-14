@@ -1,14 +1,16 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
-
 /**
+ * Settings for AI promo modal.
+ *
  * @var string $logo_template_path
  * @var string $message_template_path
  * @var string $modal_controller
  * @var string $error_message
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 ?>
 
 <div class="wpb-ai-credits-message">

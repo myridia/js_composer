@@ -1,4 +1,13 @@
 <?php
+/**
+ * Grid item preview template.
+ *
+ * @var Vc_Grid_Item $grid_item
+ * @var WP_Post $post
+ * @var string $shortcodes_string
+ * @var string $default_width_value
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

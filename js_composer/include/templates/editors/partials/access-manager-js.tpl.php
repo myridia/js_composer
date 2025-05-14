@@ -1,4 +1,10 @@
 <?php
+/**
+ * Access manager js template.
+ *
+ * phpcs:ignoreFile:Squiz.PHP.EmbeddedPhp
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -95,7 +101,8 @@ $custom_tag = 'script';
                     // phpcs:ignore
 					} elseif ( current_user_can( 'administrator' ) ) {
 						echo 'return true;';
-					} ?>
+					}
+					?>
 					if ( 'vc_row' === shortcode ) {
 						return true;
 					}

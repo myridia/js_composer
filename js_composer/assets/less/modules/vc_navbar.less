@@ -67,7 +67,7 @@
     transition: background-color @vcui-navbar-transition-duration @vcui-navbar-transition-function;
     position: relative;
     font-size: 24px;
-    &[disabled], &[disabled]#vc_navbar-redo {
+    &[disabled], &[disabled]#vc_navbar-redo, &[disabled]#vc_navbar-undo {
       .opacity(0.2);
     }
     &:not([disabled]):hover {
@@ -114,12 +114,14 @@
     font-size: 18px;
     padding: 20px 23px;
   }
-  a.vc_icon-btn.vc_windowed-button {
+
+  ul.vc_navbar-nav li a#vc_windowed-button {
     display: none;
     i {
       top: 65%;
     }
   }
+
   .vc_badge-custom-css {
     display: block;
     background-color: #fcb714;
@@ -144,13 +146,14 @@
       margin-left: 5px;
       background-color: #fff;
       color: #34434A;
+      text-align: center;
     }
   }
   .vc_dropdown {
     position: relative;
     .vc_dropdown-toggle {
       transition: background-color @vcui-navbar-transition-duration @vcui-navbar-transition-function;
-      cursor: default;
+      cursor: pointer;
       display: block;
       height: 56px;
       line-height: 16px;
@@ -174,6 +177,8 @@
       // border: 1px solid #1e5072;
       // border-width: 0 1px 1px 1px;
       padding-top: 1px;
+      max-height: calc(100vh - 102px);
+      overflow: auto;
       > li {
         margin: 0;
       }
@@ -198,16 +203,23 @@
         &.active {
           background-color: @vc_main_color;
         }
+
+        &.vc-c-icon-layout_portrait-smartphones, &.vc-c-icon-layout_landscape-smartphones  {
+          &::before {
+            font-size:  20px;
+          }
+        }
       }
     }
-    &:hover {
-      .vc_dropdown-toggle {
-        background-color: @vc_navbar_icon_btn_color_hover;
-      }
+    &.open {
       .vc_dropdown-list {
         display: block;
       }
+      .vc_dropdown-toggle {
+        background-color: @vc_navbar_icon_btn_color_hover;
+      }
     }
+
     &-more {
       .vc_dropdown-list {
         top: 56px;
@@ -238,7 +250,7 @@
   justify-content: center;
   align-items: center;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1;
   border-radius: 5px;
   width: 120px;
@@ -260,6 +272,13 @@
   }
 }
 
+@media screen and (max-width: 540px) {
+  .vc_btn.vc_navbar-btn {
+    width: 65px;
+    font-size: 14px;
+  }
+}
+
 .vc_subnav-fixed {
   position: fixed;
   top: 32px;
@@ -278,17 +297,124 @@
   }
 }
 
-@media screen and (max-width: 960px) {
-  .auto-fold {
-    .vc_subnav-fixed {
-      padding-left: 40px;
+@media screen and (min-width: 961px) {
+  .vc_hide-desktop {
+    display: none;
+  }
+  .vc_navbar ul.vc_navbar-nav li.vc_preview-template a {
+    display: flex;
+    align-items: center;
+  }
+  .vc_subnav-fixed.vc_navbar, .vc_fullscreen .vc_navbar {
+    ul.vc_navbar-nav li.vc_save-backend, ul.vc_navbar-nav li.vc_preview-template  {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 6px;
+      a {
+        margin: 0;
+        padding: 8px;
+        display: flex;
+      }
+    }
+    ul.vc_navbar-nav li.vc_save-backend {
+      margin: 0 21px;
+      gap: 8px;
+    }
+  }
+
+  .vc_navbar ul.vc_navbar-nav {
+
+    & > li > a p {
+      text-align: center;
+    }
+
+    li {
+      &.vc_save-buttons {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 21px;
+        a {
+          margin: 0;
+          padding: 8px;
+          display: flex;
+        }
+      }
+
+      a {
+        display: inline-block;
+        p {
+          margin: 0;
+        }
+      }
+
+      .vc_dropdown-more  {
+        li.vc_hide-desktop-more {
+          display: none;
+        }
+      }
     }
   }
 }
 
-@media screen and (max-width: 782px) {
-  .vc_navbar li, .navbar-header {
-    display: none;
+@media screen and (max-width: 1005px) {
+  body:not(.vc_editor) .vc_navbar {
+    padding-left: 160px;
+    position: fixed;
+    z-index: 9980;
+    width: 100%;
+    left: 0;
+    top: 32px; // #wpadminbar height
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .vc_navbar {
+    display: flex;
+    ul.vc_navbar-nav li.vc_hide-mobile, .navbar-header {
+        display: none;
+    }
+
+    &-nav {
+      flex: 1;
+    }
+  }
+
+  .vc_navbar ul.vc_navbar-nav li .vc_dropdown-more  {
+    ul {
+      width: 375px;
+      li , li.vc_hide-mobile {
+        display: block;
+        a {
+          width: 100%;
+          padding: 18px;
+          height: 56px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          i {
+            position: relative;
+            transform: unset;
+            top: unset;
+            left: unset;
+            font-size: 24px;
+          }
+          p {
+            margin: 0;
+            margin-left: 18px;
+          }
+        }
+      }
+
+      .vc_save-backend .vc_control-save {
+        margin-left: 0;
+      }
+
+      .vc_pull-right {
+        float: none !important;
+      }
+    }
   }
 
   .vc_navbar li.vc_show-mobile {
@@ -309,12 +435,44 @@
   }
 
   .vc_navbar {
-    padding-left: 0;
     position: fixed;
     z-index: 9980;
     width: 100%;
     left: 0;
+    top: 32px; // #wpadminbar height
+  }
+
+  body:not(.vc_editor) .vc_navbar {
+    padding-left: 160px;
+  }
+
+  body.auto-fold:not(.vc_editor) {
+    .vc_navbar {
+      padding-left: 36px;
+    }
+    .vc_subnav-fixed {
+      padding-left: 40px;
+    }
+  }
+}
+
+@media screen and (max-width: 782px) {
+
+  .vc_navbar {
+    position: fixed;
+    z-index: 9980;
+    width: 100%;
+    left: 0;
+  }
+
+  body:not(.vc_editor).auto-fold .vc_navbar {
+    padding-left: 0;
     top: 46px; // #wpadminbar height
+  }
+
+  #wpwrap.wp-responsive-open .vc_navbar {
+    width: calc(100% - 190px);
+    margin-left: 190px;
   }
 
   #wpcontent {
@@ -322,9 +480,18 @@
   }
 
   .auto-fold {
+    .vc_navbar {
+      padding-left: 0;
+    }
     .vc_subnav-fixed {
       padding-left: 0;
     }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .vc_navbar ul.vc_navbar-nav li .vc_dropdown-more ul {
+    width: 320px;
   }
 }
 
@@ -351,4 +518,27 @@
 
 #vc_navbar-redo, #vc_navbar-undo {
   transition: all 0.2s ease-in-out;
+}
+
+.vc_post-settings-icon {
+  position: relative;
+  .vc_badge {
+    top: -13px;
+    right: -16px;
+  }
+}
+
+#vc_more-options {
+  .vc_badge {
+    top: 0px;
+    right: -2px;
+  }
+}
+
+.vc_navbar .vc_navbar-btn.vc_btn.vc_btn-white {
+    background-color: #fff;
+    color: #34434A !important;
+  &:hover {
+    background-color: #E9F2F6;
+  }
 }

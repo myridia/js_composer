@@ -38,7 +38,7 @@ class Vc_Ai_Api_Connector {
 	 * @return array
 	 */
 	public function get_ai_type_response_route_lib() {
-		return [
+		return apply_filters( 'wpb_module_ai_type_response_route_lib', [
 			'textarea_html' => [
 				'path' => vc_path_dir( 'MODULES_DIR', 'ai/class-vc-ai-content-generator.php' ),
 				'class' => 'Vc_Ai_Content_Generator',
@@ -86,6 +86,36 @@ class Vc_Ai_Api_Connector {
 					],
 				],
 			],
+			'textarea_ace' => [
+				'path' => [
+					'default' => vc_path_dir( 'MODULES_DIR', 'ai/class-vc-ai-content-generator.php' ),
+					'wpb-ai-element-id' => [
+						'textarea_ace_javascript_code' => vc_path_dir( 'MODULES_DIR', 'ai/class-vc-ai-code-generator.php' ),
+					],
+				],
+				'class' => [
+					'default' => 'Vc_Ai_Content_Generator',
+					'wpb-ai-element-id' => [
+						'textarea_ace_javascript_code' => 'Vc_Ai_Code_Generator',
+					],
+				],
+				'method' => 'generate',
+				'endpoint' => [
+					'default' => 'generate-text',
+					'length' => [
+						'[800,1200]' => 'generate-article',
+						'[400,600]' => 'generate-article',
+						'[10,15]' => 'generate-title',
+					],
+					'contentType' => [
+						'improve_existing' => 'rewrite-text',
+						'translate' => 'translate-text',
+					],
+					'wpb-ai-element-id' => [
+						'textarea_ace_javascript_code' => 'generate-js',
+					],
+				],
+			],
 			'textarea' => [
 				'path' => vc_path_dir( 'MODULES_DIR', 'ai/class-vc-ai-content-generator.php' ),
 				'class' => 'Vc_Ai_Content_Generator',
@@ -125,7 +155,7 @@ class Vc_Ai_Api_Connector {
 				'method' => 'generate',
 				'endpoint' => 'generate-js',
 			],
-		];
+		] );
 	}
 
 	/**
@@ -432,7 +462,7 @@ class Vc_Ai_Api_Connector {
 		}
 
 		if ( isset( $response['message'] ) ) {
-			return $this->get_message_from_data( $response );
+			return $this->get_message_from_data();
 		}
 
 		return $response;

@@ -1,7 +1,7 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
-	window.InlineShortcodeView_vc_accordion = window.InlineShortcodeView_vc_row.extend( {
+	window.InlineShortcodeView_vc_accordion = window.InlineShortcodeView_vc_row.extend({
 		events: {
 			'click > .wpb_accordion > .vc_empty-element': 'addElement'
 		},
@@ -38,27 +38,27 @@
 		stopSorting: function () {
 			this.$accordion.find( '> .wpb_accordion_wrapper > .vc_element[data-tag]' ).each( function () {
 				var model = vc.shortcodes.get( $( this ).data( 'modelId' ) );
-				model.save( { order: $( this ).index() }, { silent: true } );
-			} );
+				model.save({ order: $( this ).index() }, { silent: true });
+			});
 		},
 		addElement: function ( e ) {
 			if ( e && e.preventDefault ) {
 				e.preventDefault();
 			}
 			new vc.ShortcodesBuilder()
-				.create( {
+				.create({
 					shortcode: 'vc_accordion_tab',
 					params: { title: window.i18nLocale.section },
 					parent_id: this.model.get( 'id' )
-				} )
+				})
 				.render();
 		},
 		rowsColumnsConverted: function () {
-			_.each( vc.shortcodes.where( { parent_id: this.model.get( 'id' ) } ), function ( model ) {
+			_.each( vc.shortcodes.where({ parent_id: this.model.get( 'id' ) }), function ( model ) {
 				if ( model.view.rowsColumnsConverted ) {
 					model.view.rowsColumnsConverted();
 				}
-			} );
+			});
 		}
-	} );
+	});
 })( window.jQuery );

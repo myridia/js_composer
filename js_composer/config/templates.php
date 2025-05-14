@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /** Landing page template */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Landing Page', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -21,7 +21,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Call to Action Page template */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Call to Action Page', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -31,7 +31,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Feature List template */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Feature List', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -41,7 +41,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description Page template */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description Page', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -51,7 +51,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Service List template */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Service List', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -61,7 +61,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Product Page template */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Product Page', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -70,7 +70,7 @@ CONTENT;
 
 vc_add_default_templates( $data );// New templates. Since 4.4.
 /** FAQ section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'FAQ section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -80,7 +80,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** About section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'About section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -90,7 +90,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** About section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'About with features', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -100,7 +100,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Three image description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Three image description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -110,7 +110,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** News list */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'News list', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -120,7 +120,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Product description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Product description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -130,7 +130,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with accordion */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with accordion', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -142,7 +142,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Two column list */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Two column list', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -152,7 +152,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** About with tour section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'About with tour section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -166,7 +166,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Rounded image description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Rounded image description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -176,7 +176,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with success message */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with success message', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -186,7 +186,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Images with tab description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Images with tab description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -196,7 +196,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Square on background */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Square on background', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -206,7 +206,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Product description with tabs */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Product description with tabs', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -216,7 +216,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with headings */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with headings', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -226,7 +226,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Video description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Video with description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -236,7 +236,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with buttons */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with buttons', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -246,7 +246,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Map and Contacts */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Map and Contacts', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -256,7 +256,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Help section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Help section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -266,7 +266,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Screen description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Screen description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -276,7 +276,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with round images*/
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with round images', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -286,7 +286,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** FAQ in three columns */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'FAQ in three columns', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -296,7 +296,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Centre description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Centre description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -306,7 +306,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with gallery */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with gallery', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -316,7 +316,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Centre description with image */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Centre description with image', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -326,7 +326,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with thumbnails */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with thumbnails', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -336,7 +336,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** About with left gallery */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'About with left gallery', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -346,7 +346,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Five image layout */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Five image layout', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -356,7 +356,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Accordion news list */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Accordion news list', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -366,7 +366,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Product with social icons */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Product with social icons', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -376,7 +376,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Complex news layout */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Complex news layout', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -386,7 +386,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Product list with CTA */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Product list with CTA', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -396,7 +396,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Intro with features */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Intro with features', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -406,7 +406,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Image gallery with description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Image gallery with description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -416,7 +416,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Team members */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Team members', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -426,7 +426,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Large image with thumbnails */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Large image with thumbnails', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -436,7 +436,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Complex news layout II */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Complex news layout II', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -446,7 +446,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Service description layout */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Service description layout', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -456,7 +456,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Articles with headings */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Articles with headings', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -474,7 +474,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Call to Action section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Call to Action section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -486,7 +486,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Charts section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Charts section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -504,7 +504,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Chess Grid */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Chess Grid', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -526,7 +526,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Features and articles */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Features and articles', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -568,7 +568,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Features and charts */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Features and charts', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -602,7 +602,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Features with video parallax */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Features with video parallax', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -624,7 +624,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Features with full width promo */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Features with full width promo', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -662,7 +662,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Full height hero section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Full height hero section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -676,7 +676,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Full height with transparent block */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Full height with transparent block', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -690,7 +690,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Full height parallax */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Full height parallax', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -700,7 +700,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Header section with features */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Header section with features', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -731,7 +731,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Helps with icons */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Helps with icons', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -741,7 +741,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Plain articles */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Plain articles', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -755,7 +755,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Post portfolio */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Post portfolio', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -765,7 +765,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Product introduction */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Product introduction', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -791,7 +791,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Services with block buttons */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Services with block buttons', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -813,7 +813,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Tabs with features */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Tabs with features', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -835,7 +835,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Video section */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Video section', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -849,7 +849,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Video promo */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Video promo', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -859,7 +859,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Equal Feature List */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Equal Feature List', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -869,7 +869,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Parallax Introduction */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Parallax Introduction', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -879,7 +879,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Three Informative Blocks */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Three Informative Blocks', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -890,7 +890,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description Articles */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description Articles', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -900,7 +900,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Full Height Features */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Full Height Features', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -910,7 +910,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Business Description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Business Description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -920,7 +920,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Article Hero Image */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Article Hero Image', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -930,7 +930,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** EMy Team Members */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'My Team Members', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -940,7 +940,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Hero Image With Description */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Hero Image With Description', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -950,7 +950,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Description with Image on Background */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Description with Image on Background', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT
@@ -960,7 +960,7 @@ CONTENT;
 vc_add_default_templates( $data );
 
 /** Three Image with Article */
-$data = array();
+$data = [];
 $data['name'] = esc_html__( 'Three Image with Article', 'js_composer' );
 $data['disabled'] = true;
 $data['content'] = <<<CONTENT

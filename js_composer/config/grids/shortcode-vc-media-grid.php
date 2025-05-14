@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/class-vc-grids-common.php';
 $media_grid_params = VcGridsCommon::getMediaCommonAtts();
 
-return array(
+return [
 	'name' => esc_html__( 'Media Grid', 'js_composer' ),
 	'base' => 'vc_media_grid',
 	'icon' => 'vc_icon-vc-media-grid',
@@ -20,4 +20,4 @@ return array(
 	'category' => esc_html__( 'Content', 'js_composer' ),
 	'description' => esc_html__( 'Media grid from Media Library', 'js_composer' ),
 	'params' => $media_grid_params,
-);
+];

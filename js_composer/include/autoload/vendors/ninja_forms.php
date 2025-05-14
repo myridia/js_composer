@@ -20,9 +20,9 @@ function vc_init_vendor_ninja_forms() {
 	if ( is_plugin_active( 'ninja-forms/ninja-forms.php' ) || defined( 'NINJA_FORMS_DIR' ) || function_exists( 'ninja_forms_get_all_forms' ) ) {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-ninja-forms.php' );
 		$vendor = new Vc_Vendor_NinjaForms();
-		add_action( 'vc_after_set_mode', array(
+		add_action( 'vc_after_set_mode', [
 			$vendor,
 			'load',
-		) );
+		] );
 	}
 }

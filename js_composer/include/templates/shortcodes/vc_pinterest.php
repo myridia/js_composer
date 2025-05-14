@@ -1,10 +1,19 @@
 <?php
+/**
+ * The template for displaying [vc_pinterest] shortcode output of 'Pinterest' element.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_pinterest.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $type
  * @var $annotation // TODO: check why annotation doesn't set before
@@ -35,7 +44,7 @@ $element_class = empty( $this->settings['element_default_class'] ) ? '' : $this-
 $class_to_filter = 'wpb_pinterest wpb_content_element wpb_pinterest_type_' . $type;
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . ' ' . esc_attr( $element_class ) . $this->getExtraClass( $el_class ) . $this->getCSSAnimation( $css_animation );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter, $this->settings['base'], $atts );
-$wrapper_attributes = array();
+$wrapper_attributes = [];
 if ( ! empty( $el_id ) ) {
 	$wrapper_attributes[] = 'id="' . esc_attr( $el_id ) . '"';
 }

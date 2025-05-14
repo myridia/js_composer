@@ -1,14 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
-    <title>Faq Toggle</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Faq-Toggle">
-            <rect id="Rectangle" fill="#ECECEC" x="0" y="0" width="32" height="32" rx="3"></rect>
-            <path d="M13,14 C13,13.4477153 13.455761,13 14.0024733,13 L23.9975267,13 C24.5511774,13 25,13.4438648 25,14 C25,14.5522847 24.544239,15 23.9975267,15 L14.0024733,15 C13.4488226,15 13,14.5561352 13,14 Z M13,19 C13,18.4477153 13.4378814,18 14.0029293,18 L18.9970707,18 C19.5509732,18 20,18.4438648 20,19 C20,19.5522847 19.5621186,20 18.9970707,20 L14.0029293,20 C13.4490268,20 13,19.5561352 13,19 Z" id="Combined-Shape" fill="#979797"></path>
-            <rect id="Rectangle" fill="#3B93F9" x="7" y="12" width="4" height="4" rx="2"></rect>
-        </g>
-    </g>
+<svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.5 0.959963L32.5 0.959961C33.0523 0.959961 33.5 1.40768 33.5 1.95996L33.5 9.95996C33.5 10.5122 33.0523 10.96 32.5 10.96L2.5 10.96C1.94772 10.96 1.5 10.5122 1.5 9.95996L1.5 1.95996C1.5 1.40768 1.94771 0.959964 2.5 0.959964L7.5 0.959963" stroke="#00447F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1.5" y="15.96" width="32" height="17" rx="1" stroke="#00447F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M26 5.95996H29" stroke="#00447F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27.5 7.45996L27.5 4.45996" stroke="#00447F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M26 20.96H29" stroke="#00447F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

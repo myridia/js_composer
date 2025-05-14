@@ -1,14 +1,20 @@
 <?php
+/**
+ * Button 2 grid builder shortcode element.
+ *
+ * @var WPBakeryShortCode_Vc_Button2 $this
+ * @var array $atts
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 $wrapper_css_class = 'vc_button-2-wrapper';
-/** @var WPBakeryShortCode_Vc_Button2 $this */
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 
 $class = 'vc_btn';
-// parse link
+// parse link.
 
 $class .= ( '' !== $color ) ? ( ' vc_btn_' . $color . ' vc_btn-' . $color ) : '';
 $class .= ( '' !== $size ) ? ( ' vc_btn_' . $size . ' vc_btn-' . $size ) : '';

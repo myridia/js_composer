@@ -1,8 +1,18 @@
 <?php
+/**
+ * The template for displaying [vc_zigzag] shortcode output of 'ZigZag Separator' element.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_zigzag.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ *
+ * @var array $atts
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-/** @var array $atts */
+
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 
 $class_to_filter = 'vc-zigzag-wrapper';
@@ -27,7 +37,7 @@ if ( ! empty( $atts['el_border_width'] ) ) {
 	$border_width = esc_attr( $atts['el_border_width'] );
 }
 $minheight = 2 + intval( $border_width );
-$svg = '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="' . ( intval( $border_width ) + 2 ) . 'px' . '" height="' . intval( $border_width ) . 'px' . '" viewBox="0 0 18 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon id="Combined-Shape" fill="' . esc_attr( $color ) . '" points="8.98762301 0 0 9.12771969 0 14.519983 9 5.40479869 18 14.519983 18 9.12771969"></polygon></svg>';
+$svg = '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="' . ( intval( $border_width ) + 2 ) . 'px" height="' . intval( $border_width ) . 'px" viewBox="0 0 18 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon id="Combined-Shape" fill="' . esc_attr( $color ) . '" points="8.98762301 0 0 9.12771969 0 14.519983 9 5.40479869 18 14.519983 18 9.12771969"></polygon></svg>';
 
 $output = '';
 $output .= '
