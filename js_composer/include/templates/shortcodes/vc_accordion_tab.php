@@ -1,11 +1,13 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
-
 /**
+ * The template for displaying [vc_accordion_tab] shortcode.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_accordion_tab.php
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ *
  * @deprecated
- * Shortcode attributes
+ *
  * @var $atts
  * @var $title
  * @var $el_id
@@ -13,6 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Shortcode class
  * @var WPBakeryShortCode_Vc_Accordion_tab $this
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
 $title = $el_id = '';
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );

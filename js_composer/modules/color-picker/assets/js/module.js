@@ -18,21 +18,21 @@ jQuery( document ).ready( function ( $ ) {
 		vc.initColorPicker( null, pickrOptions );
 	}
 
-	function repositionPreview() {
+	function repositionPreview () {
 		var $previewElement = $( '.wpb-pickr-preview' );
 		if ( $previewElement ) {
 			var $previewInput = $( '#picker-preview-container p' );
 			var inputOffset = $previewInput.offset();
 			var $menuWidth = $( '#adminmenuback' ).width();
-			var inputLeft =  inputOffset && inputOffset.left;
-			var inputTop =  inputOffset && inputOffset.top;
+			var inputLeft = inputOffset && inputOffset.left;
+			var inputTop = inputOffset && inputOffset.top;
 			var newLeft = inputLeft - $menuWidth - 20;
 			var newTop = inputTop + $previewInput.outerHeight();
-			$previewElement.css( {
+			$previewElement.css({
 				position: 'absolute',
 				left: newLeft + 'px',
 				top: newTop + 'px'
-			} );
+			});
 		}
 	}
 
@@ -45,6 +45,6 @@ jQuery( document ).ready( function ( $ ) {
 			$( '#vc_settings-color-picker-action' ).val( 'restore_color-picker' );
 			$( '#vc_settings-color-picker' ).attr( 'action', window.location.href ).find( '[type=submit]' ).click();
 		}
-	} );
-} );
+	});
+});
 

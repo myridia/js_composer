@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_gitem_post_data] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_gitem_post_data.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -12,7 +18,7 @@ class WPBakeryShortCode_Vc_Gitem_Post_Data extends WPBakeryShortCode_Vc_Custom_h
 	/**
 	 * Get data_source attribute value
 	 *
-	 * @param array $atts - list of shortcode attributes
+	 * @param array $atts - list of shortcode attributes.
 	 *
 	 * @return string
 	 */
@@ -21,7 +27,9 @@ class WPBakeryShortCode_Vc_Gitem_Post_Data extends WPBakeryShortCode_Vc_Custom_h
 	}
 
 	/**
-	 * @param $atts
+	 * Get attributes for shortcode.
+	 *
+	 * @param array $atts
 	 * @return array
 	 * @throws \Exception
 	 */
@@ -31,13 +39,13 @@ class WPBakeryShortCode_Vc_Gitem_Post_Data extends WPBakeryShortCode_Vc_Custom_h
 			if ( ! isset( $atts['font_container'] ) ) {
 				$atts['font_container'] = $atts['block_container'];
 			} else {
-				// merging two params into font_container
+				// merging two params into font_container.
 				$atts['font_container'] .= '|' . $atts['block_container'];
 			}
 		}
 		$atts = parent::getAttributes( $atts );
 		if ( ! isset( $this->atts['use_custom_fonts'] ) || 'yes' !== $this->atts['use_custom_fonts'] ) {
-			$atts['google_fonts_data'] = array();
+			$atts['google_fonts_data'] = [];
 		}
 
 		return $atts;

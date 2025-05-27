@@ -1,4 +1,12 @@
 <?php
+/**
+ * Backward compatibility with "LayerSlider" WordPress plugin.
+ *
+ * @see https://layerslider.com
+ *
+ * @since 4.4 vendors initialization moved to hooks in autoload/vendors.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -11,52 +19,56 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Vc_Vendor_Layerslider {
 	/**
-	 * @var int - used to detect id for layerslider in frontend
+	 * Used to detect id for layerslider in frontend.
+	 *
+	 * @var int
 	 * @deprecated
 	 */
-	protected static $instanceIndex = 1;
+	protected static $instance_index = 1;
 
 	/**
 	 * Add layerslayer shortcode to WPBakery Page Builder, and add fix for ID in frontend editor
+	 *
 	 * @since 4.3
 	 */
 	public function load() {
-		add_action( 'vc_after_mapping', array(
+		add_action( 'vc_after_mapping', [
 			$this,
 			'buildShortcode',
-		) );
-
+		] );
 	}
 
 	/**
 	 * Add shortcode and filters for layerslider id
+	 *
 	 * @since 4.3
 	 */
 	public function buildShortcode() {
 
-		vc_lean_map( 'layerslider_vc', array(
+		vc_lean_map( 'layerslider_vc', [
 			$this,
 			'addShortcodeSettings',
-		) );
+		] );
 
 		if ( vc_is_page_editable() ) {
-			add_filter( 'layerslider_slider_init', array(
+			add_filter( 'layerslider_slider_init', [
 				$this,
 				'setMarkupId',
-			), 10, 3 );
-			add_filter( 'layerslider_slider_markup', array(
+			], 10, 3 );
+			add_filter( 'layerslider_slider_markup', [
 				$this,
 				'setMarkupId',
-			), 10, 3 );
+			], 10, 3 );
 		}
 	}
 
 	/**
-	 * @param $output
+	 * Set unique id.
+	 *
+	 * @param string $output
 	 *
 	 * @return string
 	 * @since 4.3
-	 *
 	 */
 	public function setId( $output ) {
         // phpcs:ignore
@@ -64,9 +76,11 @@ class Vc_Vendor_Layerslider {
 	}
 
 	/**
-	 * @param $markup
-	 * @param $slider
-	 * @param $id
+	 * Set markup id.
+	 *
+	 * @param string $markup
+	 * @param string $slider
+	 * @param int $id
 	 * @return string
 	 * @deprecated 5.2
 	 * @since 4.3
@@ -79,11 +93,10 @@ class Vc_Vendor_Layerslider {
 	/**
 	 * Mapping settings for lean method.
 	 *
-	 * @param $tag
+	 * @param string $tag
 	 *
 	 * @return array
 	 * @since 4.9
-	 *
 	 */
 	public function addShortcodeSettings( $tag ) {
 		$use_old = class_exists( 'LS_Sliders' );
@@ -92,11 +105,12 @@ class Vc_Vendor_Layerslider {
 			$use_old = false;
 		}
 		if ( ! class_exists( 'LS_Sliders' ) ) {
-			// again check is needed if some problem inside file "class.ls.sliders.php
+			// again check is needed if some problem inside file "class.ls.sliders.php.
 			$use_old = true;
 		}
 		/**
 		 * Filter to use old type of layerslider vendor.
+		 *
 		 * @since 4.4.2
 		 */
 		$use_old = apply_filters( 'vc_vendor_layerslider_old', $use_old ); // @since 4.4.2 hook to use old style return true.
@@ -115,7 +129,7 @@ class Vc_Vendor_Layerslider {
 				wp_cache_add( 'vc_vendor_layerslider_list', $ls );
 			}
 
-			$layer_sliders = array();
+			$layer_sliders = [];
 			if ( ! empty( $ls ) ) {
 				foreach ( $ls as $slider ) {
 					$layer_sliders[ $slider->name ] = $slider->id;
@@ -124,12 +138,11 @@ class Vc_Vendor_Layerslider {
 				$layer_sliders[ esc_html__( 'No sliders found', 'js_composer' ) ] = 0;
 			}
 		} else {
-			/** @noinspection PhpUndefinedClassInspection */
-			$ls = LS_Sliders::find( array(
+			$ls = LS_Sliders::find( [
 				'limit' => 999,
 				'order' => 'ASC',
-			) );
-			$layer_sliders = array();
+			] );
+			$layer_sliders = [];
 			if ( ! empty( $ls ) ) {
 				foreach ( $ls as $slider ) {
 					$layer_sliders[ $slider['name'] ] = $slider['id'];
@@ -139,20 +152,20 @@ class Vc_Vendor_Layerslider {
 			}
 		}
 
-		return array(
+		return [
 			'base' => $tag,
 			'name' => esc_html__( 'Layer Slider', 'js_composer' ),
 			'icon' => 'icon-wpb-layerslider',
 			'category' => esc_html__( 'Content', 'js_composer' ),
 			'description' => esc_html__( 'Place LayerSlider', 'js_composer' ),
-			'params' => array(
-				array(
+			'params' => [
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Widget title', 'js_composer' ),
 					'param_name' => 'title',
 					'description' => esc_html__( 'Enter text used as widget title (Note: located above content element).', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'dropdown',
 					'heading' => esc_html__( 'LayerSlider ID', 'js_composer' ),
 					'param_name' => 'id',
@@ -160,14 +173,14 @@ class Vc_Vendor_Layerslider {
 					'value' => $layer_sliders,
 					'save_always' => true,
 					'description' => esc_html__( 'Select your LayerSlider.', 'js_composer' ),
-				),
-				array(
+				],
+				[
 					'type' => 'textfield',
 					'heading' => esc_html__( 'Extra class name', 'js_composer' ),
 					'param_name' => 'el_class',
 					'description' => esc_html__( 'Style particular content element differently - add a class name and refer to it in custom CSS.', 'js_composer' ),
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 }

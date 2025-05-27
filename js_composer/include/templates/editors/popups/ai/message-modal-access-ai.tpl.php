@@ -1,4 +1,8 @@
 <?php
+/**
+ * Access AI message template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

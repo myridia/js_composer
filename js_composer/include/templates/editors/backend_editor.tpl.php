@@ -1,23 +1,26 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
 /**
+ * Backend editor template.
+ *
  * @var Vc_Backend_Editor $editor
  * @var WP_Post $post
  * @var bool $wpb_vc_status
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
 // [shortcodes presets data]
 if ( vc_user_access()->part( 'presets' )->can()->get() ) {
 	require_once vc_path_dir( 'AUTOLOAD_DIR', 'class-vc-settings-presets.php' );
 	$vc_all_presets = Vc_Settings_Preset::listAllPresets();
 } else {
-	$vc_all_presets = array();
+	$vc_all_presets = [];
 }
 // [/shortcodes presets data]
 global $wp_version;
-$custom_tag = 'script'; // TODO: Use ajax for variables
+$custom_tag = 'script'; // TODO: Use ajax for variables.
 $is_gutenberg = version_compare( $wp_version, '4.9.8', '>' ) && ! get_option( 'wpb_js_gutenberg_disable' );
 $modules = vc_modules_manager()->get_settings();
 if ( $is_gutenberg ) {
@@ -28,10 +31,11 @@ if ( $is_gutenberg ) {
 		window.vc_all_presets = <?php echo wp_json_encode( $vc_all_presets ); ?>;
 		window.vc_post_id = <?php echo esc_js( get_the_ID() ); ?>;
 		window.wpbGutenbergEditorUrl = '<?php echo esc_js( set_url_scheme( admin_url( 'post-new.php?post_type=wpb_gutenberg_param' ) ) ); ?>';
-		window.wpbGutenbergEditorSWitchUrl = '<?php echo esc_js( set_url_scheme( admin_url( 'post.php?post=' . get_the_ID() . '&action=edit&vcv-gutenberg-editor' ) ) ); ?>';
-		window.wpbGutenbergEditorClassicSWitchUrl = '<?php echo esc_js( set_url_scheme( admin_url( 'post.php?post=' . get_the_ID() . '&action=edit&classic-editor' ) ) ); ?>';
+		window.wpbGutenbergEditorSwitchUrl = '<?php echo esc_js( set_url_scheme( admin_url( 'post.php?post=' . get_the_ID() . '&action=edit&vcv-gutenberg-editor' ) ) ); ?>';
+		window.wpbGutenbergEditorClassicSwitchUrl = '<?php echo esc_js( set_url_scheme( admin_url( 'post.php?post=' . get_the_ID() . '&action=edit&classic-editor' ) ) ); ?>';
+		window.wpbGutenbergEditorBackendSwitchUrl = '<?php echo esc_js( set_url_scheme( admin_url( 'post.php?post=' . get_the_ID() . '&action=edit&wpb-backend-editor' ) ) ); ?>';
 		window.wpbIsGutenberg = <?php echo $is_gutenberg ? 'true' : 'false'; ?>;
-		window.vc_auto_save = <?php echo wp_json_encode( get_option( 'wpb_js_auto_save' ) ) ?>;
+		window.vc_auto_save = <?php echo wp_json_encode( get_option( 'wpb_js_auto_save' ) ); ?>;
 		window.vc_modules = <?php echo wp_json_encode( $modules ); ?>;
 	</<?php echo esc_attr( $custom_tag ); ?>>
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_tta_toggle_section] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_tta_toggle_section.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -14,22 +20,25 @@ VcShortcodeAutoloader::getInstance()->includeClass( 'WPBakeryShortCode_Vc_Tta_Se
 
 /**
  * Class WPBakeryShortCode_Vc_Tta_Toggle_Section
+ *
  * @since 7.0
  */
 class WPBakeryShortCode_Vc_Tta_Toggle_Section extends WPBakeryShortCode_Vc_Tta_Section {
 	/**
 	 * Backend section controls.
+	 *
 	 * @since 7.0
 	 *
 	 * @var array
 	 */
-	protected $controls_list = array(
+	protected $controls_list = [
 		'add',
 		'edit',
-	);
+	];
 
 	/**
 	 * Get template shortcode file name.
+	 *
 	 * @since 7.0
 	 *
 	 * @return mixed|string

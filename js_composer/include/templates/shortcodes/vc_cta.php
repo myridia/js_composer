@@ -1,9 +1,18 @@
 <?php
+/**
+ * The template for displaying [vc_cta] shortcode output of 'Call to Action' element.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_cta.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $content - shortcode content
  * Shortcode class
@@ -12,17 +21,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 $this->buildTemplate( $atts, $content );
-$containerClass = trim( 'vc_cta3-container ' . esc_attr( implode( ' ', $this->getTemplateVariable( 'container-class' ) ) ) );
+$container_class = trim( 'vc_cta3-container ' . esc_attr( implode( ' ', $this->getTemplateVariable( 'container-class' ) ) ) );
 $element_class = empty( $this->settings['element_default_class'] ) ? '' : $this->settings['element_default_class'];
-$cssClass = trim( 'vc_general ' . esc_attr( $element_class ) . ' ' . esc_attr( implode( ' ', $this->getTemplateVariable( 'css-class' ) ) ) );
+$css_class = trim( 'vc_general ' . esc_attr( $element_class ) . ' ' . esc_attr( implode( ' ', $this->getTemplateVariable( 'css-class' ) ) ) );
 $output = '';
 
-$output .= '<section class="' . esc_attr( $containerClass ) . '"' . ( ! empty( $atts['el_id'] ) ? ' id="' . esc_attr( $atts['el_id'] ) . '"' : '' ) . '>';
-$output .= '<div class="' . esc_attr( $cssClass ) . '"';
+$output .= '<section class="' . esc_attr( $container_class ) . '"' . ( ! empty( $atts['el_id'] ) ? ' id="' . esc_attr( $atts['el_id'] ) . '"' : '' ) . '>';
+$output .= '<div class="' . esc_attr( $css_class ) . '"';
 if ( $this->getTemplateVariable( 'inline-css' ) ) {
 	$output .= ' style="' . esc_attr( implode( ' ', $this->getTemplateVariable( 'inline-css' ) ) ) . '"';
 }
-$output .= '>'; // div
+$output .= '>'; // div.
 $output .= $this->getTemplateVariable( 'icons-top' );
 $output .= $this->getTemplateVariable( 'icons-left' );
 

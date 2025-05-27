@@ -1,4 +1,8 @@
 <?php
+/**
+ * Lib of hooks for grid item attributes.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -6,21 +10,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Build css classes from terms of the post.
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return string
  * @since 4.4
- *
  */
 function vc_gitem_template_attribute_filter_terms_css_classes( $value, $data ) {
 	$output = '';
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	// @var null|Wp_Post $post - post object.
+	extract( array_merge( [
 		'post' => null,
-	), $data ) );
+	], $data ) );
 	if ( isset( $post->filter_terms ) && is_array( $post->filter_terms ) ) {
 		foreach ( $post->filter_terms as $t ) {
 			$output .= ' vc_grid-term-' . $t; // @todo fix #106154391786878 $t is array
@@ -33,17 +34,14 @@ function vc_gitem_template_attribute_filter_terms_css_classes( $value, $data ) {
 /**
  * Get image for post
  *
- * @param $data
+ * @param array $data
  * @return mixed|string
  */
 function vc_gitem_template_attribute_post_image( $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 	if ( 'attachment' === $post->post_type ) {
 		return wp_get_attachment_image( $post->ID, 'large' );
 	}
@@ -53,74 +51,63 @@ function vc_gitem_template_attribute_post_image( $data ) {
 }
 
 /**
- * @param $value
- * @param $data
+ * Retrieves and includes the featured image template for a grid item.
+ *
+ * @param string $value
+ * @param array $data
  * @return mixed
  */
 function vc_gitem_template_attribute_featured_image( $value, $data ) {
-	/**
-	 * @var Wp_Post $post
-	 * @var string $data
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 
-	return vc_include_template( 'params/vc_grid_item/attributes/featured_image.php', array(
+	return vc_include_template( 'params/vc_grid_item/attributes/featured_image.php', [
 		'post' => $post,
 		'data' => $data,
-	) );
+	] );
 }
 
 /**
- * Create new btn
+ * Create new btn.
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return mixed
  * @since 4.5
- *
  */
 function vc_gitem_template_attribute_vc_btn( $value, $data ) {
-	/**
-	 * @var Wp_Post $post
-	 * @var string $data
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 
-	return vc_include_template( 'params/vc_grid_item/attributes/vc_btn.php', array(
+	return vc_include_template( 'params/vc_grid_item/attributes/vc_btn.php', [
 		'post' => $post,
 		'data' => $data,
-	) );
-
+	] );
 }
 
 /**
  * Get post image url
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return string
  */
 function vc_gitem_template_attribute_post_image_url( $value, $data ) {
 	$output = '';
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
-	$extraImageMeta = explode( ':', $data );
-	$size = 'large'; // default size
-	if ( isset( $extraImageMeta[1] ) ) {
-		$size = $extraImageMeta[1];
+	], $data ) );
+	$extra_image_meta = explode( ':', $data );
+	$size = 'large'; // default size.
+	if ( isset( $extra_image_meta[1] ) ) {
+		$size = $extra_image_meta[1];
 	}
 	if ( 'attachment' === $post->post_type ) {
 		$src = vc_get_image_by_size( $post->ID, $size );
@@ -139,26 +126,23 @@ function vc_gitem_template_attribute_post_image_url( $value, $data ) {
 }
 
 /**
- * Get post image url
+ * Get post image url.
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return string
  */
 function vc_gitem_template_attribute_post_full_image_url( $value, $data ) {
 	$output = '';
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
-	$extraImageMeta = explode( ':', $data );
-	$size = 'full'; // default size
-	if ( isset( $extraImageMeta[1] ) ) {
-		$size = $extraImageMeta[1];
+	], $data ) );
+	$extra_image_meta = explode( ':', $data );
+	$size = 'full'; // default size.
+	if ( isset( $extra_image_meta[1] ) ) {
+		$size = $extra_image_meta[1];
 	}
 	if ( 'attachment' === $post->post_type ) {
 		$src = vc_get_image_by_size( $post->ID, $size );
@@ -179,8 +163,8 @@ function vc_gitem_template_attribute_post_full_image_url( $value, $data ) {
 /**
  * Get post image url with href for a dom element
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return string
  */
@@ -193,8 +177,8 @@ function vc_gitem_template_attribute_post_image_url_href( $value, $data ) {
 /**
  * Get post image url with href for a dom element
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return string
  */
@@ -207,24 +191,21 @@ function vc_gitem_template_attribute_post_full_image_url_href( $value, $data ) {
 /**
  * Add image url as href with css classes for lightbox js plugin.
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return string
  */
 function vc_gitem_template_attribute_post_image_url_attr_lightbox( $value, $data ) {
 	$data_default = $data;
-	/**
-	 * @var Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
-	$href = vc_gitem_template_attribute_post_full_image_url_href( $value, array(
+	], $data ) );
+	$href = vc_gitem_template_attribute_post_full_image_url_href( $value, [
 		'post' => $post,
 		'data' => '',
-	) );
+	] );
 	$rel = ' data-lightbox="' . esc_attr( 'lightbox[rel-' . md5( vc_request_param( 'shortcode_id' ) ) . ']' ) . '"';
 
 	return $href . $rel . ' class="' . esc_attr( $data ) . '" title="' . esc_attr( apply_filters( 'vc_gitem_template_attribute_post_title', $post->post_title, $data_default ) ) . '"';
@@ -233,32 +214,31 @@ function vc_gitem_template_attribute_post_image_url_attr_lightbox( $value, $data
 /**
  * Add image url as href with css classes for lightbox js plugin.
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  *
  * @return string
  */
 function vc_gitem_template_attribute_post_full_image_url_attr_lightbox( $value, $data ) {
 	$data_default = $data;
-	/**
-	 * @var Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
-	$href = vc_gitem_template_attribute_post_image_url_href( $value, array(
+	], $data ) );
+	$href = vc_gitem_template_attribute_post_image_url_href( $value, [
 		'post' => $post,
 		'data' => '',
-	) );
+	] );
 	$rel = ' data-lightbox="' . esc_attr( 'lightbox[rel-' . md5( vc_request_param( 'shortcode_id' ) ) . ']' ) . '"';
 
 	return $href . $rel . ' class="' . esc_attr( $data ) . '" title="' . esc_attr( apply_filters( 'vc_gitem_template_attribute_post_title', $post->post_title, $data_default ) ) . '"';
 }
 
 /**
- * @param $value
- * @param $data
+ * Loader for vc_gitem_template_attribute_post_image_url_attr_lightbox.
+ *
+ * @param string $value
+ * @param array $data
  * @return string
  * @depreacted 6.6.0
  */
@@ -266,8 +246,10 @@ function vc_gitem_template_attribute_post_image_url_attr_prettyphoto( $value, $d
 	return vc_gitem_template_attribute_post_image_url_attr_lightbox( $value, $data );
 }
 /**
- * @param $value
- * @param $data
+ * Loader for vc_gitem_template_attribute_post_full_image_url_attr_lightbox.
+ *
+ * @param string $value
+ * @param array $data
  * @return string
  */
 function vc_gitem_template_attribute_post_full_image_url_attr_prettyphoto( $value, $data ) {
@@ -277,8 +259,8 @@ function vc_gitem_template_attribute_post_full_image_url_attr_prettyphoto( $valu
 /**
  * Get post image alt
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  * @return string
  */
 function vc_gitem_template_attribute_post_image_alt( $value, $data ) {
@@ -300,7 +282,7 @@ function vc_gitem_template_attribute_post_image_alt( $value, $data ) {
 	$title = trim( wp_strip_all_tags( $data['post']->post_title ) );
 
 	if ( empty( $alt ) ) {
-		$alt = trim( wp_strip_all_tags( $data['post']->post_excerpt ) ); // If not, Use the Caption
+		$alt = trim( wp_strip_all_tags( $data['post']->post_excerpt ) ); // If not, Use the Caption.
 	}
 	if ( empty( $alt ) ) {
 		$alt = $title;
@@ -312,20 +294,18 @@ function vc_gitem_template_attribute_post_image_alt( $value, $data ) {
 /**
  * Get post image url
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  * @return string
  */
 function vc_gitem_template_attribute_post_image_background_image_css( $value, $data ) {
 	$output = '';
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	// @var null|Wp_Post $post - post object.
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
-	$size = 'large'; // default size
+	], $data ) );
+	$size = 'large'; // default size.
 	if ( ! empty( $data ) ) {
 		$size = $data;
 	}
@@ -345,55 +325,46 @@ function vc_gitem_template_attribute_post_image_background_image_css( $value, $d
 }
 
 /**
- * Get post link
+ * Get post link.
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  * @return bool|string
  */
 function vc_gitem_template_attribute_post_link_url( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
-	), $data ) );
+	], $data ) );
 
 	return get_permalink( $post->ID );
 }
 
 /**
- * Get post date
+ * Get post date.
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  * @return bool|int|string
  */
 function vc_gitem_template_attribute_post_date( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
-	), $data ) );
+	], $data ) );
 
 	return get_the_date( '', $post->ID );
 }
 
 /**
- * Get post date time
+ * Get post date time.
  *
- * @param $value
- * @param $data
+ * @param string $value
+ * @param array $data
  * @return bool|int|string
  */
 function vc_gitem_template_attribute_post_datetime( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
-	), $data ) );
+	], $data ) );
 
 	return get_the_time( 'F j, Y g:i', $post->ID );
 }
@@ -401,19 +372,15 @@ function vc_gitem_template_attribute_post_datetime( $value, $data ) {
 /**
  * Get custom fields.
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  * @return mixed|string
  */
 function vc_gitem_template_attribute_post_meta_value( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 
 	return strlen( $data ) > 0 ? get_post_meta( $post->ID, $data, true ) : $value;
 }
@@ -421,42 +388,34 @@ function vc_gitem_template_attribute_post_meta_value( $value, $data ) {
 /**
  * Get post data. Used as wrapper for others post data attributes.
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  * @return mixed|string
  */
 function vc_gitem_template_attribute_post_data( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 
-	return strlen( $data ) > 0 ? apply_filters( 'vc_gitem_template_attribute_' . $data, ( isset( $post->$data ) ? $post->$data : '' ), array(
+	return strlen( $data ) > 0 ? apply_filters( 'vc_gitem_template_attribute_' . $data, ( isset( $post->$data ) ? $post->$data : '' ), [
 		'post' => $post,
 		'data' => '',
-	) ) : $value;
+	] ) : $value;
 }
 
 /**
  * Get post excerpt. Used as wrapper for others post data attributes.
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  * @return mixed|string
  */
 function vc_gitem_template_attribute_post_excerpt( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 
 	return apply_filters( 'the_excerpt', apply_filters( 'get_the_excerpt', $value, get_post( $post ) ) );
 }
@@ -464,19 +423,15 @@ function vc_gitem_template_attribute_post_excerpt( $value, $data ) {
 /**
  * Get post excerpt. Used as wrapper for others post data attributes.
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  * @return mixed|string
  */
 function vc_gitem_template_attribute_post_title( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 	$id = 0;
 	if ( isset( $data['post'] ) ) {
 		$id = apply_filters( 'wpml_object_id', $id, 'post', true );
@@ -486,62 +441,56 @@ function vc_gitem_template_attribute_post_title( $value, $data ) {
 }
 
 /**
- * @param $value
- * @param $data
+ * Get post author.
+ *
+ * @param mixed $value
+ * @param array $data
  * @return string|null
  */
 function vc_gitem_template_attribute_post_author( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 
 	return get_the_author();
 }
 
 /**
- * @param $value
- * @param $data
+ * Get post author href.
+ *
+ * @param mixed $value
+ * @param array $data
  * @return string
  */
 function vc_gitem_template_attribute_post_author_href( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 
 	return get_author_posts_url( get_the_author_meta( 'ID' ), get_the_author_meta( 'user_nicename' ) );
 }
 
 /**
- * @param $value
- * @param $data
+ * Get post categories.
+ *
+ * @param mixed $value
+ * @param array $data
  * @return mixed
  */
 function vc_gitem_template_attribute_post_categories( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
-	$atts_extended = array();
+	], $data ) );
+	$atts_extended = [];
 	parse_str( $data, $atts_extended );
 
-	return vc_include_template( 'params/vc_grid_item/attributes/post_categories.php', array(
+	return vc_include_template( 'params/vc_grid_item/attributes/post_categories.php', [
 		'post' => $post,
 		'atts' => $atts_extended['atts'],
-	) );
+	] );
 }
 
 /**

@@ -48,10 +48,10 @@ function vc_init_vendor_woocommerce() {
 	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) || class_exists( 'WooCommerce' ) ) {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-woocommerce.php' );
 		$vendor = new Vc_Vendor_Woocommerce();
-		add_action( 'vc_before_init', array(
+		add_action( 'vc_before_init', [
 			$vendor,
 			'load',
-		), 0 );
+		], 0 );
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/woocommerce/grid-item-filters.php' );
 		// Add 'add to card' link to the list of Add link.
 		add_filter( 'vc_gitem_add_link_param', 'vc_gitem_add_link_param_woocommerce' );

@@ -1,20 +1,29 @@
 <?php
+/**
+ * The template for displaying [vc_basic_grid_filter] shortcode.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_basic_grid_filter.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 /**
  * Shortcode attributes
+ *
  * @var $atts
  */
 $output = '';
 if ( 'yes' === $atts['show_filter'] && ! empty( $filter_terms ) ) {
 	$unique_terms = array_unique( $filter_terms );
-	$terms_ids = ! empty( $atts['exclude_filter'] ) ? array_diff( $unique_terms, // Posts filter terms
+	$terms_ids = ! empty( $atts['exclude_filter'] ) ? array_diff( $unique_terms, // Posts filter terms.
 		array_map( 'abs', preg_split( '/\s*\,\s*/', $atts['exclude_filter'] ) ) ) : $unique_terms;
 	// phpcs:ignore
 	$terms = count( $terms_ids ) > 0 ? get_terms( $atts['filter_source'], array(
 		'include' => implode( ',', $terms_ids ),
-	) ) : array();
+	) ) : [];
 
 	$filter_default = $atts['filter_default_title'];
 	if ( empty( $filter_default ) ) {
@@ -26,7 +35,7 @@ if ( 'yes' === $atts['show_filter'] && ! empty( $filter_terms ) ) {
 
 		$output .= '</span></li>';
 		foreach ( $terms as $term ) {
-			$output .= '<li class="vc_grid-filter-item"><span' . ' data-vc-grid-filter-value=".vc_grid-term-' . esc_attr( $term->term_id ) . '">';
+			$output .= '<li class="vc_grid-filter-item"><span data-vc-grid-filter-value=".vc_grid-term-' . esc_attr( $term->term_id ) . '">';
 			$output .= esc_attr( $term->name );
 			$output .= '</span></li>';
 		}

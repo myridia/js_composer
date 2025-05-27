@@ -18,9 +18,9 @@ function vc_init_vendor_qtranslate() {
 	if ( is_plugin_active( 'qtranslate/qtranslate.php' ) || defined( 'QT_SUPPORTED_WP_VERSION' ) ) {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-qtranslate.php' );
 		$vendor = new Vc_Vendor_Qtranslate();
-		add_action( 'vc_after_set_mode', array(
+		add_action( 'vc_after_set_mode', [
 			$vendor,
 			'load',
-		) );
+		] );
 	}
 }

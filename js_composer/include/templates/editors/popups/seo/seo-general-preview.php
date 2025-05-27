@@ -1,8 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
 /**
+ * General preview seo template.
+ *
  * @var array $seo_settings
  * @var WP_Post | null $post
  * @var int $post
@@ -10,6 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @var Vc_Post_Seo $vc_post_seo
  * @var string $permalink_structure
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 ?>
 
 <div class="page-preview-container">

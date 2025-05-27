@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_empty_space] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_empty_space.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

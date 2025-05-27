@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_widget_sidebar] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_widget_sidebar.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

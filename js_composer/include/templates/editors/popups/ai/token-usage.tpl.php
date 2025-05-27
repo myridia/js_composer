@@ -1,4 +1,8 @@
 <?php
+/**
+ * Ai tokens usage wrapper template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

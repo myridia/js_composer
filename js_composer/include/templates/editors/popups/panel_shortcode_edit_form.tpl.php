@@ -1,4 +1,8 @@
 <?php
+/**
+ * Shortcode edit form panel template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

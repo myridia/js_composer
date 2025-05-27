@@ -1,4 +1,8 @@
 <?php
+/**
+ * Shortcode fish bones class.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,12 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WPBakeryShortCodeFishBones extends WPBakeryShortCode {
 	/**
-	 * @var bool
+	 * Shortcode class.
+	 *
+	 * @var bool|object
 	 */
 	protected $shortcode_class = false;
 
 	/**
-	 * @param $settings
+	 * WPBakeryShortCodeFishBones constructor.
+	 *
+	 * @param array $settings
 	 * @throws \Exception
 	 */
 	public function __construct( $settings ) {
@@ -22,47 +30,52 @@ class WPBakeryShortCodeFishBones extends WPBakeryShortCode {
 		}
 		$this->settings = $settings;
 		$this->shortcode = $this->settings['base'];
-		add_action( 'admin_init', array(
+		add_action( 'admin_init', [
 			$this,
 			'hookAdmin',
-		) );
+		] );
 		if ( ! shortcode_exists( $this->shortcode ) ) {
-			add_shortcode( $this->shortcode, array(
+			add_shortcode( $this->shortcode, [
 				$this,
 				'render',
-			) );
+			] );
 		}
-	}
-
-	public function hookAdmin() {
-		$this->enqueueAssets();
-		add_action( 'admin_init', array(
-			$this,
-			'enqueueAssets',
-		) );
-		if ( vc_is_page_editable() ) {
-			// fix for page editable
-			add_action( 'wp_head', array(
-				$this,
-				'printIconStyles',
-			) );
-		}
-
-		add_action( 'admin_head', array(
-			$this,
-			'printIconStyles',
-		) ); // fe+be
-		add_action( 'admin_print_scripts-post.php', array(
-			$this,
-			'enqueueAssets',
-		) );
-		add_action( 'admin_print_scripts-post-new.php', array(
-			$this,
-			'enqueueAssets',
-		) );
 	}
 
 	/**
+	 * Fire up shortcode admin hooks.
+	 */
+	public function hookAdmin() {
+		$this->enqueueAssets();
+		add_action( 'admin_init', [
+			$this,
+			'enqueueAssets',
+		] );
+		if ( vc_is_page_editable() ) {
+			// fix for page editable.
+			add_action( 'wp_head', [
+				$this,
+				'printIconStyles',
+			] );
+		}
+
+		add_action( 'admin_head', [
+			$this,
+			'printIconStyles',
+		] ); // fe+be.
+		add_action( 'admin_print_scripts-post.php', [
+			$this,
+			'enqueueAssets',
+		] );
+		add_action( 'admin_print_scripts-post-new.php', [
+			$this,
+			'enqueueAssets',
+		] );
+	}
+
+	/**
+	 * Get shortcode class.
+	 *
 	 * @return WPBakeryShortCodeFishBones
 	 * @throws \Exception
 	 */
@@ -94,14 +107,13 @@ class WPBakeryShortCodeFishBones extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Get element class.
 	 *
-	 *
-	 * @param $tag
+	 * @param string $tag
 	 *
 	 * @return \WPBakeryShortCodeFishBones
 	 * @throws \Exception
 	 * @since 4.9
-	 *
 	 */
 	public static function getElementClass( $tag ) {
 		$settings = WPBMap::getShortCode( $tag );
@@ -131,7 +143,9 @@ class WPBakeryShortCodeFishBones extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $atts
+	 * Retrieve output.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 * @param null $tag
 	 *
@@ -143,12 +157,14 @@ class WPBakeryShortCodeFishBones extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Retrieve template
+	 *
 	 * @param string $content
 	 *
 	 * @return string
 	 * @throws \Exception
 	 */
 	public function template( $content = '' ) {
-		return $this->shortcodeClass()->contentAdmin( array(), $content );
+		return $this->shortcodeClass()->contentAdmin( [], $content );
 	}
 }

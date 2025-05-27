@@ -1,13 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Toggle container</title>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" transform="translate(-331, -60)">
-            <g id="toggle-container" transform="translate(331, 60)">
-                <rect id="Rectangle" fill="#ECECEC" x="0" y="0" width="32" height="32" rx="3"></rect>
-                <rect id="Rectangle" fill="#5188F1" x="7" y="11" width="18" height="10" rx="5"></rect>
-                <rect id="Rectangle" fill="#FFFFFF" x="9" y="13" width="6" height="6" rx="3"></rect>
-            </g>
-        </g>
-    </g>
+<svg width="35" height="22" viewBox="0 0 35 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M23.5 1.62646H10.8333C8.35798 1.62646 5.98401 2.6098 4.23367 4.36013C2.48333 6.11047 1.5 8.48444 1.5 10.9598C1.5 13.4352 2.48333 15.8091 4.23367 17.5595C5.98401 19.3098 8.35798 20.2931 10.8333 20.2931H24.1667C26.642 20.2931 29.016 19.3098 30.7663 17.5595C32.5167 15.8091 33.5 13.4352 33.5 10.9598C33.5 8.48444 32.5167 6.11047 30.7663 4.36013C30.3736 3.96745 29.9496 3.61337 29.5 3.30033M10.8333 16.2931C9.7785 16.2931 8.74735 15.9803 7.87029 15.3943C6.99323 14.8083 6.30964 13.9753 5.90598 13.0008C5.50231 12.0262 5.39669 10.9539 5.60248 9.91932C5.80827 8.88475 6.31622 7.93444 7.0621 7.18856C7.80798 6.44268 8.75829 5.93473 9.79285 5.72894C10.8274 5.52315 11.8998 5.62877 12.8743 6.03244C13.8489 6.43611 14.6818 7.11969 15.2678 7.99676C15.8539 8.87382 16.1667 9.90496 16.1667 10.9598C16.1651 12.3738 15.6026 13.7294 14.6028 14.7292C13.6029 15.7291 12.2473 16.2915 10.8333 16.2931Z" stroke="#00447F" stroke-width="1.7" stroke-linecap="round"/>
+<circle cx="10.5" cy="10.6265" r="5" fill="#00447F"/>
 </svg>

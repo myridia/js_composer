@@ -1,9 +1,18 @@
 <?php
+/**
+ * The template for displaying [vc_images_carousel] shortcode output of 'Images Carousel' element.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_images_carousel.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $title
  * @var $onclick
@@ -71,16 +80,16 @@ $output = '';
 $output .= '<div' . ( ! empty( $el_id ) ? ' id="' . esc_attr( $el_id ) . '"' : '' ) . ' class="' . esc_attr( apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $css_class, $this->settings['base'], $atts ) ) . '">';
 $output .= '<div class="wpb_wrapper">';
 
-$output .= wpb_widget_title( array(
+$output .= wpb_widget_title( [
 	'title' => $title,
 	'extraclass' => 'wpb_gallery_heading',
-) );
+] );
 
 $output .= '<div id="' . esc_attr( $carousel_id ) . '" data-ride="vc_carousel" data-wrap="' . ( 'yes' === $wrap ? 'true' : 'false' ) . '" style="width: ' . esc_attr( $slider_width ) . ';" data-interval="' . ( 'yes' === $autoplay ? esc_attr( $speed ) : 0 ) . '" data-auto-height="yes" data-mode="' . esc_attr( $mode ) . '" data-partial="' . ( 'yes' === $partial_view ? 'true' : 'false' ) . '" data-per-view="' . esc_attr( $slides_per_view ) . '" data-hide-on-end="' . ( 'yes' === $autoplay ? 'false' : 'true' ) . '" class="vc_slide vc_images_carousel">';
 if ( 'yes' !== $hide_pagination_control ) {
 	$output .= '<ol class="vc_carousel-indicators">';
 	$count = count( $images );
-	for ( $z = 0; $z < $count; $z ++ ) {
+	for ( $z = 0; $z < $count; $z++ ) {
 		$output .= '<li data-target="#' . esc_attr( $carousel_id ) . '" data-slide-to="' . esc_attr( $z ) . '"></li>';
 	}
 	$output .= '</ol>';
@@ -88,18 +97,18 @@ if ( 'yes' !== $hide_pagination_control ) {
 
 $output .= '<div class="vc_carousel-inner"><div class="vc_carousel-slideline"><div class="vc_carousel-slideline-inner">';
 foreach ( $images as $attach_id ) {
-	$i ++;
+	$i++;
 	if ( $attach_id > 0 ) {
-		$post_thumbnail = wpb_getImageBySize( array(
+		$post_thumbnail = wpb_getImageBySize( [
 			'attach_id' => $attach_id,
 			'thumb_size' => $img_size,
-		) );
+		] );
 	} else {
-		$post_thumbnail = array();
-		$attributes = array(
+		$post_thumbnail = [];
+		$attributes = [
 			'src' => esc_url( vc_asset_url( 'vc/no_image.png' ) ),
 			'alt' => __( 'No image', 'js_composer' ),
-		);
+		];
 		$attributes = vc_add_lazy_loading_attribute( $attributes );
 		$post_thumbnail['thumbnail'] = '<img ' . vc_stringify_attributes( $attributes ) . ' />';
 		$post_thumbnail['p_img_large'][0] = vc_asset_url( 'vc/no_image.png' );

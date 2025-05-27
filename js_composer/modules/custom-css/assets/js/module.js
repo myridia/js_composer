@@ -1,8 +1,8 @@
 jQuery( document ).ready( function ( $ ) {
 	'use strict';
 
-	if (window.Vc_postSettingsEditor) {
-		function setEditorNewValue($editor_input, editor_slug) {
+	if ( window.Vc_postSettingsEditor ) {
+		function setEditorNewValue ( $editor_input, editor_slug ) {
 			// set new value to textarea
 			$editor_input.val( window[editor_slug].getValue() );
 		}
@@ -19,7 +19,7 @@ jQuery( document ).ready( function ( $ ) {
 			window[editor_slug] = editor_css;
 			window[editor_slug].setEditor( $editor_input.val() );
 
-			window[editor_slug].getEditor().on( "change", setEditorNewValue.bind(null, $editor_input, editor_slug));
+			window[editor_slug].getEditor().on( 'change', setEditorNewValue.bind( null, $editor_input, editor_slug ) );
 		}
 	}
-} );
+});

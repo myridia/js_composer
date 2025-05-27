@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_gitem_row] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_row.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -10,6 +16,8 @@ require_once vc_path_dir( 'SHORTCODES_DIR', 'vc-row.php' );
  */
 class WPBakeryShortCode_Vc_Gitem_Row extends WPBakeryShortCode_Vc_Row {
 	/**
+	 * Get layout control buttons.
+	 *
 	 * @return string
 	 */
 	public function getLayoutsControl() {

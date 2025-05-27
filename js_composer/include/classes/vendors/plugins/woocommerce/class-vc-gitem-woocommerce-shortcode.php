@@ -1,4 +1,12 @@
 <?php
+/**
+ * Backward compatibility with "Woocommerce" WordPress plugin.
+ *
+ * @see https://wordpress.org/plugins/woocommerce
+ *
+ * @since 4.4 vendors initialization moved to hooks in autoload/vendors.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -8,7 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Vc_Gitem_Woocommerce_Shortcode extends WPBakeryShortCode {
 	/**
-	 * @param $atts
+	 * Content render function.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 *
 	 * @return mixed
@@ -16,6 +26,8 @@ class Vc_Gitem_Woocommerce_Shortcode extends WPBakeryShortCode {
 	protected function content( $atts, $content = null ) {
 		$key = '';
 		/**
+		 * Shortcode attributes.
+		 *
 		 * @var string $el_class
 		 * @var string $post_type
 		 * @var string $product_field_key
@@ -25,7 +37,7 @@ class Vc_Gitem_Woocommerce_Shortcode extends WPBakeryShortCode {
 		 * @var string $show_label
 		 * @var string $align
 		 */
-		$atts = shortcode_atts( array(
+		$atts = shortcode_atts( [
 			'el_class' => '',
 			'post_type' => 'product',
 			'product_field_key' => 'sku',
@@ -34,7 +46,7 @@ class Vc_Gitem_Woocommerce_Shortcode extends WPBakeryShortCode {
 			'order_custom_key' => '',
 			'show_label' => '',
 			'align' => '',
-		), $atts );
+		], $atts );
 		extract( $atts );
 		if ( 'product' === $post_type ) {
 			$key = '_custom_' === $product_field_key ? $product_custom_key : $product_field_key;
@@ -46,6 +58,6 @@ class Vc_Gitem_Woocommerce_Shortcode extends WPBakeryShortCode {
 		}
 		$css_class = 'vc_gitem-woocommerce vc_gitem-woocommerce-' . $post_type . '-' . $key . ( strlen( $el_class ) ? ' ' . $el_class : '' ) . ( strlen( $align ) ? ' vc_gitem-align-' . $align : '' );
 
-		return '<div class="' . esc_attr( $css_class ) . '">' . '{{ woocommerce_' . $post_type . ':' . $key . ' }}' . '</div>';
+		return '<div class="' . esc_attr( $css_class ) . '">{{ woocommerce_' . $post_type . ':' . $key . ' }}</div>';
 	}
 }

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Sad AI logo template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

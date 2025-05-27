@@ -28,11 +28,11 @@ function vc_page_welcome_slug() {
  */
 function vc_get_page_welcome_tabs() {
 	global $vc_page_welcome_tabs;
-	$vc_page_welcome_tabs = apply_filters( 'vc_page-welcome-slugs-list', array(
+	$vc_page_welcome_tabs = apply_filters( 'vc_page-welcome-slugs-list', [
 		'vc-welcome' => esc_html__( 'What\'s New', 'js_composer' ),
 		'vc-faq' => esc_html__( 'FAQ', 'js_composer' ),
 		'vc-resources' => esc_html__( 'Resources', 'js_composer' ),
-	) );
+	] );
 
 	return $vc_page_welcome_tabs;
 }

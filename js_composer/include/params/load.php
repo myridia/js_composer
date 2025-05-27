@@ -1,14 +1,14 @@
 <?php
+/**
+ * WPBakery Page Builder shortcode attributes fields loader
+ *
+ * @package WPBakeryPageBuilder
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-/**
- * WPBakery WPBakery Page Builder shortcode attributes fields loader
- *
- * @package WPBakeryPageBuilder
- *
- */
 require_once vc_path_dir( 'PARAMS_DIR', '/default_params.php' );
 
 /**
@@ -34,10 +34,11 @@ require_once vc_path_dir( 'PARAMS_DIR', '/animation_style/animation_style.php' )
 require_once vc_path_dir( 'PARAMS_DIR', '/iconpicker/iconpicker.php' );
 require_once vc_path_dir( 'PARAMS_DIR', '/el_id/el_id.php' );
 require_once vc_path_dir( 'PARAMS_DIR', '/gutenberg/gutenberg.php' );
+require_once vc_path_dir( 'PARAMS_DIR', '/textarea_ace/textarea_ace.php' );
 
 global $vc_params_list;
-$vc_params_list = array(
-	// Default
+$vc_params_list = [
+	// Default.
 	'textfield',
 	'dropdown',
 	'textarea_html',
@@ -53,7 +54,7 @@ $vc_params_list = array(
 	'attach_images',
 	'attach_image',
 	'widgetised_sidebars',
-	// Advanced
+	// Advanced.
 	'colorpicker',
 	'loop',
 	'vc_link',
@@ -71,5 +72,6 @@ $vc_params_list = array(
 	'animation_style',
 	'iconpicker',
 	'el_id',
-	'gutenberg'
-);
+	'gutenberg',
+	'textarea_ace',
+];

@@ -1,14 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
-    <title>Flickr</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Flickr">
-            <rect id="Rectangle" fill="#E4E7E7" x="0" y="0" width="32" height="32" rx="16"></rect>
-            <rect id="Rectangle" fill="#F7419E" x="7" y="12" width="8" height="8" rx="4"></rect>
-            <rect id="Rectangle" fill="#2174E4" x="17" y="12" width="8" height="8" rx="4"></rect>
-        </g>
-    </g>
+<svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.5 0.959961C8.66089 0.959961 1.5 8.12085 1.5 16.96C1.5 25.7991 8.66089 32.96 17.5 32.96C26.3391 32.96 33.5 25.7991 33.5 16.96C33.5 8.12085 26.3391 0.959961 17.5 0.959961ZM12.5293 20.8782C10.3676 20.8782 8.61111 19.1217 8.61111 16.96C8.61111 14.7982 10.3676 13.0417 12.5293 13.0417C14.6911 13.0417 16.4476 14.7982 16.4476 16.96C16.4476 19.1217 14.6911 20.8782 12.5293 20.8782ZM22.4707 20.8782C20.3089 20.8782 18.5524 19.1217 18.5524 16.96C18.5524 14.7982 20.3089 13.0417 22.4707 13.0417C24.6324 13.0417 26.3889 14.7982 26.3889 16.96C26.3889 19.1217 24.6324 20.8782 22.4707 20.8782Z" fill="#00447F"/>
+<circle cx="17.5" cy="16.96" r="16" stroke="#00447F" stroke-width="1.7"/>
 </svg>

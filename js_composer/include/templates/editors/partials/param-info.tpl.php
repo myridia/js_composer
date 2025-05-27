@@ -1,9 +1,16 @@
 <?php
+/**
+ * Param info template.
+ *
+ * @var string|null $description
+ * @var bool|null $print
+ * @var string|null $format
+ * @var array|null $format_arguments
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-
-/** @var string $description */
 ?>
 
 <div class="edit-form-info">
@@ -21,7 +28,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 <div class="tooltip-content" role="tooltip">
 	<?php
-	if ( is_string( $description ) ) {
+	if ( ! empty( $format ) ) {
+        // phpcs:ignore
+        printf($format, ...$format_arguments);
+	}
+	if ( ! empty( $description ) ) {
 		// phpcs:ignore
 		echo $description;
 	}

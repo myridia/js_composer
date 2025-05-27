@@ -26,8 +26,8 @@ function wpb_init_vendor_rank_math() {
  * Enqueue Rank Math vendor assets.
  */
 function wpb_enqueue_rank_math_assets() {
-	wp_enqueue_script( 'vc_vendor_seo_js', vc_asset_url( 'js/vendors/seo.js' ), array(
+	wp_enqueue_script( 'vc_vendor_seo_js', vc_asset_url( 'js/vendors/seo.js' ), [
 		'jquery-core',
 		'underscore',
-	), WPB_VC_VERSION, true );
+	], WPB_VC_VERSION, true );
 }

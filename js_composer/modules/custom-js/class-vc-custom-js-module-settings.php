@@ -50,20 +50,20 @@ class Vc_Custom_Js_Module_Settings {
 	public function add_settings_section() {
 		$tab = 'custom_js';
 		vc_settings()->addSection( $tab );
-		vc_settings()->addField( $tab, esc_html__( 'JavaScript in <head>', 'js_composer' ), 'custom_js_header', array(
+		vc_settings()->addField( $tab, esc_html__( 'JavaScript in <head>', 'js_composer' ), 'custom_js_header', [
 			$this,
 			'sanitize_custom_js_header_callback',
-		), array(
+		], [
 			$this,
 			'custom_js_header_field_callback',
-		) );
-		vc_settings()->addField( $tab, esc_html__( 'JavaScript before </body>', 'js_composer' ), 'custom_js_footer', array(
+		] );
+		vc_settings()->addField( $tab, esc_html__( 'JavaScript before </body>', 'js_composer' ), 'custom_js_footer', [
 			$this,
 			'sanitize_custom_js_footer_callback',
-		), array(
+		], [
 			$this,
 			'custom_js_footer_field_callback',
-		) );
+		] );
 	}
 
 	/**
@@ -96,11 +96,11 @@ class Vc_Custom_Js_Module_Settings {
 	public function load_module_settings_assets() {
 		wp_enqueue_script( 'ace-editor', vc_asset_url( 'lib/vendor/node_modules/ace-builds/src-min-noconflict/ace.js' ), [ 'jquery-core' ], WPB_VC_VERSION, true );
 		wp_enqueue_script( 'wpb-code-editor', vc_asset_url( 'js/dist/post-code-editor.min.js' ), [ 'jquery-core' ], WPB_VC_VERSION, true );
-		wp_enqueue_script( 'wpb_custom_js_module', vc_asset_url( '../modules/custom-js/assets/dist/module.min.js' ), array(), WPB_VC_VERSION, true );
-		wp_enqueue_style( 'wpb_custom_js_module', vc_asset_url( '../modules/custom-js/assets/dist/module.min.css' ), false, WPB_VC_VERSION );
+		wp_enqueue_script( 'wpb_custom_js_module', vc_asset_url( '../modules/custom-js/assets/dist/module.min.js' ), [], WPB_VC_VERSION, true );
+		wp_enqueue_style( 'wpb_custom_js_module', vc_asset_url( '../modules/custom-js/assets/dist/module.min.css' ), [], WPB_VC_VERSION );
 		if ( vc_modules_manager()->is_module_on( 'vc-ai' ) ) {
 			wp_enqueue_script( 'wpb_ai_module', vc_asset_url( '../modules/ai/assets/dist/module.min.js' ), [], WPB_VC_VERSION, true );
-			wp_enqueue_style( 'wpb_ai_module', vc_asset_url( '../modules/ai/assets/dist/module.min.css' ), false, WPB_VC_VERSION );
+			wp_enqueue_style( 'wpb_ai_module', vc_asset_url( '../modules/ai/assets/dist/module.min.css' ), [], WPB_VC_VERSION );
 		}
 	}
 

@@ -4,7 +4,7 @@
 @vcui-prompt-color: #5e5e5e;
 @vcui-prompt-padding: 15px;
 @vcui-prompt-size: 16px;
-@vcui-prompt-gap: 18px;
+@vcui-prompt-gap: 15px;
 @vcui-prompt-xs-width: 258px;
 @vcui-prompt-sm-width: 395px;
 
@@ -69,13 +69,13 @@
 .vc_ui-prompt-content {
   display: flex;
   flex-wrap: wrap;
-  margin-left: -@vcui-prompt-gap/2;
-  margin-right: -@vcui-prompt-gap/2;
+  margin-left: calc(-@vcui-prompt-gap / 2);
+  margin-right: calc(-@vcui-prompt-gap / 2);
 }
 
 .vc_ui-prompt-column {
-  padding-left: @vcui-prompt-gap/2;
-  padding-right: @vcui-prompt-gap/2;
+  padding-left: calc(@vcui-prompt-gap / 2);
+  padding-right: calc(@vcui-prompt-gap / 2);
   &:first-child {
     flex-grow: 1;
   }

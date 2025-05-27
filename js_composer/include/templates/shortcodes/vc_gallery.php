@@ -1,10 +1,19 @@
 <?php
+/**
+ * The template for displaying [vc_gallery] shortcode of 'Image Gallery' element.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_gallery.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $title
  * @var $source
@@ -110,17 +119,17 @@ foreach ( $images as $i => $image ) {
 	switch ( $source ) {
 		case 'media_library':
 			if ( $image > 0 ) {
-				$img = wpb_getImageBySize( array(
+				$img = wpb_getImageBySize( [
 					'attach_id' => $image,
 					'thumb_size' => $img_size,
-				) );
+				] );
 				$thumbnail = $img['thumbnail'];
 				$large_img_src = $img['p_img_large'][0];
 			} else {
 				$large_img_src = $default_src;
-				$attributes = array(
+				$attributes = [
 					'src' => esc_url( $large_img_src ),
-				);
+				];
 				$attributes = vc_add_lazy_loading_attribute( $attributes );
 				$thumbnail = '<img ' . vc_stringify_attributes( $attributes ) . ' />';
 			}
@@ -130,9 +139,9 @@ foreach ( $images as $i => $image ) {
 			$dimensions = vc_extract_dimensions( $external_img_size );
 			$hwstring = $dimensions ? image_hwstring( $dimensions[0], $dimensions[1] ) : '';
 
-			$attributes = array(
+			$attributes = [
 				'src' => esc_url( $image ),
-			);
+			];
 			$attributes = vc_add_lazy_loading_attribute( $attributes );
 
 			$thumbnail = '<img ' . $hwstring . ' ' . vc_stringify_attributes( $attributes ) . ' />';
@@ -168,17 +177,17 @@ $element_class = empty( $this->settings['element_default_class'] ) ? '' : $this-
 $class_to_filter = 'wpb_gallery wpb_content_element vc_clearfix';
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . ' ' . esc_attr( $element_class ) . $this->getExtraClass( $el_class ) . $this->getCSSAnimation( $css_animation );
 $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, $class_to_filter, $this->settings['base'], $atts );
-$wrapper_attributes = array();
+$wrapper_attributes = [];
 if ( ! empty( $el_id ) ) {
 	$wrapper_attributes[] = 'id="' . esc_attr( $el_id ) . '"';
 }
 $output = '';
 $output .= '<div class="' . esc_attr( $css_class ) . '" ' . implode( ' ', $wrapper_attributes ) . '>';
 $output .= '<div class="wpb_wrapper">';
-$output .= wpb_widget_title( array(
+$output .= wpb_widget_title( [
 	'title' => $title,
 	'extraclass' => 'wpb_gallery_heading',
-) );
+] );
 $output .= '<div class="wpb_gallery_slides' . esc_attr( $type ) . '" data-interval="' . esc_attr( $interval ) . '"' . $flex_fx . '>' . $slides_wrap_start . $gal_images . $slides_wrap_end . '</div>';
 $output .= '</div>';
 $output .= '</div>';

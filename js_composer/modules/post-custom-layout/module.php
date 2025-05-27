@@ -10,56 +10,72 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+require_once vc_manager()->path( 'MUTUAL_MODULES_DIR', 'class-module.php' );
+
 /**
  * Module entry point.
  *
  * @since 7.7
  */
-class Vc_Post_Custom_Layout_Module {
+class Vc_Post_Custom_Layout_Module extends Vc_Module {
 	/**
 	 * Module meta key.
 	 *
 	 * @since 7.7
 	 * @var string
 	 */
-	const CUSTOM_CSS_META_KEY = '_wpb_post_custom_layout';
+	const CUSTOM_LAYOUT_META_KEY = '_wpb_post_custom_layout';
+
+	/**
+	 * Module settings that specify functionality common for some modules.
+	 *
+	 * @note We can use object functionality $this->get_module_functionality( 'post-meta' )->foo();
+	 *
+	 * @since 8.4
+	 * @var array
+	 */
+	public $module_common_functionality = [ 'post-meta' ];
+
+	/**
+	 * Post meta key.
+	 *
+	 * @since 8.4
+	 * @var string
+	 */
+	public $post_meta_key = 'post_custom_layout';
+
+	/**
+	 * Post meta slug.
+	 *
+	 * @since 8.4
+	 * @var string
+	 */
+	public $post_meta_slug = 'custom_layout';
+
 	/**
 	 * Init module implementation.
 	 *
 	 * @since 7.7
 	 */
 	public function init() {
-		add_filter( 'vc_post_meta_list', [ $this, 'add_custom_meta_to_update' ] );
-
-		add_filter( 'wpb_set_post_custom_meta', [ $this, 'set_post_custom_meta' ], 10, 1 );
+		// We initialize the common modules functionality in parent constructor.
+		parent::__construct();
 
 		add_action( 'template_include', [ $this, 'switch_post_custom_layout' ], 11 );
+
+		add_filter( 'wpb_is_post_custom_layout_blank', [ $this, 'is_layout_blank' ] );
 	}
 
 	/**
-	 * Add module meta to the plugin post custom meta list.
+	 * Get module post meta.
 	 *
-	 * @since 7.7
-	 * @param array $meta_list
-	 * @return array
-	 */
-	public function add_custom_meta_to_update( $meta_list ) {
-		$meta_list[] = 'custom_layout';
-
-		return $meta_list;
-	}
-
-	/**
-	 * Set post custom meta.
-	 *
-	 * @since 7.7
+	 * @since 8.4
 	 * @param array $post_custom_meta
-	 * @return array
+	 * @param int $post_id
+	 * @return string
 	 */
-	public function set_post_custom_meta( $post_custom_meta ) {
-		$post_custom_meta['post_custom_layout'] = $this->get_custom_layout_name();
-
-		return $post_custom_meta;
+	public function get_module_meta( $post_custom_meta, $post_id ) {
+		return $this->get_custom_layout_name();
 	}
 
 	/**
@@ -197,7 +213,9 @@ class Vc_Post_Custom_Layout_Module {
 	 * @return mixed
 	 */
 	public function get_layout_from_meta() {
-		return get_post_meta( get_the_ID(), self::CUSTOM_CSS_META_KEY, true );
+		$post_id = wpb_update_id_with_preview_id( get_the_ID() );
+
+		return get_post_meta( $post_id, self::CUSTOM_LAYOUT_META_KEY, true );
 	}
 
 	/**
@@ -258,5 +276,18 @@ class Vc_Post_Custom_Layout_Module {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Checks if the layout is 'blank'.
+	 *
+	 * @since 8.2
+	 *
+	 * @return bool
+	 */
+	public function is_layout_blank() {
+		$layout_name = $this->get_custom_layout_name();
+
+		return 'blank' === $layout_name;
 	}
 }

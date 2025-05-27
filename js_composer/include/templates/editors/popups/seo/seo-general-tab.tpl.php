@@ -1,14 +1,17 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
 /**
+ * General tab template.
+ *
  * @var array $seo_settings
  * @var WP_Post | null $post
  * @var int $post_id
  * @var Vc_Post_Seo $vc_post_seo
  * @var string $permalink_structure
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 ?>
 
 <div id="vc_ui-seo-general">
@@ -16,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="vc_col-sm-12 vc_column">
 			<div class="wpb_element_label"><?php esc_html_e( 'Focus keyphrase', 'js_composer' ); ?></div>
 			<div class="edit_form_line">
-				<input name="focus-keyphrase" class="wpb-textinput" type="text" value="<?php echo empty( $seo_settings['focus-keyphrase'] ) ? '' : esc_attr( $seo_settings['focus-keyphrase'] ) ?>" id="vc_focus-keyphrase-field" placeholder="">
+				<input name="focus-keyphrase" class="wpb-textinput" type="text" value="<?php echo empty( $seo_settings['focus-keyphrase'] ) ? '' : esc_attr( $seo_settings['focus-keyphrase'] ); ?>" id="vc_focus-keyphrase-field" placeholder="">
 			</div>
 		</div>
 		<div class="vc_col-sm-12 vc_column">
@@ -52,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					wpb_add_ai_icon_to_text_field( 'textfield', 'vc_seo-title-field' );
 				}
 				?>
-				<input name="title" data-preview="vc_seo-title" class="wpb-textinput" type="text" value="<?php echo empty( $seo_settings['title'] ) ? '' : esc_attr( $seo_settings['title'] ) ?>" id="vc_seo-title-field" placeholder="">
+				<input name="title" data-preview="vc_seo-title" class="wpb-textinput" type="text" value="<?php echo empty( $seo_settings['title'] ) ? '' : esc_attr( $seo_settings['title'] ); ?>" id="vc_seo-title-field" placeholder="">
 			</div>
 		</div>
 		<div class="vc_col-sm-12 vc_column">
@@ -69,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					wpb_add_ai_icon_to_text_field( 'textarea', 'vc_seo-description-field' );
 				}
 				?>
-				<textarea name="description" data-preview="vc_seo-description" class="wpb-textinput" id="vc_seo-description-field"><?php echo empty( $seo_settings['description'] ) ? '' : esc_attr( $seo_settings['description'] ) ?></textarea>
+				<textarea name="description" data-preview="vc_seo-description" class="wpb-textinput" id="vc_seo-description-field"><?php echo empty( $seo_settings['description'] ) ? '' : esc_attr( $seo_settings['description'] ); ?></textarea>
 			</div>
 		</div>
 	</div>

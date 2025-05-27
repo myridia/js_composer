@@ -1,19 +1,30 @@
-(function () {
+( function () {
 	'use strict';
 
-	window.InlineShortcodeView_vc_accordion_tab = window.InlineShortcodeView_vc_tab.extend( {
+	window.InlineShortcodeView_vc_accordion_tab = window.InlineShortcodeView_vc_tab.extend({
 		events: {
 			'click > .vc_controls .vc_element .vc_control-btn-delete': 'destroy',
+			'touchstart > .vc_controls .vc_element .vc_control-btn-delete': 'destroy',
 			'click > .vc_controls .vc_element .vc_control-btn-edit': 'edit',
+			'touchstart > .vc_controls .vc_element .vc_control-btn-edit': 'edit',
 			'click > .vc_controls .vc_element .vc_control-btn-clone': 'clone',
+			'touchstart > .vc_controls .vc_element .vc_control-btn-clone': 'clone',
 			'click > .vc_controls .vc_element .vc_control-btn-prepend': 'prependElement',
+			'touchstart > .vc_controls .vc_element .vc_control-btn-prepend': 'prependElement',
 			'click > .vc_controls .vc_control-btn-append': 'appendElement',
+			'touchstart > .vc_controls .vc_control-btn-append': 'appendElement',
 			'click > .vc_controls .vc_parent .vc_control-btn-delete': 'destroyParent',
+			'touchstart > .vc_controls .vc_parent .vc_control-btn-delete': 'destroyParent',
 			'click > .vc_controls .vc_parent .vc_control-btn-edit': 'editParent',
+			'touchstart > .vc_controls .vc_parent .vc_control-btn-edit': 'editParent',
 			'click > .vc_controls .vc_parent .vc_control-btn-clone': 'cloneParent',
+			'touchstart > .vc_controls .vc_parent .vc_control-btn-clone': 'cloneParent',
 			'click > .vc_controls .vc_parent .vc_control-btn-prepend': 'addSibling',
+			'touchstart > .vc_controls .vc_parent .vc_control-btn-prepend': 'addSibling',
 			'click > .wpb_accordion_section > .vc_empty-element': 'appendElement',
+			'touchstart > .wpb_accordion_section > .vc_empty-element': 'appendElement',
 			'click > .vc_controls .vc_control-btn-switcher': 'switchControls',
+			'touchstart > .vc_controls .vc_control-btn-switcher': 'switchControls',
 			'mouseenter': 'resetActive',
 			'mouseleave': 'holdActive'
 		},
@@ -35,21 +46,21 @@
 			return this;
 		},
 		rowsColumnsConverted: function () {
-			_.each( vc.shortcodes.where( { parent_id: this.model.get( 'id' ) } ), function ( model ) {
+			_.each( vc.shortcodes.where({ parent_id: this.model.get( 'id' ) }), function ( model ) {
 				if ( model.view.rowsColumnsConverted ) {
 					model.view.rowsColumnsConverted();
 				}
-			} );
+			});
 		},
 		destroy: function ( e ) {
 			var parent_id = this.model.get( 'parent_id' );
 			window.InlineShortcodeView_vc_accordion_tab.__super__.destroy.call( this, e );
-			if ( !vc.shortcodes.where( { parent_id: parent_id } ).length ) {
+			if ( !vc.shortcodes.where({ parent_id: parent_id }).length ) {
 				vc.shortcodes.get( parent_id ).destroy();
 			}
 		},
 		allowAddControl: function () {
 			return vc_user_access().shortcodeAll( 'vc_accordion_tab' );
 		}
-	} );
+	});
 })();

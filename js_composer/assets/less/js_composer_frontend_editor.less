@@ -72,7 +72,8 @@
   #vc_inline-frame {
     margin: 0 auto;
     display: block;
-    position: initial !important;
+    position: relative !important;
+    z-index: 9;
   }
   .custom_code {
     border: 1px solid #BABABA;
@@ -85,6 +86,7 @@
 @import "vendor/layerslider.less";
 @import "vendor/rev_slider.less";
 @import "vendor/jwplayer.less";
+@import "vendor/woocommerce_product_editor.less";
 
 .vc_shortcode-param[data-param_type="iconpicker"] {
   .vc-icons-selector .selected-icon {

@@ -1,7 +1,7 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
-	window.InlineShortcodeView_vc_row = window.InlineShortcodeView.extend( {
+	window.InlineShortcodeView_vc_row = window.InlineShortcodeView.extend({
 		column_tag: 'vc_column',
 		events: {
 			'mouseenter': 'removeHoldActive'
@@ -27,10 +27,10 @@
 			vc.unsetHoldActive();
 		},
 		addColumn: function () {
-			vc.builder.create( {
+			vc.builder.create({
 				shortcode: this.column_tag,
 				parent_id: this.model.get( 'id' )
-			} ).render();
+			}).render();
 		},
 		addElement: function ( e ) {
 			if ( e && e.preventDefault ) {
@@ -46,7 +46,7 @@
 		},
 		layoutEditor: function () {
 			if ( _.isUndefined( vc.row_layout_editor ) ) {
-				vc.row_layout_editor = new vc.RowLayoutUIPanelFrontendEditor( { el: $( '#vc_ui-panel-row-layout' ) } );
+				vc.row_layout_editor = new vc.RowLayoutUIPanelFrontendEditor({ el: $( '#vc_ui-panel-row-layout' ) });
 			}
 
 			return vc.row_layout_editor;
@@ -56,7 +56,7 @@
 				var w = c.split( '' );
 				w.splice( Math.floor( c.length / 2 ), 0, '/' );
 				return w.join( '' );
-			} );
+			});
 		},
 		changed: function () {
 			window.InlineShortcodeView_vc_row.__super__.changed.call( this );
@@ -72,9 +72,9 @@
 		},
 		addLayoutClass: function () {
 			this.$el.removeClass( 'vc_layout_' + this.layout );
-			this.layout = _.reject( vc.shortcodes.where( { parent_id: this.model.get( 'id' ) } ), function ( model ) {
+			this.layout = _.reject( vc.shortcodes.where({ parent_id: this.model.get( 'id' ) }), function ( model ) {
 				return model.get( 'deleted' );
-			} ).length;
+			}).length;
 			this.$el.addClass( 'vc_layout_' + this.layout );
 		},
 		convertRowColumns: function ( layout, builder ) {
@@ -85,49 +85,49 @@
 			columns_contents = [];
 			columns = this.convertToWidthsArray( layout );
 			vc.layout_change_shortcodes = [];
-			vc.layout_old_columns = vc.shortcodes.where( { parent_id: this.model.get( 'id' ) } );
+			vc.layout_old_columns = vc.shortcodes.where({ parent_id: this.model.get( 'id' ) });
 			_.each( vc.layout_old_columns, function ( column ) {
 				column.set( 'deleted', true );
-				columns_contents.push( {
-					shortcodes: vc.shortcodes.where( { parent_id: column.get( 'id' ) } ),
+				columns_contents.push({
+					shortcodes: vc.shortcodes.where({ parent_id: column.get( 'id' ) }),
 					params: column.get( 'params' )
-				} );
-			} );
+				});
+			});
 			_.each( columns, function ( column ) {
 				var prev_settings = columns_contents.shift();
 				if ( _.isObject( prev_settings ) ) {
-					new_model = builder.create( {
+					new_model = builder.create({
 						shortcode: this.column_tag,
 						parent_id: this.model.get( 'id' ),
 						order: vc.shortcodes.nextOrder(),
-						params: _.extend( {}, prev_settings.params, { width: column } )
-					} ).last();
+						params: _.extend({}, prev_settings.params, { width: column })
+					}).last();
 					_.each( prev_settings.shortcodes, function ( shortcode ) {
-						shortcode.save( {
-								parent_id: new_model.get( 'id' ),
-								order: vc.shortcodes.nextOrder()
-							},
-							{ silent: true } );
+						shortcode.save({
+							parent_id: new_model.get( 'id' ),
+							order: vc.shortcodes.nextOrder()
+						},
+						{ silent: true });
 						vc.layout_change_shortcodes.push( shortcode );
 					}, this );
 				} else {
 					column_params = { width: column };
 
-					new_model = builder.create( {
+					new_model = builder.create({
 						shortcode: this.column_tag,
 						parent_id: this.model.get( 'id' ),
 						order: vc.shortcodes.nextOrder(),
 						params: column_params
-					} ).last();
+					}).last();
 				}
 			}, this );
 			_.each( columns_contents, function ( column ) {
 				_.each( column.shortcodes, function ( shortcode ) {
-					shortcode.save( {
-							parent_id: new_model.get( 'id' ),
-							order: vc.shortcodes.nextOrder()
-						},
-						{ silent: true } );
+					shortcode.save({
+						parent_id: new_model.get( 'id' ),
+						order: vc.shortcodes.nextOrder()
+					},
+					{ silent: true });
 					vc.layout_change_shortcodes.push( shortcode );
 					if ( shortcode.view.rowsColumnsConverted ) {
 						shortcode.view.rowsColumnsConverted();
@@ -140,13 +140,13 @@
 					if ( shortcode.view.rowsColumnsConverted ) {
 						shortcode.view.rowsColumnsConverted();
 					}
-				} );
+				});
 				_.each( vc.layout_old_columns, function ( column ) {
 					column.destroy();
-				} );
+				});
 				vc.layout_old_columns = [];
 				vc.layout_change_shortcodes = [];
-			} );
+			});
 
 			return columns;
 		},
@@ -156,5 +156,5 @@
 		allowAddControlOnEmpty: function () {
 			return 'edit' !== vc_user_access().getState( 'shortcodes' );
 		}
-	} );
+	});
 })( window.jQuery );

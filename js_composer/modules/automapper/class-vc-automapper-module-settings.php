@@ -29,8 +29,6 @@ class Vc_Automapper_Module_Settings {
 	 * @since 7.7
 	 */
 	public function __construct() {
-		$this->title = esc_attr__( 'Shortcode Mapper', 'js_composer' );
-
 		add_action( 'vc-settings-render-tab-vc-automapper', [ $this, 'load_module_settings_assets' ] );
 	}
 
@@ -46,23 +44,13 @@ class Vc_Automapper_Module_Settings {
 	}
 
 	/**
-	 * Setter/Getter for Automapper title
-	 *
-	 * @since 7.7
-	 * @param string $title
-	 */
-    public function setTitle( $title ) { // @codingStandardsIgnoreLine
-		$this->title = $title;
-	}
-
-	/**
 	 * Getter for Automapper title tab settings.
 	 *
 	 * @since 7.7
 	 * @return string|void
 	 */
 	public function title() {
-		return $this->title;
+		return esc_attr__( 'Shortcode Mapper', 'js_composer' );
 	}
 
 	/**

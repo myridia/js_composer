@@ -97,9 +97,13 @@
 // not empty state
 .vc_welcome {
   &.vc_not-empty {
+    position: relative;
     border: 1px dashed @vc-welcome-border;
     .vc_welcome-visible-e {
       display: none;
+    }
+    &.active .vc_add-element-not-empty-button {
+      background-color: #E4E4E4;
     }
   }
   &:not(.vc_not-empty) {

@@ -1,7 +1,17 @@
 <?php
+/**
+ * UI panel row layout template.
+ *
+ * @var array $vc_row_layouts
+ * @var string $rowInfo
+ * @var string $customRowInfo
+ * @var Vc_Edit_Layout $box
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
+
 // @codingStandardsIgnoreStart
 ?>
 <div class="vc_ui-font-open-sans vc_ui-panel-window vc_media-xs vc_ui-panel" data-vc-panel=".vc_ui-panel-header-header" data-vc-ui-element="panel-row-layout" id="vc_ui-panel-row-layout">
@@ -28,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<i class="vc-composer-icon vc-c-icon-<?php echo esc_attr( $layout['icon_class'] ); ?>"></i>
 							</a>
 						<?php endforeach ?>
-			
+
 					</div>
 					<div class="vc_col-sm-12 vc_column">
 						<div class="wpb-param-heading">
@@ -38,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="edit_form_line">
 							<input name="padding" class="wpb-textinput vc_row_layout" type="text" value="" id="vc_row-layout">
 							<span class="vc_general vc_ui-button vc_ui-button-size-sm vc_ui-button-action vc_ui-button-shape-rounded vc_ui-button-update-layout" data-vc-ui-element="button-update-layout"><?php esc_html_e( 'Update', 'js_composer' ); ?></span>
-							
+
 						</div>
 					</div>
 				</div>

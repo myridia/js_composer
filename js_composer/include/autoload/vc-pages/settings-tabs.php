@@ -31,10 +31,10 @@ function vc_page_settings_build() {
 
 		if ( $has_access ) {
 			$page = add_submenu_page( VC_PAGE_MAIN_SLUG, $title, $title, 'manage_options', $slug, 'vc_page_settings_render' );
-			add_action( 'load-' . $page, array(
+			add_action( 'load-' . $page, [
 				vc_settings(),
 				'adminLoad',
-			) );
+			] );
 		}
 	}
 	do_action( 'vc_page_settings_build' );

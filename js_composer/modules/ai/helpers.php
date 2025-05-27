@@ -17,7 +17,6 @@ if ( ! function_exists( 'wpb_add_ai_to_text_field' ) ) {
 	function wpb_add_ai_icon_to_text_field( $type, $field_id ) {
 		if ( ! vc_user_access()->part( 'text_ai' )->can()->get() ) {
 			return;
-
 		}
 		wpb_get_ai_icon_template( $type, $field_id );
 	}
@@ -48,7 +47,7 @@ if ( ! function_exists( 'wpb_get_ai_icon_template' ) ) {
 	 * @param bool $is_include
 	 * @since 7.4
 	 *
-	 * @return mixed
+	 * @return string|void
 	 */
 	function wpb_get_ai_icon_template( $type, $field_id, $is_include = true ) {
 		$template = apply_filters( 'wpb_get_ai_icon_template', 'editors/partials/icon-ai.tpl.php', $type, $field_id );

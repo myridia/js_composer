@@ -1,6 +1,6 @@
-(function () {
+( function () {
 	'use strict';
-	window.InlineShortcodeView_vc_section = window.InlineShortcodeViewContainer.extend( {
+	window.InlineShortcodeView_vc_section = window.InlineShortcodeViewContainer.extend({
 		controls_selector: '#vc_controls-template-container',
 		initialize: function () {
 			_.bindAll( this, 'checkSectionWidth' );
@@ -10,7 +10,7 @@
 		},
 		checkSectionWidth: function ( e, data ) {
 			if ( data.el.hasClass( 'vc_section' ) && data.el.attr( 'data-vc-stretch-content' ) ) {
-				data.el.siblings( '.vc_controls' ).find( '.vc_controls-out-tl' ).css( { left: data.offset - 17 } );
+				data.el.siblings( '.vc_controls' ).find( '.vc_controls-out-tl' ).css({ left: data.offset - 17 });
 			}
 		},
 		render: function () {
@@ -22,5 +22,5 @@
 
 			return window.InlineShortcodeView_vc_section.__super__.render.call( this );
 		}
-	} );
+	});
 })();

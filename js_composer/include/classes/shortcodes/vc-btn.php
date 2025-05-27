@@ -1,42 +1,44 @@
 <?php
+/**
+ * Class that handles specific [vc_btn] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_btn.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * WPBakery Page Builder shortcodes
- *
- * @package WPBakeryPageBuilder
- *
- */
-
-/**
  * Class WPBakeryShortCode_Vc_Btn
+ *
  * @since 4.5
  */
 class WPBakeryShortCode_Vc_Btn extends WPBakeryShortCode {
 	/**
-	 * @param $atts
+	 * Convert old attributes to new attributes.
+	 *
+	 * @param array $atts
 	 * @return mixed
 	 */
 	public static function convertAttributesToButton3( $atts ) {
-		// size btn1 to size btn2
-		$btn1_sizes = array(
+		// size btn1 to size btn2.
+		$btn1_sizes = [
 			'wpb_regularsize',
 			'btn-large',
 			'btn-small',
 			'btn-mini',
-		);
+		];
 		if ( isset( $atts['size'] ) && in_array( $atts['size'], $btn1_sizes, true ) ) {
-			$atts['size'] = str_replace( $btn1_sizes, array(
+			$atts['size'] = str_replace( $btn1_sizes, [
 				'md',
 				'lg',
 				'sm',
 				'xs',
-			), $atts['size'] );
+			], $atts['size'] );
 		}
 
-		// Convert Btn1 href+target attributes to Btn2 `link` attribute
+		// Convert Btn1 href+target attributes to Btn2 `link` attribute.
 		if ( ! isset( $atts['link'] ) && isset( $atts['href'] ) && strlen( $atts['href'] ) > 0 ) {
 			$link = $atts['href'];
 			$target = isset( $atts['target'] ) ? $atts['target'] : '';
@@ -45,19 +47,19 @@ class WPBakeryShortCode_Vc_Btn extends WPBakeryShortCode {
 		}
 
 		if ( ( ! isset( $atts['add_icon'] ) || 'true' !== $atts['add_icon'] ) && isset( $atts['icon'] ) && strlen( $atts['icon'] ) > 0 && 'none' !== $atts['icon'] ) {
-			// old icon from btn1 is set, let's convert it to new btn
+			// old icon from btn1 is set, let's convert it to new btn.
 			$atts['add_icon'] = 'true';
 			$atts['icon_type'] = 'pixelicons';
 			$atts['icon_align'] = 'right';
 			$atts['icon_pixelicons'] = 'vc_pixel_icon vc_pixel_icon-' . str_replace( 'wpb_', '', $atts['icon'] );
 		}
-		$haystack = array(
+		$haystack = [
 			'rounded',
 			'square',
 			'round',
 			'outlined',
 			'square_outlined',
-		);
+		];
 		if ( isset( $atts['style'] ) && in_array( $atts['style'], $haystack, true ) ) {
 			switch ( $atts['style'] ) {
 				case 'rounded':
@@ -86,7 +88,9 @@ class WPBakeryShortCode_Vc_Btn extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $title
+	 * Title html output.
+	 *
+	 * @param string $title
 	 *
 	 * @return string
 	 * @since 4.5

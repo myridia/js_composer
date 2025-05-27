@@ -1,4 +1,10 @@
 <?php
+/**
+ * Basic class for vc_grid_item param.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/#vc_map()-ParametersofparamsArray
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,14 +13,59 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Vc_Grid_Item to build grid item.
  */
 class Vc_Grid_Item {
+	/**
+	 * Template for grid item.
+	 *
+	 * @var string
+	 */
 	protected $template = '';
+	/**
+	 * Html template for grid item.
+	 *
+	 * @var bool
+	 */
 	protected $html_template = false;
+	/**
+	 * Post object.
+	 *
+	 * @var bool|WP_Post
+	 */
 	protected $post = false;
-	protected $grid_atts = array();
+	/**
+	 * Grid item attributes.
+	 *
+	 * @var array
+	 */
+	protected $grid_atts = [];
+	/**
+	 * Is end of grid.
+	 *
+	 * @var bool
+	 */
 	protected $is_end = false;
+	/**
+	 * Shortcodes for grid item.
+	 *
+	 * @var bool
+	 */
 	protected $shortcodes = false;
+	/**
+	 * Found variables in template.
+	 *
+	 * @var bool
+	 */
 	protected $found_variables = false;
+	/**
+	 * Predefined templates.
+	 *
+	 * @var bool
+	 */
 	protected static $predefined_templates = false;
+	/**
+	 * Template id.
+	 *
+	 * @var bool|int
+	 */
 	protected $template_id = false;
 
 	/**
@@ -27,26 +78,26 @@ class Vc_Grid_Item {
 			$this->shortcodes = include vc_path_dir( 'PARAMS_DIR', 'vc_grid_item/shortcodes.php' );
 			$this->shortcodes = apply_filters( 'vc_grid_item_shortcodes', $this->shortcodes );
 		}
-		add_filter( 'vc_shortcode_set_template_vc_icon', array(
+		add_filter( 'vc_shortcode_set_template_vc_icon', [
 			$this,
 			'addVcIconShortcodesTemplates',
-		) );
-		add_filter( 'vc_shortcode_set_template_vc_button2', array(
+		] );
+		add_filter( 'vc_shortcode_set_template_vc_button2', [
 			$this,
 			'addVcButton2ShortcodesTemplates',
-		) );
-		add_filter( 'vc_shortcode_set_template_vc_single_image', array(
+		] );
+		add_filter( 'vc_shortcode_set_template_vc_single_image', [
 			$this,
 			'addVcSingleImageShortcodesTemplates',
-		) );
-		add_filter( 'vc_shortcode_set_template_vc_custom_heading', array(
+		] );
+		add_filter( 'vc_shortcode_set_template_vc_custom_heading', [
 			$this,
 			'addVcCustomHeadingShortcodesTemplates',
-		) );
-		add_filter( 'vc_shortcode_set_template_vc_btn', array(
+		] );
+		add_filter( 'vc_shortcode_set_template_vc_btn', [
 			$this,
 			'addVcBtnShortcodesTemplates',
-		) );
+		] );
 
 		return $this->shortcodes;
 	}
@@ -54,7 +105,7 @@ class Vc_Grid_Item {
 	/**
 	 * Used by filter vc_shortcode_set_template_vc_icon to set custom template for vc_icon shortcode.
 	 *
-	 * @param $template
+	 * @param string $template
 	 *
 	 * @return string
 	 */
@@ -72,7 +123,7 @@ class Vc_Grid_Item {
 	/**
 	 * Used by filter vc_shortcode_set_template_vc_button2 to set custom template for vc_button2 shortcode.
 	 *
-	 * @param $template
+	 * @param string $template
 	 *
 	 * @return string
 	 */
@@ -90,7 +141,7 @@ class Vc_Grid_Item {
 	/**
 	 * Used by filter vc_shortcode_set_template_vc_single_image to set custom template for vc_single_image shortcode.
 	 *
-	 * @param $template
+	 * @param string $template
 	 *
 	 * @return string
 	 */
@@ -109,7 +160,7 @@ class Vc_Grid_Item {
 	 * Used by filter vc_shortcode_set_template_vc_custom_heading to set custom template for vc_custom_heading
 	 * shortcode.
 	 *
-	 * @param $template
+	 * @param string $template
 	 *
 	 * @return string
 	 */
@@ -127,7 +178,7 @@ class Vc_Grid_Item {
 	/**
 	 * Used by filter vc_shortcode_set_template_vc_button2 to set custom template for vc_button2 shortcode.
 	 *
-	 * @param $template
+	 * @param string $template
 	 *
 	 * @return string
 	 */
@@ -144,6 +195,7 @@ class Vc_Grid_Item {
 
 	/**
 	 * Map shortcodes for vc_grid_item param type.
+	 *
 	 * @throws \Exception
 	 */
 	public function mapShortcodes() {
@@ -170,7 +222,9 @@ class Vc_Grid_Item {
 	}
 
 	/**
-	 * @param $id - Predefined templates id
+	 * Get predefined template by id.
+	 *
+	 * @param int $id - Predefined templates id.
 	 *
 	 * @return array|bool
 	 */
@@ -186,7 +240,7 @@ class Vc_Grid_Item {
 	/**
 	 * Set template which should grid used when vc_grid_item param value is rendered.
 	 *
-	 * @param $id
+	 * @param int $id
 	 *
 	 * @return bool
 	 * @throws \Exception
@@ -218,8 +272,8 @@ class Vc_Grid_Item {
 	/**
 	 * Setter for template attribute.
 	 *
-	 * @param $template
-	 * @param $template_id
+	 * @param string $template
+	 * @param int $template_id
 	 * @throws \Exception
 	 */
 	public function setTemplate( $template, $template_id ) {
@@ -230,6 +284,7 @@ class Vc_Grid_Item {
 
 	/**
 	 * Getter for template attribute.
+	 *
 	 * @return string
 	 */
 	public function template() {
@@ -238,6 +293,7 @@ class Vc_Grid_Item {
 
 	/**
 	 * Add custom css from shortcodes that were mapped for vc grid item.
+	 *
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -273,15 +329,15 @@ class Vc_Grid_Item {
 	public function getParseTemplate( $template ) {
 		$this->mapShortcodes();
 		WPBMap::addAllMappedShortcodes();
-		$attr = ' width="' . $this->gridAttribute( 'element_width', 12 ) . '"' . ' is_end="' . ( 'true' === $this->isEnd() ? 'true' : '' ) . '"';
+		$attr = ' width="' . $this->gridAttribute( 'element_width', 12 ) . '" is_end="' . ( 'true' === $this->isEnd() ? 'true' : '' ) . '"';
 		$template = preg_replace( '/(\[(\[?)vc_gitem\b)/', '$1' . $attr, $template );
-		$template = str_replace( array(
+		$template = str_replace( [
 			'<p>[vc_gitem',
 			'[/vc_gitem]</p>',
-		), array(
+		], [
 			'[vc_gitem',
 			'[/vc_gitem]',
-		), $template );
+		], $template );
 
 		return do_shortcode( trim( $template ) );
 	}
@@ -290,7 +346,6 @@ class Vc_Grid_Item {
 	 * Set parsed template to html_template attribute.
 	 *
 	 * @param string $template
-	 * @param bool $is_preview
 	 * @throws \Exception
 	 */
 	public function parseTemplate( $template ) {
@@ -299,9 +354,11 @@ class Vc_Grid_Item {
 
 	/**
 	 * Regexp for variables.
+	 *
 	 * @return string
 	 */
 	public function templateVariablesRegex() {
+        // phpcs:ignore:Generic.Strings.UnnecessaryStringConcat.Found
 		return '/\{\{' . '\{?' . '\s*' . '([^\}\:]+)(\:([^\}]+))?' . '\s*' . '\}\}' . '\}?/';
 	}
 
@@ -326,8 +383,8 @@ class Vc_Grid_Item {
 	 * @return mixed
 	 */
 	public function renderItem( WP_Post $post ) {
-		$pattern = array();
-		$replacement = array();
+		$pattern = [];
+		$replacement = [];
 		$this->addAttributesFilters();
 		foreach ( $this->getTemplateVariables() as $var ) {
 			$pattern[] = '/' . preg_quote( $var[0], '/' ) . '/';
@@ -347,7 +404,7 @@ class Vc_Grid_Item {
 	/**
 	 * Getter for Grid shortcode attributes.
 	 *
-	 * @param $grid_atts
+	 * @param array $grid_atts
 	 */
 	public function setGridAttributes( $grid_atts ) {
 		$this->grid_atts = $grid_atts;
@@ -356,20 +413,20 @@ class Vc_Grid_Item {
 	/**
 	 * Setter for Grid shortcode attributes.
 	 *
-	 * @param $name
-	 * @param string $default
+	 * @param string $name
+	 * @param string $initial
 	 *
 	 * @return string
 	 */
-	public function gridAttribute( $name, $default = '' ) {
-		return isset( $this->grid_atts[ $name ] ) ? $this->grid_atts[ $name ] : $default;
+	public function gridAttribute( $name, $initial = '' ) {
+		return isset( $this->grid_atts[ $name ] ) ? $this->grid_atts[ $name ] : $initial;
 	}
 
 	/**
 	 * Get attribute value for WP_post object.
 	 *
-	 * @param $name
-	 * @param $post
+	 * @param string $name
+	 * @param WP_Post $post
 	 * @param string $data
 	 *
 	 * @return mixed
@@ -377,10 +434,10 @@ class Vc_Grid_Item {
 	public function attribute( $name, $post, $data = '' ) {
 		$data = html_entity_decode( $data );
 
-		return apply_filters( 'vc_gitem_template_attribute_' . trim( $name ), ( isset( $post->$name ) ? $post->$name : '' ), array(
+		return apply_filters( 'vc_gitem_template_attribute_' . trim( $name ), ( isset( $post->$name ) ? $post->$name : '' ), [
 			'post' => $post,
 			'data' => $data,
-		) );
+		] );
 	}
 
 	/**
@@ -394,6 +451,7 @@ class Vc_Grid_Item {
 
 	/**
 	 * Checks is the end.
+	 *
 	 * @return bool
 	 */
 	public function isEnd() {

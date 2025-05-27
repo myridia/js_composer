@@ -1,8 +1,14 @@
 <?php
+/**
+ * Additional template configuration for [vc_item] shortcode.
+ *
+ * @var array $block_data
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-/** @var array $block_data */
+
 $block = $block_data[0];
 $settings = $block_data[1];
 $link_setting = empty( $settings[0] ) ? '' : $settings[0];

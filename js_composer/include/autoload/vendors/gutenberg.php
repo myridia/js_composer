@@ -27,7 +27,7 @@ function vcv_disable_gutenberg_for_classic_editor( $post ) {
 function vc_gutenberg_add_settings( $settings ) {
 	global $wp_version;
 	if ( function_exists( 'the_gutenberg_project' ) || version_compare( $wp_version, '4.9.8', '>' ) ) {
-		$settings->addField( 'general', esc_html__( 'Disable Gutenberg Editor', 'js_composer' ), 'gutenberg_disable', 'vc_gutenberg_sanitize_disable_callback', 'vc_gutenberg_disable_render_callback', array( 'info' => esc_html__( 'Disable Gutenberg Editor.', 'js_composer' ) ) );
+		$settings->addField( 'general', esc_html__( 'Disable Gutenberg Editor', 'js_composer' ), 'gutenberg_disable', 'vc_gutenberg_sanitize_disable_callback', 'vc_gutenberg_disable_render_callback', [ 'info' => esc_html__( 'Disable Gutenberg Editor.', 'js_composer' ) ] );
 	}
 }
 /**
@@ -67,18 +67,18 @@ function vc_gutenberg_check_disabled( $result, $post_type ) {
 	global $pagenow;
 	if ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) {
 		// we are in single post type editing.
-        // phpcs:ignore:WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['classic-editor'] ) && ! isset( $_GET['classic-editor__forget'] ) ) {
 			return false;
 		}
-        // phpcs:ignore:WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['wpb-backend-editor'] ) ) {
+			return false;
+		}
 		if ( isset( $_GET['classic-editor__forget'] ) ) {
 			return true;
 		}
 		if ( 'wpb_gutenberg_param' === $post_type ) {
 			return true;
 		}
-        // phpcs:ignore:WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['vcv-gutenberg-editor'] ) && ( get_option( 'wpb_js_gutenberg_disable' ) || vc_is_wpb_content() || isset( $_GET['classic-editor'] ) ) ) {
 			return false;
 		}
@@ -128,7 +128,15 @@ function vc_classic_editor_post_states( $state ) {
  */
 function vc_is_wpb_content() {
 	$post = get_post();
-	if ( ! empty( $post ) && isset( $post->post_content ) && wpb_get_post_editor_status( $post->ID ) ) {
+	if ( empty( $post ) ) {
+		return false;
+	}
+
+	if ( wpb_get_post_editor_status( $post->ID ) ) {
+		return true;
+	}
+
+	if ( vc_is_default_content_for_post_type( $post->post_type ) ) {
 		return true;
 	}
 

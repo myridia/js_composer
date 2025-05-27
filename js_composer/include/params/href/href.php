@@ -1,11 +1,21 @@
 <?php
+/**
+ * Param type 'href'
+ *
+ * Use it to create url link button that lets the user insert additional url attributes.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/#vc_map()-ParametersofparamsArray
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * @param $settings
- * @param $value
+ * Get href form field html.
+ *
+ * @param array $settings
+ * @param string $value
  *
  * @return string
  * @since 4.4

@@ -1,33 +1,41 @@
 <?php
+/**
+ * Class that handles specific [vc_cta] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_cta.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * WPBakery Page Builder shortcodes
- *
- * @package WPBakeryPageBuilder
- * @since 4.5
- */
-
-/**
- * @since 4.5
  * Class WPBakeryShortCode_Vc_Cta
+ *
+ * @since 4.5
  */
 class WPBakeryShortCode_Vc_Cta extends WPBakeryShortCode {
-	protected $template_vars = array();
 
 	/**
-	 * @param $atts
-	 * @param $content
+	 * Template variables list.
+	 *
+	 * @var array
+	 */
+	protected $template_vars = [];
+
+	/**
+	 * Build element template variables.
+	 *
+	 * @param array $atts
+	 * @param string $content
 	 * @throws \Exception
 	 */
 	public function buildTemplate( $atts, $content ) {
-		$output = array();
-		$inline_css = array();
+		$output = [];
+		$inline_css = [];
 
-		$main_wrapper_classes = array( 'vc_cta3' );
-		$container_classes = array();
+		$main_wrapper_classes = [ 'vc_cta3' ];
+		$container_classes = [];
 		if ( ! empty( $atts['el_class'] ) ) {
 			$main_wrapper_classes[] = $atts['el_class'];
 		}
@@ -90,8 +98,10 @@ class WPBakeryShortCode_Vc_Cta extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $tag
-	 * @param $atts
+	 * Get element heading.
+	 *
+	 * @param string $tag
+	 * @param array $atts
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -100,15 +110,15 @@ class WPBakeryShortCode_Vc_Cta extends WPBakeryShortCode {
 			if ( isset( $atts[ 'use_custom_fonts_' . $tag ] ) && 'true' === $atts[ 'use_custom_fonts_' . $tag ] ) {
 				$custom_heading = wpbakery()->getShortCode( 'vc_custom_heading' );
 				$data = vc_map_integrate_parse_atts( $this->shortcode, 'vc_custom_heading', $atts, $tag . '_' );
-				$data['font_container'] = implode( '|', array_filter( array(
+				$data['font_container'] = implode( '|', array_filter( [
 					'tag:' . $tag,
 					$data['font_container'],
-				) ) );
-				$data['text'] = $atts[ $tag ]; // provide text to shortcode
+				] ) );
+				$data['text'] = $atts[ $tag ]; // provide text to shortcode.
 
 				return $custom_heading->render( array_filter( $data ) );
 			} else {
-				$inline_css = array();
+				$inline_css = [];
 				$inline_css_string = '';
 				if ( isset( $atts['style'] ) && 'custom' === $atts['style'] ) {
 					if ( ! empty( $atts['custom_text'] ) ) {
@@ -127,7 +137,9 @@ class WPBakeryShortCode_Vc_Cta extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $atts
+	 * Render element shortcode button as independent shortcode.
+	 *
+	 * @param array $atts
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -144,7 +156,9 @@ class WPBakeryShortCode_Vc_Cta extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $atts
+	 * Get element icon output.
+	 *
+	 * @param array $atts
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -165,13 +179,15 @@ class WPBakeryShortCode_Vc_Cta extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $string
+	 * Get template variable list.
+	 *
+	 * @param string $name
 	 * @return mixed|string
 	 */
-	public function getTemplateVariable( $string ) {
-		if ( is_array( $this->template_vars ) && isset( $this->template_vars[ $string ] ) ) {
+	public function getTemplateVariable( $name ) {
+		if ( is_array( $this->template_vars ) && isset( $this->template_vars[ $name ] ) ) {
 
-			return $this->template_vars[ $string ];
+			return $this->template_vars[ $name ];
 		}
 
 		return '';

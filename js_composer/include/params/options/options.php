@@ -1,11 +1,21 @@
 <?php
+/**
+ * Param type 'options'.
+ *
+ * Used to create options form field.
+ *
+ * @see https://kb.wpbakery.com/docs/inner-api/vc_map/#vc_map()-ParametersofparamsArray
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * @param $settings
- * @param $value
+ * Renders the options param form field.
+ *
+ * @param array $settings
+ * @param string $value
  *
  * @return string
  * @since 4.2
@@ -15,6 +25,8 @@ function vc_options_form_field( $settings, $value ) {
 }
 
 /**
+ * Include options templates.
+ *
  * @since 4.2
  */
 function vc_options_include_templates() {

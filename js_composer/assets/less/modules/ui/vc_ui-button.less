@@ -37,6 +37,11 @@
 @vcui-button-action-background: @vc_main_color;
 @vcui-button-action-background-hover: @vc_main_color_hover;
 @vcui-button-message-action-color: darken(desaturate(@vcui-button-action-background, 10%), 5%);
+// State action secondary
+@vcui-button-action-color: #fff;
+@vcui-button-action-secondary-background: @vc_main_color_hover;
+@vcui-button-action-secondary-background-hover: @vc_main_color_secondary;
+@vcui-button-message-action-color: darken(desaturate(@vcui-button-action-background, 10%), 5%);
 // State info
 @vcui-button-info-color: #fff;
 @vcui-button-info-background: @vc_main_color;
@@ -115,6 +120,12 @@
   @text: @vcui-button-action-color;
   @background: @vcui-button-action-background;
   @hover: @vcui-button-action-background-hover;
+  );
+  #vc_ui-button > .make-state(
+  ~'vc_ui-button-action-secondary';
+  @text: @vcui-button-action-color;
+  @background: @vcui-button-action-secondary-background;
+  @hover: @vcui-button-action-secondary-background-hover;
   );
   #vc_ui-button > .make-state(
   ~'vc_ui-button-info';

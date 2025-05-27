@@ -26,25 +26,25 @@ class Vc_Design_Options_Module_Settings {
 
 		add_action( 'vc_settings_set_sections', [ $this, 'add_settings_section' ] );
 
-		add_action( 'update_option_wpb_js_compiled_js_composer_less', array(
+		add_action( 'update_option_wpb_js_compiled_js_composer_less', [
 			$this,
 			'build_custom_color_css',
-		) );
+		] );
 
-		add_action( 'add_option_wpb_js_compiled_js_composer_less', array(
+		add_action( 'add_option_wpb_js_compiled_js_composer_less', [
 			$this,
 			'build_custom_color_css',
-		) );
+		] );
 
-		add_action( 'add_option_wpb_js_use_custom', array(
+		add_action( 'add_option_wpb_js_use_custom', [
 			$this,
 			'build_custom_color_css',
-		) );
+		] );
 
-		add_action( 'update_option_wpb_js_use_custom', array(
+		add_action( 'update_option_wpb_js_use_custom', [
 			$this,
 			'build_custom_color_css',
-		) );
+		] );
 
 		add_action( 'vc_after_init', [ $this, 'restore_default' ] );
 
@@ -82,13 +82,13 @@ class Vc_Design_Options_Module_Settings {
 		} else {
 			$btn_class = 'button button-primary button-large vc_button-settings-less';
 			echo '<div class="' . esc_attr( $class ) . '"><p><strong>' . esc_html( $message_important ) . '</strong>: ' . esc_html( $message ) . '</p><p>';
-			echo '<a ' . implode( ' ', array(
+			echo '<a ' . implode( ' ', [
 				'href="' . esc_url( admin_url( 'admin.php?page=vc-color' ) ) . '"',
 				'class="' . esc_attr( $btn_class ) . '"',
 				'id="vc_less-save-button"',
 				'style="vertical-align: baseline;"',
 					// needed to fix ":active bug".
-			) ) . '>';
+			] ) . '>';
 			echo esc_html__( 'Open Design Options', 'js_composer' ) . '</a>';
 			echo '</p></div>';
 		}
@@ -106,33 +106,33 @@ class Vc_Design_Options_Module_Settings {
 		$submit_button_attributes['data-vc-less-path'] = vc_str_remove_protocol( vc_asset_url( 'less/js_composer.less' ) );
 		$submit_button_attributes['data-vc-less-root'] = vc_str_remove_protocol( vc_asset_url( 'less' ) );
         // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
-		$submit_button_attributes['data-vc-less-variables'] = wp_json_encode( apply_filters( 'vc_settings-less-variables', array(
+		$submit_button_attributes['data-vc-less-variables'] = wp_json_encode( apply_filters( 'vc_settings-less-variables', [
 			// Main accent color.
-			'vc_grey' => array(
+			'vc_grey' => [
 				'key' => 'wpb_js_vc_color',
 				'default' => $this->get_default( 'vc_color' ),
-			),
+			],
 			// Hover color.
-			'vc_grey_hover' => array(
+			'vc_grey_hover' => [
 				'key' => 'wpb_js_vc_color_hover',
 				'default' => $this->get_default( 'vc_color_hover' ),
-			),
+			],
 			'vc_image_slider_link_active' => 'wpb_js_vc_color_hover',
 			// Call to action background color.
 			'vc_call_to_action_bg' => 'wpb_js_vc_color_call_to_action_bg',
 			'vc_call_to_action_2_bg' => 'wpb_js_vc_color_call_to_action_bg',
-			'vc_call_to_action_border' => array(
+			'vc_call_to_action_border' => [
 				'key' => 'wpb_js_vc_color_call_to_action_border',
 				// darken 5%.
 				'default_key' => 'wpb_js_vc_color',
-				'modify_output' => array(
-					array(
-						'plain' => array(
+				'modify_output' => [
+					[
+						'plain' => [
 							'darken({{ value }}, 5%)',
-						),
-					),
-				),
-			),
+						],
+					],
+				],
+			],
 			// Google Maps background color.
 			'vc_google_maps_bg' => 'wpb_js_vc_color_google_maps_bg',
 			// Post slider caption background color.
@@ -146,56 +146,56 @@ class Vc_Design_Options_Module_Settings {
 			// Active tab background color.
 			'vc_tab_bg_active' => 'wpb_js_vc_color_tab_bg_active',
 			// Elements bottom margin.
-			'vc_element_margin_bottom' => array(
+			'vc_element_margin_bottom' => [
 				'key' => 'wpb_js_margin',
 				'default' => $this->get_default( 'margin' ),
-			),
+			],
 			// Grid gutter width.
-			'grid-gutter-width' => array(
+			'grid-gutter-width' => [
 				'key' => 'wpb_js_gutter',
 				'default' => $this->get_default( 'gutter' ),
-				'modify_output' => array(
-					array(
-						'plain' => array(
+				'modify_output' => [
+					[
+						'plain' => [
 							'{{ value }}px',
-						),
-					),
-				),
-			),
-			'screen-sm-min' => array(
+						],
+					],
+				],
+			],
+			'screen-sm-min' => [
 				'key' => 'wpb_js_responsive_max',
 				'default' => $this->get_default( 'responsive_max' ),
-				'modify_output' => array(
-					array(
-						'plain' => array(
+				'modify_output' => [
+					[
+						'plain' => [
 							'{{ value }}px',
-						),
-					),
-				),
-			),
-			'screen-md-min' => array(
+						],
+					],
+				],
+			],
+			'screen-md-min' => [
 				'key' => 'wpb_js_responsive_md',
 				'default' => $this->get_default( 'responsive_md' ),
-				'modify_output' => array(
-					array(
-						'plain' => array(
+				'modify_output' => [
+					[
+						'plain' => [
 							'{{ value }}px',
-						),
-					),
-				),
-			),
-			'screen-lg-min' => array(
+						],
+					],
+				],
+			],
+			'screen-lg-min' => [
 				'key' => 'wpb_js_responsive_lg',
 				'default' => $this->get_default( 'responsive_lg' ),
-				'modify_output' => array(
-					array(
-						'plain' => array(
+				'modify_output' => [
+					[
+						'plain' => [
 							'{{ value }}px',
-						),
-					),
-				),
-			),
-		) ) );
+						],
+					],
+				],
+			],
+		] ) );
 
 		return $submit_button_attributes;
 	}
@@ -207,17 +207,17 @@ class Vc_Design_Options_Module_Settings {
 	 * @return array
 	 */
 	public function get_color_settings() {
-		return array(
-			array( 'vc_color' => array( 'title' => esc_html__( 'Main accent color', 'js_composer' ) ) ),
-			array( 'vc_color_hover' => array( 'title' => esc_html__( 'Hover color', 'js_composer' ) ) ),
-			array( 'vc_color_call_to_action_bg' => array( 'title' => esc_html__( 'Call to action background color', 'js_composer' ) ) ),
-			array( 'vc_color_google_maps_bg' => array( 'title' => esc_html__( 'Google maps background color', 'js_composer' ) ) ),
-			array( 'vc_color_post_slider_caption_bg' => array( 'title' => esc_html__( 'Post slider caption background color', 'js_composer' ) ) ),
-			array( 'vc_color_progress_bar_bg' => array( 'title' => esc_html__( 'Progress bar background color', 'js_composer' ) ) ),
-			array( 'vc_color_separator_border' => array( 'title' => esc_html__( 'Separator border color', 'js_composer' ) ) ),
-			array( 'vc_color_tab_bg' => array( 'title' => esc_html__( 'Tabs navigation background color', 'js_composer' ) ) ),
-			array( 'vc_color_tab_bg_active' => array( 'title' => esc_html__( 'Active tab background color', 'js_composer' ) ) ),
-		);
+		return [
+			[ 'vc_color' => [ 'title' => esc_html__( 'Main accent color', 'js_composer' ) ] ],
+			[ 'vc_color_hover' => [ 'title' => esc_html__( 'Hover color', 'js_composer' ) ] ],
+			[ 'vc_color_call_to_action_bg' => [ 'title' => esc_html__( 'Call to action background color', 'js_composer' ) ] ],
+			[ 'vc_color_google_maps_bg' => [ 'title' => esc_html__( 'Google maps background color', 'js_composer' ) ] ],
+			[ 'vc_color_post_slider_caption_bg' => [ 'title' => esc_html__( 'Post slider caption background color', 'js_composer' ) ] ],
+			[ 'vc_color_progress_bar_bg' => [ 'title' => esc_html__( 'Progress bar background color', 'js_composer' ) ] ],
+			[ 'vc_color_separator_border' => [ 'title' => esc_html__( 'Separator border color', 'js_composer' ) ] ],
+			[ 'vc_color_tab_bg' => [ 'title' => esc_html__( 'Tabs navigation background color', 'js_composer' ) ] ],
+			[ 'vc_color_tab_bg_active' => [ 'title' => esc_html__( 'Active tab background color', 'js_composer' ) ] ],
+		];
 	}
 
 	/**
@@ -227,7 +227,7 @@ class Vc_Design_Options_Module_Settings {
 	 * @return array
 	 */
 	public function get_default_color_settings() {
-		return array(
+		return [
 			'vc_color' => '#f7f7f7',
 			'vc_color_hover' => '#F0F0F0',
 			'margin' => '35px',
@@ -236,7 +236,7 @@ class Vc_Design_Options_Module_Settings {
 			'responsive_md' => '992',
 			'responsive_lg' => '1200',
 			'compiled_js_composer_less' => '',
-		);
+		];
 	}
 
 	/**
@@ -315,87 +315,89 @@ class Vc_Design_Options_Module_Settings {
 		$settings->addSection( $tab );
 
 		// Use custom checkbox.
-		$settings->addField( $tab, esc_html__( 'Use custom design options', 'js_composer' ), 'use_custom', array(
+		$settings->addField( $tab, esc_html__( 'Use custom design options', 'js_composer' ), 'use_custom', [
 			$this,
 			'sanitize_use_custom_callback',
-		), array(
+		], [
 			$this,
 			'use_custom_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Enable the use of custom design options (Note: when checked - custom css file will be used).', 'js_composer' ),
-		) );
+		] );
+		$default_colors = $this->get_default_color_settings();
 
 		foreach ( $this->get_color_settings() as $color_set ) {
 			foreach ( $color_set as $key => $data ) {
-				$settings->addField( $tab, $data['title'], $key, array(
+				$settings->addField( $tab, $data['title'], $key, [
 					$this,
 					'sanitize_color_callback',
-				), array(
+				], [
 					$this,
 					'color_callback',
-				), array(
+				], [
 					'id' => $key,
-				) );
+					'default_color' => isset( $default_colors[ $key ] ) ? $default_colors[ $key ] : '',
+				] );
 			}
 		}
 
 		// Margin.
-		$settings->addField( $tab, esc_html__( 'Elements bottom margin', 'js_composer' ), 'margin', array(
+		$settings->addField( $tab, esc_html__( 'Elements bottom margin', 'js_composer' ), 'margin', [
 			$this,
 			'sanitize_margin_callback',
-		), array(
+		], [
 			$this,
 			'margin_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Change default vertical spacing between content elements (Example: 20px).', 'js_composer' ),
-		) );
+		] );
 
 		// Gutter.
-		$settings->addField( $tab, esc_html__( 'Grid gutter width', 'js_composer' ), 'gutter', array(
+		$settings->addField( $tab, esc_html__( 'Grid gutter width', 'js_composer' ), 'gutter', [
 			$this,
 			'sanitize_gutter_callback',
-		), array(
+		], [
 			$this,
 			'gutter_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Change default horizontal spacing between columns, enter new value in pixels.', 'js_composer' ),
-		) );
+		] );
 
 		// Responsive max width.
-		$settings->addField( $tab, esc_html__( 'Mobile breakpoint', 'js_composer' ), 'responsive_max', array(
+		$settings->addField( $tab, esc_html__( 'Mobile breakpoint', 'js_composer' ), 'responsive_max', [
 			$this,
 			'sanitize_responsive_max_callback',
-		), array(
+		], [
 			$this,
 			'responsive_max_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Content elements stack one on top other when the screen size is smaller than entered value. Change it to control when your layout stacks and adopts to a particular viewport or device size.', 'js_composer' ),
-		) );
-		$settings->addField( $tab, esc_html__( 'Desktop breakpoint', 'js_composer' ), 'responsive_md', array(
+		] );
+		$settings->addField( $tab, esc_html__( 'Desktop breakpoint', 'js_composer' ), 'responsive_md', [
 			$this,
 			'sanitize_responsive_md_callback',
-		), array(
+		], [
 			$this,
 			'responsive_md_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Content elements stack one on top other when the screen size is smaller than entered value. Change it to control when your layout stacks and adopts to a particular viewport or device size.', 'js_composer' ),
-		) );
-		$settings->addField( $tab, esc_html__( 'Large Desktop breakpoint', 'js_composer' ), 'responsive_lg', array(
+		] );
+		$settings->addField( $tab, esc_html__( 'Large Desktop breakpoint', 'js_composer' ), 'responsive_lg', [
 			$this,
 			'sanitize_responsive_lg_callback',
-		), array(
+		], [
 			$this,
 			'responsive_lg_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Content elements stack one on top other when the screen size is smaller than entered value. Change it to control when your layout stacks and adopts to a particular viewport or device size.', 'js_composer' ),
-		) );
-		$settings->addField( $tab, false, 'compiled_js_composer_less', array(
+		] );
+		$settings->addField( $tab, false, 'compiled_js_composer_less', [
 			$this,
 			'sanitize_compiled_js_composer_less_callback',
-		), array(
+		], [
 			$this,
 			'compiled_js_composer_less_callback',
-		) );
+		] );
 	}
 
 	/**
@@ -408,7 +410,7 @@ class Vc_Design_Options_Module_Settings {
 		$field = $args['id'];
 		$value = get_option( vc_settings()::$field_prefix . $field );
 		$value = $value ?: $this->get_default( $field );
-		echo '<div class="color-group"><div class="wpb-color-picker"></div><input type="text" name="' . esc_attr( vc_settings()::$field_prefix . $field ) . '" value="' . esc_attr( $value ) . '" class="vc_color-control css-control vc_ui-hidden"></div>';
+		echo '<div class="color-group"><div class="wpb-color-picker"></div><input type="text" name="' . esc_attr( vc_settings()::$field_prefix . $field ) . '" value="' . esc_attr( $value ) . '" data-default-value="' . esc_attr( $args['default_color'] ) . '" class="vc_color-control css-control vc_ui-hidden"></div>';
 	}
 
 	/**
@@ -716,12 +718,12 @@ class Vc_Design_Options_Module_Settings {
 	 * @since 7.8
 	 */
 	public function load_module_settings_assets() {
-		wp_enqueue_style( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/themes/classic.min.css' ), array(), WPB_VC_VERSION );
-		wp_enqueue_script( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/pickr.es5.min.js' ), array(), WPB_VC_VERSION, true );
+		wp_enqueue_style( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/themes/classic.min.css' ), [], WPB_VC_VERSION );
+		wp_enqueue_script( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/pickr.es5.min.js' ), [], WPB_VC_VERSION, true );
 
 		add_filter( 'vc_settings-tab-submit-button-attributes-color', [ $this, 'page_settings_tab_color_submit_attributes' ] );
-		wp_enqueue_script( 'vc_less_js', vc_asset_url( 'lib/vendor/node_modules/less/dist/less.min.js' ), array(), WPB_VC_VERSION, true );
-		wp_enqueue_script( 'wpb_design_options_module', vc_asset_url( '../modules/design-options/assets/dist/module.min.js' ), array(), WPB_VC_VERSION, true );
+		wp_enqueue_script( 'vc_less_js', vc_asset_url( 'lib/vendor/node_modules/less/dist/less.min.js' ), [], WPB_VC_VERSION, true );
+		wp_enqueue_script( 'wpb_design_options_module', vc_asset_url( '../modules/design-options/assets/dist/module.min.js' ), [], WPB_VC_VERSION, true );
 		wp_enqueue_style( 'wpb_design_options_module', vc_asset_url( '../modules/design-options/assets/dist/module.min.css' ), false, WPB_VC_VERSION );
 	}
 }

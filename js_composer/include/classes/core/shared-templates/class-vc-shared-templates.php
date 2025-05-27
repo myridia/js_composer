@@ -1,141 +1,160 @@
 <?php
+/**
+ * Manages shared templates for WPBakery Page Builder.
+ *
+ * This class handles the initialization, rendering, downloading, and deletion of shared templates.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-require_once dirname( __FILE__ ) . '/importer/class-vc-wp-import.php';
-require_once dirname( __FILE__ ) . '/importer/class-vc-wxr-parser-plugin.php';
+require_once __DIR__ . '/importer/class-vc-wp-import.php';
+require_once __DIR__ . '/importer/class-vc-wxr-parser-plugin.php';
 
 /**
  * Class Vc_Shared_Templates
  */
 class Vc_Shared_Templates {
 	/**
+	 * Initialization checker.
+	 *
 	 * @var bool
 	 */
 	protected $initialized = false;
 
 	/**
+	 * Download link url.
+	 *
 	 * @var string
 	 */
 	protected $download_link_url = 'https://support.wpbakery.com/templates/download-link';
 
+	/**
+	 * Initialize shared templates
+	 */
 	public function init() {
 		if ( $this->initialized ) {
 			return;
 		}
 		$this->initialized = true;
 
-		add_filter( 'vc_templates_render_category', array(
+		add_filter( 'vc_templates_render_category', [
 			$this,
 			'renderTemplateBlock',
-		), 10 );
+		], 10 );
 
-		add_filter( 'vc_templates_render_frontend_template', array(
+		add_filter( 'vc_templates_render_frontend_template', [
 			$this,
 			'renderFrontendTemplate',
-		), 10, 2 );
+		], 10, 2 );
 
-		add_filter( 'vc_templates_render_backend_template', array(
+		add_filter( 'vc_templates_render_backend_template', [
 			$this,
 			'renderBackendTemplate',
-		), 10, 2 );
-		add_filter( 'vc_templates_render_backend_template_preview', array(
+		], 10, 2 );
+		add_filter( 'vc_templates_render_backend_template_preview', [
 			$this,
 			'renderBackendTemplate',
-		), 10, 2 );
-		add_action( 'vc_templates_delete_templates', array(
+		], 10, 2 );
+		add_action( 'vc_templates_delete_templates', [
 			$this,
 			'delete',
-		), 10, 2 );
-		add_filter( 'wp_ajax_vc_shared_templates_download', array(
+		], 10, 2 );
+		add_filter( 'wp_ajax_vc_shared_templates_download', [
 			$this,
 			'ajaxDownloadTemplate',
-		) );
-		add_filter( 'vc_get_all_templates', array(
+		] );
+		add_filter( 'vc_get_all_templates', [
 			$this,
 			'addTemplatesTab',
-		) );
+		] );
 
 		$this->registerPostType();
 	}
 
 	/**
-	 * @param $templateId
-	 * @param $templateType
+	 * Render template on a backend.
+	 *
+	 * @param int $templateId
+	 * @param string $templateType
 	 * @return string
 	 */
 	public function renderBackendTemplate( $templateId, $templateType ) {
 		if ( 'shared_templates' === $templateType ) {
-			$templates = get_posts( array(
+			$templates = get_posts( [
 				'post_type' => 'vc4_templates',
 				'include' => intval( $templateId ),
 				'numberposts' => 1,
-			) );
+			] );
 			if ( ! empty( $templates ) ) {
 				$template = $templates[0];
 
 				return $template->post_content;
 			}
-			wp_send_json_error( array(
+			wp_send_json_error( [
 				'code' => 'Wrong ID or no Template found',
-			) );
+			] );
 		}
 
 		return $templateId;
 	}
 
 	/**
-	 * @param $templateId
-	 * @param $templateType
+	 * Render template on a frontend.
+	 *
+	 * @param int $templateId
+	 * @param string $templateType
 	 * @return mixed
 	 */
 	public function renderFrontendTemplate( $templateId, $templateType ) {
 		if ( 'shared_templates' === $templateType ) {
-			$templates = get_posts( array(
+			$templates = get_posts( [
 				'post_type' => 'vc4_templates',
 				'include' => intval( $templateId ),
 				'numberposts' => 1,
-			) );
+			] );
 			if ( ! empty( $templates ) ) {
 				$template = $templates[0];
 
 				vc_frontend_editor()->setTemplateContent( $template->post_content );
 				vc_frontend_editor()->enqueueRequired();
-				vc_include_template( 'editors/frontend_template.tpl.php', array(
+				vc_include_template( 'editors/frontend_template.tpl.php', [
 					'editor' => vc_frontend_editor(),
-				) );
+				] );
 				die();
 			}
-			wp_send_json_error( array(
+			wp_send_json_error( [
 				'code' => 'Wrong ID or no Template found #3',
-			) );
+			] );
 		}
 
 		return $templateId;
 	}
 
 	/**
-	 * @param $templateId
-	 * @param $templateType
+	 * Delete template.
+	 *
+	 * @param int $templateId
+	 * @param string $templateType
 	 * @return mixed
 	 */
 	public function delete( $templateId, $templateType ) {
 		if ( 'shared_templates' === $templateType ) {
-			$templates = get_posts( array(
+			$templates = get_posts( [
 				'post_type' => 'vc4_templates',
 				'include' => intval( $templateId ),
 				'numberposts' => 1,
-			) );
+			] );
 			if ( ! empty( $templates ) ) {
 				$template = $templates[0];
 				if ( wp_delete_post( $template->ID ) ) {
 					wp_send_json_success();
 				}
 			}
-			wp_send_json_error( array(
+			wp_send_json_error( [
 				'code' => 'Wrong ID or no Template found #2',
-			) );
+			] );
 		}
 
 		return $templateId;
@@ -145,7 +164,7 @@ class Vc_Shared_Templates {
 	 * Post type from templates registration in WordPress
 	 */
 	private function registerPostType() {
-		register_post_type( 'vc4_templates', array(
+		register_post_type( 'vc4_templates', [
 			'label' => 'Vc Templates',
 			'public' => false,
 			'publicly_queryable' => false,
@@ -155,39 +174,39 @@ class Vc_Shared_Templates {
 			'menu_position' => 10,
 			'menu_icon' => 'dashicons-admin-page',
 			'hierarchical' => false,
-			'taxonomies' => array(),
+			'taxonomies' => [],
 			'has_archive' => false,
 			'rewrite' => false,
 			'query_var' => false,
 			'show_in_nav_menus' => false,
-		) );
+		] );
 	}
 
 	/**
 	 * Ajax request processing from templates panel
 	 */
 	public function ajaxDownloadTemplate() {
-		/** @var Vc_Current_User_Access $access */
-		$access = vc_user_access()->checkAdminNonce()->validateDie( wp_json_encode( array(
+		// Vc_Current_User_Access $access.
+		$access = vc_user_access()->checkAdminNonce()->validateDie( wp_json_encode( [
 			'success' => false,
 			'message' => 'access denied',
-		) ) )->part( 'templates' )->checkStateAny( true, null )->validateDie( wp_json_encode( array(
+		] ) )->part( 'templates' )->checkStateAny( true, null )->validateDie( wp_json_encode( [
 			'success' => false,
 			'message' => 'part access denied',
-		) ) )->check( array(
+		] ) )->check( [
 			vc_license(),
 			'isActivated',
-		) );
-		$access->validateDie( wp_json_encode( array(
+		] );
+		$access->validateDie( wp_json_encode( [
 			'success' => false,
 			'message' => 'license is not activated',
-		) ) );
+		] ) );
 
 		$templateId = vc_request_param( 'id' );
 		$requestUrl = $this->getTemplateDownloadLink( $templateId );
 		$status = false;
 		$file = $this->downloadTemplate( $requestUrl );
-		$data = array();
+		$data = [];
 		if ( is_string( $file ) && ! empty( $file ) ) {
 			new Vc_WXR_Parser_Plugin();
 			$importer = new Vc_WP_Import();
@@ -209,12 +228,14 @@ class Vc_Shared_Templates {
 	}
 
 	/**
-	 * @param $requestUrl
+	 * Download template from remote server.
+	 *
+	 * @param string $requestUrl
 	 *
 	 * @return bool|string
 	 */
 	private function downloadTemplate( $requestUrl ) {
-		// FIX SSL SNI
+		// FIX SSL SNI.
 		$filter_add = true;
 		if ( function_exists( 'curl_version' ) ) {
 			$version = curl_version();
@@ -225,9 +246,9 @@ class Vc_Shared_Templates {
 		if ( $filter_add ) {
 			add_filter( 'https_ssl_verify', '__return_false' );
 		}
-		$downloadUrlRequest = wp_remote_get( $requestUrl, array(
+		$downloadUrlRequest = wp_remote_get( $requestUrl, [
 			'timeout' => 30,
-		) );
+		] );
 
 		if ( $filter_add ) {
 			remove_filter( 'https_ssl_verify', '__return_false' );
@@ -240,7 +261,9 @@ class Vc_Shared_Templates {
 	}
 
 	/**
-	 * @param $request
+	 * Parse request response.
+	 *
+	 * @param array $request
 	 *
 	 * @return bool|string|array
 	 */
@@ -255,7 +278,7 @@ class Vc_Shared_Templates {
 
 			return $downloadedTemplateFile;
 		} elseif ( isset( $body['error'] ) ) {
-			//new flow for error messages
+			// new flow for error messages.
 			if ( ! empty( [ 'errorHtml' ] ) ) {
 				return [
 					'code' => 1,
@@ -263,17 +286,19 @@ class Vc_Shared_Templates {
 				];
 			}
 
-			return array(
+			return [
 				'code' => 1,
 				'message' => $body['error'],
-			);
+			];
 		}
 
 		return false;
 	}
 
 	/**
-	 * @param $data
+	 * Add templates tab.
+	 *
+	 * @param array $data
 	 *
 	 * @return array
 	 */
@@ -281,12 +306,12 @@ class Vc_Shared_Templates {
 		if ( vc_user_access()->part( 'templates' )->checkStateAny( true, null, 'add' )->get() ) {
 			$templates = $this->getTemplates();
 			if ( ! empty( $templates ) || vc_user_access()->part( 'templates' )->checkStateAny( true, null )->get() ) {
-				$newCategory = array(
+				$newCategory = [
 					'category' => 'shared_templates',
 					'category_name' => esc_html__( 'Template library', 'js_composer' ),
 					'category_weight' => 10,
 					'templates' => $this->getTemplates(),
-				);
+				];
 				$data[] = $newCategory;
 			}
 		}
@@ -295,7 +320,9 @@ class Vc_Shared_Templates {
 	}
 
 	/**
-	 * @param $category
+	 * Render template block.
+	 *
+	 * @param array $category
 	 *
 	 * @return mixed
 	 */
@@ -308,36 +335,39 @@ class Vc_Shared_Templates {
 	}
 
 	/**
+	 * Get templates block output.
+	 *
 	 * @return string
 	 */
 	private function getTemplateBlockTemplate() {
 		ob_start();
-		vc_include_template( 'editors/popups/shared-templates/category.tpl.php', array(
+		vc_include_template( 'editors/popups/shared-templates/category.tpl.php', [
 			'controller' => $this,
 			'templates' => $this->getTemplates(),
-		) );
+		] );
 
 		return ob_get_clean();
 	}
 
 	/**
+	 * Get templates.
+	 *
 	 * @return array
 	 */
 	public function getTemplates() {
 		$posts = get_posts( 'post_type=vc4_templates&numberposts=-1' );
-		$templates = array();
+		$templates = [];
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
-				/** @var WP_Post $post */
 				$id = get_post_meta( $post->ID, '_vc4_templates-id', true );
-				$template = array();
+				$template = [];
 				$template['title'] = $post->post_title;
 				$template['version'] = get_post_meta( $post->ID, '_vc4_templates-version', true );
 				$template['id'] = $id;
 				$template['post_id'] = $post->ID;
-				$template['name'] = $post->post_title; // For Settings
-				$template['type'] = 'shared_templates'; // For Settings
-				$template['unique_id'] = $id; // For Settings
+				$template['name'] = $post->post_title; // For Settings.
+				$template['type'] = 'shared_templates'; // For Settings.
+				$template['unique_id'] = $id; // For Settings.
 				$templates[] = $template;
 			}
 		}
@@ -349,7 +379,7 @@ class Vc_Shared_Templates {
 	 * Create url for request to download
 	 * It requires a license key, product and version
 	 *
-	 * @param $id
+	 * @param int $id
 	 *
 	 * @return string
 	 */

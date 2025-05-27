@@ -1,4 +1,10 @@
 <?php
+/**
+ * Grid item editor template.
+ *
+ * @var WP_Post $post
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -20,12 +26,14 @@ $custom_tag = 'script';
 	value="<?php esc_html_e( 'Crunching...', 'js_composer' ); ?>"/>
 <input type="hidden" name="vc_grid_item_editor" value="true"/>
 <<?php echo esc_attr( $custom_tag ); ?>>
-	window.vc_post_id = <?php echo get_the_ID(); ?>;
+	window.vc_post_id = <?php echo esc_attr( get_the_ID() ); ?>;
 	<?php
+
+
 	$vc_gitem_template = vc_request_param( 'vc_gitem_template' );
 	$template = Vc_Grid_Item::predefinedTemplate( $vc_gitem_template );
 	if ( isset( $vc_gitem_template ) && is_string( $vc_gitem_template ) && strlen( $vc_gitem_template ) && $template ) {
-		echo "var vcDefaultGridItemContent = '" . $template['template'] . "';";
+		echo "var vcDefaultGridItemContent = '" . $template['template'] . "';"; //phpcs:ignore:WordPress.Security.EscapeOutput.OutputNotEscaped
 	} else {
 		?>
 	/**

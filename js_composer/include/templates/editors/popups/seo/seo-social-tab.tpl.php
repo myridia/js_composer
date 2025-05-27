@@ -1,13 +1,16 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
 /**
+ * Seo social tab template.
+ *
  * @var array $seo_settings
  * @var WP_Post | null $post
  * @var int $post_id
  * @var Vc_Post_Seo $vc_post_seo
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 ?>
 
 <div id="vc_ui-seo-social">
@@ -91,7 +94,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 					?>
 					<textarea name="<?php echo esc_attr( $description_name ); ?>" id="<?php echo esc_attr( $description_id ); ?>" class="wpb-textinput vc_social-description-field" maxlength="255"><?php echo esc_html( $value ); ?></textarea>
-					<div class="wpb-social-attr-description"><span class="vc_social-description-counter"><?php echo esc_html( $count ) ?></span>/255</div>
+					<div class="wpb-social-attr-description"><span class="vc_social-description-counter"><?php echo esc_html( $count ); ?></span>/255</div>
 				</div>
 			</div>
 		</div>

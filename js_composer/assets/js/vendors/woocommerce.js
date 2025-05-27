@@ -1,13 +1,13 @@
 if ( !window.ajaxurl ) {
 	window.ajaxurl = window.location.href;
 }
-(function ( $ ) {
+( function () {
 	'use strict';
 
 	var vcWoocommerceProductAttributeFilterDependencyCallback;
 
 	vcWoocommerceProductAttributeFilterDependencyCallback = function () {
-		(function ( $, that ) {
+		( function ( $, that ) {
 			var $filterDropdown, $empty;
 
 			$filterDropdown = $( '[data-vc-shortcode-param-name="filter"]', that.$content );
@@ -21,7 +21,7 @@ if ( !window.ajaxurl ) {
 				$( '.vc_checkbox-label', $filterDropdown ).remove();
 				$filterDropdown.removeClass( 'vc_dependent-hidden' );
 
-				$.ajax( {
+				$.ajax({
 					type: 'POST',
 					dataType: 'json',
 					url: window.ajaxurl,
@@ -30,16 +30,16 @@ if ( !window.ajaxurl ) {
 						attribute: this.value,
 						_vcnonce: window.vcAdminNonce
 					}
-				} ).done( function ( data ) {
+				}).done( function ( data ) {
 					if ( 0 < data.length ) {
 						$( '.edit_form_line', $filterDropdown ).prepend( $( data ) );
 					} else {
 						$( '.edit_form_line', $filterDropdown ).prepend( $( '<div class="vc_checkbox-label"><span>No values found</span></div>' ) );
 					}
-				} );
-			} );
-		}( window.jQuery, this ));
+				});
+			});
+		}( window.jQuery, this ) );
 	};
 
 	window.vcWoocommerceProductAttributeFilterDependencyCallback = vcWoocommerceProductAttributeFilterDependencyCallback;
-})( window.jQuery );
+})();

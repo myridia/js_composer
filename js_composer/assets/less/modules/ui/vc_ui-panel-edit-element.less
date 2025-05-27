@@ -13,6 +13,80 @@
         display: flex;
       }
     }
+
+    .wpb_form-link-container {
+      margin: 5px 0 0;
+    }
+
+    .wpb_form-link-container .wpb_form-link {
+      display: inline-block;
+      font-size: 0; // reset font-size to remove space between inline-block elements (prefix and slug in post url)
+    }
+
+    .wpb_form-link,
+    .wpb_form-description {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    a.wpb_form-link {
+      display: inline-flex;
+      color: #0772CE;
+      text-decoration: none;
+      &:hover {
+        color: #00447F;
+      }
+    }
+
+    .wpb-post-url--prefix,
+    .wpb-post-url--slug {
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    .wpb_form-description {
+      color: #C9C9C9;
+    }
+  }
+
+  .wpb-code-editor-tag {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18.62px;
+    color: #C9C9C9
+  }
+  pre.custom_code {
+    margin: 5px 0;
+  }
+}
+
+#vc_toggle-add-new-category {
+  margin-top: 15px;
+  color: #0772CE;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    color: #00447F;
+  }
+}
+
+#vc_add-new-category {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+
+  #vc_new-category {
+    flex: 1 1 auto;
+  }
+
+  #vc_new-category-parent {
+    flex: 1 1 auto;
+  }
+
+  #vc_add-new-category-btn {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    flex: 0 0 75px;
   }
 }
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_twitter] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_twitter.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

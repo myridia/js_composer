@@ -1,7 +1,7 @@
-(function () {
+( function () {
 	'use strict';
 
-	window.InlineShortcodeView_vc_tta_tour = window.InlineShortcodeView_vc_tta_tabs.extend( {
+	window.InlineShortcodeView_vc_tta_tour = window.InlineShortcodeView_vc_tta_tabs.extend({
 		defaultSectionTitle: window.i18nLocale.section,
 		buildPagination: function () {
 			this.removePagination();
@@ -10,5 +10,5 @@
 				this.$el.find( '.vc_tta-panels-container' ).append( this.getPaginationList() );
 			}
 		}
-	} );
+	});
 })();

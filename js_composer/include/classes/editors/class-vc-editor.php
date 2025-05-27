@@ -1,4 +1,8 @@
 <?php
+/**
+ * Common class for all editors.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -10,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 abstract class Vc_Editor {
 	/**
+	 * Post custom meta.
+	 *
 	 * @since 7.7
 	 * @var array
 	 */

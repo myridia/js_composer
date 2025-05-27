@@ -1,4 +1,8 @@
 <?php
+/**
+ * Automapper tab settings template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

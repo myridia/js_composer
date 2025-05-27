@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_column] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_column.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,29 +13,37 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WPBakery Page Builder shortcodes
  *
  * @package WPBakeryPageBuilder
- *
  */
 class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	/**
+	 * Class for non draggable column.
+	 *
 	 * @var string
 	 */
 	public $nonDraggableClass = 'vc-non-draggable-column';
 
 	/**
-	 * @param $settings
+	 * WPBakeryShortCode_VC_Column constructor.
+	 *
+	 * @param array $settings
 	 */
 	public function __construct( $settings ) {
 		parent::__construct( $settings );
 		$this->shortcodeScripts();
 	}
 
+	/**
+	 * Register shortcode scripts.
+	 */
 	protected function shortcodeScripts() {
-		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/vendor/node_modules/skrollr/dist/skrollr.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
-		wp_register_script( 'vc_youtube_iframe_api_js', 'https://www.youtube.com/iframe_api', array(), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/vendor/node_modules/skrollr/dist/skrollr.min.js' ), [ 'jquery-core' ], WPB_VC_VERSION, true );
+		wp_register_script( 'vc_youtube_iframe_api_js', 'https://www.youtube.com/iframe_api', [], WPB_VC_VERSION, true );
 	}
 
 	/**
-	 * @param $controls
+	 * Attach element controls buttons to shortcode output in editor.
+	 *
+	 * @param mixed $controls
 	 * @param string $extended_css
 	 *
 	 * @return string
@@ -96,15 +110,17 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $param
-	 * @param $value
+	 * Update old and new param names.
+	 *
+	 * @param array $param
+	 * @param string $value
 	 *
 	 * @return string
 	 */
 	public function singleParamHtmlHolder( $param, $value ) {
 		$output = '';
 		// Compatibility fixes.
-		$old_names = array(
+		$old_names = [
 			'yellow_message',
 			'blue_message',
 			'green_message',
@@ -114,8 +130,8 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 			'button_blue',
 			'button_red',
 			'button_orange',
-		);
-		$new_names = array(
+		];
+		$new_names = [
 			'alert-block',
 			'alert-info',
 			'alert-success',
@@ -125,7 +141,7 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 			'btn-primary',
 			'btn-danger',
 			'btn-warning',
-		);
+		];
 		$value = str_ireplace( $old_names, $new_names, $value );
 		$param_name = isset( $param['param_name'] ) ? $param['param_name'] : '';
 		$type = isset( $param['type'] ) ? $param['type'] : '';
@@ -139,7 +155,9 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $atts
+	 * Get admin output.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 *
 	 * @return string
@@ -157,47 +175,47 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 		$column_controls_bottom = $this->getColumnControls( 'add', 'bottom-controls' );
 
 		if ( 'column_14' === $width || '1/4' === $width ) {
-			$width = array( 'vc_col-sm-3' );
+			$width = [ 'vc_col-sm-3' ];
 		} elseif ( 'column_14-14-14-14' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-3',
 				'vc_col-sm-3',
 				'vc_col-sm-3',
 				'vc_col-sm-3',
-			);
+			];
 		} elseif ( 'column_13' === $width || '1/3' === $width ) {
-			$width = array( 'vc_col-sm-4' );
+			$width = [ 'vc_col-sm-4' ];
 		} elseif ( 'column_13-23' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-4',
 				'vc_col-sm-8',
-			);
+			];
 		} elseif ( 'column_13-13-13' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-4',
 				'vc_col-sm-4',
 				'vc_col-sm-4',
-			);
+			];
 		} elseif ( 'column_12' === $width || '1/2' === $width ) {
-			$width = array( 'vc_col-sm-6' );
+			$width = [ 'vc_col-sm-6' ];
 		} elseif ( 'column_12-12' === $width ) {
-			$width = array(
+			$width = [
 				'vc_col-sm-6',
 				'vc_col-sm-6',
-			);
+			];
 		} elseif ( 'column_23' === $width || '2/3' === $width ) {
-			$width = array( 'vc_col-sm-8' );
+			$width = [ 'vc_col-sm-8' ];
 		} elseif ( 'column_34' === $width || '3/4' === $width ) {
-			$width = array( 'vc_col-sm-9' );
+			$width = [ 'vc_col-sm-9' ];
 		} elseif ( 'column_16' === $width || '1/6' === $width ) {
-			$width = array( 'vc_col-sm-2' );
+			$width = [ 'vc_col-sm-2' ];
 		} elseif ( ' column_56' === $width || ' 5/6' === $width ) {
-			$width = array( 'vc_col-sm-10' );
+			$width = [ 'vc_col-sm-10' ];
 		} else {
-			$width = array( '' );
+			$width = [ '' ];
 		}
 		$count = count( $width );
-		for ( $i = 0; $i < $count; $i ++ ) {
+		for ( $i = 0; $i < $count; $i++ ) {
 			$output .= '<div ' . $this->mainHtmlBlockParams( $width, $i ) . '>';
 			$output .= str_replace( '%column_size%', wpb_translateColumnWidthToFractional( $width[ $i ] ), $column_controls );
 			$output .= '<div class="wpb_element_wrapper">';
@@ -209,7 +227,7 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 				foreach ( $this->settings['params'] as $param ) {
 					$param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : '';
 					if ( is_array( $param_value ) ) {
-						// Get first element from the array
+						// Get first element from the array.
 						reset( $param_value );
 						$first_key = key( $param_value );
 						$param_value = $param_value[ $first_key ];
@@ -227,6 +245,8 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Set custom admin block params.
+	 *
 	 * @return string
 	 */
 	public function customAdminBlockParams() {
@@ -234,8 +254,10 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $width
-	 * @param $i
+	 * Get main html block params.
+	 *
+	 * @param string $width
+	 * @param int $i
 	 *
 	 * @return string
 	 * @throws \Exception
@@ -247,8 +269,10 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $width
-	 * @param $i
+	 * Get container html block classes.
+	 *
+	 * @param string $width
+	 * @param int $i
 	 *
 	 * @return string
 	 */
@@ -257,6 +281,8 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Get element output.
+	 *
 	 * @param string $content
 	 *
 	 * @return string
@@ -266,6 +292,8 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Add with attributes to element output.
+	 *
 	 * @return string
 	 */
 	protected function templateWidth() {
@@ -273,6 +301,8 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Build styles.
+	 *
 	 * @param string $font_color
 	 *
 	 * @return string

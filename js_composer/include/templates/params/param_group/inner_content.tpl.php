@@ -1,4 +1,8 @@
 <?php
+/**
+ * Template for element param group inner content.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

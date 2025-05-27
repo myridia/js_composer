@@ -1,36 +1,58 @@
 <?php
+/**
+ * Class that handles specific [vc_row] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_row.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
- * WPBakery WPBakery Page Builder row
+ * WPBakery Page Builder row
  *
  * @package WPBakeryPageBuilder
- *
  */
 class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
-	protected $predefined_atts = array(
+	/**
+	 * Predefined attributes for shortcode.
+	 *
+	 * @var array
+	 */
+	protected $predefined_atts = [
 		'el_class' => '',
-	);
+	];
 
+	/**
+	 * Non draggable class.
+	 *
+	 * @var string
+	 */
 	public $nonDraggableClass = 'vc-non-draggable-row';
 
 	/**
-	 * @param $settings
+	 * Constructor
+	 *
+	 * @param array $settings
 	 */
 	public function __construct( $settings ) {
 		parent::__construct( $settings );
 		$this->shortcodeScripts();
 	}
 
+	/**
+	 * Register shortcode scripts.
+	 */
 	protected function shortcodeScripts() {
-		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/vendor/node_modules/skrollr/dist/skrollr.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
-		wp_register_script( 'vc_youtube_iframe_api_js', 'https://www.youtube.com/iframe_api', array(), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/vendor/node_modules/skrollr/dist/skrollr.min.js' ), [ 'jquery-core' ], WPB_VC_VERSION, true );
+		wp_register_script( 'vc_youtube_iframe_api_js', 'https://www.youtube.com/iframe_api', [], WPB_VC_VERSION, true );
 	}
 
 	/**
-	 * @param $atts
+	 * Get shortcode output.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 * @return mixed|string
 	 */
@@ -41,7 +63,7 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 	}
 
 	/**
-	 * This returs block controls
+	 * This returns block controls.
 	 */
 	public function getLayoutsControl() {
 		global $vc_row_layouts;
@@ -56,7 +78,9 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $controls
+	 * Get column controls.
+	 *
+	 * @param mixed $controls
 	 * @param string $extended_css
 	 * @return string
 	 * @throws \Exception
@@ -64,7 +88,7 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 	public function getColumnControls( $controls, $extended_css = '' ) {
 		$output = '<div class="vc_controls vc_controls-row controls_row vc_clearfix">';
 		$controls_end = '</div>';
-		// Create columns
+		// Create columns.
 		$controls_layout = $this->getLayoutsControl();
 
 		$controls_move = ' <a class="vc_control column_move vc_column-move" href="#" title="' . esc_attr__( 'Drag row to reorder', 'js_composer' ) . '" data-vc-control="move"><i class="vc-composer-icon vc-c-icon-dragndrop"></i></a>';
@@ -122,7 +146,9 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 	}
 
 	/**
-	 * @param $atts
+	 * Load template.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 * @return string
 	 * @throws \Exception
@@ -153,7 +179,7 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 				}
 				$param_value = isset( $atts[ $param['param_name'] ] ) ? $atts[ $param['param_name'] ] : '';
 				if ( is_array( $param_value ) ) {
-					// Get first element from the array
+					// Get first element from the array.
 					reset( $param_value );
 					$first_key = key( $param_value );
 					$param_value = $param_value[ $first_key ];
@@ -169,6 +195,8 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Add admin class to css.
+	 *
 	 * @return string
 	 * @throws \Exception
 	 */
@@ -179,17 +207,21 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 	}
 
 	/**
+	 * Custom admin block params.
+	 *
 	 * @return string
 	 * @deprecated 4.5 - due to it is not used anywhere? 4.5
 	 * @typo Bock - Block
 	 */
 	public function customAdminBockParams() {
-		// this function is depreacted
+		// this function is deprecated.
 
 		return '';
 	}
 
 	/**
+	 * Build additional styles.
+	 *
 	 * @param string $bg_image
 	 * @param string $bg_color
 	 * @param string $bg_image_repeat
@@ -199,10 +231,9 @@ class WPBakeryShortCode_Vc_Row extends WPBakeryShortCode {
 	 *
 	 * @return string
 	 * @deprecated 4.5
-	 *
 	 */
 	public function buildStyle( $bg_image = '', $bg_color = '', $bg_image_repeat = '', $font_color = '', $padding = '', $margin_bottom = '' ) {
-		// this function is deprecated
+		// this function is deprecated.
 
 		$has_image = false;
 		$style = '';

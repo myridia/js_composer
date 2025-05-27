@@ -1,4 +1,8 @@
 <?php
+/**
+ * UI settings dropdown template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

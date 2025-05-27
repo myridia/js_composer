@@ -20,7 +20,7 @@ add_action( 'wp_ajax_vc_media_editor_preview_image', 'vc_media_editor_preview_im
  * @return array
  */
 function vc_get_filters() {
-	return array(
+	return [
 		'antique' => esc_html__( 'Antique', 'js_composer' ),
 		'blackwhite' => esc_html__( 'Black & White', 'js_composer' ),
 		'boost' => esc_html__( 'Boost', 'js_composer' ),
@@ -42,7 +42,7 @@ function vc_get_filters() {
 		'tender' => esc_html__( 'Tender', 'js_composer' ),
 		'vintage' => esc_html__( 'Vintage', 'js_composer' ),
 		'washed' => esc_html__( 'Washed', 'js_composer' ),
-	);
+	];
 }
 
 /**
@@ -66,7 +66,7 @@ function vc_attachment_filter_field( $form_fields, $post ) {
 		$html_options .= '<option value="' . esc_attr( $value ) . '">' . esc_html( $title ) . '</option>';
 	}
 
-	$form_fields['vc-image-filter'] = array(
+	$form_fields['vc-image-filter'] = [
 		'label' => '',
 		'input' => 'html',
 		'html' => '
@@ -78,7 +78,7 @@ function vc_attachment_filter_field( $form_fields, $post ) {
 			</div>',
 		'value' => get_post_meta( $post->ID, 'vc_image_filter', true ),
 		'helps' => '',
-	);
+	];
 
 	return $form_fields;
 }
@@ -101,16 +101,16 @@ function vc_media_editor_add_image() {
 	vc_user_access()->checkAdminNonce()->validateDie()->wpAny( 'upload_files' )->validateDie();
 
 	require_once vc_path_dir( 'HELPERS_DIR', 'class-vc-image-filter.php' );
-	$response = array(
+	$response = [
 		'success' => true,
-		'data' => array(
-			'ids' => array(),
-		),
-	);
+		'data' => [
+			'ids' => [],
+		],
+	];
 
-	$filters = (array) vc_post_param( 'filters', array() );
+	$filters = (array) vc_post_param( 'filters', [] );
 
-	$ids = (array) vc_post_param( 'ids', array() );
+	$ids = (array) vc_post_param( 'ids', [] );
 	if ( ! $ids ) {
 		wp_send_json( $response );
 	}
@@ -121,9 +121,9 @@ function vc_media_editor_add_image() {
 
 	$file_key = 0;
 	$post_id = 0;
-	$post_data = array();
-	$overrides = array( 'action' => $action );
-	$_POST = array( 'action' => $action );
+	$post_data = [];
+	$overrides = [ 'action' => $action ];
+	$_POST = [ 'action' => $action ];
 
 	foreach ( $ids as $key => $attachment_id ) {
 		if ( ! empty( $filters[ $attachment_id ] ) ) {
@@ -180,15 +180,15 @@ function vc_media_editor_add_image() {
 
 		$new_filename = basename( $temp_path, '.' . $extension ) . '-' . $filter_name . '.' . $extension;
 
-		$_FILES = array(
-			array(
+		$_FILES = [
+			[
 				'name' => $new_filename,
 				'type' => $mime_type,
 				'tmp_name' => $temp_path,
 				'error' => UPLOAD_ERR_OK,
 				'size' => filesize( $temp_path ),
-			),
-		);
+			],
+		];
 
 		$new_attachment_id = media_handle_upload( $file_key, $post_id, $post_data, $overrides );
 
@@ -223,12 +223,12 @@ function vc_media_editor_preview_image() {
 
 	require_once vc_path_dir( 'HELPERS_DIR', 'class-vc-image-filter.php' );
 
-	$response = array(
+	$response = [
 		'success' => true,
-		'data' => array(
+		'data' => [
 			'src' => '',
-		),
-	);
+		],
+	];
 
 	$filter_name = vc_post_param( 'filter', '' );
 	$attachment_id = vc_post_param( 'attachment_id', false );

@@ -1,11 +1,14 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
 /**
+ * Frontend editor template.
+ *
  * @var Vc_Frontend_Editor $editor
  * @var bool $wpb_vc_status
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
 global $menu, $submenu, $parent_file, $post_ID, $post, $post_type, $post_type_object, $plugin_page, $title;
 $post_ID = $editor->post_id;
@@ -16,13 +19,13 @@ $post_title = trim( $post->post_title );
 $nonce_action = $nonce_action = 'update-post_' . $editor->post_id;
 $user_ID = isset( $editor->current_user ) && isset( $editor->current_user->ID ) ? (int) $editor->current_user->ID : 0;
 $form_action = 'editpost';
-$menu = array();
+$menu = [];
 $plugin_page = 'js_composer';
 $title = __( 'Frontend Editor', 'js_composer' );
-// we use it in case to repair editor if iframe url has redirect
+// we use it in case to repair editor if iframe url has redirect.
 $editor->setFrontendEditorTransient( $post_ID );
 add_thickbox();
-wp_enqueue_media( array( 'post' => $editor->post_id ) );
+wp_enqueue_media( [ 'post' => $editor->post_id ] );
 require_once $editor->adminFile( 'admin-header.php' );
 // @since 4.8 js logic for user role access manager.
 vc_include_template( 'editors/partials/access-manager-js.tpl.php' );
@@ -38,11 +41,12 @@ $modules = vc_modules_manager()->get_settings();
 		window.wpbGutenbergEditorUrl = '<?php echo esc_js( set_url_scheme( admin_url( 'post-new.php?post_type=wpb_gutenberg_param' ) ) ); ?>';
 		window.vc_modules = <?php echo wp_json_encode( $modules ); ?>;
 	</<?php echo esc_attr( $custom_tag ); ?>>
+	<?php // we use vc_title-saved value to check if we should open settings when clicking to h1 tag that has value saved by us. ?>
 	<input type="hidden" name="vc_post_title" id="vc_title-saved" value="<?php echo esc_attr( $post_title ); ?>"/>
 	<input type="hidden" name="vc_post_id" id="vc_post-id" value="<?php echo esc_attr( $editor->post_id ); ?>"/>
 <?php
 
-// [vc_navbar frontend]
+// [vc_navbar frontend].
 require_once vc_path_dir( 'EDITORS_DIR', 'navbar/class-vc-navbar-frontend.php' );
 $nav_bar = new Vc_Navbar_Frontend( $post );
 $nav_bar->render();
@@ -82,10 +86,11 @@ if ( vc_modules_manager()->is_module_on( 'vc-post-custom-layout' ) ) {
 vc_include_template( 'editors/partials/footer.tpl.php',
 	[
 		'editor' => $editor,
+		'post' => $post,
 	]
 );
 
-// fe controls
+// fe controls.
 vc_include_template( 'editors/partials/frontend_controls.tpl.php' );
 
 // [shortcodes presets data]
@@ -94,8 +99,8 @@ if ( vc_user_access()->part( 'presets' )->can()->get() ) {
 	$vc_vendor_settings_presets = Vc_Settings_Preset::listDefaultVendorSettingsPresets();
 	$vc_all_presets = Vc_Settings_Preset::listAllPresets();
 } else {
-	$vc_vendor_settings_presets = array();
-	$vc_all_presets = array();
+	$vc_vendor_settings_presets = [];
+	$vc_all_presets = [];
 }
 // [/shortcodes presets data]
 
@@ -114,7 +119,7 @@ vc_include_template(
 	window.wpb_js_google_fonts_save_nonce = '<?php echo esc_js( wp_create_nonce( 'wpb_js_google_fonts_save' ) ); ?>';
 	window.wpb_vc_js_status = '<?php echo esc_js( wp_json_encode( $wpb_vc_status ) ); ?>';
 	window.vc_post_id = <?php echo esc_js( $post_ID ); ?>;
-	window.vc_auto_save = <?php echo wp_json_encode( get_option( 'wpb_js_auto_save' ) ) ?>;
+	window.vc_auto_save = <?php echo wp_json_encode( get_option( 'wpb_js_auto_save' ) ); ?>;
 </<?php echo esc_attr( $custom_tag ); ?>>
 
 <?php vc_include_template( 'editors/partials/vc_settings-image-block.tpl.php' ); ?>
@@ -122,18 +127,18 @@ vc_include_template(
 <input type="hidden" id="post_ID" name="post_ID" value="<?php echo esc_attr( $post_ID ); ?>"/>
 	<div style="height: 1px; visibility: hidden; overflow: hidden;">
 		<?php
-		// Disable notice in edit-form-advanced.php
+		// Disable notice in edit-form-advanced.php.
 		$is_IE = false;
-		wp_editor( '', 'vc-hidden-editor', array(
+		wp_editor( '', 'vc-hidden-editor', [
 			'editor_height' => 300,
-			'tinymce' => array(
+			'tinymce' => [
 				'resize' => false,
 				'wp_autoresize_on' => false,
 				'add_unload_trigger' => false,
 				'wp_keep_scroll_position' => ! $is_IE,
-			),
-		) );
-		// Fix: WP 4.0
+			],
+		] );
+		// Fix: WP 4.0.
 		wp_dequeue_script( 'editor-expand' );
 		do_action( 'vc_frontend_editor_render_template' );
 		?>

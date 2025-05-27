@@ -31,13 +31,13 @@ class Vc_Settings_Preset {
 			return null;
 		}
 
-		$args = array(
+		$args = [
 			'post_type' => 'vc_settings_preset',
 			'post_mime_type' => self::constructShortcodeMimeType( $shortcode_name ),
 			'posts_per_page' => - 1,
 			'meta_key' => '_vc_default',
 			'meta_value' => true,
-		);
+		];
 
 		$posts = get_posts( $args );
 
@@ -128,12 +128,12 @@ class Vc_Settings_Preset {
 	 * @return array E.g. array(preset_id => value, preset_id => value, ...)
 	 */
 	public static function listAllPresets() {
-		$list = array();
+		$list = [];
 
-		$args = array(
+		$args = [
 			'post_type' => 'vc_settings_preset',
 			'posts_per_page' => - 1,
-		);
+		];
 
 		// user presets.
 		$posts = get_posts( $args );
@@ -161,14 +161,14 @@ class Vc_Settings_Preset {
 	 * @return array E.g. array(shortcode_name => value, shortcode_name => value, ...)
 	 */
 	public static function listDefaultSettingsPresets() {
-		$list = array();
+		$list = [];
 
-		$args = array(
+		$args = [
 			'post_type' => 'vc_settings_preset',
 			'posts_per_page' => - 1,
 			'meta_key' => '_vc_default',
 			'meta_value' => true,
-		);
+		];
 
 		// user presets.
 		$posts = get_posts( $args );
@@ -196,7 +196,7 @@ class Vc_Settings_Preset {
 	 * @return array E.g. array(shortcode_name => value, shortcode_name => value, ...)
 	 */
 	public static function listDefaultVendorSettingsPresets() {
-		$list = array();
+		$list = [];
 
 		$presets = vc_vendor_preset()->getDefaults();
 		foreach ( $presets as $id => $preset ) {
@@ -219,13 +219,13 @@ class Vc_Settings_Preset {
 	 * @return mixed int|false Post ID
 	 */
 	public static function saveSettingsPreset( $shortcode_name, $title, $content, $is_default = false ) {
-		$post_id = wp_insert_post( array(
+		$post_id = wp_insert_post( [
 			'post_title' => $title,
 			'post_content' => $content,
 			'post_status' => 'publish',
 			'post_type' => 'vc_settings_preset',
 			'post_mime_type' => self::constructShortcodeMimeType( $shortcode_name ),
-		), false );
+		], false );
 
 		if ( $post_id && $is_default ) {
 			self::setAsDefaultSettingsPreset( $post_id, $shortcode_name );
@@ -244,18 +244,18 @@ class Vc_Settings_Preset {
 	 * @return array E.g. array(id1 => title1, id2 => title2, ...)
 	 */
 	public static function listSettingsPresets( $shortcode_name = null ) {
-		$list = array();
+		$list = [];
 
 		if ( ! $shortcode_name ) {
 			return $list;
 		}
 
-		$args = array(
+		$args = [
 			'post_type' => 'vc_settings_preset',
-			'orderby' => array( 'post_date' => 'DESC' ),
+			'orderby' => [ 'post_date' => 'DESC' ],
 			'posts_per_page' => - 1,
 			'post_mime_type' => self::constructShortcodeMimeType( $shortcode_name ),
-		);
+		];
 
 		$posts = get_posts( $args );
 		foreach ( $posts as $post ) {
@@ -275,7 +275,7 @@ class Vc_Settings_Preset {
 	 * @return array E.g. array(id1 => title1, id2 => title2, ...)
 	 */
 	public static function listVendorSettingsPresets( $shortcode_name = null ) {
-		$list = array();
+		$list = [];
 
 		if ( ! $shortcode_name ) {
 			return $list;
@@ -365,14 +365,14 @@ class Vc_Settings_Preset {
 		}
 
 		ob_start();
-		vc_include_template( apply_filters( 'vc_render_settings_preset_popup', 'editors/partials/settings_presets_popup.tpl.php' ), array(
-			'list_presets' => array(
+		vc_include_template( apply_filters( 'vc_render_settings_preset_popup', 'editors/partials/settings_presets_popup.tpl.php' ), [
+			'list_presets' => [
 				$list_presets,
 				$list_vendor_presets,
-			),
+			],
 			'default_id' => $default_id,
 			'shortcode_name' => $shortcode_name,
-		) );
+		] );
 
 		$html = ob_get_clean();
 
@@ -389,20 +389,20 @@ class Vc_Settings_Preset {
 	 */
 	public static function addVcPresetsToShortcodes( $shortcodes ) {
 		if ( vc_user_access()->part( 'presets' )->can()->get() ) {
-			$shortcodesAndPresets = array();
+			$shortcodesAndPresets = [];
 
 			foreach ( $shortcodes as $shortcode ) {
 				$presets = self::listSettingsPresets( $shortcode['base'] );
 				$shortcodesAndPresets[ $shortcode['base'] ] = $shortcode;
 				if ( ! empty( $presets ) ) {
 					foreach ( $presets as $presetId => $preset ) {
-						$shortcodesAndPresets[ $presetId ] = array(
+						$shortcodesAndPresets[ $presetId ] = [
 							'name' => $preset,
 							'base' => $shortcode['base'],
 							'description' => $shortcode['description'],
 							'presetId' => $presetId,
-							'_category_ids' => array( '_my_elements_' ),
-						);
+							'_category_ids' => [ '_my_elements_' ],
+						];
 
 						if ( isset( $shortcode['icon'] ) ) {
 							$shortcodesAndPresets[ $presetId ]['icon'] = $shortcode['icon'];

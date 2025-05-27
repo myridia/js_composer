@@ -1,4 +1,10 @@
 <?php
+/**
+ * Main plugin settings file.
+ *
+ * @since 3.4
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -21,45 +27,84 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 9. My Shortcodes - automated mapping tool for shortcodes.
  *
  * @link http://codex.wordpress.org/Settings_API WordPress settings API
- * @since 3.4
  */
 class Vc_Settings {
-	public $tabs;
-	public $deactivate;
-	public $locale;
 	/**
+	 * List of tabs for settings.
+	 *
+	 * @var array
+	 */
+	public $tabs;
+
+	/**
+	 * Deactivation flag.
+	 *
+	 * @var bool
+	 */
+	public $deactivate;
+
+	/**
+	 * Locale settings for the plugin.
+	 *
+	 * @var array
+	 */
+	public $locale;
+
+	/**
+	 * Option group name.
+	 *
 	 * @var string
 	 */
 	protected $option_group = 'wpb_js_composer_settings';
+
 	/**
+	 * Page slug for the settings.
+	 *
 	 * @var string
 	 */
 	protected $page = 'vc_settings';
+
 	/**
+	 * Prefix for the fields.
+	 *
 	 * @var string
 	 */
 	public static $field_prefix = 'wpb_js_';
+
 	/**
+	 * Notification name.
+	 *
 	 * @var string
 	 */
 	protected static $notification_name = 'wpb_js_notify_user_about_element_class_names';
+
 	/**
-	 * @var
+	 * Default settings.
+	 *
+	 * @var mixed
 	 */
 	protected static $defaults;
+
 	/**
-	 * @var
+	 * Composer instance.
+	 *
+	 * @var mixed
 	 */
 	protected $composer;
 
 	/**
+	 * Default Google Fonts subsets.
+	 *
 	 * @var array
 	 */
-	protected $google_fonts_subsets_default = array( 'latin' );
+	protected $google_fonts_subsets_default = [ 'latin' ];
+
 	/**
+	 * Available Google Fonts subsets.
+	 *
 	 * @var array
 	 */
-	protected $google_fonts_subsets = array(
+	protected $google_fonts_subsets = [
 		'latin',
 		'vietnamese',
 		'cyrillic',
@@ -67,16 +112,33 @@ class Vc_Settings {
 		'greek',
 		'cyrillic-ext',
 		'greek-ext',
-	);
+	];
 
 	/**
+	 * Excluded Google Fonts subsets.
+	 *
 	 * @var array
 	 */
-	public $google_fonts_subsets_excluded = array();
+	public $google_fonts_subsets_excluded = [];
 
+	/**
+	 * Google Fonts subsets settings.
+	 *
+	 * @var mixed
+	 */
 	protected $google_fonts_subsets_settings;
 
 	/**
+	 * Support portal beta testers endpoint.
+	 *
+	 * @since 8.4
+	 * @var string
+	 */
+	public $support_portal_beta_testers_endpoint = 'https://support.wpbakery.com/api/external/fluentcrm/set-beta-tester';
+
+	/**
+	 * Set the field prefix.
+	 *
 	 * @param string $field_prefix
 	 */
 	public static function setFieldPrefix( $field_prefix ) {
@@ -84,6 +146,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get the settings page slug.
+	 *
 	 * @return string
 	 */
 	public function page() {
@@ -91,13 +155,15 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Check if the editor is enabled.
+	 *
 	 * @return bool
 	 */
 	public function isEditorEnabled() {
 		global $current_user;
 		wp_get_current_user();
 
-		/** @var $settings - get use group access rules */
+		// @var $settings - get use group access rules.
 		$settings = $this->get( 'groups_access_rules' );
 
 		$show = true;
@@ -111,8 +177,11 @@ class Vc_Settings {
 		return $show;
 	}
 
+	/**
+	 * Set the tabs for the settings page.
+	 */
 	public function setTabs() {
-		$this->tabs = array();
+		$this->tabs = [];
 
 		if ( $this->showConfigurationTabs() ) {
 			$this->tabs['vc-general'] = esc_html__( 'General Settings', 'js_composer' );
@@ -127,7 +196,7 @@ class Vc_Settings {
 	}
 
 	/**
-	 * @return mixed|void
+	 * Set the tabs for the settings page.
 	 */
 	public function getTabs() {
 		if ( ! isset( $this->tabs ) ) {
@@ -138,6 +207,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Check if configuration tabs should be shown.
+	 *
 	 * @return bool
 	 */
 	public function showConfigurationTabs() {
@@ -147,7 +218,7 @@ class Vc_Settings {
 	/**
 	 * Render
 	 *
-	 * @param $tab
+	 * @param string $tab
 	 * @throws \Exception
 	 */
 	public function renderTab( $tab ) {
@@ -159,14 +230,18 @@ class Vc_Settings {
 				unset( $tabs[ $key ] );
 			}
 		}
-		do_action( 'vc-settings-render-tab-' . $tab );
 		$page = new Vc_Page();
+        // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
 		$page->setSlug( $tab )->setTitle( isset( $tabs[ $tab ] ) ? $tabs[ $tab ] : '' )->setTemplatePath( apply_filters( 'vc_settings-render-tab-' . $tab, 'pages/vc-settings/tab.php' ) );
-		vc_include_template( 'pages/vc-settings/index.php', array(
+
+        // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
+		do_action( 'vc-settings-render-tab-' . $tab, $page );
+
+		vc_include_template( 'pages/vc-settings/index.php', [
 			'pages' => $tabs,
 			'active_page' => $page,
 			'vc_settings' => $this,
-		) );
+		] );
 	}
 
 	/**
@@ -176,15 +251,25 @@ class Vc_Settings {
 	public function initAdmin() {
 		$this->setTabs();
 
-		add_action( 'update_option_wpb_js_modules', array(
+		add_action( 'update_option_wpb_js_modules', [
 			$this,
 			'reset_modules_dependency',
-		), 10, 2 );
+		], 10, 2 );
 
-		add_action( 'add_option_wpb_js_modules', array(
+		add_action( 'add_option_wpb_js_modules', [
 			$this,
 			'reset_modules_dependency',
-		), 10, 2 );
+		], 10, 2 );
+
+		add_action( 'add_option_wpb_js_beta_version', [
+			$this,
+			'subscribe_user_to_beta',
+		], 10, 2 );
+
+		add_action( 'update_option_wpb_js_beta_version', [
+			$this,
+			'subscribe_user_to_beta',
+		], 10, 2 );
 
 		$this->set_sections();
 
@@ -192,6 +277,7 @@ class Vc_Settings {
 		 * Custom Tabs
 		 */
 		foreach ( $this->getTabs() as $tab => $title ) {
+            // phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
 			do_action( 'vc_settings_tab-' . preg_replace( '/^vc\-/', '', $tab ), $this );
 		}
 
@@ -228,33 +314,41 @@ class Vc_Settings {
 		$tab = 'general';
 		$this->addSection( $tab );
 
-		$this->addField( $tab, esc_html__( 'Disable responsive content elements', 'js_composer' ), 'not_responsive_css', array(
+		$this->addField( $tab, esc_html__( 'Disable responsive content elements', 'js_composer' ), 'not_responsive_css', [
 			$this,
 			'sanitize_not_responsive_css_callback',
-		), array(
+		], [
 			$this,
 			'not_responsive_css_field_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Disable content elements from "stacking" one on top other on small media screens (Example: mobile devices).', 'js_composer' ),
-		)	 );
+		]    );
 
-		$this->addField( $tab, esc_html__( 'Google fonts subsets', 'js_composer' ), 'google_fonts_subsets', array(
+		$this->addField( $tab, esc_html__( 'Google fonts subsets', 'js_composer' ), 'google_fonts_subsets', [
 			$this,
 			'sanitize_google_fonts_subsets_callback',
-		), array(
+		], [
 			$this,
 			'google_fonts_subsets_callback',
-		), array(
+		], [
 			'info' => esc_html__( 'Select subsets for Google Fonts available to content elements.', 'js_composer' ),
-		)	 );
+		]    );
 
-		$this->addField( $tab, esc_html__( 'Local Google Fonts', 'js_composer' ), 'local_google_fonts', array(
+		$this->addField( $tab, esc_html__( 'Local Google Fonts', 'js_composer' ), 'local_google_fonts', [
 			$this,
 			'sanitize_local_google_fonts_callback',
-		), array(
+		], [
 			$this,
 			'local_google_fonts_callback',
-		) );
+		] );
+
+		$this->addField( $tab, esc_html__( 'Beta Version', 'js_composer' ), 'beta_version', [
+			$this,
+			'sanitize_beta_version_callback',
+		], [
+			$this,
+			'beta_version_callback',
+		] );
 	}
 
 	/**
@@ -268,7 +362,7 @@ class Vc_Settings {
 		$this->addField($tab, '', vc_modules_manager()->option_slug, [
 			$this,
 			'sanitize_modules_callback',
-		],  [
+		], [
 			$this,
 			'use_modules_callback',
 		]);
@@ -279,50 +373,54 @@ class Vc_Settings {
 	/**
 	 * Creates new section.
 	 *
-	 * @param $tab - tab key name as tab section
-	 * @param $title - Human title
-	 * @param $callback - function to build section header.
+	 * @param string $tab - tab key name as tab section.
+	 * @param string $title - Human title.
+	 * @param callable|null $callback - function to build section header.
 	 */
 	public function addSection( $tab, $title = null, $callback = null ) {
-		add_settings_section( $this->option_group . '_' . $tab, $title, ( null !== $callback ? $callback : array(
+		add_settings_section( $this->option_group . '_' . $tab, $title, ( null !== $callback ? $callback : [
 			$this,
 			'setting_section_callback_function',
-		) ), $this->page . '_' . $tab );
+		] ), $this->page . '_' . $tab );
 	}
 
 	/**
 	 * Create field in section.
 	 *
-	 * @param $tab
-	 * @param $title
-	 * @param $field_name
-	 * @param $sanitize_callback
-	 * @param $field_callback
+	 * @param string $tab
+	 * @param string $title
+	 * @param string $field_name
+	 * @param callable $sanitize_callback
+	 * @param callable $field_callback
 	 * @param array $args
 	 *
 	 * @return $this
 	 */
-	public function addField( $tab, $title, $field_name, $sanitize_callback, $field_callback, $args = array() ) {
+	public function addField( $tab, $title, $field_name, $sanitize_callback, $field_callback, $args = [] ) {
 		register_setting( $this->option_group . '_' . $tab, self::$field_prefix . $field_name, $sanitize_callback );
 		add_settings_field( self::$field_prefix . $field_name, $title, $field_callback, $this->page . '_' . $tab, $this->option_group . '_' . $tab, $args );
 
-		return $this; // chaining
+		return $this; // chaining.
 	}
 
 	/**
-	 * @param $option_name
+	 * Get option.
 	 *
-	 * @param bool $defaultValue
+	 * @param string $option_name
+	 *
+	 * @param bool $default_value
 	 *
 	 * @return mixed
 	 */
-	public static function get( $option_name, $defaultValue = false ) {
-		return get_option( self::$field_prefix . $option_name, $defaultValue );
+	public static function get( $option_name, $default_value = false ) {
+		return get_option( self::$field_prefix . $option_name, $default_value );
 	}
 
 	/**
-	 * @param $option_name
-	 * @param $value
+	 * Set option.
+	 *
+	 * @param string $option_name
+	 * @param mixed $value
 	 *
 	 * @return bool
 	 */
@@ -332,11 +430,10 @@ class Vc_Settings {
 
 	/**
 	 * Set up the enqueue for the CSS & JavaScript files.
-	 *
 	 */
 	public function adminLoad() {
-		wp_register_script( 'wpb_js_composer_settings', vc_asset_url( 'js/dist/settings.min.js' ), array(), WPB_VC_VERSION, true );
-		wp_register_script( 'popper', vc_asset_url( 'lib/vendor/node_modules/@popperjs/core/dist/umd/popper.min.js' ), array(), WPB_VC_VERSION, true );
+		wp_register_script( 'wpb_js_composer_settings', vc_asset_url( 'js/dist/settings.min.js' ), [], WPB_VC_VERSION, true );
+		wp_register_script( 'wpb-popper', vc_asset_url( 'lib/vendor/node_modules/@popperjs/core/dist/umd/popper.min.js' ), [], WPB_VC_VERSION, true );
 		wp_enqueue_style( 'js_composer_settings', vc_asset_url( 'css/js_composer_settings.min.css' ), false, WPB_VC_VERSION );
 		wp_enqueue_script( 'backbone' );
 		wp_enqueue_script( 'shortcode' );
@@ -344,9 +441,9 @@ class Vc_Settings {
 		wp_enqueue_script( 'jquery-ui-accordion' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'wpb_js_composer_settings' );
-		wp_enqueue_script( 'popper' );
+		wp_enqueue_script( 'wpb-popper' );
 
-		$this->locale = apply_filters( 'vc_get_settings_locale', array(
+		$this->locale = apply_filters( 'vc_get_settings_locale', [
 			'are_you_sure_reset_css_classes' => esc_html__( 'Are you sure you want to reset to defaults?', 'js_composer' ),
 			'are_you_sure_reset_color' => esc_html__( 'Are you sure you want to reset to defaults?', 'js_composer' ),
 			'saving' => esc_html__( 'Saving...', 'js_composer' ),
@@ -367,12 +464,13 @@ class Vc_Settings {
 			'error_wrong_param_name' => esc_html__( 'Please use only letters, numbers and underscore for param name', 'js_composer' ),
 			'error_enter_valid_shortcode' => esc_html__( 'Please enter valid shortcode to parse!', 'js_composer' ),
 			'copied' => esc_html__( 'Copied', 'js_composer' ),
-		));
+			'license_sync_failed' => esc_html__( 'Failed to sync license. Please try again later.', 'js_composer' ),
+		]);
 
-		wp_localize_script( 'wpb_js_composer_settings', 'vcData', apply_filters( 'vc_global_js_data', array(
+		wp_localize_script( 'wpb_js_composer_settings', 'vcData', apply_filters( 'vc_global_js_data', [
 			'version' => WPB_VC_VERSION,
 			'debug' => false,
-		) ) );
+		] ) );
 		wp_localize_script( 'wpb_js_composer_settings', 'i18nLocaleSettings', $this->locale );
 		$wpb_settings_data = apply_filters( 'vc_get_settings_wpb_data', [] );
 		wp_localize_script( 'wpb_js_composer_settings', 'wpbData', $wpb_settings_data );
@@ -456,6 +554,32 @@ class Vc_Settings {
 		<?php
 	}
 
+	/**
+	 * Sanitizes the beta version option.
+	 *
+	 * @param mixed $rules The beta version rules.
+	 * @return bool Sanitized beta version status.
+	 * @since 8.1
+	 */
+	public function sanitize_beta_version_callback( $rules ) {
+		return (bool) $rules;
+	}
+
+	/**
+	 * Renders the beta version checkbox in the WordPress dashboard,
+	 * under WPBakery -> General Settings.
+	 *
+	 * @since 8.1
+	 */
+	public function beta_version_callback() {
+		vc_include_template( 'pages/vc-settings/beta-version.php', [
+			'checked' => get_option( 'wpb_js_beta_version', false ),
+		] );
+	}
+
+	/**
+	 * Local google fonts callback.
+	 */
 	public function local_google_fonts_callback() {
 		$checked = get_option( self::$field_prefix . 'local_google_fonts' );
 		if ( empty( $checked ) ) {
@@ -486,6 +610,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get default Google Fonts subsets.
+	 *
 	 * @return array
 	 */
 	public function googleFontsSubsetsDefault() {
@@ -493,6 +619,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get the Google Fonts subsets.
+	 *
 	 * @return array
 	 */
 	public function getGoogleFontsSubsets() {
@@ -500,7 +628,9 @@ class Vc_Settings {
 	}
 
 	/**
-	 * @param $subsets
+	 * Set the Google Fonts subsets.
+	 *
+	 * @param mixed $subsets
 	 *
 	 * @return bool
 	 */
@@ -515,6 +645,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get the excluded Google Fonts subsets.
+	 *
 	 * @return array
 	 */
 	public function getGoogleFontsSubsetsExcluded() {
@@ -522,7 +654,9 @@ class Vc_Settings {
 	}
 
 	/**
-	 * @param $excluded
+	 * Set the excluded Google Fonts subsets.
+	 *
+	 * @param mixed $excluded
 	 *
 	 * @return bool
 	 */
@@ -539,7 +673,7 @@ class Vc_Settings {
 	/**
 	 * Callback function for settings section
 	 *
-	 * @param $tab
+	 * @param array $tab
 	 */
 	public function setting_section_callback_function( $tab ) {
 		if ( 'wpb_js_composer_settings_color' === $tab['id'] ) {
@@ -551,25 +685,31 @@ class Vc_Settings {
 	}
 
 	/**
-	 * @param $rules
+	 * Sanitize callback for not responsive css.
 	 *
-	 * @return mixed
+	 * @param mixed $rules
+	 *
+	 * @return bool
 	 */
 	public function sanitize_not_responsive_css_callback( $rules ) {
 		return (bool) $rules;
 	}
 
 	/**
-	 * @param $checkbox
+	 * Sanitize callback for local google fonts.
 	 *
-	 * @return mixed
+	 * @param mixed $checkbox
+	 *
+	 * @return bool
 	 */
 	public function sanitize_local_google_fonts_callback( $checkbox ) {
 		return (bool) $checkbox;
 	}
 
 	/**
-	 * @param $checkbox
+	 * Sanitize callback for modules.
+	 *
+	 * @param mixed $field
 	 *
 	 * @since 7.7
 	 *
@@ -580,12 +720,14 @@ class Vc_Settings {
 	}
 
 	/**
-	 * @param $subsets
+	 * Sanitize callback for google fonts subsets.
+	 *
+	 * @param array $subsets
 	 *
 	 * @return array
 	 */
 	public function sanitize_google_fonts_subsets_callback( $subsets ) {
-		$pt_array = array();
+		$pt_array = [];
 		if ( isset( $subsets ) && is_array( $subsets ) ) {
 			foreach ( $subsets as $pt ) {
 				if ( ! in_array( $pt, $this->getGoogleFontsSubsetsExcluded(), true ) && in_array( $pt, $this->getGoogleFontsSubsets(), true ) ) {
@@ -597,6 +739,9 @@ class Vc_Settings {
 		return $pt_array;
 	}
 
+	/**
+	 * Rebuilding.
+	 */
 	public function rebuild() {
 		/** WordPress Template Administration API */
 		require_once ABSPATH . 'wp-admin/includes/template.php';
@@ -607,6 +752,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Build custom css file using css options from vc settings.
+	 *
 	 * @deprecated 7.7
 	 */
 	public static function buildCustomColorCss() {
@@ -621,7 +768,6 @@ class Vc_Settings {
 	 * Builds custom css file using css options from vc settings.
 	 *
 	 * @deprecated 7.7
-	 * @return bool
 	 */
 	public static function buildCustomCss() {
 		_deprecated_function( __METHOD__, '7.7', "vc_modules_manager()->get_module('vc-custom-css')->settings->build_custom_css()" );
@@ -632,9 +778,11 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Check create upload dir.
+	 *
 	 * @param \WP_Filesystem_Direct $wp_filesystem
-	 * @param $option
-	 * @param $filename
+	 * @param string $option
+	 * @param string $filename
 	 *
 	 * @return bool|string
 	 */
@@ -652,16 +800,21 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Upload dir.
+	 *
 	 * @return string
 	 */
 	public static function uploadDir() {
 		$upload_dir = wp_upload_dir();
-		/** @var \WP_Filesystem_Direct $wp_filesystem */ global $wp_filesystem;
+		// WP_Filesystem_Direct $wp_filesystem - global variable.
+		global $wp_filesystem;
 
 		return $wp_filesystem->find_folder( $upload_dir['basedir'] ) . vc_upload_dir();
 	}
 
 	/**
+	 * Upload URL.
+	 *
 	 * @return string
 	 */
 	public static function uploadURL() {
@@ -672,6 +825,8 @@ class Vc_Settings {
 
 
 	/**
+	 * Get field prefix.
+	 *
 	 * @return string
 	 */
 	public static function getFieldPrefix() {
@@ -679,11 +834,17 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get file system.
+	 *
 	 * @param string $url
-	 * @return \WP_Filesystem_Direct|bool
+	 * @return bool|null
 	 */
 	public static function getFileSystem( $url = '' ) {
-		/** @var \WP_Filesystem_Direct $wp_filesystem */ global $wp_filesystem;
+		if ( '' !== $url ) {
+			_deprecated_argument( __METHOD__, '7.9', '$url' );
+		}
+		// WP_Filesystem_Direct $wp_filesystem - global variable.
+		global $wp_filesystem;
 		$status = true;
 		if ( ! $wp_filesystem || ! is_object( $wp_filesystem ) ) {
 			require_once ABSPATH . '/wp-admin/includes/file.php';
@@ -694,6 +855,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get option group.
+	 *
 	 * @return string
 	 */
 	public function getOptionGroup() {
@@ -701,6 +864,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get page.
+	 *
 	 * @deprecated 7.7
 	 */
 	public function useCustomCss() {
@@ -712,6 +877,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get page.
+	 *
 	 * @deprecated 7.7
 	 */
 	public function getCustomCssVersion() {
@@ -723,6 +890,9 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get page.
+	 *
+	 * @param string $key
 	 * @deprecated 7.7
 	 */
 	public function get_default( $key ) {
@@ -734,6 +904,8 @@ class Vc_Settings {
 	}
 
 	/**
+	 * Get page.
+	 *
 	 * @deprecated 7.7
 	 */
 	public function restoreColor() {
@@ -747,6 +919,9 @@ class Vc_Settings {
 	/**
 	 * We should reset some optionality of other modules when modules option changed.
 	 *
+	 * @param mixed $old_value
+	 * @param string $new_value
+	 *
 	 * @since 7.7
 	 */
 	public function reset_modules_dependency( $old_value, $new_value ) {
@@ -755,5 +930,30 @@ class Vc_Settings {
 		if ( isset( $options['vc-design-options'] ) && ! $options['vc-design-options'] ) {
 			delete_option( self::$field_prefix . 'use_custom' );
 		}
+	}
+
+	/**
+	 * We save users that agree use our beta to CRM beta_testers tag.
+	 *
+	 * @param string $old_value
+	 * @param bool $new_value
+	 *
+	 * @since 8.4
+	 */
+	public function subscribe_user_to_beta( $old_value, $new_value ) {
+		if ( ! $new_value ) {
+			return;
+		}
+
+		if ( ! vc_manager()->license()->isActivated() ) {
+			return;
+		}
+
+		$params = [
+			'body' => [ 'key' => vc_manager()->license()->getLicenseKey() ],
+			'timeout' => 30,
+		];
+
+		wp_remote_post( $this->support_portal_beta_testers_endpoint, $params );
 	}
 }

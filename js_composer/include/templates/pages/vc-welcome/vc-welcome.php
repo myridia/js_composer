@@ -1,4 +1,8 @@
 <?php
+/**
+ * Welcome page template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -6,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="vc_welcome-tab changelog">
 	<div class="vc_feature-section-teaser">
 		<?php
-		vc_include_template( 'editors/partials/promo-content.tpl.php', array(
+		vc_include_template( 'editors/partials/promo-content.tpl.php', [
 			'is_about_page' => true,
-		) );
+		] );
 		?>
 	</div>
 	<p class="vc-thank-you">

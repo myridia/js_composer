@@ -1,4 +1,8 @@
 <?php
+/**
+ * SEO analysis tab template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

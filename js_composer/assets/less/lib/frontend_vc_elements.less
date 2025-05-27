@@ -53,6 +53,13 @@
         position: absolute;
         background-color: #C9C9C9;
         border-radius: 5px;
+        transition: background-color .2s ease-in-out;
+      }
+      &.active,
+      &:hover {
+        &:after {
+          background-color: #E4E4E4;
+        }
       }
     }
     > .vc_controls {

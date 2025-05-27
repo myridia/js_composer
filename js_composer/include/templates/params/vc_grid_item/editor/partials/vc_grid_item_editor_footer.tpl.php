@@ -1,4 +1,8 @@
 <?php
+/**
+ * Grid item editor footer template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -20,8 +24,8 @@ if ( vc_user_access()->part( 'presets' )->can()->get() ) {
 	$vc_vendor_settings_presets = Vc_Settings_Preset::listDefaultVendorSettingsPresets();
 	$vc_all_presets = Vc_Settings_Preset::listAllPresets();
 } else {
-	$vc_vendor_settings_presets = array();
-	$vc_all_presets = array();
+	$vc_vendor_settings_presets = [];
+	$vc_all_presets = [];
 }
 $custom_tag = 'script';
 ?>
@@ -33,7 +37,7 @@ $custom_tag = 'script';
 		window.vc_frontend_enabled = false;
 		window.vc_mode = '<?php echo esc_js( vc_mode() ); ?>';
 		window.vcAdminNonce = '<?php echo esc_js( vc_generate_nonce( 'vc-admin-nonce' ) ); ?>';
-		window.vc_auto_save = <?php echo wp_json_encode( get_option( 'wpb_js_auto_save' ) ) ?>;
+		window.vc_auto_save = <?php echo wp_json_encode( get_option( 'wpb_js_auto_save' ) ); ?>;
 		window.vc_modules = <?php echo wp_json_encode( $modules ); ?>;
 	</<?php echo esc_attr( $custom_tag ); ?>>
 

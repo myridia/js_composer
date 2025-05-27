@@ -1,8 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
 /**
+ * Social preview template.
+ *
  * @var array $seo_settings
  * @var WP_Post | null $post
  * @var int $post
@@ -12,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @var string $network_name
  * @var int $image_id
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 $title = $network_name . __( ' share preview', 'js_composer' );
 $id = 'wpb-' . $network_slug . '-preview';
 $src = $vc_post_seo->get_image_by_id( $image_id );

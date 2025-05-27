@@ -25,6 +25,26 @@ class Vc_Ai_Modal_Controller {
 	public $credits_limit;
 
 	/**
+	 * Ai element type.
+	 *
+	 * @var string
+	 */
+	public $ai_element_type;
+
+	/**
+	 * Set AI element type.
+	 *
+	 * @since 8.3
+	 * @param string $ai_element_type
+	 * @return Vc_Ai_Modal_Controller
+	 */
+	public function set_ai_element_type( $ai_element_type ) {
+		$this->ai_element_type = $ai_element_type;
+
+		return $this;
+	}
+
+	/**
 	 * Get AI modal data.
 	 *
 	 * @since 7.2
@@ -32,6 +52,7 @@ class Vc_Ai_Modal_Controller {
 	 * @return array
 	 */
 	public function get_modal_data( $modal_param ) {
+		$this->set_ai_element_type( $modal_param['ai_element_type'] );
 		$response['type'] = 'promo';
 		if ( ! vc_license()->isActivated() ) {
 			$response['content'] =
@@ -273,9 +294,9 @@ class Vc_Ai_Modal_Controller {
 		$type_dependency = [
 			'textarea_html' => 'editors/popups/ai/generate-text.php',
 			'textarea' => 'editors/popups/ai/generate-text.php',
-			'textarea_raw_html' => [
-				'default' => 'editors/popups/ai/generate-text.php',
-				'textarea_raw_html_javascript_code' => 'editors/popups/ai/generate-code.php',
+			'textarea_ace' => [
+				'textarea_ace_raw_html' => 'editors/popups/ai/generate-text.php',
+				'textarea_ace_javascript_code' => 'editors/popups/ai/generate-code.php',
 			],
 			'textfield' => 'editors/popups/ai/generate-text.php',
 			'custom_css' => 'editors/popups/ai/generate-code.php',
@@ -386,7 +407,8 @@ class Vc_Ai_Modal_Controller {
 				'enthusiastic' => esc_html__( 'Enthusiastic', 'js_composer' ),
 				'persuasive' => esc_html__( 'Persuasive', 'js_composer' ),
 				'zealous' => esc_html__( 'Zealous', 'js_composer' ),
-			]
+			],
+			$this->ai_element_type
 		);
 
 		$list = is_array( $list ) ? $list : [];
@@ -422,6 +444,14 @@ class Vc_Ai_Modal_Controller {
 					'[400,600]' => 'Short article (up to 600 words)',
 					'[800,1200]' => 'Long article (800 - 1200 words)',
 				],
+				'textarea_ace' => [
+					'[10,15]' => 'Title (up to 15 words)',
+					'[15,25]' => 'Short description (up to 25 words)',
+					'[20,50]' => 'Description (up to 50 words)',
+					'[200,300]' => 'Long description (up to 300 words)',
+					'[400,600]' => 'Short article (up to 600 words)',
+					'[800,1200]' => 'Long article (800 - 1200 words)',
+				],
 				'textarea' => [
 					'[10,15]' => 'Title (up to 15 words)',
 					'[15,25]' => 'Short description (up to 25 words)',
@@ -430,9 +460,9 @@ class Vc_Ai_Modal_Controller {
 				],
 				'textfield' => [
 					'[10,15]' => 'Title (up to 15 words)',
-					'[15,25]' => 'Short description (up to 25 words)',
 				],
-			]
+			],
+			$this->ai_element_type
 		);
 
 		if (
@@ -459,7 +489,8 @@ class Vc_Ai_Modal_Controller {
 				'new_content' => esc_html__( 'New content', 'js_composer' ),
 				'improve_existing' => esc_html__( 'Improve existing', 'js_composer' ),
 				'translate' => esc_html__( 'Translate', 'js_composer' ),
-			]
+			],
+			$this->ai_element_type
 		);
 
 		return is_array( $content ) ? $content : [];

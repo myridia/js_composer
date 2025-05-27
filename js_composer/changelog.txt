@@ -1,5 +1,137 @@
 *** WPBakery Page Builder changelog ***
 
+2025-04-17 - version 8.4.1
+  - Fix: The post grid elements with custom heading work properly
+  
+2025-04-15 - version 8.4
+  - Update: Consent has been added to the beta release controls
+  - Update: User experience for the template search has been improved
+  - Update: The navigation bar has been improved for mobile devices
+  - Update: The call to action element attribute names have been improved for a better user experience
+  - Update: Google Fonts loading has been improved for performance
+  - Compatibility: WPBakery works properly with TranslatePress
+  - Fix: Toggle controls work properly in the Design Options controls
+  - Fix: Custom JavaScript works properly in page settings
+  - Fix: The save element button works properly for custom elements
+  - Fix: Color consistency has been improved in the Frontend editor for better user experience
+  - Fix: WPB AI prompt management has been improved
+  - Fix: Role Manager backend editor enabled by default works properly
+  - Fix: The undo button works properly on mobile devices
+  - Fix: Custom color options work properly for the Chart element
+  - Fix: The toggle container element works properly
+  - Fix: Color transparency works properly in the general Design Options
+  - Fix: The text block element output works properly with <div> tags
+  - Fix: The element edit controls are displayed properly on mobile
+  - Fix: The frontend editor layout display improved
+  - Fix: The template preview option works properly
+  - Fix: The navigation bar position in the Backend editor has been improved for user experience
+  - Fix: The separator with text element display in the Backend editor has been improved
+  - Fix: The Google Maps element works properly with the Role Manager settings
+  - Fix: The navigation bar does not overlap the WooCommerce bar
+  - Fix: The image carousel element works properly
+  - Fix: Z-index works properly for the editor tooltip
+  - Fix: The color picker works properly
+  - Fix: The text block element is being displayed properly in the Backend editor
+  - Fix: The Grid Builder and grid elements work properly
+  - Fix: The tooltip location has been improved
+  - Fix: The icon libraries work properly for custom elements
+  - Fix: The editor does not experience fatal error
+
+2025-03-18 - version 8.3.1
+  - Fix: WordPress preview now works properly
+
+2025-03-12 - version 8.3
+  - New: API for AI integration
+  - New: Access page title settings directly from the title
+  - New: Font Awesome 6 for icon element
+  - New: New Google Maps element
+  - New: Preview button for the Settings panel
+  - Update: Improved accessibility for tab element
+  - Update: Implement code-coverage for existing PHPUnit pipeline check
+  - Update: Improved accessibility for pagination dots for elements such as Pageable Container
+  - Update: "value_includes" dependency rule for elements
+  - Update: Placeholder option for input and textarea params
+  - Fix: Optimized admin-ajax.php calls
+  - Fix: ACF element fields displayed properly
+  - Fix: Scroll to element functionality when adding a template to a page
+  - Fix: Undo works properly if template added
+  - Fix: Add element window active tabs displayed properly
+  - Fix: Element save title field displayed properly
+  - Fix: Page settings panel displayed properly in case all modules disabled
+  - Fix: Page settings panel displayed properly on mobile devices
+  - Fix: Tour and Pageable container elements work properly
+  - Fix: Page title displayed properly after template added
+  - Fix: Beta version notifications displayed properly
+  - Fix: Font Awesome doesn't show duplicates
+
+2025-02-03 - version 8.2
+  - New: Permalink option in frontend editor settings
+  - New: Template dropdown in frontend editor settings
+  - New: Page status dropdown in frontend editor settings
+  - New: Manage menus option in frontend editor settings
+  - New: Categories option in frontend settings
+  - New: Tags option in frontend settings
+  - New: Featured image option in frontend editor settings
+  - New: Excerpt field in frontend editor settings
+  - New: Author field in frontend editor settings
+  - New: Option to allow/disallow comments and pingbacks
+  - Update: Option to hide the page/post title
+  - Update: Styling updated for consistency in the frontend editor
+  - Fix: AI window fields are now responsive on mobile devices
+  - Fix: Resolved console warnings with WooCommerce
+  - Fix: Addressed deprecated warnings with PHP 8.2
+  - Fix: Resolved warning when adding icon element to editor
+  - Fix: Fixed issue preventing posts from being moved to trash
+  - Fix: Switching between editors no longer causes page reload
+  - Fix: Default templates for post types now work correctly
+  - Fix: Corrected element controls height 
+  - Fix: Replaced custom image caption function with native WordPress function
+  - Fix: Resolved warning with empty icon element
+
+2024-12-10 - version 8.1
+  - Update: Raw HTML text area is being improved for accessibility and usability
+  - Update: Settings window updated for consistency and better UX
+  - Update: Custom CSS and JS in settings are being moved to a new tab
+  - Update: The "Save as draft" option is being added to the Settings window
+  - Update: Update and licensing mechanism is being improved for better handling of active licenses and support periods
+  - Fix: The navigation bar layout works properly
+  - Fix: The "Submit for review" button is being displayed properly
+  - Fix: The AI credit window works properly
+  - Fix: The close edit window popup button works properly
+  - Fix: Element editing works properly on Android devices
+  - Fix: The WPBakery button is being displayed properly in other editors
+  - Fix: The Pie chart element works properly
+  - Fix: The ACF output works properly in grids
+  - Fix: The Backend editor is loading properly
+  - Fix: Error messages are being handled properly
+  - Fix: The editor and Formidable Forms works properly
+
+2024-11-19 - version 8.0.1
+  - Fix: Inline colors work properly for the Custom Heading element
+  - Fix: Background image and color notifications are displayed properly in the Backend editor
+  - Fix: Empty space element works properly with em an rem values
+
+2024-11-11 - version 8.0
+  - New: Add description for rows to be displayed in the Backend editor for quick reference
+  - New: Add an image to your page from your computer with drag-and-drop
+  - New: Manually synchronize the latest Google Fonts from the WPBakery Settings
+  - New: Connect your font libraries from Adobe Fonts to use in the editor
+  - New: The "Copyright" element with dynamic year has been added
+  - Update: The color reset option has been added to the color picker
+  - Update: Responsiveness options have been improved for better user experience and reduced learning curve
+  - Update: Editor components have been updated to use CSS variables
+  - Update: The PHP configuration file has been updated
+  - Update: The navigation bar has been improved for consistency and better user experience on mobile devices
+  - Update: Element icons are being updated for a better user experience
+  - Update: The "Add Element" window has been improved for a better user experience
+  - Update: Tweet element updated to X
+  - Update: The plugin notification mechanism has been improved for versioning
+  - Compatibility: The editor works properly with PHP 8.3
+  - Compatibility: WPBakery works properly with the ACF checkbox field
+  - Fix: The module manager options do not affect the editors' settings window
+  - Fix: WPBakery SEO is not affecting the Grid Builder
+  - Fix: The Gutenberg element works properly
+
 2024-08-21 - version 7.9
   - New: Ability to copy AI-generated content anywhere
   - New: The element window features the most used elements

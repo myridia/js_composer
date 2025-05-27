@@ -1,4 +1,8 @@
 <?php
+/**
+ * Start add element title template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

@@ -1,18 +1,27 @@
 <?php
+/**
+ * The template for displaying [vc_basic_grid] shortcode output.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_basic_grid.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 /**
  * Shortcode attributes
+ *
  * @var array $atts
  * @var $content - shortcode content
  * Shortcode class
  * @var WPBakeryShortCode_Vc_Basic_Grid $this
  */
 $this->post_id = false;
-$this->items = array();
+$this->items = [];
 $css = $el_class = '';
-$posts = $filter_terms = array();
+$posts = $filter_terms = [];
 $this->buildAtts( $atts, $content );
 
 $css = isset( $atts['css'] ) ? $atts['css'] : '';
@@ -38,14 +47,14 @@ $this->enqueueScripts();
 
 $animation = isset( $this->atts['initial_loading_animation'] ) ? $this->atts['initial_loading_animation'] : 'zoomIn';
 
-// Used for preload first page
+// Used for preload first page.
 if ( ! vc_is_page_editable() ) {
-	$haystack = array(
+	$haystack = [
 		'load-more',
 		'lazy',
 		'all',
-	);
-	if ( in_array( $this->atts['style'], $haystack, true ) && in_array( $this->settings['base'], array( 'vc_basic_grid' ), true ) ) {
+	];
+	if ( in_array( $this->atts['style'], $haystack, true ) && in_array( $this->settings['base'], [ 'vc_basic_grid' ], true ) ) {
 		$this->atts['max_items'] = 'all' === $this->atts['style'] || $this->atts['items_per_page'] > $this->atts['max_items'] ? $this->atts['max_items'] : $this->atts['items_per_page'];
 		$this->buildItems();
 	}

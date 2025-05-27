@@ -19,3 +19,30 @@
     margin-top: 10px;
   }
 }
+
+// Positioning of info icons
+#vc_settings-general.vc_settings-tab-content, .vc_ui-settings-roles-role {
+  .form-table tr td {
+    padding: 15px 40px;
+
+    &:has(.edit-form-info) {
+      padding: 15px 10px;
+    }
+
+    &:has(.vc_pointers-reset-button) .edit-form-info {
+      margin-top: 6px;
+    }
+  }
+}
+
+.vc_settings-tab-content .form-table tr td:has(input[type="checkbox"]) .edit-form-info {
+  position: relative;
+  top: 3px;
+}
+
+.wpb-settings-beta-version {
+  .wpb-beta-title-agreement {
+    margin-top: 20px;
+    margin-left: 53px;
+  }
+}

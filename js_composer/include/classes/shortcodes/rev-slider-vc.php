@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_rev_slider] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/rev_slider_vc.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

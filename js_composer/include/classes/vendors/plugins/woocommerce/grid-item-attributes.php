@@ -1,4 +1,12 @@
 <?php
+/**
+ * Backward compatibility with "Woocommerce" WordPress plugin.
+ *
+ * @see https://wordpress.org/plugins/woocommerce
+ *
+ * @since 4.4 vendors initialization moved to hooks in autoload/vendors.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -6,24 +14,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Get woocommerce data for product
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  *
  * @return string
  */
 function vc_gitem_template_attribute_woocommerce_product( $value, $data ) {
 	$label = '';
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 	require_once WC()->plugin_path() . '/includes/abstracts/abstract-wc-product.php';
-	/** @noinspection PhpUndefinedClassInspection */
-	/** @var WC_Product $product */
+	// WC_Product $product.
 	$product = new WC_Product( $post );
 	if ( preg_match( '/_labeled$/', $data ) ) {
 		$data = preg_replace( '/_labeled$/', '', $data );
@@ -49,10 +52,10 @@ function vc_gitem_template_attribute_woocommerce_product( $value, $data ) {
 			$value = $product->get_price_html();
 			break;
 		case 'reviews_count':
-			$value = count( get_comments( array(
+			$value = count( get_comments( [
 				'post_id' => $post->ID,
 				'approve' => 'approve',
-			) ) );
+			] ) );
 			break;
 		case 'short_description':
 			$value = apply_filters( 'woocommerce_short_description', get_post( $product->get_id() )->post_excerpt );
@@ -68,7 +71,7 @@ function vc_gitem_template_attribute_woocommerce_product( $value, $data ) {
 			$value = $product->get_weight() ? wc_format_decimal( $product->get_weight(), 2 ) : '';
 			break;
 		case 'on_sale':
-			$value = $product->is_on_sale() ? 'yes' : 'no'; // TODO: change
+			$value = $product->is_on_sale() ? 'yes' : 'no'; // TODO: change.
 			break;
 		default:
 			$value = method_exists( $product, 'get_' . $data ) ? $product->{'get_' . $data}() : $product->$data;
@@ -80,23 +83,18 @@ function vc_gitem_template_attribute_woocommerce_product( $value, $data ) {
 /**
  * Gte woocommerce data for order
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  *
  * @return string
  */
 function vc_gitem_template_attribute_woocommerce_order( $value, $data ) {
 	$label = '';
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 	require_once WC()->plugin_path() . '/includes/class-wc-order.php';
-	/** @noinspection PhpUndefinedClassInspection */
 	$order = new WC_Order( $post->ID );
 	if ( preg_match( '/_labeled$/', $data ) ) {
 		$data = preg_replace( '/_labeled$/', '', $data );
@@ -137,22 +135,17 @@ function vc_gitem_template_attribute_woocommerce_order( $value, $data ) {
 /**
  * Get woocommerce product add to cart url.
  *
- * @param $value
- * @param $data
+ * @param mixed $value
+ * @param array $data
  *
  * @return string
  * @since 4.5
- *
  */
 function vc_gitem_template_attribute_woocommerce_product_link( $value, $data ) {
-	/**
-	 * @var null|Wp_Post $post ;
-	 * @var string $data ;
-	 */
-	extract( array_merge( array(
+	extract( array_merge( [
 		'post' => null,
 		'data' => '',
-	), $data ) );
+	], $data ) );
 	$link = do_shortcode( '[add_to_cart_url id="' . $post->ID . '"]' );
 
 	return apply_filters( 'vc_gitem_template_attribute_woocommerce_product_link_value', $link );

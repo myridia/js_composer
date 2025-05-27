@@ -29,7 +29,7 @@ class Vc_Vendor_Preset {
 	 *
 	 * @var array
 	 */
-	private static $presets = array();
+	private static $presets = [];
 
 	/**
 	 * Get instance of Vc_Vendor_Preset.
@@ -66,12 +66,12 @@ class Vc_Vendor_Preset {
 			return false;
 		}
 
-		$preset = array(
+		$preset = [
 			'shortcode' => $shortcode,
 			'default' => $default_value,
 			'params' => $params,
 			'title' => $title,
-		);
+		];
 
 		// @codingStandardsIgnoreLine
 		$id = md5( serialize( $preset ) );
@@ -106,7 +106,7 @@ class Vc_Vendor_Preset {
 	 * @since 4.8
 	 */
 	public function getAll( $shortcode ) {
-		$list = array();
+		$list = [];
 
 		foreach ( self::$presets as $id => $preset ) {
 			if ( $shortcode === $preset['shortcode'] ) {
@@ -126,9 +126,9 @@ class Vc_Vendor_Preset {
 	 * @since 4.8
 	 */
 	public function getDefaults() {
-		$list = array();
+		$list = [];
 
-		$added = array();
+		$added = [];
 
 		foreach ( self::$presets as $id => $preset ) {
 			if ( $preset['default'] && ! in_array( $preset['shortcode'], $added, true ) ) {

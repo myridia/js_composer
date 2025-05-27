@@ -1,4 +1,8 @@
 <?php
+/**
+ * Basic class for 'vc_grid_item' mapping.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,15 +11,30 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class WpbMap_Grid_Item
  */
 class WpbMap_Grid_Item extends WPBMap {
+	/**
+	 * Check user.
+	 *
+	 * @var array
+	 */
 	protected static $gitem_user_sc = false;
+	/**
+	 * List of user categories.
+	 *
+	 * @var array
+	 */
 	protected static $gitem_user_categories = false;
+	/**
+	 * User sorted shortcodes list.
+	 *
+	 * @var array
+	 */
 	protected static $gitem_user_sorted_sc = false;
 
 	/**
 	 * Generates list of shortcodes only for Grid element.
 	 *
 	 * This method parses the list of mapped shortcodes and creates categories list for users.
-	 * Also it checks is 'is_grid_item_element' attribute true.
+	 * Also, it checks is 'is_grid_item_element' attribute true.
 	 *
 	 * @static
 	 *
@@ -26,7 +45,7 @@ class WpbMap_Grid_Item extends WPBMap {
 		if ( ! $force && false !== self::$gitem_user_sc && false !== self::$gitem_user_categories ) {
 			return;
 		}
-		self::$gitem_user_sc = self::$gitem_user_categories = self::$gitem_user_sorted_sc = array();
+		self::$gitem_user_sc = self::$gitem_user_categories = self::$gitem_user_sorted_sc = [];
 		$deprecated = 'deprecated';
 		$add_deprecated = false;
 		if ( is_array( self::$sc ) && ! empty( self::$sc ) ) {
@@ -34,7 +53,7 @@ class WpbMap_Grid_Item extends WPBMap {
 				if ( isset( $values['post_type'] ) && Vc_Grid_Item_Editor::postType() === $values['post_type'] && vc_user_access_check_shortcode_all( $name ) ) {
 					if ( ! isset( $values['content_element'] ) || true === $values['content_element'] ) {
 						$categories = isset( $values['category'] ) ? $values['category'] : '_other_category_';
-						$values['_category_ids'] = array();
+						$values['_category_ids'] = [];
 						if ( isset( $values['deprecated'] ) && false !== $values['deprecated'] ) {
 							$add_deprecated = true;
 							$values['_category_ids'][] = $deprecated;
@@ -84,6 +103,7 @@ class WpbMap_Grid_Item extends WPBMap {
 
 	/**
 	 * Get list of mapped shortcode settings for current user.
+	 *
 	 * @static
 	 * @return bool - associated array of shortcodes settings with tag as the key.
 	 * @throws \Exception

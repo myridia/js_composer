@@ -1,4 +1,8 @@
 <?php
+/**
+ * AI settings tab template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -23,6 +27,6 @@ if ( 'promo' === $modal['type'] ) {
 	<p><?php esc_html_e( 'WPBakery AI credits allow you to use artificial intelligence within the editor to generate, improve, and translate content.', 'js_composer' ); ?></p>
 	<h4 class="vc-ai-tokens-usage">
 		<?php esc_html_e( 'Your monthly credit usage: ', 'js_composer' ); ?>
-		<span class="vc-ai-tokens-left"><strong><?php esc_html_e( $modal['tokens_left'] ); ?></strong></span>/<span class="vc-ai-tokens-total"><strong><?php esc_html_e( $modal['tokens_total'] ); ?></strong></span>
+		<span class="vc-ai-tokens-left"><strong><?php echo esc_html( $modal['tokens_left'] ); ?></strong></span>/<span class="vc-ai-tokens-total"><strong><?php echo esc_html( $modal['tokens_total'] ); ?></strong></span>
 	</h4>
 </div>

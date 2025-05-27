@@ -1,4 +1,8 @@
 <?php
+/**
+ * Manager for our autoload files
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class help manage autoload components.
  * Autoload components is functionality that we want to see everywhere after plugin loaded.
  *
- * @since   7.7
+ * @since 7.7
  */
 class Vc_Autoload_Manager {
 

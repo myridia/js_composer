@@ -1,144 +1,88 @@
 <?php
+/**
+ * UI Panel Post Settings template.
+ *
+ * @var array $page_settings_data
+ * @var Vc_Post_Settings $box
+ * @var array $header_tabs_template_variables
+ * @var array $controls
+ * @var array $permalink
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-/**
- * @var bool $can_unfiltered_html_cap
- */
 ?>
 <div class="vc_ui-font-open-sans vc_ui-panel-window vc_media-xs vc_ui-panel" data-vc-panel=".vc_ui-panel-header-header" data-vc-ui-element="panel-post-settings" id="vc_ui-panel-post-settings">
 	<div class="vc_ui-panel-window-inner">
-		<?php
-		vc_include_template('editors/popups/vc_ui-header.tpl.php', array(
+	<?php
+	// First collect all tab contents and determine which tabs have content.
+	$tab_contents = [];
+	$categories = $header_tabs_template_variables['categories'];
+	$has_any_content = false;
+	$original_templates = $header_tabs_template_variables['templates'];
+
+	foreach ( $original_templates as $key => $template_name ) {
+		ob_start();
+		vc_include_template(
+			$template_name,
+			[
+				'page_settings_data' => $page_settings_data,
+				'permalink' => $permalink,
+			]
+		);
+		$content = ob_get_clean();
+		if ( ! empty( trim( $content ) ) ) {
+			$tab_contents[ $key ] = [
+				'content' => $content,
+				'template' => $template_name,
+			];
+			$has_any_content = true;
+		}
+	}
+
+	if ( $has_any_content ) {
+		vc_include_template('editors/popups/vc_ui-header.tpl.php', [
 			'title' => esc_html__( 'Page Settings', 'js_composer' ),
-			'controls' => array( 'minimize', 'close' ),
+			'controls' => [ 'minimize', 'close' ],
 			'header_css_class' => 'vc_ui-post-settings-header-container',
-			'content_template' => '',
-		));
+			'header_tabs_template' => 'editors/partials/add_element_tabs.tpl.php',
+			'header_tabs_template_variables' => [
+				'categories' => array_values(array_filter($categories, function ( $key ) use ( $tab_contents ) {
+					return isset( $tab_contents[ $key ] );
+				}, ARRAY_FILTER_USE_KEY)),
+				'templates' => array_map( function ( $tab ) {
+					return $tab['template']; }, $tab_contents ),
+				'is_default_tab' => true,
+			],
+			'box' => $box,
+		]);
 		?>
 		<div class="vc_ui-panel-content-container">
 			<div class="vc_ui-panel-content vc_properties-list vc_edit_form_elements" data-vc-ui-element="panel-content">
-				<div class="vc_row">
-					<div class="vc_col-sm-12 vc_column" id="vc_settings-title-container">
-						<div class="wpb_settings-title">
-							<div class="wpb_element_label"><?php esc_html_e( 'Page title', 'js_composer' ); ?></div>
-							<?php if ( is_string( $title_info ) ) { echo $title_info ; } ?>
-						</div>
-						<div class="edit_form_line">
-							<?php
-							if ( vc_modules_manager()->is_module_on( 'vc-ai' ) ) {
-								wpb_add_ai_icon_to_text_field( 'textfield', 'vc_page-title-field' );
-							}
-							?>
-							<input name="page_title" class="wpb-textinput vc_title_name" type="text" value="" id="vc_page-title-field" placeholder="<?php esc_attr_e( 'Please enter page title', 'js_composer' ); ?>">
-						</div>
-					</div>
+				<div class="vc_panel-tabs">
 					<?php
-					if ( vc_modules_manager()->is_module_on( 'vc-post-custom-layout' ) ) {
-						?>
-						<div class="vc_col-sm-12 vc_column" id="vc_settings-post_custom_layout">
-							<div class="wpb_element_label"><?php esc_html_e( 'Layout Option', 'js_composer' ); ?></div>
-							<?php
-							vc_include_template(
-								'editors/partials/vc_post_custom_layout.tpl.php',
-								[ 'location' => 'settings' ]
-							);
-							?>
-						</div>
-						<?php
-					}
-					?>
-					<?php
-					if ( vc_modules_manager()->is_module_on( 'vc-custom-css' ) ) {
-						?>
-						<div class="vc_col-sm-12 vc_column">
-							<div class="wpb_settings-title">
-								<div class="wpb_element_label">
-									<?php esc_html_e( 'Custom CSS settings', 'js_composer' ); ?>
-								</div>
-								<?php if ( is_string( $css_info ) ) { echo $css_info ; } ?>	
-							</div>
-							<div class="edit_form_line">
-								<div class="vc_ui-settings-text-wrapper">
-									<p><?php esc_html_e( '<style>' ) ?></p>
-									<?php
-									if ( vc_modules_manager()->is_module_on( 'vc-ai' ) ) {
-										wpb_add_ai_icon_to_code_field( 'custom_css', 'wpb_css_editor' );
-									}
-									?>
-								</div>
-								<pre id="wpb_css_editor" class="wpb_content_element custom_code wpb_frontend"></pre>
-								<p><?php esc_html_e( '</style>' ) ?></p>
-							</div>
-						</div>
-						<?php
-					}
-					?>
-					<?php
-					if ( vc_modules_manager()->is_module_on( 'vc-custom-js' ) ) {
-						?>
-						<div class="vc_col-sm-12 vc_column">
-							<div class="wpb_settings-title">
-								<div class="wpb_element_label">
-									<?php esc_html_e( 'Custom JavaScript in <head>', 'js_composer' ); ?>
-								</div>
-								<?php if ( is_string( $js_head_info ) ) { echo $js_head_info ; } ?>	
-							</div>
-							<div class="edit_form_line">
-								<div class="vc_ui-settings-text-wrapper">
-									<p><?php esc_html_e( '<script>' ) ?></p>
-									<?php
-									if ( vc_modules_manager()->is_module_on( 'vc-ai' ) ) {
-										wpb_add_ai_icon_to_code_field( 'custom_js', 'wpb_js_header_editor' );
-									}
-									?>
-								</div>
-								<pre id="wpb_js_header_editor" class="wpb_content_element custom_code wpb_frontend <?php echo $can_unfiltered_html_cap ?: 'wpb_missing_unfiltered_html'; ?>"><?php echo $can_unfiltered_html_cap ? '' : wpbakery()->getEditorsLocale()['unfiltered_html_access']; ?></pre>
-								<p><?php esc_html_e( '</script>' ) ?></p>
-							</div>
-						</div>
-						<div class="vc_col-sm-12 vc_column">
-							<div class="wpb_settings-title">
-								<div class="wpb_element_label">
-									<?php esc_html_e( 'Custom JavaScript before </body>', 'js_composer' ); ?>
-								</div>
-								<?php if ( is_string( $js_body_info ) ) { echo $js_body_info ; } ?>	
-							</div>
-							<div class="edit_form_line">
-								<div class="vc_ui-settings-text-wrapper">
-									<p><?php esc_html_e( '<script>' ) ?></p>
-									<?php
-									if ( vc_modules_manager()->is_module_on( 'vc-ai' ) ) {
-										wpb_add_ai_icon_to_code_field( 'custom_js', 'wpb_js_footer_editor' );
-									}
-									?>
-								</div>
-								<pre id="wpb_js_footer_editor" class="wpb_content_element custom_code wpb_frontend <?php echo $can_unfiltered_html_cap ?: 'wpb_missing_unfiltered_html'; ?>"><?php echo $can_unfiltered_html_cap ? '' : wpbakery()->getEditorsLocale()['unfiltered_html_access']; ?></pre>
-								<p><?php esc_html_e( '</script>' ) ?></p>
-							</div>
-						</div>
-						<?php
+					foreach ( $tab_contents as $key => $tab ) {
+						$active_class = array_key_first( $tab_contents ) === $key ? ' vc_active' : '';
+						echo '<div id="vc_page-settings-tab-' . esc_attr( $key ) . '" class="vc_panel-tab vc_row' . esc_attr( $active_class ) . '" data-tab-index="' . esc_attr( $key ) . '">';
+						echo '<div class="vc_row">';
+						echo $tab['content']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo '</div>';
+						echo '</div>';
 					}
 					?>
 				</div>
 			</div>
 		</div>
-		<!-- param window footer-->
 		<?php
-		vc_include_template('editors/popups/vc_ui-footer.tpl.php', array(
-			'controls' => array(
-				array(
-					'name' => 'close',
-					'label' => esc_html__( 'Close', 'js_composer' ),
-				),
-				array(
-					'name' => 'save',
-					'label' => esc_html__( 'Save changes', 'js_composer' ),
-					'css_classes' => 'vc_ui-button-fw',
-					'style' => 'action',
-				),
-			),
-		));
-		?>
+		// Include the template with the dynamic controls array.
+		vc_include_template(
+			'editors/popups/vc_ui-footer.tpl.php',
+			[
+				'controls' => $controls,
+			]
+		);
+	}
+	?>
 	</div>
 </div>

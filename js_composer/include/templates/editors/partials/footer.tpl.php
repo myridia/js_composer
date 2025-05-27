@@ -1,9 +1,14 @@
 <?php
+/**
+ * Editor footer template.
+ *
+ * @var Vc_Backend_Editor | Vc_Frontend_Editor $editor
+ * @var WP_Post $post
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-
-/** @var Vc_Backend_Editor | Vc_Frontend_Editor $editor */
 
 // [add element popup/box]
 require_once vc_path_dir( 'EDITORS_DIR', 'popups/class-vc-add-element-box.php' );
@@ -28,7 +33,7 @@ wpbakery()->presetPanelEditor()->renderUIPreset();
 // [post settings panel render]
 if ( vc_user_access()->part( 'post_settings' )->can()->get() ) {
 	require_once vc_path_dir( 'EDITORS_DIR', 'popups/class-vc-post-settings.php' );
-	$post_settings = new Vc_Post_Settings( $editor );
+	$post_settings = new Vc_Post_Settings( $editor, $post );
 	$post_settings->renderUITemplate();
 }
 // [/post settings panel render]

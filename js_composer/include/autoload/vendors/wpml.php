@@ -19,9 +19,9 @@ function vc_init_vendor_wpml() {
 	if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
 		require_once vc_path_dir( 'VENDORS_DIR', 'plugins/class-vc-vendor-wpml.php' );
 		$vendor = new Vc_Vendor_WPML();
-		add_action( 'vc_after_set_mode', array(
+		add_action( 'vc_after_set_mode', [
 			$vendor,
 			'load',
-		) );
+		] );
 	}
 }

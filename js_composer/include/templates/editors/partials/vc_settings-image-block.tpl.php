@@ -1,4 +1,8 @@
 <?php
+/**
+ * Settings image block template.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }

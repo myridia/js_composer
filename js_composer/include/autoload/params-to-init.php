@@ -24,7 +24,7 @@ if ( 'vc_edit_form' === vc_post_param( 'action' ) ) {
  * @return array
  */
 function vc_edit_for_fields_add_optional_params( $params ) {
-	$arr = array(
+	$arr = [
 		'hidden',
 		'textfield',
 		'dropdown',
@@ -51,7 +51,7 @@ function vc_edit_for_fields_add_optional_params( $params ) {
 		'el_id',
 		'vc_grid_item',
 		'google_fonts',
-	);
+	];
 	$params = array_values( array_unique( array_merge( $params, $arr ) ) );
 
 	return $params;
@@ -63,7 +63,7 @@ function vc_edit_for_fields_add_optional_params( $params ) {
 function vc_output_required_params_to_init() {
 	$params = WpbakeryShortcodeParams::getRequiredInitParams();
 
-	$js_array = array();
+	$js_array = [];
 	foreach ( $params as $param ) {
 		$js_array[] = '"' . $param . '"';
 	}
@@ -77,19 +77,4 @@ function vc_output_required_params_to_init() {
 
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $output;
-}
-
-add_action( 'wp_ajax_wpb_gallery_html', 'vc_gallery_html' );
-
-/**
- * Get gallery images.
- */
-function vc_gallery_html() {
-	vc_user_access()->checkAdminNonce()->validateDie()->wpAny( 'edit_posts', 'edit_pages' )->validateDie();
-
-	$images = vc_post_param( 'content' );
-	if ( ! empty( $images ) ) {
-		wp_send_json_success( vc_field_attached_images( explode( ',', $images ) ) );
-	}
-	die();
 }

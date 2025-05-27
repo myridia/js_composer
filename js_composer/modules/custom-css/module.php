@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+require_once vc_manager()->path( 'MUTUAL_MODULES_DIR', 'class-module.php' );
 require_once vc_manager()->path( 'MODULES_DIR', 'custom-css/class-vc-custom-css-module-settings.php' );
 
 /**
@@ -17,7 +18,33 @@ require_once vc_manager()->path( 'MODULES_DIR', 'custom-css/class-vc-custom-css-
  *
  * @since 7.7
  */
-class Vc_Custom_Css_Module {
+class Vc_Custom_Css_Module extends Vc_Module {
+
+	/**
+	 * Module settings that specify functionality common for some modules.
+	 *
+	 * @note We can use object functionality $this->get_module_functionality( 'post-meta' )->foo();
+	 *
+	 * @since 8.4
+	 * @var array
+	 */
+	public $module_common_functionality = [ 'post-meta' ];
+
+	/**
+	 * Post meta key.
+	 *
+	 * @since 8.4
+	 * @var string
+	 */
+	public $post_meta_key = 'post_custom_css';
+
+	/**
+	 * Post meta slug.
+	 *
+	 * @since 8.4
+	 * @var string
+	 */
+	public $post_meta_slug = 'custom_css';
 
 	/**
 	 * Settings object.
@@ -35,51 +62,67 @@ class Vc_Custom_Css_Module {
 	const CUSTOM_CSS_META_KEY = '_wpb_post_custom_css';
 
 	/**
+	 * Vc_Custom_Css_Module constructor.
+	 *
+	 * @since 8.0
+	 */
+	public function __construct() {
+		// We initialize the common modules functionality in parent constructor.
+		parent::__construct();
+		$this->settings = new Vc_Custom_Css_Module_Settings();
+		$this->settings->init();
+	}
+
+	/**
 	 * Init module implementation.
 	 *
 	 * @since 7.7
 	 */
 	public function init() {
-
-		$this->settings = new Vc_Custom_Css_Module_Settings();
-		$this->settings->init();
-
 		add_action( 'vc_build_page', [ $this, 'add_custom_css_to_page' ] );
-
-		add_filter( 'vc_post_meta_list', [ $this, 'add_custom_meta_to_update' ] );
-
-		add_filter( 'wpb_set_post_custom_meta', [ $this, 'set_post_custom_meta' ], 10, 2 );
 
 		add_action( 'vc_base_register_front_css', [ $this, 'register_global_custom_css' ] );
 
 		add_action( 'vc_load_iframe_jscss', [ $this, 'enqueue_global_custom_css_to_page' ] );
 
 		add_action('vc_base_register_front_css', function () {
-			add_action( 'wp_enqueue_scripts', array(
+			add_action( 'wp_enqueue_scripts', [
 				$this,
 				'enqueue_global_custom_css_to_page',
-			) );
+			] );
 		});
 
-		add_action( 'update_option_wpb_js_custom_css', array(
+		add_action( 'update_option_wpb_js_custom_css', [
 			$this,
 			'build_custom_css',
-		) );
+		] );
 
-		add_action( 'add_option_wpb_js_custom_css', array(
+		add_action( 'add_option_wpb_js_custom_css', [
 			$this,
 			'build_custom_css',
-		) );
+		] );
 
-		add_filter( 'vc_enqueue_backend_editor_js', array(
+		add_filter( 'wpb_enqueue_backend_editor_js', [
 			$this,
 			'enqueue_editor_js',
-		));
+		]);
 
-		add_filter( 'vc_enqueue_frontend_editor_js', array(
+		add_filter( 'vc_enqueue_frontend_editor_js', [
 			$this,
 			'enqueue_editor_js',
-		));
+		]);
+	}
+
+	/**
+	 * Get module post meta.
+	 *
+	 * @since 8.4
+	 * @param array $post_custom_meta
+	 * @param int $post_id
+	 * @return mixed
+	 */
+	public function get_module_meta( $post_custom_meta, $post_id ) {
+		return get_post_meta( $post_id, self::CUSTOM_CSS_META_KEY, true );
 	}
 
 	/**
@@ -107,14 +150,9 @@ class Vc_Custom_Css_Module {
 			return;
 		}
 
-		if ( 'true' === vc_get_param( 'preview' ) && wp_revisions_enabled( get_post( $id ) ) ) {
-			$latest_revision = wp_get_post_revisions( $id );
-			if ( ! empty( $latest_revision ) ) {
-				$array_values = array_values( $latest_revision );
-				$id = $array_values[0]->ID;
-			}
-		}
-		$post_custom_css = get_metadata( 'post', $id, '_wpb_post_custom_css', true );
+		$id = wpb_update_id_with_preview_id( $id );
+
+		$post_custom_css = get_metadata( 'post', $id, self::CUSTOM_CSS_META_KEY, true );
 		$post_custom_css = apply_filters( 'vc_post_custom_css', $post_custom_css, $id );
 		if ( ! empty( $post_custom_css ) ) {
 			$post_custom_css = wp_strip_all_tags( $post_custom_css );
@@ -123,44 +161,6 @@ class Vc_Custom_Css_Module {
 			echo $post_custom_css;
 			echo '</style>';
 		}
-	}
-
-	/**
-	 * Add custom js to the plugin post custom meta list.
-	 *
-	 * @since 7.7
-	 * @param array $meta_list
-	 * @return array
-	 */
-	public function add_custom_meta_to_update( $meta_list ) {
-		$meta_list[] = 'custom_css';
-
-		return $meta_list;
-	}
-
-	/**
-	 * Set post custom meta.
-	 *
-	 * @since 7.7
-	 * @param array $post_custom_meta
-	 * @param WP_Post $post
-	 * @return array
-	 */
-	public function set_post_custom_meta( $post_custom_meta, $post ) {
-		$post_custom_meta['post_custom_css'] = wp_strip_all_tags( $this->get_custom_css_post_meta( $post->ID ) );
-
-		return $post_custom_meta;
-	}
-
-	/**
-	 * Get custom css post meta.
-	 *
-	 * @since 7.7
-	 * @param int $id
-	 * @return mixed
-	 */
-	public function get_custom_css_post_meta( $id ) {
-		return get_post_meta( $id, self::CUSTOM_CSS_META_KEY, true );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class Vc_Custom_Css_Module {
 		if ( is_file( $upload_dir['basedir'] . '/' . $vc_upload_dir . '/custom.css' ) && filesize( $custom_css_path ) > 0 ) {
 			$custom_css_url = $upload_dir['baseurl'] . '/' . $vc_upload_dir . '/custom.css';
 			$custom_css_url = vc_str_remove_protocol( $custom_css_url );
-			wp_register_style( 'js_composer_custom_css', $custom_css_url, array(), WPB_VC_VERSION );
+			wp_register_style( 'js_composer_custom_css', $custom_css_url, [], WPB_VC_VERSION );
 		}
 	}
 

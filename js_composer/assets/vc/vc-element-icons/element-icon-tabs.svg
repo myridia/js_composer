@@ -1,15 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
-    <title>Tabs</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Tabs">
-            <rect id="Rectangle" fill="#ECECEC" x="0" y="0" width="15" height="10" rx="3"></rect>
-            <rect id="Rectangle" fill="#D8D8D8" x="17" y="0" width="15" height="10" rx="3"></rect>
-            <path d="M0,6 L32,6 L32,28.9920699 C32,30.6533038 30.6657405,32 29.0038998,32 L2.99610022,32 C1.34139976,32 0,30.6568766 0,28.9920699 L0,6 Z" id="Rectangle" fill="#ECECEC"></path>
-            <path d="M4,11 L28,11 L28,26 L4,26 L4,11 Z M6,13 L6,24 L26,24 L26,13 L6,13 Z" id="Combined-Shape" fill="#D8D8D8"></path>
-        </g>
-    </g>
+<svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.5 2.95996V1.95996C17.5 1.40768 17.0523 0.959961 16.5 0.959961H2.5C1.94772 0.959961 1.5 1.40768 1.5 1.95996V31.96C1.5 32.5122 1.94772 32.96 2.5 32.96H7.5M17.5 2.95996V7.95996C17.5 8.51225 17.9477 8.95996 18.5 8.95996H31M17.5 2.95996H30C30.5523 2.95996 31 3.40768 31 3.95996V8.95996M31 8.95996H32.5C33.0523 8.95996 33.5 9.40768 33.5 9.95996V31.96C33.5 32.5122 33.0523 32.96 32.5 32.96H13.5" stroke="#00447F" stroke-width="1.7" stroke-linecap="round"/>
+<path d="M17.5 7.95996V3.95996C17.5 3.40768 17.9477 2.95996 18.5 2.95996H30C30.5523 2.95996 31 3.40768 31 3.95996V7.95996C31 8.51225 30.5523 8.95996 30 8.95996H18.5C17.9477 8.95996 17.5 8.51225 17.5 7.95996Z" fill="#00447F"/>
 </svg>

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Class that handles specific [vc_accordion] shortcode.
+ *
+ * @see js_composer/include/templates/shortcodes/vc_accordion.php
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -7,20 +13,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WPBakery Page Builder shortcodes
  *
  * @package WPBakeryPageBuilder
- *
  */
 class WPBakeryShortCode_Vc_Accordion extends WPBakeryShortCode {
+	/**
+	 * Controls CSS settings.
+	 *
+	 * @var string
+	 */
 	protected $controls_css_settings = 'out-tc vc_controls-content-widget';
 
 	/**
-	 * @param $atts
+	 * Get admin output.
+	 *
+	 * @param array $atts
 	 * @param null $content
 	 * @return mixed|string
 	 * @throws \Exception
 	 */
 	public function contentAdmin( $atts, $content = null ) {
 		$width = $custom_markup = '';
-		$shortcode_attributes = array( 'width' => '1/1' );
+		$shortcode_attributes = [ 'width' => '1/1' ];
 		foreach ( $this->settings['params'] as $param ) {
 			if ( 'content' !== $param['param_name'] ) {
 				$shortcode_attributes[ $param['param_name'] ] = isset( $param['value'] ) ? $param['value'] : null;
@@ -36,7 +48,7 @@ class WPBakeryShortCode_Vc_Accordion extends WPBakeryShortCode {
 		foreach ( $this->settings['params'] as $param ) {
 			$param_value = isset( ${$param['param_name']} ) ? ${$param['param_name']} : '';
 			if ( is_array( $param_value ) ) {
-				// Get first element from the array
+				// Get first element from the array.
 				reset( $param_value );
 				$first_key = key( $param_value );
 				$param_value = $param_value[ $first_key ];

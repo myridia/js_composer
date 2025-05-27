@@ -1,10 +1,19 @@
 <?php
+/**
+ * The template for displaying [vc_tt_global] shortcode output.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_tta_global.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $content - shortcode content
  * @var $el_class
@@ -21,8 +30,8 @@ $this->setGlobalTtaInfo();
 $this->enqueueTtaStyles();
 $this->enqueueTtaScript();
 
-// It is required to be before tabs-list-top/left/bottom/right for tabs/tours
-$prepareContent = $this->getTemplateVariable( 'content' );
+// It is required to be before tabs-list-top/left/bottom/right for tabs/tours.
+$prepare_content = $this->getTemplateVariable( 'content' );
 
 $class_to_filter = $this->getTtaGeneralClasses();
 $class_to_filter .= vc_shortcode_custom_css_class( $css, ' ' ) . $this->getCSSAnimation( $css_animation );
@@ -36,7 +45,7 @@ $output .= $this->getTemplateVariable( 'tabs-list-left' );
 $output .= '<div class="vc_tta-panels-container">';
 $output .= $this->getTemplateVariable( 'pagination-top' );
 $output .= '<div class="vc_tta-panels">';
-$output .= $prepareContent;
+$output .= $prepare_content;
 $output .= '</div>';
 $output .= $this->getTemplateVariable( 'pagination-bottom' );
 $output .= '</div>';

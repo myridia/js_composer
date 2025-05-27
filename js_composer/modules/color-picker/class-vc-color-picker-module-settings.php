@@ -39,12 +39,12 @@ class Vc_Color_Picker_Module_Settings {
 		add_filter( 'vc_get_editor_wpb_data', [
 			$this,
 			'add_module_wpb_data',
-		], 10, 1 );
+		] );
 
 		add_filter( 'vc_get_settings_wpb_data', [
 			$this,
 			'add_module_wpb_data',
-		], 10, 1 );
+		] );
 
 		if ( 'vc-color-picker' === vc_get_param( 'page' ) ) {
 			add_action( 'wpb_add_after_settings_form', [
@@ -71,7 +71,7 @@ class Vc_Color_Picker_Module_Settings {
 	public function set_setting_tab( $tabs ) {
 		if ( vc_settings()->showConfigurationTabs() ) {
 			// phpcs:ignore:WordPress.NamingConventions.ValidHookName.UseUnderscores
-			if ( ! vc_is_as_theme() || apply_filters( 'vc_settings_page_show_color-picker-tab', false ) ) {
+			if ( apply_filters( 'vc_settings_page_show_color-picker-tab', true ) ) {
 				$tabs['vc-color-picker'] = esc_html__( 'Color Picker Settings', 'js_composer' );
 			}
 		}
@@ -86,16 +86,16 @@ class Vc_Color_Picker_Module_Settings {
 	 * @since 7.9
 	 */
 	public function get_color_settings() {
-		return array(
-			array( 'vc_pickr_color_1' => array( 'title' => esc_html__( 'Color #1', 'js_composer' ) ) ),
-			array( 'vc_pickr_color_2' => array( 'title' => esc_html__( 'Color #2', 'js_composer' ) ) ),
-			array( 'vc_pickr_color_3' => array( 'title' => esc_html__( 'Color #3', 'js_composer' ) ) ),
-			array( 'vc_pickr_color_4' => array( 'title' => esc_html__( 'Color #4', 'js_composer' ) ) ),
-			array( 'vc_pickr_color_5' => array( 'title' => esc_html__( 'Color #5', 'js_composer' ) ) ),
-			array( 'vc_pickr_color_6' => array( 'title' => esc_html__( 'Color #6', 'js_composer' ) ) ),
-			array( 'vc_pickr_color_7' => array( 'title' => esc_html__( 'Color #7', 'js_composer' ) ) ),
-			array( 'vc_pickr_color_8' => array( 'title' => esc_html__( 'Color #8', 'js_composer' ) ) ),
-		);
+		return [
+			[ 'vc_pickr_color_1' => [ 'title' => esc_html__( 'Color #1', 'js_composer' ) ] ],
+			[ 'vc_pickr_color_2' => [ 'title' => esc_html__( 'Color #2', 'js_composer' ) ] ],
+			[ 'vc_pickr_color_3' => [ 'title' => esc_html__( 'Color #3', 'js_composer' ) ] ],
+			[ 'vc_pickr_color_4' => [ 'title' => esc_html__( 'Color #4', 'js_composer' ) ] ],
+			[ 'vc_pickr_color_5' => [ 'title' => esc_html__( 'Color #5', 'js_composer' ) ] ],
+			[ 'vc_pickr_color_6' => [ 'title' => esc_html__( 'Color #6', 'js_composer' ) ] ],
+			[ 'vc_pickr_color_7' => [ 'title' => esc_html__( 'Color #7', 'js_composer' ) ] ],
+			[ 'vc_pickr_color_8' => [ 'title' => esc_html__( 'Color #8', 'js_composer' ) ] ],
+		];
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Vc_Color_Picker_Module_Settings {
 	 * @since 7.9
 	 */
 	public function get_default_color_settings() {
-		return array(
+		return [
 			'vc_pickr_color_1' => '#000000',
 			'vc_pickr_color_2' => '#FFFFFF',
 			'vc_pickr_color_3' => '#DD3333',
@@ -114,7 +114,7 @@ class Vc_Color_Picker_Module_Settings {
 			'vc_pickr_color_6' => '#81D742',
 			'vc_pickr_color_7' => '#1E73BE',
 			'vc_pickr_color_8' => '#8224E3',
-		);
+		];
 	}
 
 	/**
@@ -126,18 +126,20 @@ class Vc_Color_Picker_Module_Settings {
 		$tab = 'color-picker';
 		$settings = vc_settings();
 		$settings->addSection( $tab );
+		$default_colors = $this->get_default_color_settings();
 
 		foreach ( $this->get_color_settings() as $color_set ) {
 			foreach ( $color_set as $key => $data ) {
-				$settings->addField( $tab, $data['title'], $key, array(
+				$settings->addField( $tab, $data['title'], $key, [
 					$this,
 					'sanitize_color_callback',
-				), array(
+				], [
 					$this,
 					'color_callback',
-				), array(
+				], [
 					'id' => $key,
-				) );
+					'default_color' => $default_colors[ $key ],
+				] );
 			}
 		}
 	}
@@ -190,7 +192,7 @@ class Vc_Color_Picker_Module_Settings {
 		$field = $args['id'];
 		$value = get_option( vc_settings()::$field_prefix . $field );
 		$value = $value ?: $this->get_default( $field );
-		echo '<div class="color-group"><div class="wpb-color-picker"></div><input type="text" name="' . esc_attr( vc_settings()::$field_prefix . $field ) . '" value="' . esc_attr( $value ) . '" class="vc_color-control css-control vc_ui-hidden"></div>';
+		echo '<div class="color-group"><div class="wpb-color-picker"></div><input type="text" name="' . esc_attr( vc_settings()::$field_prefix . $field ) . '" value="' . esc_attr( $value ) . '" data-default-value="' . esc_attr( $args['default_color'] ) . '" class="vc_color-control css-control vc_ui-hidden"></div>';
 	}
 
 	/**
@@ -251,9 +253,9 @@ class Vc_Color_Picker_Module_Settings {
 	 * @since 7.8
 	 */
 	public function load_module_settings_assets() {
-		wp_enqueue_style( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/themes/classic.min.css' ), array(), WPB_VC_VERSION );
-		wp_enqueue_script( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/pickr.es5.min.js' ), array(), WPB_VC_VERSION, true );
-		wp_enqueue_script( 'wpb_color_picker_module', vc_asset_url( '../modules/color-picker/assets/dist/module.min.js' ), array(), WPB_VC_VERSION, true );
+		wp_enqueue_style( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/themes/classic.min.css' ), [], WPB_VC_VERSION );
+		wp_enqueue_script( 'pickr', vc_asset_url( 'lib/vendor/node_modules/@simonwep/pickr/dist/pickr.es5.min.js' ), [], WPB_VC_VERSION, true );
+		wp_enqueue_script( 'wpb_color_picker_module', vc_asset_url( '../modules/color-picker/assets/dist/module.min.js' ), [], WPB_VC_VERSION, true );
 		wp_enqueue_style( 'wpb_automapper_module', vc_asset_url( '../modules/color-picker/assets/dist/module.min.css' ), false, WPB_VC_VERSION );
 	}
 }

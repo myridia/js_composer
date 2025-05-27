@@ -34,11 +34,11 @@
         transition: fill 0.2s ease-in-out;
         fill: #BECBD1;
     }
-    
+
 }
 .edit-form-info + .tooltip-content {
-    display: block; 
-    opacity: 0; 
+    display: block;
+    opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
     background: #2C3339;
@@ -48,7 +48,7 @@
     font-size: 12px;
     line-height: 20px;
     border-radius: 14px;
-    z-index: 999;
+    z-index: 99999; // compensate the post categories dropdown (select2 field)
 }
 .edit-form-info + .tooltip-content a {
     color: #fff;
@@ -57,8 +57,8 @@
     }
 }
 .edit-form-info[data-show] + .tooltip-content {
-    opacity: 1; 
-    visibility: visible; 
+    opacity: 1;
+    visibility: visible;
     &:hover {
         cursor: pointer;
     }

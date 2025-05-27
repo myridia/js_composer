@@ -1,11 +1,16 @@
 <?php
+/**
+ * Icon grid builder shortcode element.
+ *
+ * @var WPBakeryShortCode_Vc_Icon $this
+ * @var array $atts - shortcode attributes
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-/** @var WPBakeryShortCode_Vc_Icon $this */
 $icon = $color = $size = $align = $el_class = $custom_color = $link = $background_style = $background_color = $type = $icon_fontawesome = $icon_openiconic = $icon_typicons = $icon_entypoicons = $icon_linecons = $custom_background_color = '';
 
-/** @var array $atts - shortcode attributes */
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
 $link = vc_gitem_create_link( $atts, 'vc_icon_element-link' );
@@ -21,7 +26,7 @@ $has_style = false;
 if ( strlen( $background_style ) > 0 ) {
 	$has_style = true;
 	if ( false !== strpos( $background_style, 'outline' ) ) {
-		$background_style .= ' vc_icon_element-outline'; // if we use outline style it is border in css
+		$background_style .= ' vc_icon_element-outline'; // if we use outline style it is border in css.
 	} else {
 		$background_style .= ' vc_icon_element-background';
 	}

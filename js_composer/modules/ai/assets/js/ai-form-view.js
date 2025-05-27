@@ -1,7 +1,7 @@
-(function ( $ ) {
+( function ( $ ) {
 	'use strict';
 
-	window.vc.AiFormView = Backbone.View.extend( {
+	window.vc.AiFormView = Backbone.View.extend({
 		events: {
 			'click .vc_ai-generate-button': 'generateContent',
 			'change [name="contentType"]': 'changeContentType',
@@ -19,18 +19,18 @@
 			this.toggleModalPromoClass( options.data.type );
 			this.$el.find( '.vc_ui-helper-modal-ai-preloader' ).after( options.data.content );
 			this.setFormElements();
-			$('.edit-form-info').initializeTooltips();
+			$( '.edit-form-info' ).initializeTooltips();
 
 		},
 		render: function ( options ) {
-			if (this.timerInterval) {
+			if ( this.timerInterval ) {
 				this.clearTimer();
 			}
 			this.toggleModalPromoClass( options.type );
 			this.$form.after( options.content );
 			this.$form.remove();
 			this.setFormElements();
-
+			$( '.edit-form-info' ).initializeTooltips();
 			return this;
 		},
 		setFormElements: function () {
@@ -55,13 +55,13 @@
 			// trim the prompt field value if user has set it programmatically
 			var promptWords = this.$prompt_field.val().split( ' ' );
 			if ( this.maxPromptLength < promptWords.length ) {
-				this.$prompt_field.val(promptWords.slice(0, this.maxPromptLength).join( ' ' ));
+				this.$prompt_field.val( promptWords.slice( 0, this.maxPromptLength ).join( ' ' ) );
 			}
 
-			var init_data = this.$form.find(':visible:not([style*="display: none"]), [name="prompt"], input[type="hidden"]').serializeArray();
+			var init_data = this.$form.find( ':visible:not([style*="display: none"]), [name="prompt"], input[type="hidden"]' ).serializeArray();
 			var cache_id = this.getUniqueCacheId();
-			init_data.push( {name: 'cacheId', value: cache_id} );
-			this.$generated_content.val('');
+			init_data.push({ name: 'cacheId', value: cache_id });
+			this.$generated_content.val( '' );
 
 			var data = {
 				action: 'wpb_ai_api_get_response',
@@ -71,17 +71,18 @@
 
 			this.isGenerating = true;
 			this.$generate_placeholder.removeClass( 'vc_ui-hidden' );
+			this.$generate_placeholder.addClass( 'wpb-generating-content' );
 			this.timerInterval = setInterval( this.updateTimer.bind( this ), 1000 );
 
 			// we break first request if you do not get response in 20 seconds.
 			// if we do not get response in 20 seconds then we save response data in cache on the remote server
 			// and then process another bunch of ajax requests to check if cache is ready
-			$.ajax( {
+			$.ajax({
 				type: 'POST',
 				url: window.ajaxurl,
 				timeout: 20000,
 				data: data
-			} ).done( function ( response ) {
+			}).done( function ( response ) {
 				if ( !_this.isGenerating ) {
 					return false;
 				}
@@ -96,7 +97,7 @@
 					if ( response && response.data && response.data[0] && response.data[0].code && response.data[0].message ) {
 						console.error( response.data[0].code, response.data[0].message );
 						_this.resetButton( false );
-						var message = response.data[0].message.replace(/\\/g, '');
+						var message = response.data[0].message.replace( /\\/g, '' );
 						_this.showErrorMessage( message );
 					} else {
 						console.error( _this.getLocale().ai_response_error );
@@ -104,7 +105,7 @@
 						_this.showErrorMessage( _this.getLocale().ai_response_error );
 					}
 				}
-			} ).fail( function ( response ) {
+			}).fail( function ( response ) {
 				if ( !_this.isGenerating ) {
 					return false;
 				}
@@ -134,26 +135,26 @@
 
 				// we create a timer to check if cache is ready every 10 seconds for 5 minutes
 				var timeouts = [];
-				for (var time_interval = 10000; time_interval <= _this.maxWaitingCacheInterval; time_interval += 10000) {
-					createTimeout(time_interval);
+				for ( var time_interval = 10000; time_interval <= _this.maxWaitingCacheInterval; time_interval += 10000 ) {
+					createTimeout( time_interval );
 				}
 
-				function createTimeout(interval) {
-					timeouts.push(setTimeout(function () {
+				function createTimeout ( interval ) {
+					timeouts.push( setTimeout( function () {
 						var output_value = _this.$generated_content.val();
 
-						if (output_value) {
+						if ( output_value ) {
 							// stop all other timeouts related to cache checking
-							for (var i = 0; i < timeouts.length; i++) {
-								if ('stop_cache_timeouts' === output_value) {
-									_this.$generated_content.val('');
+							for ( var i = 0; i < timeouts.length; i++ ) {
+								if ( 'stop_cache_timeouts' === output_value ) {
+									_this.$generated_content.val( '' );
 								}
-								clearTimeout(timeouts[i]);
+								clearTimeout( timeouts[i]);
 							}
 						} else {
-							_this.processCachedRequest(_this, data, interval);
+							_this.processCachedRequest( _this, data, interval );
 						}
-					}, interval));
+					}, interval ) );
 				}
 
 			});
@@ -167,12 +168,12 @@
 				_this.showErrorMessage( _this.getLocale().ai_response_error );
 			} else {
 				// any other timer then last we process request to check cache
-				$.ajax( {
+				$.ajax({
 					type: 'POST',
 					url: window.ajaxurl,
 					timeout: 10000,
 					data: data
-				} ).done( function ( response ) {
+				}).done( function ( response ) {
 					if ( !_this.isGenerating ) {
 						return false;
 					}
@@ -185,10 +186,10 @@
 					if ( false === response.success && response && response.data && response.data[0] && response.data[0].code && response.data[0].message ) {
 						_this.$generated_content.val( 'stop_cache_timeouts' );
 						_this.resetButton( false );
-						var message = response.data[0].message.replace(/\\/g, '');
+						var message = response.data[0].message.replace( /\\/g, '' );
 						_this.showErrorMessage( message );
 					}
-				} );
+				});
 			}
 		},
 
@@ -200,16 +201,16 @@
 			};
 			var _this = this;
 
-			$.ajax( {
+			$.ajax({
 				type: 'POST',
 				url: window.ajaxurl,
 				data: data
-			} ).done( function ( response ) {
+			}).done( function ( response ) {
 				var is_token_text = undefined !== response.data.tokens_left && undefined !== response.data.tokens_total;
 				if ( true === response.success && is_token_text ) {
 					var token_usage_text =
 						_this.getLocale().ai_credit_usage + response.data.tokens_left + ' / ' + response.data.tokens_total;
-					$('.vc-ai-tokens-usage').text(token_usage_text);
+					$( '.vc-ai-tokens-usage' ).text( token_usage_text );
 				} else {
 					// error returned by wpbakery server api
 					var is_error_message =
@@ -227,7 +228,7 @@
 						_this.showErrorMessage( _this.getLocale().ai_response_error );
 					}
 				}
-			} ).fail( function ( response ) {
+			}).fail( function () {
 				console.error( _this.getLocale().ai_response_error );
 				_this.resetButton();
 				_this.showErrorMessage( _this.getLocale().ai_response_error );
@@ -241,7 +242,7 @@
 		disableButton: function () {
 			this.$generate_button.prop( 'disabled', function ( _, val ) {
 				return !val;
-			} );
+			});
 			this.isGenerateDisabled = true;
 		},
 
@@ -255,6 +256,7 @@
 
 		clearTimer: function () {
 			this.$generate_placeholder.addClass( 'vc_ui-hidden' );
+			this.$generate_placeholder.removeClass( 'wpb-generating-content' );
 			this.$generate_placeholder_timer.text( '00:00' );
 			clearInterval( this.timerInterval );
 			this.seconds = 0;
@@ -281,28 +283,28 @@
 			var elementData = this.$el.data();
 
 			// hide form fields that do not match selected content type
-			var formFieldOptionalityList = $(e.target).find('option:selected').attr('data-form-fields-optionality');
-			formFieldOptionalityList = formFieldOptionalityList ? formFieldOptionalityList.split('|') : [];
+			var formFieldOptionalityList = $( e.target ).find( 'option:selected' ).attr( 'data-form-fields-optionality' );
+			formFieldOptionalityList = formFieldOptionalityList ? formFieldOptionalityList.split( '|' ) : [];
 			this.hideFormFields( formFieldOptionalityList );
 
 			// Set all form fields to default values except content type
-			this.$form.trigger('reset');
-			this.$form.find( '[name="contentType"]' ).val(this.contentType);
+			this.$form.trigger( 'reset' );
+			this.$form.find( '[name="contentType"]' ).val( this.contentType );
 
 			// set the value of the "prompt" textarea with existing field value
 			if ( 'improve_existing' === e.target.value || 'translate' === e.target.value ) {
 				this.$generate_button.text( this.getLocale().regenerate );
 				var existingContent = elementData.element.val();
-				if ( 'textarea_raw_html' === elementData.param_type ) {
+				if ( 'textarea_raw_html' === elementData.param_type || 'textarea_ace' === elementData.param_type ) {
 					existingContent = rawurldecode( base64_decode( existingContent.trim() ) );
 				} else if ( 'textarea_html' === elementData.param_type ) {
 					existingContent = window.tinymce.get( elementData.element.attr( 'id' ) ).getContent();
 				}
-				this.$form.find('[name="prompt"]').val(existingContent);
+				this.$form.find( '[name="prompt"]' ).val( existingContent );
 				this.resetButton( true );
 			} else {
 				this.$generate_button.text( this.getLocale().generate );
-				this.$form.find('[name="prompt"]').val('');
+				this.$form.find( '[name="prompt"]' ).val( '' );
 				this.disableButton();
 			}
 		},
@@ -316,8 +318,8 @@
 			}
 			// trim prompt value if it exceeds maxPromptLength
 			var promptWords = e.target.value.split( ' ' );
-			if (promptWords.length > this.maxPromptLength) {
-				e.target.value = promptWords.slice(0, this.maxPromptLength).join( ' ' );
+			if ( promptWords.length > this.maxPromptLength ) {
+				e.target.value = promptWords.slice( 0, this.maxPromptLength ).join( ' ' );
 			}
 		},
 
@@ -331,7 +333,7 @@
 				return false;
 			}
 			var currentParamData = this.$el.data();
-			var aiFields = [ 'textarea', 'textfield', 'textarea_raw_html' ];
+			var aiFields = [ 'textarea', 'textfield', 'textarea_raw_html', 'textarea_ace' ];
 			var aceEditorFields = [ 'wpb_css_editor', 'wpb_js_header_editor', 'wpb_js_footer_editor' ];
 
 			if ( 'textarea_html' === currentParamData.param_type || 'content' === currentParamData.fieldId ) {
@@ -343,38 +345,50 @@
 				}
 
 				var tinyMCE = window.tinymce.get( textareaId );
-				if (tinyMCE) {
+				if ( tinyMCE ) {
 					tinyMCE.setContent( generatedContent );
 				}
-				$textareaElement.val( generatedContent ).trigger('input').trigger('change').trigger('blur');
+				$textareaElement.val( generatedContent ).trigger( 'input' ).trigger( 'change' ).trigger( 'blur' );
 			} else if ( aiFields.includes( currentParamData.param_type ) ) {
 				var $inputElement = currentParamData.element;
 				if ( 'new_content' === this.contentType ) {
 					var currentInputValue = $inputElement.val();
-					generatedContent = currentInputValue + ' ' + generatedContent;
+					if ( currentParamData.param_type !== 'textarea_ace' ) {
+						generatedContent = currentInputValue + ' ' + generatedContent;
+					}
 				}
-				$inputElement.val( generatedContent ).trigger('input').trigger('change').trigger('blur');
+				if ( currentParamData.param_type === 'textarea_ace' ) {
+					var aceId = currentParamData.element.closest( '.edit_form_line' ).find( '.textarea_ace_container' ).attr( 'id' );
+					var aceEditor = window.ace.edit( aceId );
+					this.updateAceEditor( aceEditor, generatedContent );
+				} else {
+					$inputElement.val( generatedContent ).trigger( 'input' ).trigger( 'change' ).trigger( 'blur' );
+				}
 			} else if ( currentParamData.fieldId ) {
 				if ( aceEditorFields.includes( currentParamData.fieldId ) ) {
 					var aceEditor = window.ace.edit( currentParamData.fieldId );
-					var currentValue = aceEditor.getValue();
-					var $codeTextarea = $(aceEditor.container).find('textarea');
-					var emptySpace = '';
-					if(currentValue !== '') {
-						emptySpace = '\n\n';
-					}
-					generatedContent = currentValue + emptySpace + generatedContent;
-					aceEditor.setValue( generatedContent );
-					$codeTextarea.trigger('input').trigger('change').trigger('blur');
+					this.updateAceEditor( aceEditor, generatedContent );
 				} else if ( currentParamData.element && currentParamData.element.length ) {
 					if ( 'new_content' === this.contentType ) {
 						var currentElementValue = currentParamData.element.val();
 						generatedContent = currentElementValue + ' ' + generatedContent;
 					}
-					currentParamData.element.val(generatedContent).trigger('input').trigger('change').trigger('blur');
+					currentParamData.element.val( generatedContent ).trigger( 'input' ).trigger( 'change' ).trigger( 'blur' );
 				}
 			}
 			this.$close_button.click();
+		},
+
+		updateAceEditor: function ( aceEditor, generatedContent ) {
+			var currentValue = aceEditor.getValue();
+			var $codeTextarea = $( aceEditor.container ).find( 'textarea' );
+			var emptySpace = '';
+			if( currentValue !== '' ) {
+				emptySpace = '\n\n';
+			}
+			generatedContent = currentValue + emptySpace + generatedContent;
+			aceEditor.setValue( generatedContent );
+			$codeTextarea.trigger( 'input' ).trigger( 'change' ).trigger( 'blur' );
 		},
 
 		toggleModalPromoClass: function ( type ) {
@@ -387,9 +401,9 @@
 
 		hideFormFields: function ( optionalityList ) {
 			// hide form fields that do not match selected content type
-			this.$form.find('div[data-optional-form-field]').each(function () {
-				var $formField = $(this);
-				var formFieldSlug = $formField.attr('data-optional-form-field');
+			this.$form.find( 'div[data-optional-form-field]' ).each( function () {
+				var $formField = $( this );
+				var formFieldSlug = $formField.attr( 'data-optional-form-field' );
 				if ( optionalityList.includes( formFieldSlug ) ) {
 					$formField.show();
 				} else {
@@ -407,9 +421,9 @@
 		toggleCopyButton: function () {
 			var $copyButton = this.$el.find( '.wpb-copy-output' );
 			if ( this.$generated_content.val() ) {
-				$copyButton.removeClass('disabled');
+				$copyButton.removeClass( 'disabled' );
 			} else {
-				$copyButton.addClass('disabled');
+				$copyButton.addClass( 'disabled' );
 			}
 		},
 		copyContent: function ( e ) {

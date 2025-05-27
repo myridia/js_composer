@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function vc_settings_tabs_vc_roles( $tabs ) {
 	// insert after vc-modules tab.
 	if ( array_key_exists( 'vc-modules', $tabs ) ) {
-		$new = array();
+		$new = [];
 		foreach ( $tabs as $key => $value ) {
 			$new[ $key ] = $value;
 			if ( 'vc-modules' === $key ) {
@@ -55,7 +55,7 @@ function vc_roles_settings_save() {
 	if ( check_admin_referer( 'vc_settings-roles-action', 'vc_nonce_field' ) && current_user_can( 'manage_options' ) ) {
 		require_once vc_path_dir( 'SETTINGS_DIR', 'class-vc-roles.php' );
 		$vc_roles = new Vc_Roles();
-		$data = $vc_roles->save( vc_request_param( 'vc_roles', array() ) );
+		$data = $vc_roles->save( vc_request_param( 'vc_roles', [] ) );
 		echo wp_json_encode( $data );
 		die();
 	}
@@ -67,7 +67,7 @@ if ( 'vc-roles' === vc_get_param( 'page' ) ) {
 	 * Enqueue scripts for roles manager.
 	 */
 	function vc_settings_render_tab_vc_roles_scripts() {
-		wp_register_script( 'vc_accordion_script', vc_asset_url( 'lib/vc/vc_accordion/vc-accordion.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_accordion_script', vc_asset_url( 'lib/vc/vc_accordion/vc-accordion.min.js' ), [ 'jquery-core' ], WPB_VC_VERSION, true );
 	}
 
 	add_action( 'admin_init', 'vc_settings_render_tab_vc_roles_scripts' );
@@ -107,11 +107,11 @@ function wpb_editor_access( $state, $role ) {
 			return true;
 		}
 
-		return isset( $role, $role->name ) && in_array( $role->name, array(
+		return isset( $role, $role->name ) && in_array( $role->name, [
 			'administrator',
 			'editor',
 			'author',
-		), true );
+		], true );
 	}
 
 	return $state;

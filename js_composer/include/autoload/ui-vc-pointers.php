@@ -10,11 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $vc_default_pointers, $vc_pointers;
-$vc_default_pointers = (array) apply_filters( 'vc_pointers_list', array(
+$vc_default_pointers = (array) apply_filters( 'vc_pointers_list', [
 	'vc_grid_item',
 	'vc_pointers_backend_editor',
 	'vc_pointers_frontend_editor',
-) );
+] );
 if ( is_admin() ) {
 	add_action( 'admin_enqueue_scripts', 'vc_pointer_load', 1000 );
 }
@@ -33,7 +33,7 @@ function vc_pointer_load() {
 	$screen_id = $screen->id;
 
 	// Get pointers for this screen.
-	$pointers = apply_filters( 'vc-ui-pointers', array() );
+	$pointers = apply_filters( 'vc-ui-pointers', [] );
 	$pointers = apply_filters( 'vc_ui-pointers-' . $screen_id, $pointers );
 
 	if ( ! $pointers || ! is_array( $pointers ) ) {
@@ -42,7 +42,7 @@ function vc_pointer_load() {
 
 	// Get dismissed pointers.
 	$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-	$vc_pointers = array( 'pointers' => array() );
+	$vc_pointers = [ 'pointers' => [] ];
 
 	// Check pointers and remove dismissed ones.
 	foreach ( $pointers as $pointer_id => $pointer ) {
@@ -65,11 +65,11 @@ function vc_pointer_load() {
 	wp_enqueue_style( 'wp-pointer' );
 	wp_enqueue_script( 'wp-pointer' );
 	// messages.
-	$vc_pointers['texts'] = array(
+	$vc_pointers['texts'] = [
 		'finish' => esc_html__( 'Finish', 'js_composer' ),
 		'next' => esc_html__( 'Next', 'js_composer' ),
 		'prev' => esc_html__( 'Prev', 'js_composer' ),
-	);
+	];
 
 	// Add pointer options to script.
 	wp_localize_script( 'wp-pointer', 'vcPointer', $vc_pointers );
@@ -92,7 +92,7 @@ function vc_pointer_reset() {
 		update_user_meta( get_current_user_id(), 'dismissed_wp_pointers', $meta_value, $prev_meta_value );
 	}
 
-	wp_send_json( array( 'success' => true ) );
+	wp_send_json( [ 'success' => true ] );
 }
 
 /**

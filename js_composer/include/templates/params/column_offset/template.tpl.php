@@ -1,17 +1,23 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	die( '-1' );
-}
 /**
+ * Template for element param column offset.
+ *
+ * @var array $settings
+ * @var string $value
+ * @var array $data
  * @var Vc_Column_Offset $param
  * @var Vc_Column_Offset $sizes ::$size_types
  */
-$layouts = array(
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+$layouts = [
 	'xs' => 'portrait-smartphones',
 	'sm' => 'portrait-tablets',
 	'md' => 'landscape-tablets',
 	'lg' => 'default',
-);
+];
 $custom_tag = 'script';
 ?>
 <div class="vc_column-offset" data-column-offset="true">
@@ -73,10 +79,10 @@ $custom_tag = 'script';
 <<?php echo esc_attr( $custom_tag ); ?>>
 	window.VcI8nColumnOffsetParam =
 	<?php
-	echo wp_json_encode( array(
+	echo wp_json_encode( [
 		'inherit' => esc_html__( 'Inherit: ', 'js_composer' ),
 		'inherit_default' => esc_html__( 'Inherit from default', 'js_composer' ),
-	) )
+	] )
 	?>
 	;
 </<?php echo esc_attr( $custom_tag ); ?>>

@@ -1,9 +1,18 @@
 <?php
+/**
+ * The template for displaying [vc_btn] shortcode output of 'Button' element.
+ *
+ * This template can be overridden by copying it to yourtheme/vc_templates/vc_btn.php.
+ *
+ * @see https://kb.wpbakery.com/docs/developers-how-tos/change-shortcodes-html-output
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 /**
  * Shortcode attributes
+ *
  * @var $atts
  * @var $style
  * @var $shape
@@ -43,14 +52,14 @@ $style = $shape = $color = $size = $custom_background = $custom_text = $align = 
 $gradient_color_1 = $gradient_color_2 = $gradient_custom_color_1 = $gradient_custom_color_2 = $gradient_text_color = '';
 $custom_onclick = $custom_onclick_code = '';
 $a_href = $a_title = $a_target = $a_rel = '';
-$styles = array();
+$styles = [];
 $icon_wrapper = false;
 $icon_html = false;
-$attributes = array();
+$attributes = [];
 
 $atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 extract( $atts );
-// parse link
+// parse link.
 $link = trim( $link );
 $link = ( '||' === $link ) ? '' : $link;
 $link = vc_build_link( $link );
@@ -65,20 +74,20 @@ if ( strlen( $link['url'] ) > 0 ) {
 	$a_rel = $link['rel'];
 }
 
-$wrapper_classes = array(
+$wrapper_classes = [
 	'vc_btn3-container',
 	$this->getExtraClass( $el_class ),
 	$this->getCSSAnimation( $css_animation ),
 	'vc_btn3-' . $align,
-);
+];
 
-$button_classes = array(
+$button_classes = [
 	'vc_general',
 	'vc_btn3',
 	'vc_btn3-size-' . $size,
 	'vc_btn3-shape-' . $shape,
 	'vc_btn3-style-' . $style,
-);
+];
 
 $button_html = $title;
 
@@ -136,7 +145,7 @@ if ( 'custom' === $style ) {
 		$attributes[] = 'onmouseleave="this.style.borderColor=\'\'; this.style.backgroundColor=\'transparent\'; this.style.color=\'\'"';
 	}
 
-	$onmouseenter = array();
+	$onmouseenter = [];
 	if ( $outline_custom_hover_background ) {
 		$onmouseenter[] = 'this.style.borderColor=\'' . esc_attr( $outline_custom_hover_background ) . '\';';
 		$onmouseenter[] = 'this.style.backgroundColor=\'' . esc_attr( $outline_custom_hover_background ) . '\';';
@@ -171,7 +180,7 @@ if ( 'custom' === $style ) {
 		$button_text_color = $gradient_text_color;
 	}
 
-	$gradient_css = array();
+	$gradient_css = [];
 	$gradient_css[] = 'color: ' . $button_text_color;
 	$gradient_css[] = 'border: none';
 	$gradient_css[] = 'background-color: ' . $gradient_color_1;
@@ -181,8 +190,8 @@ if ( 'custom' === $style ) {
 	$gradient_css[] = 'transition: all .2s ease-in-out';
 	$gradient_css[] = 'background-size: 200% 100%';
 
-	// hover css
-	$gradient_css_hover = array();
+	// hover css.
+	$gradient_css_hover = [];
 	$gradient_css_hover[] = 'color: ' . $button_text_color;
 	$gradient_css_hover[] = 'background-color: ' . $gradient_color_2;
 	$gradient_css_hover[] = 'border: none';
@@ -190,8 +199,8 @@ if ( 'custom' === $style ) {
 
 	$uid = uniqid();
 	$first_tag = 'style';
-	$output .= '<' . $first_tag . '>.vc_btn3-style-' . esc_attr( $style ) . '.vc_btn-gradient-btn-' . esc_attr( $uid ) . ':hover{' . esc_attr( implode( ';', $gradient_css_hover ) ) . ';' . '}</' . $first_tag . '>';
-	$output .= '<' . $first_tag . '>.vc_btn3-style-' . esc_attr( $style ) . '.vc_btn-gradient-btn-' . esc_attr( $uid ) . '{' . esc_attr( implode( ';', $gradient_css ) ) . ';' . '}</' . $first_tag . '>';
+	$output .= '<' . $first_tag . '>.vc_btn3-style-' . esc_attr( $style ) . '.vc_btn-gradient-btn-' . esc_attr( $uid ) . ':hover{' . esc_attr( implode( ';', $gradient_css_hover ) ) . ';}</' . $first_tag . '>';
+	$output .= '<' . $first_tag . '>.vc_btn3-style-' . esc_attr( $style ) . '.vc_btn-gradient-btn-' . esc_attr( $uid ) . '{' . esc_attr( implode( ';', $gradient_css ) ) . ';}</' . $first_tag . '>';
 	$button_classes[] = 'vc_btn-gradient-btn-' . $uid;
 	$attributes[] = 'data-vc-gradient-1="' . esc_attr( $gradient_color_1 ) . '"';
 	$attributes[] = 'data-vc-gradient-2="' . esc_attr( $gradient_color_2 ) . '"';
