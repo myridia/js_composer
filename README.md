@@ -1,4 +1,4 @@
-
+<img src="js_composer.svg" alt="js_composer" width="120">
 
 # js_composer
 * Popular Wordpress Plugin called WPBakery Page Builder with its folder js_composer
@@ -7,4 +7,3 @@
 ## Notes
 * This plugin here serves as a source backup.
 * You still need to purchase their license to operate it
-
